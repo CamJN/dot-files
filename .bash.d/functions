@@ -1,0 +1,235 @@
+#!/bin/bash
+
+function cscp {
+    # wkhtmltopdf.gz site-localhost.zip amazon2:
+    rsync -Lvz --progress --timeout=10 --rsh=ssh "$@"
+    while [ $? -ne 0 ]; do
+        rsync -Lvz --append --partial --progress --timeout=10 --rsh=ssh "$@"
+    done
+}
+
+function cps {
+    ps -A | grep -i $*
+}
+
+function cfind {
+    if [ `uname` = "Darwin" ]; then
+        find -x "$@"
+    else
+        #handle multiple search locations
+        PLACE=$1
+        shift 1
+        find $PLACE -xdev $*
+    fi
+}
+
+function cdiff() {
+    if hash git &>/dev/null; then
+        git diff --no-index --color-words "$@"
+    else
+        diff "$@"
+    fi
+}
+
+function clocate {
+    if [ `uname` = "Darwin" ]; then
+        mdfind name:"$*"
+    else
+        cdllocate "$*"
+    fi
+}
+
+function csed {
+    #alias sed='psed'
+    if [ `uname` = "Darwin" ]; then
+        sed -E "$@"
+    else
+        sed -r "$*"
+    fi
+}
+
+function colors {
+    for i in {0..31} ; do echo "[7;(38;05;$i)mColor $i [0m	[7;(38;05;$(($i + 32)))mColor $(($i+32)) [0m	[7;(38;05;$(($i+64)))mColor $(($i+64)) [0m	[7;(38;05;$(($i + 96)))mColor $(($i+96)) [0m	[7;(38;05;$(($i+128)))mColor $(($i+128)) [0m	[7;(38;05;$(($i + 160)))mColor $(($i+160)) [0m	[7;(38;05;$(($i+192)))mColor $(($i+192)) [0m	[7;(38;05;$(($i + 224)))mColor $(($i+224))"; done; echo -n "[0m"
+}
+
+function loveSongsForCamden {
+    options_found=0
+    while getopts :vn:N: OPT; do
+        options_found=1
+        case $OPT in
+            v|+v)
+                mdfind kind:music album:camden | sort -nt / -k+11 | while read line; do echo "\n $line"; afplay "$line"; done &
+                ;;
+            n|+n)
+                mdfind kind:music album:camden | sort -nt / -k+11 | egrep --color='never' "/$OPTARG-.*$" | while read line; do afplay "$line"; done &
+                ;;
+            N|+N)
+                shift $(( OPTIND - 1 ))
+                OPTIND=1
+                mdfind kind:music album:camden | sort -nt / -k+11 | egrep --color='never' -i "[^/]*$*[^/]*/[^/]*$" | while read line; do afplay "$line"; done &
+                ;;
+            *)
+                echo "usage: ${0##*/} [+-vn album-number] +-N album name"
+                return 2
+        esac
+    done
+    if ((!options_found));then
+        mdfind kind:music album:camden | sort -nt / -k+11 | while read line; do afplay "$line"; done &
+    fi
+}
+
+function chdir {
+    if [ -n "$1" ]; then
+        pushd "$*"
+    else
+        pushd ~
+    fi
+}
+
+function ccalendar {
+    echo -e '\nToday in history:'
+    if [ "$TERM" != 'dumb' ]; then
+        calendar 2>/dev/null | perl -pe 's/[^[:space:][:print:]]//g' | tr "\n" "|" | sed -E -e 's/\|$//' -e 's/\|[	]{1,2}/ /g' -e 's/[\|]/\
+/g' | sed -E -e "s/^([^	]*)(.*)$/\1[0;38;5;122m\2[0m/g"
+    else
+        calendar 2>/dev/null | perl -pe 's/[^[:space:][:print:]]//g' | tr "\n" "|" | sed -E -e 's/\|$//' -e 's/\|[	]{1,2}/ /g' -e 's/[\|]/\
+/g' | sed -E -e "s/^([^	]*)(.*)$/\1[0;36m\2[0m/g"
+    fi
+}
+
+function cssh {
+    ssh -t "$@" 'screen -dR'
+}
+
+function getIp {
+    \curl -s http://canhazip.com
+}
+
+function mailIpTo {
+    getIp | mail -s "`whoami`'s IP update" -F camden.narzt@gmail.com
+}
+
+function zipup {
+    zip -r $1 $1
+    mv $1.zip ../
+}
+
+function fplay {
+    TYPEREGEX='.*\.(3g[2|p]|a(ac|c3|dts|if[c|f]?|mr|nd|u)|caf|m4[a|r]|mp([1-4|a]|eg[0,9]?)|sd2|wav)'
+    DOAPPLESCRIPT=0
+    APPLESCRIPTPART1='tell application "QuickTime Player" to delay 1'
+    APPLESCRIPTPART2='tell application "QuickTime Player" to play the first document'
+    MUSICROOT=~/Music/iTunes
+    OUTPUT1="/dev/null"
+    OUTPUT2="/dev/null"
+    AUTHOR=""
+    ALBUM=""
+    NAME=""
+    PLAY=1
+    INFO=0
+    options_found=0
+    while getopts “:sd:hgia:A:o:v” OPTION
+    do
+        options_found=1
+        case $OPTION in
+            d|+d)
+                MUSICROOT="$OPTARG"
+                ;;
+            g|+g)
+                DOAPPLESCRIPT=1
+                ;;
+            s|+s)
+                PLAY=0
+                ;;
+            i|+i)
+                INFO=1
+                ;;
+            a|+a)
+                AUTHOR="AND author:$OPTARG"
+                ;;
+            A|+A)
+                ALBUM="AND album:$OPTARG"
+                ;;
+            o|+o)
+                OUTPUT2="$OPTARG"
+                ;;
+            v|+v)
+                OUTPUT1="/dev/stdout"
+                ;;
+            h|+h)
+                echo "usage: ${0##*/} [+-vshgi] [+-d music-directory] [+-a album] [+-A artist] [+-o playlist] [--] search terms..."
+                return
+                ;;
+            *)
+                echo "usage: ${0##*/} [+-vshgi] [+-d music-directory] [+-a album] [+-A artist] [+-o playlist] [--] search terms..."
+                return 2
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+    OPTIND=1
+    if [ "$#" -gt "0" ]; then
+        NAME="AND name:$*"
+    fi
+    if [[ ( -n $NAME ) || ((options_found -eq 1)) ]]; then
+        mdfind -onlyin $MUSICROOT \(kind:music OR kind:movie\) $NAME $AUTHOR $ALBUM |
+            egrep --color=auto $TYPEREGEX $OUTPUT |
+            while read line; do
+                echo "$line" | tee -a "$OUTPUT2" > "$OUTPUT1"
+                if ((INFO)); then
+                    afinfo "$line"
+                fi
+                if ((DOAPPLESCRIPT)); then
+                    open -a QuickTime\ Player "$line"
+                    if ((PLAY)); then
+                        osascript -e "$APPLESCRIPTPART1"
+                        osascript -e "$APPLESCRIPTPART2"
+                    fi
+                elif ((PLAY)); then
+                    afplay "$line"
+                fi
+            done
+    fi
+}
+
+function ccal {
+
+    cat >/tmp/FileWithDates <<EOF
+EOD
+10 31
+4 25
+2 14
+2 2
+EOD
+EOF
+
+cal -y | awk -v month="$(date +%m)" -v day="$(date +%e) " '
+BEGIN {
+    max=0
+    sub(/^0/,"",month)
+    months[max] = month + 0
+    days[max]   = day + 0
+    max++
+}
+
+NR == FNR {
+    months[max] = $1 + 0
+    days[max]   = $2 + 0
+    max++
+    next
+}
+
+{   m = (int((FNR-3)/8) * 3) + 1
+    for (i=0; i<3; i++) {
+        t[i] = " " substr($0,1+i*22,20) " "
+         for(j=0; j < max; j++) {
+            if (m+i == months[j]) {
+                sub(" "days[j]" ",":"days[j]"@",t[i])
+            }
+        }
+        gsub(/:/," \033[0;31m",t[i])
+        gsub(/@/,"\033[0m ",t[i])
+    }
+    print t[0],t[1],t[2]
+} ' /tmp/FileWithDates -
+}

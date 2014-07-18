@@ -1,0 +1,32 @@
+[user]
+	name = Camden Narzt
+	email = 
+[core]
+        editor = emacs
+[sendemail]
+        smtpencryption = tls
+        smtpserver = smtp.gmail.com
+        smtpuser =
+        smtppass =
+        smtpserverport = 587
+[color]
+	ui = auto
+[color "branch"]
+       current = yellow bold
+       local = green bold
+       remote = cyan bold
+[color "diff"]
+       meta = yellow bold
+       frag = magenta bold
+       old = red bold
+       new = green bold
+       whitespace = red reverse
+[color "status"]
+       added = green bold
+       changed = yellow bold
+       untracked = red bold
+[alias]
+       history = log --oneline --abbrev-commit --all --graph --decorate --color
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f

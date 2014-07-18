@@ -1,0 +1,92 @@
+#!/bin/bash
+
+alias add='git add'
+alias back='popd'
+alias bell='tput bel'
+alias calendar='ccalendar'
+alias curl='curl -O'
+#alias wget='\curl -O'
+alias cd='chdir'
+alias cdu='du -hcm | grep -v \./Music/ | awk -F "	" '\''$1 >1024 { printf "%6.2fGB %s\n", $1/1024, $2}'\'' | sort -rn | \less'
+alias clear='dirs -c; clear; ls'
+alias ccommand='command -V'
+alias convert='afconvert'
+alias cpu='sysctl -n machdep.cpu.brand_string'
+alias cycle='pushd +1'
+alias dbconsole='rails dbconsole'
+alias diff='diff -iby --suppress-common-lines'
+alias disu='\caffeinate -disu'
+alias du='du -h'
+alias echo='echo -e'
+alias egrep='grep -E'
+alias emptycache='sudo killall -HUP mDNSResponder'
+alias exit='privacy; reset; \clear; lastLogin; calendar'
+alias filter='fgrep -vie'
+alias find='cfind'
+alias ip="2>/dev/null ifconfig eth0 || ifconfig en1 | sed -e 's/ ((0x)?[0-9:a-f]{3,}|[0-9.]{7,})[ %]/[(01;(38;05;122))m \1 [0m/g'"
+alias killFlash='rm -rf ~/Library/Preferences/Macromedia/Flash\ Player/macromedia.com/support/flashplayer/sys/* ~/Library/Preferences/Macromedia/Flash\ Player/\#SharedObjects/* '
+alias lastLogin="last -1 `whoami` | head -1 | sed -e 's/`whoami` +([^ ]+) +([^:]*:[0-9]\.?[0-9]) +(.*)/Last Login: \2 on \1/g'"
+alias less='/usr/share/vim/vim*/macros/less.sh'
+alias locate='clocate'
+alias loveSongs='loveSongsForCamden'
+alias ls='ls -hG'
+alias mkdir='mkdir -p'
+alias more='less'
+alias password="cat /dev/random | egrep --color=auto -ao '[a-zA-Z0-9]+' | paste -d\0 `for i in {1..32}; do echo -n '- '; done` | sed -e 's/\0//g' | head -1"
+alias path='echo -e ${PATH//:/\\n}'
+alias perl='perl -p'
+alias permissions='sudo chmod -R 770 ~/Sites/ ; sudo chown -R `whoami`:_www ~/Sites/'
+alias pgsql='psql'
+alias play='afplay'
+alias please='sudo'
+alias pop='popd'
+alias privacy='killFlash; emptycache; sqlite ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent"'
+alias processes='ps'
+alias ps='ps -U`whoami`'
+alias push='pushd'
+alias ql='qlmanage -p 2>/dev/null'
+alias scan='airport -s'
+alias screen='screen -a'
+alias screensaver='ScreenSaverEngine 2>/dev/null'
+alias sed='csed'
+alias sedstrip="sed -e 's/:.*$//g'"
+alias server='rails server 2> log/error.log > log/server.log &'
+alias sqlite='sqlite3'
+alias ssh='cssh'
+alias status='git status'
+alias su='su -m'
+alias sudo='sudo '
+alias swap='pushd +1'
+alias tail='tail -f'
+alias temp="ioreg -n IOHWSensor | awk '/location/ || /current-value/ || /\"type\"/' | sed -e 's/[^\"]*\"//' -e 's/\" =//' -e 's/location//' -e 's/type//' -e 's/\"//g' | awk '{ d=(\$2/65536); if (\$1==\"current-value\") print substr(d,1,7) \"\\t\" ; if (\$1!=\"current-value\") print \$0 }' | sed -e 's/temperature/Celsius/' -e 's/voltage/volts/' -e 's/fanspeed/fan RPM/' -e 's/current/Amps/' -e 's/^temp$//' -e 's/ //' | awk '{ if ((NR % 3) == 0) print \$0; else printf \$0 \" \" }'"
+alias test='rake test'
+alias top='top -U `whoami`'
+alias cname="uname -mrs | sed -e 's/([^ ]+)/\1 Kernel Version/'"
+alias up='cd ../'
+alias using='lsof'
+alias version="sw_vers"
+alias wifi='airport -I'
+
+if [ `uname` = "Darwin" ];then
+    find ~/Applications/ /Applications/{,Utilities} -maxdepth 1 -type d -name "*.[Aa]pp" ! -path "*[Cc]ontents*" ! \( -name 'Caffeinate.[Aa]pp' -name 'Emacs.[Aa]pp' -o -name 'Xcode.[Aa]pp' -o -name 'Mail.[Aa]pp' -o -name 'Calendar.[Aa]pp' -o -name 'Less.[Aa]pp' -o -name 'wkhtmltopdf.[Aa]pp' -o -iname '*goto*' \) -exec basename {} \; |
+        sed -e 's/^(.*)$/\1|\1/g' -e 's/\.[Aa]pp//g' |
+        awk -F \| '{ gsub(" ","_",$2); gsub(" ","\\ ",$1); printf "alias %s=\"open -a %s\"\n", tolower($2), $1 }' > /tmp/aliases.gen
+
+        if [ -f /tmp/aliases.gen ]; then
+            . /tmp/aliases.gen
+            rm /tmp/aliases.gen
+        fi
+
+        function calias {
+            if [ -n "$1" ]; then
+                alias "$@"
+            else
+                echo -e "Normal aliases\n------------------------------------"
+                alias | grep -vi --color=never open | sed -e 's/\[0m//g' -e 's/^alias ([^ ]+)=/\[01;31malias\[0m \[01;36m\1\[0m=/g' -e "s/='(.+)'$/='\[0;38;5;122m\1\[0m'/g"
+                echo -e "\nGenerated aliases\n------------------------------------"
+                alias | grep -i --color=never open | sed -e 's/\[0m//g' -e 's/^alias ([^ ]+)=/\[01;31malias\[0m \[01;36m\1\[0m=/g' -e "s/='(.+)'$/='\[0;38;5;122m\1\[0m'/g"
+            fi
+        }
+
+        alias alias='calias'
+fi

@@ -25,6 +25,7 @@
 
 (require 'defuns)
 (require 'accutex nil t)
+(require 'apache nil t)
 (require 'bison-mode nil t)
 (require 'darwin nil t)
 (require 'dirtrack)
@@ -39,11 +40,12 @@
 (require 'lisp-mode)
 (require 'locate)
 (require 'meese)
+(require 'rust-mode nil t)
 (require 'server)
 (require 'sql)
 (require 'shell)
 (require 'vc-git)
-(require 'web-mode)
+(require 'web-mode nil t)
 
 (setq custom-file "custom.el")
 (load custom-file nil t t t)
@@ -77,10 +79,16 @@
 (global-set-key                 (kbd "C-x C-d")         'duplicate-lines)
 (global-set-key                 (kbd "C-x f")           'find-file-at-point)
 (global-set-key                 (kbd "C-x o")           'next-multiframe-window)
+(global-set-key                 (kbd "C-M-y")           (lambda (arg)
+                                                          (interactive "^p")
+                                                          ;;(setq arg (or arg -1))
+                                                          ;;(yank-pop arg)))
+                                                          (yank-pop -1)))
 (global-set-key                 (kbd "C-z")             'zone)
 (global-set-key                 (kbd "M-%")             'query-replace-regexp)
 (global-set-key                 (kbd "M-/")             'hippie-expand)
 (global-set-key                 (kbd "M-g g")           'goto-line)
+(global-set-key                 (kbd "M-m")             'beginning-of-line)
 (global-set-key                 (kbd "<ESC> <down>")    'move-line-down)
 (global-set-key                 (kbd "M-<down>")        'move-line-down)
 (global-set-key                 (kbd "<ESC> <up>")      'move-line-up)
@@ -264,7 +272,7 @@
 (when (file-exists-p "~/.emacs.d/lisp/cc-mode/") (add-to-list 'load-path "~/.emacs.d/lisp/cc-mode/"))
 
 ;;(add-hook 'c-initialization-hook (lambda () (require 'cedet "cedet-config.el" t)))
-;;(add-hook 'c-mode-common-hook (lambda () (load-library "programming")))
+(add-hook 'c-mode-common-hook (lambda () (unless (eq major-mode 'nxhtml-mode)(load-library "programming"))))
 
 (when (string< "24.1" (format "%d.%d" emacs-major-version emacs-minor-version))
   (eval-after-load "mumamo"

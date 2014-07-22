@@ -12,20 +12,6 @@
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")
 
-
-;;--------------ignore ds_store ----------------------
-;; (defadvice completion--file-name-table (after
-;;                                         ignoring-backups-f-n-completion
-;;                                         activate)
-;;   "Filter out results when they match `completion-ignored-extensions'."
-;;   (let ((res ad-return-value))
-;;     (if (and (listp res)
-;;              (stringp (car res))
-;;              (cdr res))                 ; length > 1, don't ignore sole match
-;;         (setq ad-return-value
-;;               (completion-pcm--filename-try-filter res)))))
-
-
 ;;----------Use text cleanly---------------------------
 (defadvice thing-at-point (after strip-text-properties (thing) activate)
   "Don't include text properties with `thing-at-point' results."
@@ -40,19 +26,6 @@
         (progn (when (minibufferp) (iswitchb-next-match))
                (replace-buffer-in-windows "*scratch*"))
       ad-do-it)))
-
-                                        ;(defadvice kill-buffer (around kill-buffer-around-advice activate)
-                                        ;  "Never kill *scratch* buffer, just move it out of the way."
-                                        ;  (let ((the-arg (ad-get-arg 0)))
-                                        ;    (if (and (not (null the-arg)) (string= (buffer-name (get-buffer the-arg)) "*scratch*"))
-                                        ;        (progn (when (minibufferp) (iswitchb-next-match))
-                                        ;               (replace-buffer-in-windows "*scratch*"))
-                                        ;      (if server-buffer-clients (progn
-                                        ;                                  (ad-disable-advice 'kill-buffer 'around 'kill-buffer-around-advice)
-                                        ;                                  (ad-activate 'kill-buffer)
-                                        ;                                  (server-done)
-                                        ;                                  (ad-enable-advice 'kill-buffer 'around 'kill-buffer-around-advice)
-                                        ;                                  (ad-activate 'kill-buffer)) ad-do-it))))
 
 (defun dont-kill-scratch ()
   "Don't let scratch be killed."
@@ -70,9 +43,76 @@
   "Reverts the *scratch* buffer to its initial state after erasing it."
   (when (string-match-p "*scratch*" (buffer-name)) (insert initial-scratch-message)))
 
+;;---------set things locally--------------------------
+(defun set-local-variable (variable value)
+  "Set VARIABLE to VALUE.  VALUE is a Lisp object.
+VARIABLE should be a user option variable name, a Lisp variable
+meant to be customized by users.  You should enter VALUE in Lisp syntax,
+so if you want VALUE to be a string, you must surround it with doublequotes.
+VALUE is used literally, not evaluated.
+
+If VARIABLE has a `variable-interactive' property, that is used as if
+it were the arg to `interactive' (which see) to interactively read VALUE.
+
+If VARIABLE has been defined with `defcustom', then the type information
+in the definition is used to check that VALUE is valid.
+
+With a prefix argument, set VARIABLE to VALUE buffer-locally."
+  (interactive
+   (let* ((default-var (variable-at-point))
+          (var (if (custom-variable-p default-var)
+                   (read-variable (format "Set variable (default %s): " default-var)
+                                  default-var)
+                 (read-variable "Set variable: ")))
+          (minibuffer-help-form '(describe-variable var))
+          (prop (get var 'variable-interactive))
+          (obsolete (car (get var 'byte-obsolete-variable)))
+          (prompt (format "Set %s %s to value: " var
+                          (cond ((local-variable-p var)
+                                 "(buffer-local)")
+                                (t "buffer-locally")
+                                )))
+          (val (progn
+                 (when obsolete
+                   (message (concat "`%S' is obsolete; "
+                                    (if (symbolp obsolete) "use `%S' instead" "%s"))
+                            var obsolete)
+                   (sit-for 3))
+                 (if prop
+                     ;; Use VAR's `variable-interactive' property
+                     ;; as an interactive spec for prompting.
+                     (call-interactively `(lambda (arg)
+                                            (interactive ,prop)
+                                            arg))
+                   (read
+                    (read-string prompt nil
+                                 'set-variable-value-history
+                                 (format "%S" (symbol-value var))))))))
+     (list var val)))
+
+  (and (custom-variable-p variable)
+       (not (get variable 'custom-type))
+       (custom-load-symbol variable))
+  (let ((type (get variable 'custom-type)))
+    (when type
+      ;; Match with custom type.
+      (require 'cus-edit)
+      (setq type (widget-convert type))
+      (unless (widget-apply type :match value)
+        (error "Value `%S' does not match type %S of %S"
+               value (car type) variable))))
+
+  (make-local-variable variable)
+
+  (set variable value)
+
+  ;; Force a thorough redisplay for the case that the variable
+  ;; has an effect on the display, like `tab-width' has.
+  (force-mode-line-update))
 
 ;;----------New Functions------------------------------
 (defun previous-char-p (char-as-string)
+  "Does the char preceeding point eq CHAR-AS-STRING"
   (eq (preceding-char) (string-to-char char-as-string)))
 
 

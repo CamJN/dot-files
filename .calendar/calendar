@@ -1,0 +1,7 @@
+#include <calendar.christian>
+#include <calendar.computer>
+#include <calendar.history>
+#include <calendar.judaic>
+#include <calendar.lotr>
+#include <calendar.music>
+#include <calendar.usholiday>

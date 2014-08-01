@@ -1,0 +1,44 @@
+;; User behaviors
+;; -----------------------------
+;; Behaviors are stored as a set of diffs that are merged together
+;; to create the final set of functionality that makes up Light Table. You can
+;; modify these diffs to either add or subtract functionality.
+;;
+;; Behaviors are added to tags, objects with those tags then automatically gain
+;; whatever logic the behavior imparts. To see a list of user-level behaviors,
+;; start typing a word related to the functionality you want in between the square
+;; brackets (e.g. "theme").
+;;~/Applications/LightTable/LightTable.app/Contents/Resources/app.nw/core/misc/example.behaviors
+;;~/Applications/LightTable/LightTable.app/Contents/Resources/app.nw/settings/default/default.behaviors
+;;~/Library/Application Support/LightTable/plugins/Emacs/emacs.behaviors
+;;~/Library/Application Support/LightTable/settings/user.behaviors
+
+{
+:+ {
+     ;; The app tag is kind of like global scope. You assign behaviors that affect
+     ;; all of Light Table here
+     :app [(:lt.objs.style/set-skin "dark")
+           (:lt.objs.app/run-on-init [:window.fullscreen])
+           (:lt.objs.sidebar.workspace/workspace.open-on-start)]
+
+     ;; The editor tag is applied to all editors
+     :editor [:lt.objs.editor/no-wrap
+     					:lt.objs.editor/line-numbers
+              :lt.objs.editor.file/remove-trailing-whitespace
+              (:lt.objs.style/set-theme "default")
+              (:lt.plugins.emacs/activate-emacs)]
+
+     ;; Here we can add behaviors to just clojure editors
+     :editor.clojure [(:lt.plugins.clojure/print-length 1000)]}
+
+;;   :files [(:lt.objs.files/file-types [
+;;             {:name "ERB"  :exts [:erb :rhtml] :mime "application/x-aspx" :tags [:editor.html :editor.ruby]}
+;;             {:name "HTML" :exts [:html :htm]  :mime "htmlmixed"  :tags [:editor.html]}
+;;           ])
+;; ]
+
+
+ ;; You can use the subtract key to remove behavior that may get added by
+ ;; another diff
+ :- {:app []}
+}

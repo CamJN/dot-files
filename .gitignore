@@ -1,0 +1,6 @@
+/.emacs.d/backup-files/*
+/.emacs.d/elpa/*
+/.emacs.d/auto-save-list/*
+/.emacs.d/recentf
+/.bash.d/history
+/.bash.d/.bash-git-prompt

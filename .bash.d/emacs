@@ -3,6 +3,9 @@
 if [ -d ~/Applications/Emacs.app ]; then
     export PATH=~/Applications/Emacs.app/Contents/MacOS/bin:$PATH
     EMACS=~/Applications/Emacs.app/Contents/MacOS/Emacs
+elif [ -d /Applications/Emacs.app ]; then
+    export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
+    EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 elif [[ `\emacs --version | head -1` == "GNU Emacs 24.1.1" ]]; then
     export TMPDIR=/tmp/
     EMACS='/usr/bin/emacs'

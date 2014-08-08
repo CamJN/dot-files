@@ -26,9 +26,6 @@ shopt -s histappend
 shopt -s extglob
 shopt -s xpg_echo
 
-bind 'set completion-ignore-case on' # only works in interactive mode, so bashrc is better i think.
-#bind 'set skip-completed-text on' # requires bash 4
-
 #completion
 if [ -f ~/.bash.d/completion ]; then
     . ~/.bash.d/completion

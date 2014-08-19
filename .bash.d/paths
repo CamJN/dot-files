@@ -1,14 +1,9 @@
 #!/bin/bash
 
-export MANPATH=:~/Programming/C/emacs/doc/man:~/Applications/Emacs.app/Contents/Resources/etc/man
-
-#might not be in right format, currently .texi
-#export INFOPATH=~/Programming/C/emacs/doc/
-
-PATH=$PATH:/usr/local/mysql/bin
-PATH=$PATH:/usr/local/sbin
-PATH=/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH
-PATH=$PATH:/usr/local/texlive/2013/bin/x86_64-darwin
+PATH=/usr/local/bin:$PATH
+PATH=/usr/local/sbin:$PATH
+PATH=/usr/local/etc/openssl/misc:$PATH
+PATH=/usr/local/Cellar/openssl/1.0.1i/bin:$PATH
+PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin
 PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
-#PATH=$PATH:/usr/local/labkey/external/ant/bin:/usr/local/labkey/external/bin:/usr/local/labkey/external/osx/bin
 export PATH=$PATH:/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS

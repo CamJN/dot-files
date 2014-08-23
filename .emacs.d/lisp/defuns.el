@@ -263,7 +263,7 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
          (topExtn (string-match ".*_.*" kind))
          (extension (if topExtn kind (car (cdr parts))))
          )
-    (cd (concat "~/Programming/extensions/" (if topExtn nil kind)))
+    (cd (concat "~/Developer/PHP/work_extensions/" (if topExtn nil kind)))
     (compile (concat "make " extension))
     ))
 

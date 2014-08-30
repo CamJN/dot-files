@@ -3,6 +3,7 @@
 alias add='git add'
 alias back='popd'
 alias bell='tput bel'
+alias blanks='sed "/^$/d"'
 alias calendar='ccalendar'
 alias curl='curl -O'
 alias cd='chdir'

@@ -4,3 +4,4 @@
 /.emacs.d/recentf
 /.bash.d/history
 /.bash.d/.bash-git-prompt
+.emacs.d/%backup%~

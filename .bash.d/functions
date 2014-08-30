@@ -23,12 +23,16 @@ function cfind {
     fi
 }
 
-function cdiff() {
+function cdiff {
     if hash git &>/dev/null; then
         git diff --no-index --color-words "$@"
     else
         diff "$@"
     fi
+}
+
+function ramdrive {
+    diskutil erasevolume HFS+ 'RAM Disk' `hdiutil attach -nomount ram://$(echo '4 * 1024 ^ 3 / 512' | bc)` 2>/dev/null
 }
 
 function clocate {

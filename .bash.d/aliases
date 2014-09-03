@@ -63,6 +63,7 @@ alias test='rake test:all'
 alias top='top -U `whoami`'
 alias cname="uname -mrs | sed -e 's/([^ ]+)/\1 Kernel Version/'"
 alias up='cd ../'
+alias update='softwareupdate --install -a ; brew update && brew upgrade ; gem update'
 alias using='lsof'
 alias version="sw_vers"
 alias wifi='airport -I'

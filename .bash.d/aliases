@@ -67,27 +67,3 @@ alias update='softwareupdate --install -a ; brew update && brew upgrade ; gem up
 alias using='lsof'
 alias version="sw_vers"
 alias wifi='airport -I'
-
-# if [ `uname` = "Darwin" ];then
-#     find ~/Applications/ /Applications/{,Utilities} -maxdepth 1 -type d -name "*.[Aa]pp" ! -path "*[Cc]ontents*" ! \( -name 'Caffeinate.[Aa]pp' -name 'Emacs.[Aa]pp' -o -name 'Xcode.[Aa]pp' -o -name 'Mail.[Aa]pp' -o -name 'Calendar.[Aa]pp' -o -name 'Less.[Aa]pp' -o -name 'wkhtmltopdf.[Aa]pp' -o -iname '*goto*' \) -exec basename {} \; |
-#         sed -e 's/^(.*)$/\1|\1/g' -e 's/\.[Aa]pp//g' |
-#         awk -F \| '{ gsub(" ","_",$2); gsub(" ","\\ ",$1); printf "alias %s=\"open -a %s\"\n", tolower($2), $1 }' > /tmp/aliases.gen
-
-#         if [ -f /tmp/aliases.gen ]; then
-#             . /tmp/aliases.gen
-#             rm /tmp/aliases.gen
-#         fi
-
-#         function calias {
-#             if [ -n "$1" ]; then
-#                 alias "$@"
-#             else
-#                 echo -e "Normal aliases\n------------------------------------"
-#                 alias | grep -vi --color=never open | sed -e 's/\[0m//g' -e 's/^alias ([^ ]+)=/\[01;31malias\[0m \[01;36m\1\[0m=/g' -e "s/='(.+)'$/='\[0;38;5;122m\1\[0m'/g"
-#                 echo -e "\nGenerated aliases\n------------------------------------"
-#                 alias | grep -i --color=never open | sed -e 's/\[0m//g' -e 's/^alias ([^ ]+)=/\[01;31malias\[0m \[01;36m\1\[0m=/g' -e "s/='(.+)'$/='\[0;38;5;122m\1\[0m'/g"
-#             fi
-#         }
-
-#         alias alias='calias'
-# fi

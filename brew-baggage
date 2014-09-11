@@ -1,0 +1,8 @@
+#!/usr/local/bin/bash
+#/usr/local/bin/brew-baggage
+for pkg in `\diff -iby --suppress-common-lines <(brew list) <(brew leaves) | tr -d '< '`; do
+    du -md 0 "$HOMEBREW_CELLAR/$pkg";
+    #echo -n "$pkg: "; brew uses --installed $pkg;
+done |
+sort -n |
+sed -Ee 's/^ *([0-9]+)/\1MB/g' -e "s|$HOMEBREW_CELLAR/||g"

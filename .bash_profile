@@ -64,6 +64,7 @@ fi
 if [ "Darwin" = `uname` ]; then
     calendar
 fi
+
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)";
 fi

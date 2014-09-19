@@ -34,4 +34,4 @@ GIT_PROMPT_START=$PS1
 
 GIT_PROMPT_END="\[\033[37m\] \\$ \[\033[0m\]"
 
-source ~/.bash.d/.bash-git-prompt/gitprompt.sh
+source /usr/local/opt/bash-git-prompt/share/gitprompt.sh

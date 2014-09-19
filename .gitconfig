@@ -3,6 +3,7 @@
 	email = admin@silversshadows.com
 [core]
         editor = emacs
+        fileMode = false
 [sendemail]
         smtpencryption = tls
         smtpserver = smtp.gmail.com

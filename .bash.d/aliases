@@ -60,7 +60,7 @@ alias sudo='sudo '
 alias swap='pushd +1'
 alias tail='tail -f'
 alias temp="ioreg -n IOHWSensor | awk '/location/ || /current-value/ || /\"type\"/' | sed -e 's/[^\"]*\"//' -e 's/\" =//' -e 's/location//' -e 's/type//' -e 's/\"//g' | awk '{ d=(\$2/65536); if (\$1==\"current-value\") print substr(d,1,7) \"\\t\" ; if (\$1!=\"current-value\") print \$0 }' | sed -e 's/temperature/Celsius/' -e 's/voltage/volts/' -e 's/fanspeed/fan RPM/' -e 's/current/Amps/' -e 's/^temp$//' -e 's/ //' | awk '{ if ((NR % 3) == 0) print \$0; else printf \$0 \" \" }'"
-alias test='rake test:all'
+alias runtests='rake test:all'
 alias top='top -U `whoami`'
 alias trim="tr -d ' '"
 alias up='cd ../'

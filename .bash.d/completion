@@ -1,30 +1,7 @@
 #!/bin/bash
 
-# complete -A binding bind
-# complete -A helptopic help
-# complete -A setopt set
-# complete -A shopt shopt
-# complete -A stopped -P '"%' -S '"' bg
-# complete -a unalias
-# complete -b builtin
-# complete -c sudo command type which do else eval exec nice nohup then time xargs man info
-# complete -d pushd cd
-# complete -j -P '"%' -S '"' fg jobs disown
-# complete -u su write chfn groups w finger
-# complete -v readonly unset
-
-# complete -f -X '!*.?(t)bz?(2)' bunzip2 bzcat
-# complete -f -X '!*.@(?([xX]|[sS])[hH][tT][mM]?([lL]))' safari firefox
-# complete -f -X '!*.@(Z|[gGd]z|t[ag]z)' gunzip zcat
-# complete -f -X '!*.Z' uncompress
-# complete -f -X '!*.@(zip|[ejw]ar|exe|pk3|wsz|zargo|xpi|sxw|o[tx]t|od[fgpst]|epub|apk)' unzip zipinfo unzipsfx
-# complete -f -X '!*.texi*' makeinfo texi2html texi2dvi
-# complete -f -X '*.Z' compress znew
-# complete -f -X '*.@(o|so|so.!(conf)|a|[rs]pm|gif|jp?(e)g|mp3|mp?(e)g|avi|asf|ogg|class)' vi vim rvim view rview emacs
-
-# if [ -f /usr/share/git-core/git-completion.bash ];then
-#     . /usr/share/git-core/git-completion.bash
-# fi
+# includes git-completion.bash
+# and brew_bash_completion.sh
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion

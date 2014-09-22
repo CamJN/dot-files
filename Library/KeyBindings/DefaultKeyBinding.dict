@@ -1,0 +1,30 @@
+{
+"^ "        = "setMark:";
+"^w"        = "deleteToMark:";
+"^g"        = "cancelOperation:";
+"^x" = {
+        "^u"    = "uppercaseWord:";
+        "^l"    = "lowecaseWord:";
+        "u"     = "undo:";                          /* C-x u        Undo */
+        "k"     = "performClose:";                  /* C-x k        Close */
+        "^f"    = "openDocument:";                  /* C-x C-f      Open (find file) */
+        "^x"    = "swapWithMark:";                  /* C-x C-x      Swap with mark */
+        "^m"    = "selectToMark:";                  /* C-x C-m      Select to mark*/
+        "^s"    = "saveDocument:";                  /* C-x C-s      Save */
+        "^w"    = "saveDocumentAs:";                /* C-x C-w      Save as */
+    };
+
+"^/" = ("undo:", "insertText:", "\UF743");
+
+"^\177" = ("insertText:", "\UF744");
+"^\010" = ("insertText:", "\UF744");
+"~^\177" = ("insertText:", "\033\UF744");
+"~^\010" = ("insertText:", "\033\UF744");
+
+/*
+"^\U0008" = ("insertText:", "\UF744");
+"^\UF728" = ("insertText:", "\UF744");
+"~^\U0008" = ("insertText:", "\UF744");
+"~^\UF728" = ("insertText:", "\UF744");
+*/
+}

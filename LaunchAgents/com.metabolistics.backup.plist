@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.metabolistics.backup</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/local/bin/php</string>
+      <string>/Users/camdennarzt/Developer/PHP/Work/cli/akeeba-backup.php</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Hour</key>
+      <integer>9</integer>
+      <key>Minute</key>
+      <integer>35</integer>
+    </dict>
+    <key>WorkingDirectory</key>
+    <string>/Users/camdennarzt/Developer/PHP/Work</string>
+    <key>StandardOutPath</key>
+    <string>/Users/camdennarzt/Developer/PHP/Work/logs/akeeba_backup.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/camdennarzt/Developer/PHP/Work/logs/akeeba_backup_err.log</string>
+  </dict>
+</plist>

@@ -1,5 +1,14 @@
 #!/bin/bash
 
+MANPATH=/Library/Developer/CommandLineTools/usr/share/man
+MANPATH=/Library/Frameworks/R.framework/Versions/3.1/Resources:$MANPATH
+MANPATH=/opt/X11/share/man:$MANPATH
+MANPATH=/usr/local/man:$MANPATH
+MANPATH=/usr/local/share/man:$MANPATH
+MANPATH=/usr/local/texlive/2014/texmf-dist/doc/man:$MANPATH
+MANPATH=/usr/share/man:$MANPATH
+MANPATH=/Applications/Emacs.app/Contents/Resources/man:$MANPATH
+
 PATH=/usr/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=/usr/local/etc/openssl/misc:$PATH

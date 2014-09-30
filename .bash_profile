@@ -26,11 +26,6 @@ shopt -s histappend
 shopt -s extglob
 shopt -s xpg_echo
 
-#completion
-if [ -f ~/.bash.d/completion ]; then
-    . ~/.bash.d/completion
-fi
-
 #paths
 if [ -f ~/.bash.d/paths ]; then
     . ~/.bash.d/paths
@@ -51,6 +46,11 @@ if [ -f ~/.bash.d/aliases ]; then
     . ~/.bash.d/aliases
 fi
 
+#completion
+if [ -f ~/.bash.d/completion ]; then
+    . ~/.bash.d/completion
+fi
+
 #development
 if [ -f ~/.bash.d/development ]; then
     . ~/.bash.d/development
@@ -61,10 +61,10 @@ if [ -f ~/.bash.d/emacs ]; then
     . ~/.bash.d/emacs
 fi
 
-if [ "Darwin" = `uname` ]; then
-    calendar
-fi
-
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)";
+fi
+
+if [ "Darwin" = `uname` ]; then
+    calendar
 fi

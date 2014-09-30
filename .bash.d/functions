@@ -44,7 +44,6 @@ function clocate {
 }
 
 function csed {
-    #alias sed='psed'
     if [ `uname` = "Darwin" ]; then
         sed -E "$@"
     else

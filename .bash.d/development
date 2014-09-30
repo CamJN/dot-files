@@ -13,7 +13,7 @@ if [ `uname` = "Darwin" ]; then
     MAC_DEV=1
     if [ -n "${MAC_DEV:+x}" ]; then
         DEV_PLATFORM=MacOSX
-        DEV_VERSION=`version -productVersion | sed 's/([0-9]+\.[0-9]+)\.?[0-9]*/\1/g'`
+        DEV_VERSION=`version -productVersion | \sed -Ee 's/([0-9]+\.[0-9]+)\.?[0-9]*/\1/g'`
     else
         DEV_PLATFORM=iPhoneOS
         DEV_VERSION=6.1

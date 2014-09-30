@@ -1,29 +1,15 @@
 #!/bin/bash
 
-if [ -d ~/Applications/Emacs.app ]; then
-    export PATH=~/Applications/Emacs.app/Contents/MacOS/bin:$PATH
-    EMACS=~/Applications/Emacs.app/Contents/MacOS/Emacs
-elif [ -d /Applications/Emacs.app ]; then
-    export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
-    EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
-elif [[ `\emacs --version | head -1` == "GNU Emacs 24.1.1" ]]; then
-    export TMPDIR=/tmp/
-    EMACS='/usr/bin/emacs'
-fi
+EMACS=`which emacs`
+VERSION=`emacs --version | head -1 | awk '{print $3}' | \sed -Ee 's/([0-9]+\.[0-9]+)\.[0-9]+/\1/g'`
+export EMACS_SERVER_FILE=${TMPDIR}emacs`id -u`/server
+export EDITOR="/usr/local/Cellar/emacs/$VERSION/bin/emacsclient -t -s $EMACS_SERVER_FILE"
 
-if [[ -n $EMACS ]]; then
-    export EMACS_SERVER_FILE=${TMPDIR}emacs`id -u`/server
-    export EDITOR="emacsclient -t -s $EMACS_SERVER_FILE"
-
-    if shlock -p $$ -f ~/.bash.d/emacs.lock; then
-        if [ ! -e $EMACS_SERVER_FILE -o ! -S $EMACS_SERVER_FILE ]; then
-            $EMACS --daemon 2>/dev/null
-        fi
-        rm  ~/.bash.d/emacs.lock;
+if shlock -p $$ -f ~/.bash.d/emacs.lock; then
+    if [ ! -e $EMACS_SERVER_FILE -o ! -S $EMACS_SERVER_FILE ]; then
+        $EMACS --daemon 2>/dev/null
     fi
-else
-    export EDITOR='emacsclient -nw "$@" 2>/dev/null'
-    export ALTERNATE_EDITOR="\emacs"
+    rm  ~/.bash.d/emacs.lock;
 fi
 
 alias emacs="$EDITOR"

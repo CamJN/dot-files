@@ -66,5 +66,6 @@ if which rbenv > /dev/null; then
 fi
 
 if [ "Darwin" = `uname` ]; then
+    archey -c
     calendar
 fi

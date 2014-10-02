@@ -20,6 +20,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.86/")
+(add-to-list 'load-path "~/.emacs.d/rinari")
 
 ;;(load "nxhtml/autostart.el")
 
@@ -40,7 +41,11 @@
 (require 'lisp-mode)
 (require 'locate)
 (require 'meese)
+(require 'pretty-lambdada)
 (require 'rust-mode nil t)
+(require 'rhtml-mode)
+(require 'rinari)
+(require 'sass-mode)
 (require 'server)
 (require 'sql)
 (require 'shell)
@@ -250,6 +255,10 @@
                           (indent-line-to 8)
                           (mark-paragraph)
                           (tabify (region-beginning) (region-end)))))))))
+
+;; --------Ruby stuff --------------------
+;;(add-hook 'projectile-mode-hook 'projectile-rails-on)
+;;(global-rinari-mode)
 
 
 ;;----------CC Mode stuff------------------------------------

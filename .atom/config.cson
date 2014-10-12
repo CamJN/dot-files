@@ -1,0 +1,16 @@
+'editor':
+  'fontFamily': 'menlo'
+  'invisibles': {}
+'core':
+  'projectHome': '/Users/camdennarzt/Developer/'
+  'disabledPackages': [
+    'welcome'
+    'racer'
+  ]
+'exception-reporting':
+  'userId': '2e222403-8700-310a-806e-395ad4e95b46'
+'welcome':
+  'showOnStartup': false
+'metrics':
+  'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
+'racer': {}

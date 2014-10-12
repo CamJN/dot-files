@@ -1,0 +1,86 @@
+'body':
+  'ctrl-g': 'core:cancel'
+  'alt-x': 'command-palette:toggle'
+  'ctrl-x k': 'core:close'
+  'ctrl-x ctrl-f': 'fuzzy-finder:toggle-file-finder'
+  'ctrl-x b': 'fuzzy-finder:toggle-buffer-finder'
+  'ctrl-x 3': 'pane:split-right'
+  'ctrl-x 2': 'pane:split-down'
+  'ctrl-x 0': 'pane:close'
+  'ctrl-x 1': 'pane:close-other-items'
+  'ctrl-x o': 'window:focus-next-pane'
+
+'.editor:not(.mini)':
+  'ctrl-f': 'atomic-emacs:forward-char'
+  'ctrl-b': 'atomic-emacs:backward-char'
+  'ctrl-n': 'atomic-emacs:next-line'
+  'ctrl-p': 'atomic-emacs:previous-line'
+  'ctrl-l': 'atomic-emacs:recenter-top-bottom'
+  'ctrl-g': 'core:cancel'
+  'ctrl-y': 'core:paste'
+  'ctrl-w': 'core:cut'
+  'ctrl-v': 'atomic-emacs:scroll-up'
+  'ctrl-s': 'find-and-replace:show'
+  'ctrl-r': 'find-and-replace:show'
+  'ctrl-j': 'editor:newline'
+  'ctrl-/': 'core:undo'
+  'ctrl-o': 'atomic-emacs:open-line'
+  'ctrl-t': 'atomic-emacs:transpose-chars'
+  'ctrl-_': 'core:undo'
+  'ctrl-space': 'atomic-emacs:set-mark'
+  'ctrl-x ctrl-s': 'core:save'
+  'ctrl-x ctrl-u': 'atomic-emacs:upcase-region'
+  'ctrl-x ctrl-l': 'atomic-emacs:downcase-region'
+  'ctrl-x ctrl-t': 'atomic-emacs:transpose-lines'
+  'ctrl-x h': 'atomic-emacs:mark-whole-buffer'
+  'ctrl-x ctrl-x': 'atomic-emacs:exchange-point-and-mark'
+  'alt-f': 'atomic-emacs:forward-word'
+  'alt-b': 'atomic-emacs:backward-word'
+  'alt-d': 'atomic-emacs:kill-word'
+  'alt-q': 'autoflow:reflow-paragraph'
+  'alt-t': 'atomic-emacs:transpose-words'
+  'alt-w': 'atomic-emacs:copy'
+  'alt-;': 'editor:toggle-line-comments'
+  'alt-v': 'atomic-emacs:scroll-down'
+  'alt-<': 'core:move-to-top'
+  'alt->': 'core:move-to-bottom'
+  'alt-m': 'editor:move-to-first-character-of-line'
+  'alt-/': 'autocomplete:toggle'
+  'alt-.': 'symbols-view:toggle-file-symbols'
+  'alt-\\': 'atomic-emacs:delete-horizontal-space'
+  'alt-backspace': 'atomic-emacs:backward-kill-word'
+  'alt-delete': 'atomic-emacs:backward-kill-word'
+  'alt-space': 'atomic-emacs:just-one-space'
+  'alt-[': 'atomic-emacs:backward-paragraph'
+  'alt-]': 'atomic-emacs:forward-paragraph'
+  'up': 'atomic-emacs:previous-line'
+  'down': 'atomic-emacs:next-line'
+  'left': 'atomic-emacs:backward-char'
+  'right': 'atomic-emacs:forward-char'
+
+'.find-and-replace':
+  'ctrl-s': 'find-and-replace:find-next'
+  'ctrl-r': 'find-and-replace:find-previous'
+
+'.go-to-line .mini.editor input':
+  'ctrl-g': 'core:cancel'
+
+'.tree-view-dialog .mini.editor':
+  'ctrl-g': 'core:cancel'
+
+'.tool-panel.panel-left, .tool-panel.panel-right':
+  'ctrl-g': 'tool-panel:unfocus'
+
+'.platform-win32':
+  'alt-g g': 'go-to-line:toggle'
+  'ctrl-g': 'core:cancel'
+
+'.platform-win32 .go-to-line .mini.editor input':
+  'ctrl-g': 'core:cancel'
+
+'.platform-darwin':
+  'alt-g g': 'go-to-line:toggle'
+  'ctrl-g': 'core:cancel'
+
+'.platform-darwin .go-to-line .mini.editor input':
+  'ctrl-g': 'core:cancel'

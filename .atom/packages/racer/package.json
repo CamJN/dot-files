@@ -1,0 +1,35 @@
+{
+  "name": "racer",
+  "main": "./lib/racer",
+  "version": "0.4.0",
+  "description": "Intelligent Rust code completion.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/edubkendo/atom-racer"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "underscore-plus": "1.x",
+    "autocomplete-plus": "git://github.com/saschagehlich/autocomplete-plus.git#feature/api",
+    "fs-plus": "2.x",
+    "async": ">=0.9.0",
+    "pathwatcher": "~2.0.X",
+    "fuzzaldrin": "~1.0.0",
+    "tmp": "*"
+  },
+  "readme": "# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/edubkendo/atom-racer/issues"
+  },
+  "homepage": "https://github.com/edubkendo/atom-racer",
+  "_id": "racer@0.4.0",
+  "dist": {
+    "shasum": "7137532df0e7d69105a31eace286d758463d8970"
+  },
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13492-vm9h8o/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13492-vm9h8o/package.tgz"
+}

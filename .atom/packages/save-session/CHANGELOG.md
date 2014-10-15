@@ -1,3 +1,9 @@
+## 0.8.3 Added descriptions to settings
+
+## 0.8.2 Fixed an issue with opening new windows
+* Opening a new window (cmd+N) will no longer open the project you were just
+working on. It will open up the undefined project.
+
 ## 0.8.1 Fixed a config issue
 
 ## 0.8.0 Files open asynchronously, removed `Disable New File On Open Always`

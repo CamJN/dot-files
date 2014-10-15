@@ -2,57 +2,57 @@
 module.exports =
 
   # User configs
-  disableNewBufferOnOpen: (val) ->
-    @config 'disableNewFileOnOpen', val
+  disableNewBufferOnOpen: (val, force) ->
+    @config 'disableNewFileOnOpen', val, force
 
-  disableNewBufferOnOpenAlways: (val) ->
-    @config 'disableNewFileOnOpenAlways', val
+  disableNewBufferOnOpenAlways: (val, force) ->
+    @config 'disableNewFileOnOpenAlways', val, force
 
-  restoreOpenFilesPerProject: (val) ->
-    @config 'restoreOpenFilesPerProject', val
+  restoreOpenFilesPerProject: (val, force) ->
+    @config 'restoreOpenFilesPerProject', val, force
 
-  saveFolder: (val) ->
-    @config 'dataSaveFolder', val
+  saveFolder: (val, force) ->
+    @config 'dataSaveFolder', val, force
 
-  restoreProject: (val) ->
-    @config 'restoreProject', val
+  restoreProject: (val, force) ->
+    @config 'restoreProject', val, force
 
-  restoreWindow: (val) ->
-    @config 'restoreWindow', val
+  restoreWindow: (val, force) ->
+    @config 'restoreWindow', val, force
 
-  restoreFileTreeSize: (val) ->
-    @config 'restoreFileTreeSize', val
+  restoreFileTreeSize: (val, force) ->
+    @config 'restoreFileTreeSize', val, force
 
-  restoreOpenFiles: (val) ->
-    @config 'restoreOpenFiles', val
+  restoreOpenFiles: (val, force) ->
+    @config 'restoreOpenFiles', val, force
 
-  restoreOpenFileContents: (val) ->
-    @config 'restoreOpenFileContents', val
+  restoreOpenFileContents: (val, force) ->
+    @config 'restoreOpenFileContents', val, force
 
-  restoreCursor: (val) ->
-    @config 'restoreCursor', val
+  restoreCursor: (val, force) ->
+    @config 'restoreCursor', val, force
 
-  skipSavePrompt: (val) ->
-    @config 'skipSavePrompt', val
+  skipSavePrompt: (val, force) ->
+    @config 'skipSavePrompt', val, force
 
   # Saving specific configs
-  project: (val) ->
-    @config 'project', val
+  project: (val, force) ->
+    @config 'project', val, force
 
-  x: (val) ->
-    @config 'x', val
+  windowX: (val, force) ->
+    @config 'windowX', val, force
 
-  y: (val) ->
-    @config 'y', val
+  windowY: (val, force) ->
+    @config 'windowY', val, force
 
-  width: (val) ->
-    @config 'width', val
+  windowWidth: (val, force) ->
+    @config 'windowWidth', val, force
 
-  height: (val) ->
-    @config 'height', val
+  windowHeight: (val, force) ->
+    @config 'windowHeight', val, force
 
-  treeSize: (val) ->
-    @config 'treeSize', val
+  treeSize: (val, force) ->
+    @config 'treeSize', val, force
 
   #Helpers
   saveFolderDefault: ->
@@ -70,8 +70,8 @@ module.exports =
     else
       return folder + @pathSeparator() + 'undefined' + @pathSeparator() + 'project.json'
 
-  config: (key, val) ->
-    if val?
+  config: (key, val, force) ->
+    if val? or (force? and force)
       atom.config.set 'save-session.' + key, val
     else
       atom.config.get 'save-session.' + key

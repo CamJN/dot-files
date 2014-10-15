@@ -1,0 +1,91 @@
+## 0.8.1 Fixed a config issue
+
+## 0.8.0 Files open asynchronously, removed `Disable New File On Open Always`
+* Files are now opened asynchronously, which should help the initial load time
+* The `Disable New File On Open Always` setting has been removed, and is now the
+way `Disable New File On Open` works.
+
+## 0.7.4 Big refactor and save on exit fix
+* Moved code to separate files to clean up the main file.
+* Fixed an issue where having save on exit enabled and canceling the exit after
+being prompted to save would still exit Atom.
+
+## 0.7.3 Refactor and new preview gif
+* Refactored the code by moving config stuff to its own file
+* Updated the preview gif to show some newer features
+
+## 0.7.2 Fixed Windows Bug
+* Fixed an issue with Windows using `\` for file separators over `/`
+
+## 0.7.1 - Updated readme
+
+## 0.7.0 - Restoring files per project
+* Added a setting that allows files to be restored per project instead of
+globally.
+
+## 0.6.0 - Always open without default file
+* Added the option to never open the file that Atom opens automatically on
+startup. Default is false.
+
+## 0.5.5 - Small fixes
+* Removed option when opening files since it didn't do what I expected :(.
+* Enabled save on close prompt for closing a single file at a time.
+
+## 0.5.4 - Bug fix
+* Fixed an error thrown when splitting panes.
+
+## 0.5.3 - Bug fix
+* Disabling the disable new file on open setting should work now.
+
+## 0.5.2 - Bug fix
+* Should no longer have issues with restoring unsaved files with disabling the
+new file on open.
+
+## 0.5.1 - Safer closing of the new file buffer
+* There are now checks to be sure that the file is empty and has no path before
+it is closed.
+
+## 0.5.0 - Changed saving the project
+* The project is now saved when the window gets focus instead of with file edits.
+
+## 0.4.0 - Removing the new file buffer
+* The new file is automatically closed when Atom starts if there were previous
+files open.
+
+## 0.3.2 - Bug fixes
+* Fixed a bug where closing a buffer was not saved.
+
+## 0.3.1 - Bug fixes
+* Fixed a bug where you had to reopen an Atom window for the Skip Save Prompt setting
+to actually save.
+
+## 0.3.0 - Disabled save on exit
+* Skip Save Prompt will disable the save on exit prompt
+* Fixed some bugs
+
+## 0.2.4 - Minor edits
+* Just readme edits and deleting some unused stuff.
+
+## 0.2.3 - Cursor Position
+* The cursor position is now saved on edits
+
+## 0.2.2 - More settings
+* Users can specify what they want to save now.
+
+## 0.2.1 - Settings
+* Users can specify their buffer save file.
+
+## 0.2.0 - Buffers are saved a file.
+* Buffers are saved to a file instead of settings so users can open their config
+files without breaking everything.
+
+## 0.1.2 - Fixed Readme
+
+## 0.1.1 - Published Package
+
+## 0.1.0 - First Release
+* The project is reopened if there is no project already open.
+* Dimensions are reloaded
+* Open files are reloaded if the project is reloaded.
+  * Files will be opened with the contents they had when they were closed
+  * This includes unsaved files

@@ -1,24 +1,35 @@
-'editor':
-  'fontFamily': 'menlo'
-  'fontSize': 14
-  'invisibles': {}
-'core':
-  'projectHome': '/Users/camdennarzt/Developer/'
-  'disabledPackages': [
-    'welcome'
-    'racer'
-  ]
-'exception-reporting':
-  'userId': '2e222403-8700-310a-806e-395ad4e95b46'
-'welcome':
-  'showOnStartup': false
-'metrics':
-  'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
-'save-session':
-  'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-  'project': '/Users/camdennarzt/Developer/Ruby/KingOfStrain'
-  'x': 0
-  'y': 0
-  'width': 1440
-  'height': 900
-  'treeSize': 199
+'global':
+  'editor':
+    'fontFamily': 'menlo'
+    'fontSize': 14
+    'invisibles': {}
+  'core':
+    'projectHome': '/Users/camdennarzt/Developer/'
+    'disabledPackages': [
+      'welcome'
+      'racer'
+    ]
+  'exception-reporting':
+    'userId': '2e222403-8700-310a-806e-395ad4e95b46'
+  'welcome':
+    'showOnStartup': false
+  'metrics':
+    'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
+  'save-session':
+    'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
+    'project': '/Users/camdennarzt/Developer/Ruby/KingOfStrain'
+    'x': 0
+    'y': 0
+    'width': 1440
+    'height': 900
+    'treeSize': 199
+    'windowX': 0
+    'windowY': 0
+    'windowWidth': 1440
+    'windowHeight': 900
+  'browser-refresh':
+    'firefox': true
+    'chromeBackgroundRefresh': false
+    'googleChrome': false
+    'googleChromeCanary': false
+    'saveFilesBeforeRefresh': true

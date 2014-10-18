@@ -1,3 +1,22 @@
+## 0.8.9 Another syntax fix...
+
+## 0.8.8 Another syntax fix
+
+## 0.8.7 Missed an @ symbol...
+* Should fix issue #20 now
+
+## 0.8.6 Fixed an issue with Windows and saving per project
+* Fixes issue #20
+
+## 0.8.5 No changes...
+
+## 0.8.4 Command for reloading project, Better handing of json errors
+* A command called `Reopen Project` will reopen the currently active project.
+This was mainly done for development/testing.
+* Json errors are handled better, instead of just crashing, it will just delete
+the project file and continue restoring.
+* Updated readme
+
 ## 0.8.3 Added descriptions to settings
 
 ## 0.8.2 Fixed an issue with opening new windows

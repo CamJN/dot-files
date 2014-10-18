@@ -1,0 +1,26 @@
+{
+  "name": "browser-refresh",
+  "main": "./lib/browser-refresh",
+  "version": "0.8.0",
+  "description": "Refresh browser from atom editor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raviraa/browser-refresh"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "readme": "# browser-refresh package\n\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/raviraa/browser-refresh/issues"
+  },
+  "homepage": "https://github.com/raviraa/browser-refresh",
+  "_id": "browser-refresh@0.8.0",
+  "dist": {
+    "shasum": "a15b64bab3a9237d76b28d915a9012c662353f61"
+  },
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114916-46028-12jpptm/package.tgz",
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114916-46028-12jpptm/package.tgz"
+}

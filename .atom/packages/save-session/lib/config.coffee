@@ -32,6 +32,9 @@ module.exports =
   restoreCursor: (val, force) ->
     @config 'restoreCursor', val, force
 
+  restoreScrollPos: (val, force) ->
+    @config 'restoreScrollPosition', val, force
+
   skipSavePrompt: (val, force) ->
     @config 'skipSavePrompt', val, force
 
@@ -68,7 +71,7 @@ module.exports =
 
   saveFile: ->
     folder = @saveFolder()
-    if @restoreOpenFilesPerProject()
+    if @restoreOpenFilesPerProject() and atom.project.path?
       path = @transformProjectPath(atom.project.path)
       return folder + @pathSeparator() + path + @pathSeparator() + 'project.json'
     else

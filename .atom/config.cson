@@ -2,7 +2,6 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
-    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -17,12 +16,12 @@
     'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
   'save-session':
     'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-    'project': '/Users/camdennarzt/Developer/Ruby/KingOfStrain'
+    'project': '/Users/camdennarzt/Developer/Ruby/blog'
     'x': 0
     'y': 0
     'width': 1440
     'height': 900
-    'treeSize': 199
+    'treeSize': 180
     'windowX': 0
     'windowY': 0
     'windowWidth': 1440

@@ -233,6 +233,7 @@ DNS.4 = matrix.dev
 DNS.5 = blog.dev
 DNS.6 = metabolistics.dev
 DNS.7 = silversshadows.dev
+DNS.8 = mote.scanimetrics.dev
 
 [ v3_ca ]
 

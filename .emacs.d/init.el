@@ -10,7 +10,7 @@
 ;;(setq debug-on-error t)
 
 (defadvice package-compute-transaction
-  (before package-compute-transaction-reverse (package-list requirements) activate compile)
+    (before package-compute-transaction-reverse (package-list requirements) activate compile)
   "reverse the requirements"
   (setq requirements (reverse requirements))
   (print requirements))
@@ -67,9 +67,6 @@
                               ))
 (define-key emacs-lisp-mode-map (kbd "<f5>")            'emacs-lisp-byte-compile-and-load)
 (define-key isearch-mode-map    (kbd "C-o")             'isearch-occur)
-(define-key isearch-mode-map    (kbd "C-y")             'isearch-yank-kill)
-(define-key isearch-mode-map    (kbd "M-s C-e")         'isearch-yank-line)
-(define-key isearch-mode-map    (kbd "M-y")             'isearch-yank-pop)
 (define-key read-expression-map (kbd "<tab>")           'lisp-complete-symbol)
 (define-key occur-mode-map      (kbd "C-x C-q")         'occur-edit-mode)
 (global-set-key                 (kbd "C-M-<backspace>") 'backward-kill-sexp)
@@ -139,10 +136,10 @@
                                 (highlight-regexp ".*Note:.*" 'hi-green-b)
                                 ))
 
-(defvar mailcheck
-  (run-with-idle-timer 5 t
-                       (lambda()(let ((new-window (get-buffer-window "RMAIL-summary" t))(old-window (get-buffer-window)))(select-window new-window)(rmail-summary-get-new-mail)(select-window old-window))))
-  "idle-timer (see \\[run-with-idle-timer]) that checks for new mail")
+;; (defvar mailcheck
+;;   (run-with-idle-timer 5 t
+;;                        (lambda()(let ((new-window (get-buffer-window "RMAIL-summary" t))(old-window (get-buffer-window)))(select-window new-window)(rmail-summary-get-new-mail)(select-window old-window))))
+;;   "idle-timer (see \\[run-with-idle-timer]) that checks for new mail")
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

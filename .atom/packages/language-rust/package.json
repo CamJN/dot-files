@@ -1,6 +1,6 @@
 {
   "name": "language-rust",
-  "version": "0.2.9",
+  "version": "0.3.1",
   "description": "Rust language support in Atom",
   "license": "MIT",
   "engines": {
@@ -17,10 +17,20 @@
   },
   "readme": "# Rust language support in Atom\n\nAdds syntax highlighting and snippets to [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).\n\n## Install\n\nInstall the package `language-rust` in Atom (Preferences->Packages) or Atom's package manager from a shell:\n\n```bash\n$ apm install language-rust\n```\n\n## Bugs\n\nGrammar rules were written from scratch. They seem to work for most cases. However there are most certainly still a few cases that result in wrong syntax highlighting. Feel free to fix it and send a pull request, or open an issue to report it.\n\n## Links\n\n* [Rust](http://www.rust-lang.org/) -- a safe, concurrent, practical language\n* [Atom](http://atom.io/) -- a hackable text editor for the 21st Century\n",
   "readmeFilename": "README.md",
-  "_id": "language-rust@0.2.9",
+  "_id": "language-rust@0.3.1",
   "dist": {
-    "shasum": "261d1794a45581e62122dca8414967ea7cfddc8b"
+    "shasum": "63f3fe0e2a8e34c2b637884dc952beb10825a315"
   },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13484-azq3h/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13484-azq3h/package.tgz"
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114928-42079-1xcy3zg/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114928-42079-1xcy3zg/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
 }

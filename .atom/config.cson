@@ -2,7 +2,6 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
-    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -10,6 +9,7 @@
       'racer'
       'linter-rubocop'
       'linter-csslint'
+      'linter-scss-lint'
     ]
   'exception-reporting':
     'userId': '2e222403-8700-310a-806e-395ad4e95b46'
@@ -35,5 +35,7 @@
     'googleChrome': false
     'googleChromeCanary': false
     'saveFilesBeforeRefresh': true
-  'linter-csslint': {}
-  'linter-js-yaml': {}
+'.rust.source':
+  'editor': {}
+'linter-erb':
+  'erbExecutablePath': '/Users/camdennarzt/.rbenv/shims/erb'

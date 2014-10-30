@@ -1,7 +1,7 @@
 {
   "name": "save-session",
   "main": "./lib/save-session",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "An Atom package to restore your session.",
   "repository": {
     "type": "git",
@@ -14,18 +14,21 @@
   "dependencies": {
     "mkdirp": ">=0.5.0"
   },
-  "readme": "# Save Session (Atom Package)\n\nSave Session is designed to reopen your last session in [Atom](https://atom.io/).\nIt automatically saves all file's contents and other session information in the\nbackground so you don't have to worry as much about losing an important file.\nI liked how [Sublime Text](http://www.sublimetext.com/) does this, so I wanted\nto recreate it for Atom\n\n![preview](https://raw.githubusercontent.com/mpeterson2/save-session/master/preview.gif)\n\n## What is saved\n\n - The project currently being worked on\n - The files currently being worked on, whether they are saved to disk or not\n - The size of the window and file tree\n - The position of the cursor\n\n## Settings\n\nAll settings are now documented using Atom's new settings API, so each setting\nhas a description in your settings menu. If you haven't downloaded the package\nyet, this is what you can customize.\n\n### User settings\n\n - `Disable New File On Open` - Whether or not to auto close the new file auto\n opened by Atom.\n - `Data Save Folder` - The root folder to save the session data in.\n - `Restore Cursor` - Whether or not the cursor position should be restored.\n - `Restore File Tree Size` - Whether or not the file tree size will be restored.\n - `Restore Open Files Per Project` - If enabled, only files from previous sessions\n with the save project will be restored. Otherwise, files from your last session\n will be restored.\n - `Restore Open File Contents` - Whether or not file contents will be\n automatically restored on load. This has no effect if `Restore Open Files` is\n disabled.\n - `Restore Open Files` - Whether or not files will be reopened.\n - `Restore Project` - Whether or not the project will be reopened.\n - `Restore Window` - Whether or not the window size/positions will be saved.\n - `Skip Save Prompt` - This will disable the save on exit prompt.\n\n### Other settings\nThese settings are used by the package to restore data. You can change them, but\nthey will all be set by the package when a related event happens.\n\n - `Height` - The height of the editor\n - `Width` - The width of the editor\n - `X` - The x position of the editor\n - `Y` - The y position of the editor\n\n### Commands\n\nThere is currently only one command: `Save Session: Reopen Project`. This is\nmostly for me, or other developers. All it does is reopen the current project.\nThis allows you to edit a package and reload it without exiting out of your\ncurrent window or loosing the project in the new window. \n\n## How it works\n\nSave Session saves your data in two different ways. The first, is through Atom's\nsettings API. Simple things like window dimensions are saved here, but nothing\ncomplicated. The second is on your file system. Things like files info is stored\nin a folder at `<atom package dir>/save-session/<project path>/projects.json` by\ndefault.\n\n## Contributing\n\nFeel free to submit issues if you see anything misbehaving. The more information\nyou can give me about your issue the better. Things like operating system, Atom\nversion, Save Session version, your Save Session config, other installed\npackages, and any error messages in the console that mention Save Session are\nhelpful.\n\nPull requests are also welcome if you want to improve or change something.\n",
+  "devDependencies": {
+    "q": "^1.0.1"
+  },
+  "readme": "# Save Session (Atom Package) [![Build Status](https://travis-ci.org/mpeterson2/save-session.svg?branch=master)](https://travis-ci.org/mpeterson2/save-session)\n\nSave Session is designed to reopen your last session in [Atom](https://atom.io/).\nIt automatically saves all file's contents and other session information in the\nbackground so you don't have to worry as much about losing an important file.\nI liked how [Sublime Text](http://www.sublimetext.com/) does this, so I wanted\nto recreate it for Atom\n\n![preview](https://raw.githubusercontent.com/mpeterson2/save-session/master/preview.gif)\n\n## What is saved\n\n - The project currently being worked on\n - The files currently being worked on, whether they are saved to disk or not\n - The size of the window and file tree\n - The position of the cursor\n\n## Settings\n\nAll settings are now documented using Atom's new settings API, so each setting\nhas a description in your settings menu. If you haven't downloaded the package\nyet, this is what you can customize.\n\n### User settings\n\n - `Disable New File On Open` - Whether or not to auto close the new file auto\n opened by Atom.\n - `Data Save Folder` - The root folder to save the session data in.\n - `Restore Cursor` - Whether or not the cursor position should be restored.\n - `Restore File Tree Size` - Whether or not the file tree size will be restored.\n - `Restore Open Files Per Project` - If enabled, only files from previous sessions\n with the save project will be restored. Otherwise, files from your last session\n will be restored.\n - `Restore Open File Contents` - Whether or not file contents will be\n automatically restored on load. This has no effect if `Restore Open Files` is\n disabled.\n - `Restore Open Files` - Whether or not files will be reopened.\n - `Restore Project` - Whether or not the project will be reopened.\n - `Restore Window` - Whether or not the window size/positions will be saved.\n - `Skip Save Prompt` - This will disable the save on exit prompt.\n\n### Other settings\nThese settings are used by the package to restore data. You can change them, but\nthey will all be set by the package when a related event happens.\n\n - `Height` - The height of the editor\n - `Width` - The width of the editor\n - `X` - The x position of the editor\n - `Y` - The y position of the editor\n\n### Commands\n\nThere is currently only one command: `Save Session: Reopen Project`. This is\nmostly for me, or other developers. All it does is reopen the current project.\nThis allows you to edit a package and reload it without exiting out of your\ncurrent window or loosing the project in the new window.\n\n## How it works\n\nSave Session saves your data in two different ways. The first, is through Atom's\nsettings API. Simple things like window dimensions are saved here, but nothing\ncomplicated. The second is on your file system. Things like files info is stored\nin a folder at `<atom package dir>/save-session/<project path>/projects.json` by\ndefault.\n\n## Contributing\n\nFeel free to submit issues if you see anything misbehaving. The more information\nyou can give me about your issue the better. Things like operating system, Atom\nversion, Save Session version, your Save Session config, other installed\npackages, and any error messages in the console that mention Save Session are\nhelpful.\n\nPull requests are also welcome if you want to improve or change something.\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/mpeterson2/save-session/issues"
   },
   "homepage": "https://github.com/mpeterson2/save-session",
-  "_id": "save-session@0.9.0",
+  "_id": "save-session@0.10.0",
   "dist": {
-    "shasum": "91a5407df3166e7b35410e55cdea5b4cc5745b77"
+    "shasum": "5423b90442d6e7ed1691e93af473a0a3de8b2c5c"
   },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114920-1390-10k7k3h/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114920-1390-10k7k3h/package.tgz",
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114928-42098-12y2xu/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114928-42098-12y2xu/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -40,11 +43,35 @@
         "path": "node_modules/mkdirp/node_modules/minimist/index.js"
       }
     ],
+    "extensions": {
+      ".coffee": [
+        "lib/config.coffee",
+        "lib/dimensions.coffee",
+        "lib/files.coffee",
+        "lib/first-buffer.coffee",
+        "lib/project.coffee",
+        "lib/save-prompt.coffee",
+        "lib/save-session.coffee"
+      ],
+      ".js": [
+        "node_modules/mkdirp/bin/cmd.js",
+        "node_modules/mkdirp/examples/pow.js",
+        "node_modules/mkdirp/index.js",
+        "node_modules/mkdirp/node_modules/minimist/example/parse.js",
+        "node_modules/mkdirp/node_modules/minimist/index.js"
+      ],
+      ".json": [
+        "node_modules/mkdirp/node_modules/minimist/package.json",
+        "node_modules/mkdirp/package.json",
+        "package.json"
+      ]
+    },
     "folders": [
       {
         "paths": [
           "lib",
-          ""
+          "",
+          "spec"
         ],
         "dependencies": {
           "mkdirp": ">=0.5.0"

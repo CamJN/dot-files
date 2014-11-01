@@ -2,6 +2,7 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
+    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -25,10 +26,10 @@
     'width': 1440
     'height': 900
     'treeSize': 233
-    'windowX': 0
-    'windowY': 0
-    'windowWidth': 1440
-    'windowHeight': 900
+    'windowX': 252
+    'windowY': 22
+    'windowWidth': 1198
+    'windowHeight': 829
   'browser-refresh':
     'firefox': true
     'chromeBackgroundRefresh': false

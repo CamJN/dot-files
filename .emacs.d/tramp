@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <14/09/28 09:23:06 /Users/camdennarzt/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <14/11/01 13:13:12 /Users/camdennarzt/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -17,4 +17,6 @@
   ("id" "/usr/bin/id")
   ("gid-integer" 0)
   ("file-exists" "test -e")
-  ("uid-integer" 0)))
+  ("uid-integer" 0)
+  ("locale" "LC_ALL=C")
+  ("gid-string" "wheel")))

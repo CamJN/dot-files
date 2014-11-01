@@ -1,0 +1,101 @@
+marquee { -moz-binding: none !important;}
+blink, A:link, A:visited, A:link:hover, A:visited:hover { text-decoration: none ! important }
+
+@-moz-document domain(lifehacker.com), domain(gizmodo.com), domain(kotaku.com), domain(jezebel.com){
+    DIV.ad_perma-panorama { height: 1px !important;}
+    body.marqueed .imgwrap.abovewrap img,body.marqueed #illustration_overlay { opacity: 100 !important;}
+}
+
+@-moz-document domain("amalah.com") {
+    DIV#center {width: 622px !important; overflow: visible !important;}
+    DIV#center>DIV.content {width: 612px !important;}
+    DIV#center>IMG,
+    DIV#white>IMG {width: 622px !important;}
+    DIV#center>DIV.content+IMG {position:relative !important; top:1px !important;}
+    DIV.entry, DIV.pager-bottom {padding-right:10px !important;}
+}
+
+@-moz-document domain("www.macstories.net") {
+    DIV#sidebar {margin:24px !important;}
+}
+
+@-moz-document domain("dilbert.com") {
+    body {height:100% ! important}
+}
+
+@-moz-document domain("foxtrot.com") {
+    div#comic-foot,
+    div#sidebar-undercomic { height:35px !important; }
+}
+
+@-moz-document url-prefix(https://bugzilla.mozilla.org), domain(bugzilla.mozilla.org) {
+    .bz_comment_text>span.quote { white-space:normal !important; }
+}
+
+@-moz-document domain(weddingbee.com) {
+    .mainmod {    background:white !important;
+                  width:100% !important;
+                  position:inherit !important; }
+    .body {       background:white !important; }
+    #bride {       margin-top:25px !important; }
+    .commentcontainer {  width:90% !important;
+                         float:right !important; }
+    .commenttext {     float:right !important;
+                       width:90% !important }
+}
+
+@-moz-document domain(smbc-comics.com) {
+    #top-menu {    margin-top: 104px!important; }
+    #main,#footer {    width: 840px!important;position: relative!important; }
+    #main:after{
+        content:" ";
+        background-image: url("http://www.smbc-comics.com/images/background_wrapper.png");
+        background-repeat: repeat-y;
+        background-position: right top;
+        width:25px;
+        height:100%;
+        position:absolute;
+        display:block;
+        margin-left:840px;
+    }
+    #header{background: rgb(198, 218, 251)!important;}
+    #footer:after{
+        content:" ";
+        background-image: url("http://www.smbc-comics.com/images/background_footer.png");
+        background-position: right top;
+        background-repeat: no-repeat;
+        width:28px;
+        height:100%;
+        position:absolute;
+        display:block;
+        margin-left:840px;
+        clear:both;
+    }
+
+}
+
+@-moz-document domain(angrybirdsnest.com) {
+    div.menu-wrap {top:200px!important;}
+    div#content {width:100%!important;}
+}
+
+@-moz-document domain("ctv.ca") {
+    section#backgroundTarget{ padding-top:250px !important; }
+}
+
+@-moz-document domain("globaltv.com") {
+    header{height:auto!important;}
+    .globalTvVideoContainer{
+        min-height:0px!important;
+        padding-bottom:0px!important;
+    }
+    html.wf-active { margin-top: 0px !important; }
+    #ShowContent{padding-bottom:0px!important;}
+    .C16.NoTopMargin{margin-bottom:0px!important;}
+}
+
+@-moz-document domain(cbc.ca) {
+    div#page_container { padding-top: 430px !important; width: 100% !important;}
+    div.container_12 { min-height: 0px !important; }
+    div.entrylinks { height: 100% !important; }
+}

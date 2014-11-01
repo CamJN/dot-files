@@ -1,0 +1,170 @@
+[Adblock Plus 2.0.3]
+! Camden's Adblock list
+! Updated: 02 Mar 2013
+! License: http://creativecommons.org/licenses/by/3.0/
+!
+! ---------- GlobalTV ----------
+!
+globaltv.com##div#ClipDescriptor-Countdown
+globaltv.com##div#Header-Search
+globaltv.com##div#TopBar
+globaltv.com##div#VideoPlayer-BigBox
+globaltv.com##div.ContentBrowser-BottomContent
+globaltv.com##div.ContentBrowser-GlobalVideoMenu
+globaltv.com##footer
+globaltv.com##div#shawUH
+globaltv.com##div#Leaderboard
+globaltv.com##div#shawUH
+globaltv.com##div#Leaderboard
+!
+! ---------- VideoLAN ----------
+!
+videolan.org##div#donate
+videolan.org##div#social
+videolan.org##div.clearme:nth-child(5)
+!
+! ---------- Readability ----------
+!
+readability.com##a#read-later-button
+readability.com##.tools
+readability.com##div.pitch
+readability.com##div.article-actions
+!
+! ---------- CTV ----------
+!
+ctv.ca##section.rail
+ctv.ca##footer
+ctv.ca##header
+||doubleclick.net^$object_subrequest
+!
+! ---------- Foxtrot ----------
+!
+foxtrot.com##A>IMG
+foxtrot.com##DIV#footer
+foxtrot.com##DIV#header
+foxtrot.com##DIV#special
+foxtrot.com##DIV#subcontent-wrapper
+foxtrot.com##div#sidebar-comicright
+foxtrot.com##li#calendar-3
+foxtrot.com##li#comic_date-3
+foxtrot.com##select.archive-dropdown
+!
+! ---------- Dilbert ----------
+!
+dilbert.com##DIV.Col_B
+dilbert.com##DIV.FTR_Footer
+dilbert.com##DIV.FTR_FooterTop
+dilbert.com##DIV.STR_Footer
+dilbert.com##DIV.STR_Search
+dilbert.com##div.HPG_Promo.HPG_Promo_E
+dilbert.com##div.HPG_Promo_Template.HPG_Promo_Template_5
+!
+! ---------- Google ----------
+!
+google.com,google.ca##div#als
+google.com,google.ca##div#fll
+google.com,google.ca##div#footer
+google.com,google.ca##div#rhs
+google.com,google.ca##p#bfl
+!
+! ---------- Mac Stories ----------
+!
+macstories.net##UL#featured
+macstories.net##UL#featured+div.break
+macstories.net##li#sidebar-sponsor
+!
+! ---------- Wedding Bee ----------
+!
+weddingbee.com##div#highlightbar
+weddingbee.com##div#side2
+weddingbee.com##div#topic-tags
+weddingbee.com##div.foot
+weddingbee.com##div.head
+weddingbee.com##div.morebuttonset
+weddingbee.com##div.relatedposts
+weddingbee.com##ul.x-sortresults
+weddingbee.com#@#.social-box
+weddingbee.com##div.social
+!
+! ---------- Speed Test ----------
+!
+speedtest.net##DIV#home-features
+!
+! ---------- Amalah ----------
+!
+amalah.com##div#fm_leaderboard
+amalah.com##div#sellout
+amalah.com##div.fm_inlineAd
+!
+! ---------- Gawker ----------
+!
+io9.com,gizmodo.com,lifehacker.com,jezebel.com,kotaku.com,jalopnik.com##.post-supp
+io9.com,gizmodo.com,lifehacker.com,jezebel.com,kotaku.com,jalopnik.com##.twitter
+io9.com,gizmodo.com,lifehacker.com,jezebel.com,kotaku.com,jalopnik.com##div.ad_marquee
+!
+! ---------- SMBC ----------
+!
+smbc-comics.com###rightcolumn
+smbc-comics.com###blog
+smbc-comics.com###smbctbar
+smbc-comics.com###videos
+smbc-comics.com###credit
+smbc-comics.com###store-cta
+smbc-comics.com###top-cta
+smbc-comics.com#@##sharebar
+!
+! ---------- XKCD ----------
+!
+xkcd.com##div#comicLinks
+xkcd.com##div#licenseText
+xkcd.com##div#news
+xkcd.com##form#cse-search-box
+xkcd.com##h3
+!
+! ---------- Angry Birds' Nest ----------
+!
+angrybirdsnest.com##div#respond
+angrybirdsnest.com##ul.search
+angrybirdsnest.com##div.entry-meta
+angrybirdsnest.com##div.entry-utility
+angrybirdsnest.com###welcome
+angrybirdsnest.com##div#comments-title>h2+ul
+angrybirdsnest.com##div#footer
+angrybirdsnest.com##div#primary
+!
+! ---------- OS X Daily ----------
+!
+osxdaily.com##div#footer
+osxdaily.com##div#sharing_container
+osxdaily.com##div.navigation
+osxdaily.com##div#respond
+osxdaily.com##div#gsearch_box
+osxdaily.com##div#right_column
+!
+! --------- iFixit -----------
+!
+ifixit.com##div.belowBanner
+!
+! --------- CBC -------------
+!
+cbc.ca##div#pnav
+cbc.ca##div[style="width:620px;height:60px;position:relative;"]
+cbc.ca##div#gnwrap
+cbc.ca##div#site_header
+cbc.ca##div.grid_4.sidebar
+cbc.ca##.fb_iframe_widget
+cbc.ca##div#footer
+cbc.ca##div#more_episodes+div
+!
+! --------- SOTI -------------
+!
+somethingofthatilk.com##.fb-comments
+!
+! --------- Exceptions -----------
+!
+@@||localhost^$document
+@@||fortawesome.github.com^$document
+@@||metabolistics.com^$document
+@@||twitter.com^$document
+@@||harry-potter.local^$document
+@@||walle.local^$document

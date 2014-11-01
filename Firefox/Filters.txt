@@ -112,6 +112,7 @@ smbc-comics.com###credit
 smbc-comics.com###store-cta
 smbc-comics.com###top-cta
 smbc-comics.com#@##sharebar
+smbc-comics.com#@##aftercomic
 !
 ! ---------- XKCD ----------
 !
@@ -168,3 +169,21 @@ somethingofthatilk.com##.fb-comments
 @@||twitter.com^$document
 @@||harry-potter.local^$document
 @@||walle.local^$document
+@@||*.dev^$document
+!
+! --------- Hulu ---------
+!
+@@||hulu.com/published/*.mp4
+@@||hulu.com/published/*.flv
+||p.hulu.com/getPlaylist
+||*.telemetryverification.net/cid/*
+||hulu.com/*dummy.swf
+||telemetry.huluad.com/creatives/verizon/*.swf
+||telemetry.huluad.com/booter/telemetry-booter-v2.swf
+!
+! --------- David Walsh Blog ---------
+!
+davidwalsh.name##div.sidebar-treehouse
+davidwalsh.name##div.sidebar-event
+davidwalsh.name##div.header-sda
+davidwalsh.name##div.x.x-long

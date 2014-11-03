@@ -36,6 +36,7 @@ ctv.ca##section.rail
 ctv.ca##footer
 ctv.ca##header
 ||doubleclick.net^$object_subrequest
+@@||imasdk.googleapis.com^$third-party
 !
 ! ---------- Foxtrot ----------
 !

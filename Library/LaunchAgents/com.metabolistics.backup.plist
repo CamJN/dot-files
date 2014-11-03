@@ -6,7 +6,7 @@
     <string>com.metabolistics.backup</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/php</string>
+      <string>/usr/bin/php</string>
       <string>/Users/camdennarzt/Developer/PHP/Work/cli/akeeba-backup.php</string>
     </array>
     <key>StartCalendarInterval</key>

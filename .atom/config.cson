@@ -28,8 +28,8 @@
     'treeSize': 170
     'windowX': 0
     'windowY': 0
-    'windowWidth': 1920
-    'windowHeight': 1080
+    'windowWidth': 1440
+    'windowHeight': 900
   'browser-refresh':
     'firefox': true
     'chromeBackgroundRefresh': false

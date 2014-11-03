@@ -25,11 +25,11 @@
     'y': 0
     'width': 1440
     'height': 900
-    'treeSize': 233
-    'windowX': 252
-    'windowY': 22
-    'windowWidth': 1198
-    'windowHeight': 829
+    'treeSize': 170
+    'windowX': 0
+    'windowY': 0
+    'windowWidth': 1920
+    'windowHeight': 1080
   'browser-refresh':
     'firefox': true
     'chromeBackgroundRefresh': false

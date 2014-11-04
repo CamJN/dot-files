@@ -2,7 +2,6 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
-    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -11,6 +10,11 @@
       'linter-rubocop'
       'linter-csslint'
       'linter-scss-lint'
+    ]
+    'ignoredNames': [
+      '.git'
+      '.svn'
+      '.DS_Store'
     ]
   'exception-reporting':
     'userId': '2e222403-8700-310a-806e-395ad4e95b46'
@@ -30,12 +34,17 @@
     'windowY': 0
     'windowWidth': 1440
     'windowHeight': 900
+  'whitespace':
+    'ensureSingleTrailingNewline': true
+    'removeTrailingWhitespace': true
   'browser-refresh':
     'firefox': true
     'chromeBackgroundRefresh': false
     'googleChrome': false
     'googleChromeCanary': false
     'saveFilesBeforeRefresh': true
+  'autocomplete':
+    'includeCompletionsFromAllBuffers': true
 '.rust.source':
   'editor': {}
 'linter-erb':

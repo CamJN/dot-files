@@ -19,3 +19,8 @@
 # You can find more information about keymaps in these guides:
 # * https://atom.io/docs/latest/customizing-atom#customizing-key-bindings
 # * https://atom.io/docs/latest/advanced/keymaps
+
+'.editor':
+  'ctrl-r': 'find-and-replace:focus-previous'
+  'ctrl-c o': 'window:focus-previous-pane'
+  'ctrl-x ctrl-d': 'editor:duplicate-lines'

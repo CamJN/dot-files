@@ -2,6 +2,7 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
+    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [

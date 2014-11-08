@@ -24,7 +24,7 @@
     'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
   'save-session':
     'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-    'project': '/Users/camdennarzt/Developer/Ruby/KingOfStrain'
+    'project': '/Library/WebServer/Documents'
     'x': 0
     'y': 0
     'width': 1440
@@ -34,9 +34,6 @@
     'windowY': 0
     'windowWidth': 1440
     'windowHeight': 900
-  'whitespace':
-    'ensureSingleTrailingNewline': true
-    'removeTrailingWhitespace': true
   'browser-refresh':
     'firefox': true
     'chromeBackgroundRefresh': false

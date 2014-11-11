@@ -37,6 +37,26 @@ delay 0.2
 activate application a
 """
 
+MacFirefoxNightlyCmd = """
+set a to path to frontmost application as text
+tell application "FirefoxNightly"
+	activate
+	tell application "System Events" to keystroke "r" using command down
+end tell
+delay 0.2
+activate application a
+"""
+
+MacFirefoxDeveloperEditionCmd = """
+set a to path to frontmost application as text
+tell application "FirefoxDeveloperEdition"
+	activate
+	tell application "System Events" to keystroke "r" using command down
+end tell
+delay 0.2
+activate application a
+"""
+
 MacSafariCmd = """
 tell application "Safari"
   activate
@@ -49,6 +69,8 @@ end tell
 Commands = {
   darwin: {
     firefox      : MacFirefoxCmd,
+    firefoxNightly : MacFirefoxNightlyCmd,
+    firefoxDeveloperEdition : MacFirefoxDeveloperEditionCmd,
     chrome       : MacChromeCmd,
     chromeCanary : MacChromeCanaryCmd,
     safari       : MacSafariCmd
@@ -110,6 +132,10 @@ BrowserOpen = ()->
     atom.workspace.saveAll()
   if(atom.config.get 'browser-refresh.firefox')
     RunCmd('firefox')
+  if(atom.config.get 'browser-refresh.firefoxNightly')
+    RunCmd('firefoxNightly')
+  if(atom.config.get 'browser-refresh.firefoxDeveloperEdition')
+    RunCmd('firefoxDeveloperEdition')
   if(atom.config.get 'browser-refresh.googleChrome')
     RunCmd('chrome')
   if(atom.config.get 'browser-refresh.googleChromeCanary')

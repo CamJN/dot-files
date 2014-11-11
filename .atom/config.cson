@@ -2,6 +2,7 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
+    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -30,18 +31,17 @@
     'width': 1440
     'height': 900
     'treeSize': 170
-    'windowX': 0
-    'windowY': 0
-    'windowWidth': 1440
-    'windowHeight': 900
+    'windowX': 91
+    'windowY': 22
+    'windowWidth': 1318
+    'windowHeight': 829
+  'autocomplete':
+    'includeCompletionsFromAllBuffers': true
   'browser-refresh':
-    'firefox': true
-    'chromeBackgroundRefresh': false
     'googleChrome': false
     'googleChromeCanary': false
     'saveFilesBeforeRefresh': true
-  'autocomplete':
-    'includeCompletionsFromAllBuffers': true
+    'chromeBackgroundRefresh': false
 '.rust.source':
   'editor': {}
 'linter-erb':

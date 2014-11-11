@@ -1,7 +1,7 @@
 {
   "name": "racer",
   "main": "./lib/racer",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Intelligent Rust code completion.",
   "repository": {
     "type": "git",
@@ -20,16 +20,345 @@
     "fuzzaldrin": "~1.0.0",
     "tmp": "*"
   },
-  "readme": "# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
+  "readme": "## I am not currently using Rust at all and am thus not in a position to maintain this repo anymore.\n## If someone else is interested please create an issue.\n\n# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/edubkendo/atom-racer/issues"
   },
   "homepage": "https://github.com/edubkendo/atom-racer",
-  "_id": "racer@0.4.0",
+  "_id": "racer@0.5.0",
   "dist": {
-    "shasum": "7137532df0e7d69105a31eace286d758463d8970"
+    "shasum": "09cc8fc067e5b308426109a6b14fe0749a6d9aaa"
   },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13492-vm9h8o/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114912-13492-vm9h8o/package.tgz"
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141011-40214-1cbroxd/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141011-40214-1cbroxd/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "async",
+        "version": "0.9.0",
+        "path": "node_modules/async/lib/async.js"
+      },
+      {
+        "name": "autocomplete-plus",
+        "version": "0.11.0",
+        "path": "node_modules/async/lib/async.js"
+      },
+      {
+        "name": "minimatch",
+        "version": "0.2.14",
+        "path": "node_modules/autocomplete-plus/node_modules/minimatch/minimatch.js"
+      },
+      {
+        "name": "lru-cache",
+        "version": "2.5.0",
+        "path": "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/lru-cache/lib/lru-cache.js"
+      },
+      {
+        "name": "sigmund",
+        "version": "1.0.0",
+        "path": "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/sigmund/sigmund.js"
+      },
+      {
+        "name": "fs-plus",
+        "version": "2.3.1",
+        "path": "node_modules/fs-plus/lib/fs-plus.js"
+      },
+      {
+        "name": "async",
+        "version": "0.2.10",
+        "path": "node_modules/fs-plus/node_modules/async/lib/async.js"
+      },
+      {
+        "name": "mkdirp",
+        "version": "0.3.5",
+        "path": "node_modules/fs-plus/node_modules/mkdirp/index.js"
+      },
+      {
+        "name": "rimraf",
+        "version": "2.2.8",
+        "path": "node_modules/fs-plus/node_modules/rimraf/rimraf.js"
+      },
+      {
+        "name": "fuzzaldrin",
+        "version": "1.0.0",
+        "path": "node_modules/fuzzaldrin/lib/fuzzaldrin.js"
+      },
+      {
+        "name": "pathwatcher",
+        "version": "2.0.12",
+        "path": "node_modules/pathwatcher/lib/main.js"
+      },
+      {
+        "name": "async",
+        "version": "0.2.10",
+        "path": "node_modules/pathwatcher/node_modules/async/lib/async.js"
+      },
+      {
+        "name": "emissary",
+        "version": "1.3.1",
+        "path": "node_modules/pathwatcher/node_modules/emissary/lib/emissary.js"
+      },
+      {
+        "name": "harmony-collections",
+        "version": "0.3.7",
+        "path": "node_modules/pathwatcher/node_modules/emissary/node_modules/harmony-collections/harmony-collections.js"
+      },
+      {
+        "name": "mixto",
+        "version": "1.0.0",
+        "path": "node_modules/pathwatcher/node_modules/emissary/node_modules/mixto/lib/mixin.js"
+      },
+      {
+        "name": "property-accessors",
+        "version": "1.1.0",
+        "path": "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/lib/property-accessors.js"
+      },
+      {
+        "name": "harmony-collections",
+        "version": "0.3.7",
+        "path": "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/node_modules/harmony-collections/harmony-collections.js"
+      },
+      {
+        "name": "nan",
+        "version": "1.2.0",
+        "path": "node_modules/pathwatcher/node_modules/nan/include_dirs.js"
+      },
+      {
+        "name": "q",
+        "version": "1.0.1",
+        "path": "node_modules/pathwatcher/node_modules/q/q.js"
+      },
+      {
+        "name": "runas",
+        "version": "1.0.1",
+        "path": "node_modules/pathwatcher/node_modules/runas/lib/runas.js"
+      },
+      {
+        "name": "tmp",
+        "version": "0.0.24",
+        "path": "node_modules/tmp/lib/tmp.js"
+      },
+      {
+        "name": "underscore-plus",
+        "version": "1.6.1",
+        "path": "node_modules/underscore-plus/lib/underscore-plus.js"
+      },
+      {
+        "name": "underscore",
+        "version": "1.6.0",
+        "path": "node_modules/underscore-plus/node_modules/underscore/underscore.js"
+      }
+    ],
+    "extensions": {
+      ".js": [
+        "lib/js/opal.js",
+        "lib/js/racer.js",
+        "node_modules/async/lib/async.js",
+        "node_modules/autocomplete-plus/node_modules/minimatch/minimatch.js",
+        "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/lru-cache/lib/lru-cache.js",
+        "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/sigmund/bench.js",
+        "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/sigmund/sigmund.js",
+        "node_modules/fs-plus/lib/fs-plus.js",
+        "node_modules/fs-plus/node_modules/async/lib/async.js",
+        "node_modules/fs-plus/node_modules/mkdirp/examples/pow.js",
+        "node_modules/fs-plus/node_modules/mkdirp/index.js",
+        "node_modules/fs-plus/node_modules/rimraf/bin.js",
+        "node_modules/fs-plus/node_modules/rimraf/rimraf.js",
+        "node_modules/fuzzaldrin/lib/filter.js",
+        "node_modules/fuzzaldrin/lib/fuzzaldrin.js",
+        "node_modules/fuzzaldrin/vendor/stringscore.js",
+        "node_modules/pathwatcher/lib/directory.js",
+        "node_modules/pathwatcher/lib/file.js",
+        "node_modules/pathwatcher/lib/main.js",
+        "node_modules/pathwatcher/node_modules/async/lib/async.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/behavior.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/emissary.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/emitter.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/helpers.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/signal.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/subscriber.js",
+        "node_modules/pathwatcher/node_modules/emissary/lib/subscription.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/harmony-collections/harmony-collections.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/harmony-collections/harmony-collections.min.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/mixto/lib/mixin.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/lib/property-accessors.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/node_modules/harmony-collections/harmony-collections.js",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/node_modules/harmony-collections/harmony-collections.min.js",
+        "node_modules/pathwatcher/node_modules/nan/include_dirs.js",
+        "node_modules/pathwatcher/node_modules/q/benchmark/compare-with-callbacks.js",
+        "node_modules/pathwatcher/node_modules/q/benchmark/scenarios.js",
+        "node_modules/pathwatcher/node_modules/q/q.js",
+        "node_modules/pathwatcher/node_modules/q/queue.js",
+        "node_modules/pathwatcher/node_modules/runas/lib/runas.js",
+        "node_modules/tmp/domain-test.js",
+        "node_modules/tmp/lib/tmp.js",
+        "node_modules/tmp/test.js",
+        "node_modules/underscore-plus/lib/underscore-plus.js",
+        "node_modules/underscore-plus/node_modules/underscore/underscore-min.js",
+        "node_modules/underscore-plus/node_modules/underscore/underscore.js"
+      ],
+      ".coffee": [
+        "lib/racer-provider.coffee",
+        "lib/racer.coffee",
+        "node_modules/autocomplete-plus/lib/autocomplete-view.coffee",
+        "node_modules/autocomplete-plus/lib/autocomplete.coffee",
+        "node_modules/autocomplete-plus/lib/fuzzy-provider.coffee",
+        "node_modules/autocomplete-plus/lib/perf.coffee",
+        "node_modules/autocomplete-plus/lib/provider.coffee",
+        "node_modules/autocomplete-plus/lib/simple-select-list-view.coffee",
+        "node_modules/autocomplete-plus/lib/suggestion.coffee",
+        "node_modules/autocomplete-plus/lib/utils.coffee"
+      ],
+      ".json": [
+        "node_modules/async/component.json",
+        "node_modules/async/package.json",
+        "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/lru-cache/package.json",
+        "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/sigmund/package.json",
+        "node_modules/autocomplete-plus/node_modules/minimatch/package.json",
+        "node_modules/autocomplete-plus/package.json",
+        "node_modules/fs-plus/node_modules/async/component.json",
+        "node_modules/fs-plus/node_modules/async/package.json",
+        "node_modules/fs-plus/node_modules/mkdirp/package.json",
+        "node_modules/fs-plus/node_modules/rimraf/package.json",
+        "node_modules/fs-plus/package.json",
+        "node_modules/fuzzaldrin/package.json",
+        "node_modules/pathwatcher/api.json",
+        "node_modules/pathwatcher/node_modules/async/component.json",
+        "node_modules/pathwatcher/node_modules/async/package.json",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/harmony-collections/package.json",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/mixto/package.json",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/node_modules/harmony-collections/package.json",
+        "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/package.json",
+        "node_modules/pathwatcher/node_modules/emissary/package.json",
+        "node_modules/pathwatcher/node_modules/nan/package.json",
+        "node_modules/pathwatcher/node_modules/q/package.json",
+        "node_modules/pathwatcher/node_modules/runas/package.json",
+        "node_modules/pathwatcher/package.json",
+        "node_modules/tmp/package.json",
+        "node_modules/underscore-plus/node_modules/underscore/package.json",
+        "node_modules/underscore-plus/package.json",
+        "package.json"
+      ],
+      ".node": [
+        "node_modules/pathwatcher/build/Release/pathwatcher.node",
+        "node_modules/pathwatcher/build/Release/pathwatcher.node.dSYM/Contents/Resources/DWARF/pathwatcher.node",
+        "node_modules/pathwatcher/node_modules/runas/build/Release/runas.node",
+        "node_modules/pathwatcher/node_modules/runas/build/Release/runas.node.dSYM/Contents/Resources/DWARF/runas.node"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "lib/js",
+          "lib",
+          "",
+          "spec"
+        ],
+        "dependencies": {
+          "underscore-plus": "1.x",
+          "fs-plus": "2.x",
+          "async": ">=0.9.0",
+          "pathwatcher": "~2.0.X",
+          "fuzzaldrin": "~1.0.0",
+          "tmp": "*"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/autocomplete-plus/lib",
+          "node_modules/autocomplete-plus",
+          "node_modules/autocomplete-plus/spec",
+          "node_modules/autocomplete-plus/spec/fixtures/issues",
+          "node_modules/autocomplete-plus/spec/fixtures",
+          "node_modules/autocomplete-plus/spec/issues"
+        ],
+        "dependencies": {
+          "underscore-plus": "1.x",
+          "fuzzaldrin": "~1.0.0",
+          "minimatch": "~0.2.14"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/autocomplete-plus/node_modules/minimatch",
+          "node_modules/autocomplete-plus/node_modules/minimatch/test"
+        ],
+        "dependencies": {
+          "lru-cache": "2",
+          "sigmund": "~1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/fs-plus/lib",
+          "node_modules/fs-plus"
+        ],
+        "dependencies": {
+          "underscore-plus": "1.x",
+          "mkdirp": "~0.3.5",
+          "rimraf": "~2.2.2",
+          "async": "~0.2.9"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/pathwatcher",
+          "node_modules/pathwatcher/build/Release",
+          "node_modules/pathwatcher/build/Release/pathwatcher.node.dSYM/Contents/Resources/DWARF",
+          "node_modules/pathwatcher/lib"
+        ],
+        "dependencies": {
+          "nan": "1.2.0",
+          "q": "~1.0.1",
+          "emissary": "^1.1.0",
+          "underscore-plus": "~1.x",
+          "fs-plus": "^2.1",
+          "async": "~0.2.10",
+          "runas": "^1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/pathwatcher/node_modules/emissary/lib",
+          "node_modules/pathwatcher/node_modules/emissary"
+        ],
+        "dependencies": {
+          "underscore-plus": "1.x",
+          "mixto": "1.x",
+          "property-accessors": "^1.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors/lib",
+          "node_modules/pathwatcher/node_modules/emissary/node_modules/property-accessors"
+        ],
+        "dependencies": {
+          "mixto": "1.x"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/pathwatcher/node_modules/runas/build/Release",
+          "node_modules/pathwatcher/node_modules/runas/build/Release/runas.node.dSYM/Contents/Resources/DWARF",
+          "node_modules/pathwatcher/node_modules/runas/lib",
+          "node_modules/pathwatcher/node_modules/runas"
+        ],
+        "dependencies": {
+          "nan": "1.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/underscore-plus/lib",
+          "node_modules/underscore-plus"
+        ],
+        "dependencies": {
+          "underscore": "~1.6.0"
+        }
+      }
+    ]
+  }
 }

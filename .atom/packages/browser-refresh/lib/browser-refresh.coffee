@@ -12,6 +12,8 @@ module.exports =
     googleChrome            : true
     firefox                 : false
     safari                  : false
+    firefoxNightly          : false
+    firefoxDeveloperEdition : true
 
   activate: (state) ->
     atom.workspaceView.command "browser-refresh:open", -> BrowserOpen()

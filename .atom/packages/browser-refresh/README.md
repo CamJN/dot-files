@@ -13,4 +13,6 @@ Commands to refresh browsers are taken from [sublime plugin](https://github.com/
 - Chrome
 - Chrome Canary
 - Firefox
+- Firefox Nightly
+- Firefox Developer Edition
 - Safari (Mac only)

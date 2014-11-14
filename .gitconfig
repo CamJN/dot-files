@@ -4,6 +4,7 @@
 [core]
         editor = emacs
         fileMode = false
+        autocrlf = input
 [sendemail]
         smtpencryption = tls
         smtpserver = smtp.gmail.com

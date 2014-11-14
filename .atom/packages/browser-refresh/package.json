@@ -1,7 +1,7 @@
 {
   "name": "browser-refresh",
   "main": "./lib/browser-refresh",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Refresh browser from atom editor",
   "repository": {
     "type": "git",
@@ -17,11 +17,12 @@
     "url": "https://github.com/raviraa/browser-refresh/issues"
   },
   "homepage": "https://github.com/raviraa/browser-refresh",
-  "_id": "browser-refresh@0.8.1",
+  "_id": "browser-refresh@0.8.2",
   "dist": {
-    "shasum": "4bdd78fb02cef2ab7a8c67de184c059cb4031230"
+    "shasum": "7d5aa6a298156916b4e1fa6838a868ba422a23bf"
   },
-  "_from": "/Users/camdennarzt/Developer/Bash/dot-files/.atom/.node-gyp/.atom/.apm/browser-refresh/0.8.1/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141013-62684-1n5a0yu/package.tgz",
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141013-62684-1n5a0yu/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

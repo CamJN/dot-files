@@ -8,12 +8,12 @@ module.exports =
   configDefaults:
     saveFilesBeforeRefresh  : false
     chromeBackgroundRefresh : true
-    googleChromeCanary      : true
+    googleChromeCanary      : false
     googleChrome            : true
     firefox                 : false
     safari                  : false
     firefoxNightly          : false
-    firefoxDeveloperEdition : true
+    firefoxDeveloperEdition : false
 
   activate: (state) ->
     atom.workspaceView.command "browser-refresh:open", -> BrowserOpen()

@@ -2,7 +2,6 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
-    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -25,23 +24,24 @@
     'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
   'save-session':
     'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-    'project': '/Users/camdennarzt/Developer/HTML/RattanLaw'
+    'project': '/Users/camdennarzt/Developer/Ruby/KingOfStrain'
     'x': 0
     'y': 0
     'width': 1440
     'height': 900
     'treeSize': 170
-    'windowX': 91
-    'windowY': 22
-    'windowWidth': 1318
-    'windowHeight': 829
+    'windowX': 0
+    'windowY': 0
+    'windowWidth': 1440
+    'windowHeight': 900
   'autocomplete':
     'includeCompletionsFromAllBuffers': true
   'browser-refresh':
     'googleChrome': false
-    'googleChromeCanary': false
     'saveFilesBeforeRefresh': true
     'chromeBackgroundRefresh': false
+  'tree-view':
+    'hideVcsIgnoredFiles': true
 '.rust.source':
   'editor': {}
 'linter-erb':

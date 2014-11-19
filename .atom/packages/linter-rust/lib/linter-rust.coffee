@@ -3,12 +3,11 @@ Linter = require "#{linterPath}/lib/linter"
 
 {exec} = require 'child_process'
 {log, warn} = require "#{linterPath}/lib/utils"
+path = require 'path'
 
 
 class LinterRust extends Linter
   @enable: false
-  @cfg: null
-  @cmd: ''
   @syntax: 'source.rust'
   linterName: 'rust'
   errorStream: 'stderr'
@@ -16,9 +15,9 @@ class LinterRust extends Linter
 
   constructor: (@editor) ->
     super @editor
-    @cfg = atom.config.get('linter-rust')
-    @cmd = @cfg['executablePath']
-    exec "#{@cmd} --version", @executionCheckHandler
+    atom.config.observe 'linter-rust.executablePath', =>
+      @executablePath = atom.config.get 'linter-rust.executablePath'
+      exec "#{@executablePath} --version", @executionCheckHandler
 
   executionCheckHandler: (error, stdout, stderr) =>
     versionRegEx = /rustc ([\d\.]+)/
@@ -26,7 +25,7 @@ class LinterRust extends Linter
       result = if error? then '#' + error.code + ': ' else ''
       result += 'stdout: ' + stdout if stdout.length > 0
       result += 'stderr: ' + stderr if stderr.length > 0
-      console.error "Linter-Rust: \"#{@cmd}\" was not executable: \
+      console.error "Linter-Rust: \"#{@executablePath}\" was not executable: \
       \"#{result}\". Please, check executable path in the linter settings."
     else
       @enabled = true
@@ -34,12 +33,13 @@ class LinterRust extends Linter
       do @initCmd
 
   initCmd: =>
-    @cmd = "#{@cmd} --no-trans --color never"
+    @cmd = "#{@executablePath} --no-trans --color never"
     log 'Linter-Rust: initialization completed'
 
   lintFile: (filePath, callback) =>
     if @enabled
-      super(filePath, callback)
+      origin_file = path.basename @editor.getPath()
+      super(origin_file, callback)
 
   formatMessage: (match) ->
     type = if match.error then match.error else match.warning

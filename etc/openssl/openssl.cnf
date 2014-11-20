@@ -15,7 +15,7 @@ oid_section		= new_oids
 # To use this configuration file with the "-extfile" option of the
 # "openssl x509" utility, name here the section containing the
 # X.509v3 extensions to use:
-# extensions		= 
+# extensions		=
 # (Alternatively, use a configuration file that has only
 # X.509v3 extensions in its main [= default] section.)
 
@@ -59,8 +59,8 @@ x509_extensions	= usr_cert		# The extentions to add to the cert
 
 # Comment out the following two lines for the "traditional"
 # (and highly broken) format.
-name_opt 	= ca_default		# Subject Name options
-cert_opt 	= ca_default		# Certificate field options
+name_opt        = ca_default		# Subject Name options
+cert_opt        = ca_default		# Certificate field options
 
 # Extension copying option: use with caution.
 copy_extensions = copy
@@ -113,7 +113,7 @@ x509_extensions	= v3_ca	# The extentions to add to the self signed cert
 # input_password = secret
 # output_password = secret
 
-# This sets a mask for permitted string types. There are several options. 
+# This sets a mask for permitted string types. There are several options.
 # default: PrintableString, T61String, BMPString.
 # pkix   : PrintableString, BMPString (PKIX recommendation before 2004)
 # utf8only: only UTF8Strings (PKIX recommendation after 2004).
@@ -234,6 +234,7 @@ DNS.5 = blog.dev
 DNS.6 = metabolistics.dev
 DNS.7 = silversshadows.dev
 DNS.8 = mote.scanimetrics.dev
+DNS.9 = 127.0.0.1
 
 [ v3_ca ]
 

@@ -1,5 +1,5 @@
 # Create CA certificate
-PATH=/usr/local/Cellar/openssl/1.0.1i/bin:$PATH
+PATH=/usr/local/Cellar/openssl/1.0.1j/bin:$PATH
 
 openssl genrsa 2048 > ca-key.pem
 openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca-cert.pem

@@ -1,5 +1,7 @@
 #!/bin/bash
-
+if [[  ! ( $- =~ "i" ) ]]; then
+    return 0
+fi
 #environment variables
 export CATALINA_HOME=/Library/Tomcat/
 export TERM=xterm-256color

@@ -9,7 +9,7 @@
       <string>sh</string>
       <string>-i</string>
       <string>-c</string>
-      <string>$SHELL --login -c "bundle exec padrino rake update_once"</string>
+      <string>$SHELL --login -i -c "bundle exec padrino rake update_once"</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>

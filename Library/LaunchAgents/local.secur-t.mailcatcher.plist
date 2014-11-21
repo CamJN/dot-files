@@ -9,7 +9,7 @@
       <string>sh</string>
       <string>-i</string>
       <string>-c</string>
-      <string>$SHELL --login -c "mailcatcher --foreground"</string>
+      <string>$SHELL --login -i -c "mailcatcher --foreground"</string>
     </array>
     <key>KeepAlive</key>
     <true/>

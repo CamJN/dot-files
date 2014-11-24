@@ -6,10 +6,11 @@
     <string>me.mailcatcher</string>
     <key>ProgramArguments</key>
     <array>
-      <string>sh</string>
+      <string>$SHELL</string>
+      <string>--login</string>
       <string>-i</string>
       <string>-c</string>
-      <string>$SHELL --login -i -c "mailcatcher --foreground"</string>
+      <string>"mailcatcher --foreground"</string>
     </array>
     <key>KeepAlive</key>
     <true/>

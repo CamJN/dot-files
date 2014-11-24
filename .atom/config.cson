@@ -15,6 +15,7 @@
       '.git'
       '.svn'
       '.DS_Store'
+      '_notes'
     ]
   'exception-reporting':
     'userId': '2e222403-8700-310a-806e-395ad4e95b46'

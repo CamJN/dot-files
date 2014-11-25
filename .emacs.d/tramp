@@ -1,23 +1,25 @@
-;; -*- emacs-lisp -*- <14/11/19 17:42:44 /Users/camdennarzt/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <14/11/24 16:55:48 /Users/camdennarzt/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
 ((["sudo" "root" "localhost" nil nil]
-  ("uname" "Darwin 13.4.0")
+  ("uname" "Darwin 14.0.0")
   ("test" "test")
   ("remote-path"
    ("/usr/bin" "/bin" "/usr/sbin" "/sbin" "/usr/local/bin"))
   ("remote-shell" "/bin/sh")
   ("locale" "LC_ALL=C")
-  ("stat" nil)
+  ("file-exists" "test -e")
+  ("readlink" nil)
   ("perl-file-spec" t)
   ("perl-cwd-realpath" t)
   ("perl" "\\perl")
+  ("stat" nil)
+  ("ls" "/bin/ls")
   ("id" "/usr/bin/id")
   ("gid-string" "wheel")
-  ("readlink" nil)
   ("gid-integer" 0)
-  ("file-exists" "test -e")
   ("uid-integer" 0)
-  ("ls" "/bin/ls")
-  ("ls-dired" nil)))
+  ("tmpdir" "/sudo:root@localhost:/tmp")
+  ("touch-t" t)
+  ("touch" "\\touch")))

@@ -1,6 +1,5 @@
 
 BrowserOpen = require "./browser-open"
-{$, $$, View, EditorView} = require 'atom'
 
 
 module.exports =

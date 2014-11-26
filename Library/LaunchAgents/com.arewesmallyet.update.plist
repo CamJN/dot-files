@@ -6,11 +6,11 @@
     <string>com.arewesmallyet.update</string>
     <key>ProgramArguments</key>
     <array>
-      <string>$SHELL</string>
-      <string>--login</string>
-      <string>-i</string>
-      <string>-c</string>
-      <string>"bundle exec padrino rake update_once"</string>
+      <string>/Users/camdennarzt/.rbenv/shims/bundle</string>
+      <string>exec</string>
+      <string>padrino</string>
+      <string>rake</string>
+      <string>update_once</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>

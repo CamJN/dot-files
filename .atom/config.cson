@@ -2,7 +2,6 @@
   'editor':
     'fontFamily': 'menlo'
     'fontSize': 14
-    'invisibles': {}
   'core':
     'projectHome': '/Users/camdennarzt/Developer/'
     'disabledPackages': [
@@ -31,7 +30,7 @@
     'y': 0
     'width': 1440
     'height': 900
-    'treeSize': 170
+    'treeSize': 145
     'windowX': 0
     'windowY': 0
     'windowWidth': 1440

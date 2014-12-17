@@ -38,7 +38,7 @@ Semantic, and Ansi-Color faces are included.")
       (plum-1 "#ad7fa8") (plum-2 "#75507b") (plum-3 "#5c3566")
       (red-1 "#ef2929")  (red-2 "#cc0000")  (red-3 "#a40000")
       (alum-1 "#eeeeec") (alum-2 "#e5e5e5") (alum-3 "#babdb6")
-      (alum-4 "#888a85") (alum-5 "#555753") (alum-6 "#1c1c1c")
+      (alum-4 "#888a85") (alum-5 "#555753") (alum-6 "#424242")
       ;; Not in Tango palette; used for better contrast.
       (cham-0 "#afffaf") (blue-0 "#8cc4ff") (plum-0 "#e6a8df")
       (red-0 "#ff4b4b")  (alum-5.5 "#41423f") (alum-7 "#212526")

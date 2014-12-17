@@ -12,6 +12,10 @@
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")
 
+(defun on-frame-open (frame)
+  (if (not (display-graphic-p frame))
+      (set-face-background 'default "unspecified-bg" frame)))
+
 ;;----------Use text cleanly---------------------------
 (defadvice thing-at-point (after strip-text-properties (thing) activate)
   "Don't include text properties with `thing-at-point' results."

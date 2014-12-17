@@ -136,11 +136,6 @@
                                 (highlight-regexp ".*Note:.*" 'hi-green-b)
                                 ))
 
-;; (defvar mailcheck
-;;   (run-with-idle-timer 5 t
-;;                        (lambda()(let ((new-window (get-buffer-window "RMAIL-summary" t))(old-window (get-buffer-window)))(select-window new-window)(rmail-summary-get-new-mail)(select-window old-window))))
-;;   "idle-timer (see \\[run-with-idle-timer]) that checks for new mail")
-
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()
                               (set-buffer-file-coding-system 'utf-8-unix)
@@ -225,6 +220,7 @@
 (setq window-system-default-frame-alist `((ns . ,initial-frame-alist)))
 (toggle-tool-bar-mode-from-frame -1)
 (set-scroll-bar-mode nil)
+(add-hook 'after-make-frame-functions 'on-frame-open)
 
 ;;----------Turn on useful functionality------------------------------------
 (add-hook 'find-file-hook 'turn-on-useful-modes)

@@ -1,8 +1,6 @@
 require "../spec-helper"
-{$, TextEditorView, WorkspaceView} = require 'atom'
 AutocompleteView = require '../../lib/autocomplete-view'
 Autocomplete = require '../../lib/autocomplete'
-
 describe "Autocomplete", ->
   [activationPromise, autocomplete, editorView, editor, completionDelay] = []
 
@@ -16,24 +14,24 @@ describe "Autocomplete", ->
         completionDelay = 100
         atom.config.set "autocomplete-plus.autoActivationDelay", completionDelay
         completionDelay += 100 # Rendering delay
-        atom.workspaceView = new WorkspaceView()
-        atom.workspace = atom.workspaceView.model
+
+        workspaceElement = atom.views.getView(atom.workspace)
+        jasmine.attachToDOM(workspaceElement)
+
 
       waitsForPromise -> atom.workspace.open("issues/50.js").then (e) ->
         editor = e
-        atom.workspaceView.attachToDom()
 
       # Activate the package
       waitsForPromise -> atom.packages.activatePackage("autocomplete-plus").then (a) -> autocomplete = a
 
       runs ->
-        editorView = atom.workspaceView.getActiveView()
-        autocomplete = new AutocompleteView editorView
+        editorView = atom.views.getView(editor)
+        autocomplete = new AutocompleteView editor
 
     it "cancels autocompletion when entering an empty string (e.g. space)", ->
       runs ->
-        editorView.attachToDom()
-        expect(editorView.find(".autocomplete-plus")).not.toExist()
+        expect(editorView.querySelector(".autocomplete-plus")).not.toExist()
 
         # Trigger an autocompletion
         editor.moveToBottom()
@@ -41,8 +39,8 @@ describe "Autocomplete", ->
 
         advanceClock completionDelay
 
-        expect(editorView.find(".autocomplete-plus")).toExist()
+        expect(editorView.querySelector(".autocomplete-plus")).toExist()
 
         editor.insertText " "
 
-        expect(editorView.find(".autocomplete-plus")).not.toExist()
+        expect(editorView.querySelector(".autocomplete-plus")).not.toExist()

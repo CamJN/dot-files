@@ -25,7 +25,7 @@
     'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
   'save-session':
     'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-    'project': '/Users/camdennarzt/Developer/Ruby/m2'
+    'project': '/Users/camdennarzt/Developer/Ruby/arewesmallyet'
     'x': 0
     'y': 0
     'width': 1440
@@ -43,6 +43,7 @@
     'chromeBackgroundRefresh': false
   'tree-view':
     'hideVcsIgnoredFiles': true
+  'linter': {}
 '.rust.source':
   'editor': {}
 'linter-erb':

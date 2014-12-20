@@ -82,10 +82,18 @@ function loveSongsForCamden {
 }
 
 function chdir {
-    if [ -n "$1" ]; then
-        pushd "$*"
+    if [ "$_" == "ccalendar" ]; then
+        if [ -n "$1" ]; then
+            cd "$*"
+        else
+            cd ~
+        fi
     else
-        pushd ~
+        if [ -n "$1" ]; then
+            pushd "$*"
+        else
+            pushd ~
+        fi
     fi
 }
 

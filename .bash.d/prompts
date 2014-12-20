@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 #check window size before printing prompt
 shopt -s checkwinsize

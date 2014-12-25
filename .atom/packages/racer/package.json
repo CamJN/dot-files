@@ -7,7 +7,7 @@
     "autocomplete",
     "autocomplete-plus"
   ],
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": {
     "name": "Eric West",
     "email": "esw9999@gmail.com",
@@ -40,12 +40,12 @@
   },
   "readme": "# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
   "readmeFilename": "README.md",
-  "_id": "racer@0.7.0",
+  "_id": "racer@0.7.1",
   "dist": {
-    "shasum": "979149d1f512b4144c78c94586f520dc87b6fbbe"
+    "shasum": "acb7a48d8193982d69fbca3600b75609c259ea96"
   },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141118-49442-9lawqq/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141118-49442-9lawqq/package.tgz",
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141125-17023-ql1k55/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141125-17023-ql1k55/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -115,11 +115,6 @@
         "path": "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/index.js"
       },
       {
-        "name": "space-pen",
-        "version": "4.3.0",
-        "path": "node_modules/autocomplete-plus/node_modules/space-pen/lib/space-pen.js"
-      },
-      {
         "name": "temp",
         "version": "0.8.1",
         "path": "node_modules/autocomplete-plus/node_modules/temp/lib/temp.js"
@@ -150,14 +145,12 @@
         "lib/racer-client.coffee",
         "lib/racer-provider.coffee",
         "lib/racer.coffee",
-        "node_modules/autocomplete-plus/lib/autocomplete-view.coffee",
-        "node_modules/autocomplete-plus/lib/autocomplete.coffee",
+        "node_modules/autocomplete-plus/lib/autocomplete-manager.coffee",
         "node_modules/autocomplete-plus/lib/fuzzy-provider.coffee",
-        "node_modules/autocomplete-plus/lib/perf.coffee",
+        "node_modules/autocomplete-plus/lib/main.coffee",
         "node_modules/autocomplete-plus/lib/provider.coffee",
-        "node_modules/autocomplete-plus/lib/simple-select-list-view.coffee",
-        "node_modules/autocomplete-plus/lib/suggestion.coffee",
-        "node_modules/autocomplete-plus/lib/utils.coffee"
+        "node_modules/autocomplete-plus/lib/select-list-element.coffee",
+        "node_modules/autocomplete-plus/lib/suggestion.coffee"
       ],
       ".json": [
         "node_modules/autocomplete-plus/node_modules/async/component.json",
@@ -175,8 +168,6 @@
         "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/package.json",
         "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/package.json",
         "node_modules/autocomplete-plus/node_modules/minimatch/package.json",
-        "node_modules/autocomplete-plus/node_modules/space-pen/api.json",
-        "node_modules/autocomplete-plus/node_modules/space-pen/package.json",
         "node_modules/autocomplete-plus/node_modules/temp/node_modules/rimraf/package.json",
         "node_modules/autocomplete-plus/node_modules/temp/package.json",
         "node_modules/autocomplete-plus/package.json",
@@ -219,8 +210,6 @@
         "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/index.js",
         "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/example/map.js",
         "node_modules/autocomplete-plus/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/index.js",
-        "node_modules/autocomplete-plus/node_modules/space-pen/lib/space-pen.js",
-        "node_modules/autocomplete-plus/node_modules/space-pen/vendor/jquery.js",
         "node_modules/autocomplete-plus/node_modules/temp/examples/grepcount.js",
         "node_modules/autocomplete-plus/node_modules/temp/examples/pdfcreator.js",
         "node_modules/autocomplete-plus/node_modules/temp/lib/temp.js",
@@ -265,7 +254,6 @@
           "fuzzaldrin": ">=1.0.0",
           "grim": ">=0.12.0",
           "minimatch": ">=0.2.14",
-          "space-pen": ">=4.3.0",
           "temp": ">=0.7.0",
           "underscore-plus": ">=1.0.0"
         }
@@ -326,17 +314,6 @@
         "dependencies": {
           "balanced-match": "^0.2.0",
           "concat-map": "0.0.1"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/autocomplete-plus/node_modules/space-pen",
-          "node_modules/autocomplete-plus/node_modules/space-pen/lib",
-          "node_modules/autocomplete-plus/node_modules/space-pen/vendor"
-        ],
-        "dependencies": {
-          "grim": "^0.12.0",
-          "underscore-plus": "1.x"
         }
       },
       {

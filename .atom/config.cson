@@ -1,49 +1,42 @@
 'global':
-  'editor':
-    'fontFamily': 'menlo'
-    'fontSize': 14
-  'core':
-    'projectHome': '/Users/camdennarzt/Developer/'
-    'disabledPackages': [
-      'welcome'
-      'racer'
-      'linter-rubocop'
-      'linter-csslint'
-      'linter-scss-lint'
-    ]
-    'ignoredNames': [
-      '.git'
-      '.svn'
-      '.DS_Store'
-      '_notes'
-    ]
-  'exception-reporting':
-    'userId': '2e222403-8700-310a-806e-395ad4e95b46'
   'welcome':
     'showOnStartup': false
-  'metrics':
-    'userId': 'aeaa3468400162e55e99b43cca1461ec66807a06'
   'save-session':
     'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
     'project': '/Users/camdennarzt/Developer/Ruby/arewesmallyet'
-    'x': 0
-    'y': 0
-    'width': 1440
-    'height': 900
-    'treeSize': 145
     'windowX': 0
     'windowY': 0
     'windowWidth': 1440
     'windowHeight': 900
-  'autocomplete':
-    'includeCompletionsFromAllBuffers': true
-  'browser-refresh':
-    'googleChrome': false
-    'saveFilesBeforeRefresh': true
-    'chromeBackgroundRefresh': false
-  'tree-view':
-    'hideVcsIgnoredFiles': true
+  'exception-reporting':
+    'userId': '6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a'
+  'core':
+    'disabledPackages': [
+      'linter-rubocop'
+      'welcome'
+      'racer'
+      'linter-csslint'
+      'linter-scss-lint'
+    ]
+    'projectHome': '/Users/camdennarzt/Developer'
+    'ignoredNames': [
+      '.git'
+      '.hg'
+      '.svn'
+      '.DS_Store'
+      '_notes'
+      'Thumbs.db'
+    ]
   'linter': {}
+  'editor':
+    'invisibles': {}
+    'fontFamily': 'menlo'
+    'fontSize': 14
+  'racer': {}
+  'linter-csslint': {}
+  'browser-refresh':
+    'firefoxDeveloperEdition': true
+    'googleChrome': false
 '.rust.source':
   'editor': {}
 'linter-erb':

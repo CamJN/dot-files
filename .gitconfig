@@ -3,7 +3,7 @@
 	email = admin@silversshadows.com
 [core]
         editor = emacs
-        fileMode = false
+	filemode = false
         autocrlf = input
 [sendemail]
         smtpencryption = tls

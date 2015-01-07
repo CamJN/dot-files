@@ -1,9 +1,8 @@
-'global':
+'*':
   'welcome':
     'showOnStartup': false
   'save-session':
-    'dataSaveFolder': '/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects'
-    'project': '/Users/camdennarzt/Developer/Ruby/arewesmallyet'
+    'project': '/Users/camdennarzt/Developer/Ruby/m2'
     'windowX': 0
     'windowY': 0
     'windowWidth': 1440
@@ -11,14 +10,6 @@
   'exception-reporting':
     'userId': '6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a'
   'core':
-    'disabledPackages': [
-      'linter-rubocop'
-      'welcome'
-      'racer'
-      'linter-csslint'
-      'linter-scss-lint'
-    ]
-    'projectHome': '/Users/camdennarzt/Developer'
     'ignoredNames': [
       '.git'
       '.hg'
@@ -27,17 +18,19 @@
       '_notes'
       'Thumbs.db'
     ]
-  'linter': {}
+    'disabledPackages': [
+      'linter-rubocop'
+      'welcome'
+      'racer'
+      'linter-csslint'
+      'linter-scss-lint'
+    ]
+    'projectHome': '/Users/camdennarzt/Developer'
   'editor':
-    'invisibles': {}
     'fontFamily': 'menlo'
     'fontSize': 14
-  'racer': {}
-  'linter-csslint': {}
+    'invisibles': {}
   'browser-refresh':
     'firefoxDeveloperEdition': true
     'googleChrome': false
-'.rust.source':
-  'editor': {}
-'linter-erb':
-  'erbExecutablePath': '/Users/camdennarzt/.rbenv/shims/erb'
+  'linter': {}

@@ -7,7 +7,7 @@ _ = require 'lodash'
 class StatusBarView extends View
 
   @content: ->
-    @div class: 'tool-panel panel-bottom padded text-smaller', =>
+    @div class: 'padded text-smaller', =>
       @dl class: 'linter-statusbar', outlet: 'violations',
 
   initialize: ->
@@ -30,7 +30,7 @@ class StatusBarView extends View
     # If the selected line contains an error message, highlight the error
     $line?.addClass('message-highlighted')
 
-  beforeRemove: ->
+  detached: ->
     @off 'click', '.copy'
     @off 'click', '.goToError'
 

@@ -1,4 +1,6 @@
 # Linter
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/AtomLinter/Linter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/AtomLinter/Linter.svg)](https://travis-ci.org/AtomLinter/Linter)
 
 Lint your code with ease in [Atom](http://atom.io).
@@ -25,6 +27,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Dart
 - [linter-dartanalyzer](https://atom.io/packages/linter-dartanalyzer), for Dart using `dartanalyzer`
 
+#### for LiveScript
+- [linter-lsc](https://atom.io/packages/linter-lsc), for LiveScript, using `lsc -a`
 
 #### for Ruby and Ruby on Rails
 - [linter-rubocop](https://atom.io/packages/linter-rubocop), for Ruby and Ruby on Rails, using `rubocop`

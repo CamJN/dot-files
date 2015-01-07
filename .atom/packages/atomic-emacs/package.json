@@ -1,7 +1,7 @@
 {
   "name": "atomic-emacs",
   "main": "./lib/atomic-emacs",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "An atomic implementation of emacs keybindings",
   "activationEvents": [
     "atomic-emacs:beginning-of-buffer",
@@ -50,12 +50,12 @@
     "url": "https://github.com/avendael/atomic-emacs/issues"
   },
   "homepage": "https://github.com/avendael/atomic-emacs",
-  "_id": "atomic-emacs@0.3.5",
+  "_id": "atomic-emacs@0.3.6",
   "dist": {
-    "shasum": "633b1b90a2c2b62d69243d5bb42e34a42713e5ff"
+    "shasum": "c8b4c6c684a9bba1f7cc449ef9c62af55e8a611c"
   },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141030-56749-1pes10x/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-1141030-56749-1pes10x/package.tgz",
+  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-11506-11966-1mddlf5/package.tgz",
+  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-11506-11966-1mddlf5/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

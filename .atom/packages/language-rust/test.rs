@@ -39,6 +39,8 @@ text '\x20' text
 text '\'' text
 
 text 42f32 text
+text 42is text
+text 42i32 text
 text 42e+18 text
 text 42.1415 text
 
@@ -47,7 +49,7 @@ text 0xf00b text
 text 0o755 text
 text 0b101010 text
 
-text bool text char text uint text int text
+text bool text char text usize text isize text
 text u8 text u16 text u32 text u64 text
 text i8 text i16 text i32 text i64 text
 text str text Self text

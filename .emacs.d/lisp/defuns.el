@@ -43,7 +43,7 @@
 
 ;;----------Cleaning up--------------------------------
 (defadvice erase-buffer
-  (after repopulate-scratch-buffer activate)
+    (after repopulate-scratch-buffer activate)
   "Reverts the *scratch* buffer to its initial state after erasing it."
   (when (string-match-p "*scratch*" (buffer-name)) (insert initial-scratch-message)))
 
@@ -263,13 +263,16 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
 
 (defun make ()
   (interactive)
-  (let* ((parts (split-string (replace-regexp-in-string ".*extensions/\\([^/]*/[^/]*\\)/.*" "\\1" (file-name-directory (buffer-file-name))) "/"))
+  (let* (
+         (parts (split-string (replace-regexp-in-string ".*extensions/\\([^/]*/[^/]*\\)/.*" "\\1" (file-name-directory (buffer-file-name))) "/"))
          (kind (car parts))
          (topExtn (string-match ".*_.*" kind))
          (extension (if topExtn kind (car (cdr parts))))
+         (back default-directory)
          )
     (cd (concat "~/Developer/PHP/work_extensions/" (if topExtn nil kind)))
     (compile (concat "make " extension))
+    (cd back)
     ))
 
 (provide 'defuns)

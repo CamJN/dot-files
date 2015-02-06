@@ -1,4 +1,4 @@
-_ = require 'underscore-plus'
+RacerProvider = require './racer-provider'
 
 module.exports =
   # Config schema
@@ -12,39 +12,16 @@ module.exports =
       type: 'string'
       default: '/usr/local/bin/racer'
   # members
-  editorSubscription: null
-  autocomplete: null
-  providers: []
+  racerProvider: null
 
-  ###
-   * Registers a RacerProvider for each editor
-  ###
   activate: (state) ->
-    return unless _.contains(atom.packages.getAvailablePackageNames(), 'autocomplete-plus')
-    atom.packages.activatePackage("autocomplete-plus")
-      .then (pkg) =>
-        @autocomplete = pkg.mainModule
-        RacerProvider = (require './racer-provider').ProviderClass(@autocomplete.Provider, @autocomplete.Suggestion)
-        @editorSubscription = atom.workspace.observeTextEditors( (editor) =>
-          @registerProvider(RacerProvider, editor))
+    @racerProvider = new RacerProvider()
+    return
 
-  ###
-   * Registers a RacerProvider for each editor
-  ###
-  registerProvider: (RacerProvider, editor) ->
-    return unless editor?
-    editorView = atom.views.getView(editor)
-    if not editorView.mini and editor.getGrammar()?.scopeName is 'source.rust'
-      provider = new RacerProvider(editor)
-      @autocomplete.registerProviderForEditor(provider, editor)
-      @providers.push provider
+  provideAutocompletion: ->
+    return {provider: @racerProvider}
 
-  ###
-   * Cleans everything up, unregisters all RacerProvider instances
-  ###
   deactivate: ->
-    @editorSubscription?.dispose()
-    @editorSubscription = null
-    @providers.forEach (provider) =>
-      @autocomplete.unregisterProvider provider
-    @providers = []
+    @racerProvider?.dispose()
+    @racerProvider = null
+    return

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.9.1 (2015-02-04)
+Switch to registering a provider service declaratively through package.json
+
+## v0.9.0 (2015-02-01)
+Use the new Provider API from "autocomplete-plus"
+
+* Conform to the new autocomplete-plus Providers API
+* Back to calling the "racer" process asynchronously (along with temporary file creation)
+* Code cleanup and safety
+
 ## v0.8.0 (2014-12-27)
 Make it full synchronous to conform to the current "autocomplete-plus" API state.
 This is temporary, waiting for an asynchronous API to emerge in the future.

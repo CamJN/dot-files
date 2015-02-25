@@ -3,7 +3,7 @@
   "linter-package": true,
   "activationEvents": [],
   "main": "./lib/init",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Linter plugin for HTML, using tidy",
   "repository": {
     "type": "git",
@@ -20,12 +20,10 @@
     "url": "https://github.com/AtomLinter/linter-tidy/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-tidy",
-  "_id": "linter-tidy@0.0.1",
-  "dist": {
-    "shasum": "60dfb4d8cc1230a5e9e329e4150c4436b4caa3f9"
-  },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30053-o25epv/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30053-o25epv/package.tgz",
+  "_id": "linter-tidy@1.0.0",
+  "_shasum": "1e22e5d97f51cd43492b07d4f015b3cea98810a9",
+  "_resolved": "file:../d-115115-38217-p5f8rw/package.tgz",
+  "_from": "../d-115115-38217-p5f8rw/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

@@ -14,6 +14,7 @@ You can configure linter-erb by editing ~/.atom/config.cson (choose Open Your Co
 ```
 'linter-erb':
   'erbExecutablePath': null # erb path. run 'which erb' to find the path
+  'rubyOnRailsMode': false  # deal with the <%= function_with trailing block do %> ... <% end %>
 ```
 
 ## Donation

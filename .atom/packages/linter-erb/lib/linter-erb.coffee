@@ -14,6 +14,8 @@ class LinterErb extends Linter
   erbCmd: 'erb -x -T -'
 
   executablePath: null
+  
+  rubyOnRailsMode: false
 
   linterName: 'erb'
 
@@ -26,8 +28,12 @@ class LinterErb extends Linter
     atom.config.observe 'linter-erb.erbExecutablePath', =>
       @executablePath = atom.config.get 'linter-erb.erbExecutablePath'
 
+    atom.config.observe 'linter-erb.rubyOnRailsMode', =>
+      @rubyOnRailsMode = atom.config.get 'linter-erb.rubyOnRailsMode'
+
   destroy: ->
     atom.config.unobserve 'linter-erb.erbExecutablePath'
+    atom.config.unobserve 'linter-erb.rubyOnRailsMode'
 
   lintFile: (filePath, callback) ->
     # build the command with arguments to lint the file
@@ -40,6 +46,7 @@ class LinterErb extends Linter
     rubyOptions = {stdio: ['pipe', null, null]}
     erbOptions = {cwd: @cwd}
 
+    that = this
     data = []
 
     rubyStderr = (output) ->
@@ -50,6 +57,10 @@ class LinterErb extends Linter
       @processMessage data, callback
 
     erbStdout = (output) ->
+      # deal with the <%= function_with trailing block do %> ... <% end %>
+      if that.rubyOnRailsMode
+        output = output.replace(/_erbout.concat\(\((.+?do.+?)\).to_s\)/g, '\$1')
+
       log 'stdout', output
       rubyProcess.process.stdin.write(output)
 
@@ -71,9 +82,9 @@ class LinterErb extends Linter
     , 5000
 
   createMessage: (match) ->
-    # Easy fix when editor has no newline at end of file
-    if match.line > @editor.getLineCount()
-      match.line = @editor.getLineCount()
+    # Skip first line of erb output, is a comment
+    match.line -= 1
+
     super(match)
 
 module.exports = LinterErb

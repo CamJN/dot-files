@@ -18,17 +18,22 @@ Before using this plugin, you must ensure that `rubocop` is installed on your sy
 
 Now you can proceed to install the linter-rubocop plugin.
 
-### Plugin installationd
+### Plugin installation
 ```
 $ apm install linter-rubocop
 ```
 
 ## Settings
 You can configure linter-rubocop by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
+
+#### rubocopExecutablePath
 ```
 'linter-rubocop':
-  'rubocopExecutablePath': null #rubocop path. run 'which rubocop' to find the path
+  'rubocopExecutablePath': null # rubocop path. 
 ```
+Run `which rubocop` to find the path,
+if you using rbenv run `rbenv which rubocop`
+
 **Note**: This plugin finds the nearest .rubocop.yml file and uses the --config command line argument to use that file, so you may not use the --config argument in the linter settings.
 
 ## Contributing

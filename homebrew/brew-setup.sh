@@ -1,7 +1,9 @@
 #!/bin/bash
 ruby -e "$(\curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew install archey bash bash-completion bash-git-prompt dnsmasq foremost git imagemagick mysql ossp-uuid passenger php56-mcrypt php56-pdo-pgsql qt rbenv-default-gems rbenv-gem-rehash rust tidy wget whereami
-brew install php56 --with-homebrew-openssl --with-tidy --without-snmp --with-postgresql
+brew doctor
+brew tap homebrew/dupes homebrew/php
+brew install archey bash bash-completion bash-git-prompt dnsmasq foremost git imagemagick mysql ossp-uuid passenger qt rbenv-default-gems rbenv-gem-rehash rust wget whereami
+brew install tidy php56-mcrypt php56-pdo-pgsql php56 --with-homebrew-openssl --with-tidy --without-snmp --with-postgresql
 brew install emacs --cocoa --srgb
 brew pin emacs
 brew pin php56

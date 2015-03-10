@@ -1,6 +1,6 @@
 {
   "name": "language-rust",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Rust language support in Atom",
   "license": "MIT",
   "engines": {
@@ -17,10 +17,10 @@
   },
   "readme": "# Rust language support in Atom\n\nAdds syntax highlighting and snippets to [Rust](http://www.rust-lang.org/) files in [Atom](http://atom.io/).\n\n## Install\n\nInstall the package `language-rust` in Atom (Preferences->Packages) or Atom's package manager from a shell:\n\n```bash\n$ apm install language-rust\n```\n\n## Bugs\n\nGrammar rules were written from scratch. They seem to work for most cases. However there are most certainly still a few cases that result in wrong syntax highlighting. Feel free to fix it and send a pull request, or open an issue to report it.\n\n## Links\n\n* [Rust](http://www.rust-lang.org/) -- a safe, concurrent, practical language\n* [Atom](http://atom.io/) -- a hackable text editor for the 21st Century\n",
   "readmeFilename": "README.md",
-  "_id": "language-rust@0.4.1",
-  "_shasum": "de1fe202a81e696512d9faa09517a1806bf3b443",
-  "_resolved": "file:../d-115120-60928-1t4uw0i/package.tgz",
-  "_from": "../d-115120-60928-1t4uw0i/package.tgz",
+  "_id": "language-rust@0.4.2",
+  "_shasum": "86ad4fc3b1b11638b54982027fd5d7aeadf64ba8",
+  "_resolved": "file:../d-115210-9511-fpu55z/package.tgz",
+  "_from": "../d-115210-9511-fpu55z/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

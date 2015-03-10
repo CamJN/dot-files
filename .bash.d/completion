@@ -7,4 +7,6 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
+source ~/.bash.d/launchctl-completion.bash
+
 complete -C aws_completer aws

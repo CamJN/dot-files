@@ -8,5 +8,5 @@
 255.255.255.255	broadcasthost
 ::1             localhost metabolistics.dev silversshadows.dev matrix.dev barcoding.dev blog.dev arewesmallyet.dev
 ::1             mailcatcher.dev kingofstrain.dev mote.scanimetrics.dev rattanlaw.dev membership.aresedmonton.dev m2.dev
-::1             splash.silversshadows.dev
+::1             splash.silversshadows.dev crowdfunding.metabolistics.dev
 fe80::1%lo0	localhost

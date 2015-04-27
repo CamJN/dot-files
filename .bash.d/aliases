@@ -54,6 +54,7 @@ alias sedstrip="\sed -Ee 's/:.*$//g'"
 alias server='rails server 2> log/error.log > log/server.log &'
 alias sqlite='sqlite3'
 alias ssh='cssh'
+alias stablizeIp='for i in 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0; do getIp ; done | sort -u'
 alias status='git status'
 alias su='su -m'
 alias sudo='sudo '

@@ -71,7 +71,7 @@
 (define-key occur-mode-map      (kbd "C-x C-q")         'occur-edit-mode)
 (global-set-key                 (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key                 (kbd "C-M-h")           'mark-defun)
-;;(global-set-key                 (kbd "C-m")             'recompile);;this hijacks the enter key
+(global-set-key                 (kbd "C-x c")           'quick-save)
 (global-set-key                 (kbd "C-c C-b")         'erase-buffer)
 (global-set-key                 (kbd "C-c C-r")         'sudo-edit-current-file)
 (global-set-key                 (kbd "C-c o")           'previous-multiframe-window)

@@ -113,7 +113,7 @@ function cssh {
 }
 
 function getIp {
-    \curl -s http://canhazip.com
+    \curl -s http://icanhazip.com
 }
 
 function mailIpTo {
@@ -214,7 +214,7 @@ EOD
 EOD
 EOF
 
-cal -y | awk -v month="$(date +%m)" -v day="$(date +%e) " '
+    cal -y | awk -v month="$(date +%m)" -v day="$(date +%e) " '
 BEGIN {
     max=0
     sub(/^0/,"",month)

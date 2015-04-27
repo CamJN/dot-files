@@ -3,7 +3,7 @@
   "linter-package": true,
   "activationEvents": [],
   "main": "./lib/init",
-  "version": "0.0.4",
+  "version": "0.0.10",
   "description": "Lint Rust on the fly, using rustc",
   "repository": {
     "type": "git",
@@ -20,10 +20,10 @@
     "url": "https://github.com/AtomLinter/linter-rust/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rust",
-  "_id": "linter-rust@0.0.4",
-  "_shasum": "7e396d110f0f97d9372b07bc14c6c33a0186edad",
-  "_resolved": "file:../d-115212-60450-8dek2n/package.tgz",
-  "_from": "../d-115212-60450-8dek2n/package.tgz",
+  "_id": "linter-rust@0.0.10",
+  "_shasum": "cf9a97bd26975fe06cbebd1b3d9d4a2537332a72",
+  "_resolved": "file:../d-115324-40258-10853r6/package.tgz",
+  "_from": "../d-115324-40258-10853r6/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

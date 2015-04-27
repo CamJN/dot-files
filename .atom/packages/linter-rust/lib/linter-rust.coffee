@@ -3,21 +3,28 @@ Linter = require "#{linterPath}/lib/linter"
 
 {exec} = require 'child_process'
 {log, warn} = require "#{linterPath}/lib/utils"
+fs = require 'fs'
 path = require 'path'
 
 
 class LinterRust extends Linter
-  @enable: false
+  @enabled: false
   @syntax: 'source.rust'
+  rustcPath: ''
   linterName: 'rust'
   errorStream: 'stderr'
-  regex: '(.+):(?<line>\\d+):(?<col>\\d+):\\s*(\\d+):(\\d+)\\s+((?<error>error|fatal error)|(?<warning>warning)):\\s+(?<message>.+)\n'
+  regex: '(?<file>.+):(?<line>\\d+):(?<col>\\d+):\\s*(\\d+):(\\d+)\\s+((?<error>error|fatal error)|(?<warning>warning)|(?<info>note)):\\s+(?<message>.+)\n'
+  cargoFilename: "Cargo.toml"
+  dependencyDir: "target/debug/deps"
 
   constructor: (@editor) ->
     super @editor
     atom.config.observe 'linter-rust.executablePath', =>
-      @executablePath = atom.config.get 'linter-rust.executablePath'
-      exec "#{@executablePath} --version", @executionCheckHandler
+      rustcPath = atom.config.get 'linter-rust.executablePath'
+      if rustcPath != @rustcPath
+        @enabled = false
+        @rustcPath = rustcPath
+        exec "\"#{@rustcPath}\" --version", @executionCheckHandler
 
   executionCheckHandler: (error, stdout, stderr) =>
     versionRegEx = /rustc ([\d\.]+)/
@@ -25,7 +32,7 @@ class LinterRust extends Linter
       result = if error? then '#' + error.code + ': ' else ''
       result += 'stdout: ' + stdout if stdout.length > 0
       result += 'stderr: ' + stderr if stderr.length > 0
-      console.error "Linter-Rust: \"#{@executablePath}\" was not executable: \
+      console.error "Linter-Rust: \"#{@rustcPath}\" was not executable: \
       \"#{result}\". Please, check executable path in the linter settings."
     else
       @enabled = true
@@ -33,16 +40,35 @@ class LinterRust extends Linter
       do @initCmd
 
   initCmd: =>
-    @cmd = "#{@executablePath} --no-trans --color never"
+    @cmd = [@rustcPath, '-Z', 'no-trans', '--color', 'never']
+    cargoPath = do @locateCargo
+    if cargoPath
+      @cmd.push '-L'
+      @cmd.push cargoPath + '/' + @dependencyDir
+
     log 'Linter-Rust: initialization completed'
 
   lintFile: (filePath, callback) =>
     if @enabled
-      origin_file = path.basename @editor.getPath()
-      super(origin_file, callback)
+      origin_file = path.basename do @editor.getPath
+      super origin_file, callback
+
+  locateCargo: ->
+    directory = path.resolve path.dirname do @editor.getPath
+    loop
+      cargoFile = directory + '/' + @cargoFilename
+      return directory if fs.existsSync cargoFile
+
+      break if directory == '/'
+      directory = path.resolve path.join(directory, '..')
+
+    return false
 
   formatMessage: (match) ->
-    type = if match.error then match.error else match.warning
-    "#{type} #{match.message}"
+    type = if match.error then match.error else if match.warning then match.warning else match.info
+    if match.file != path.basename do @editor.getPath
+      "#{type} in #{match.file}: #{match.message}"
+    else
+      "#{type}: #{match.message}"
 
 module.exports = LinterRust

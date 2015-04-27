@@ -2,12 +2,18 @@
   welcome:
     showOnStartup: false
   "save-session":
-    project: "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
+    project: "/Users/camdennarzt/Developer/Ruby/nmr"
     windowX: 0
     windowY: 0
     windowWidth: 1440
     windowHeight: 900
     dataSaveFolder: "/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects"
+    fullScreen: true
+    projects: [
+      "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
+      "/Users/camdennarzt/Developer/Ruby/KingOfStrain"
+      "/Users/camdennarzt/Developer/Ruby/nmr"
+    ]
   "exception-reporting":
     userId: "6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a"
   core:

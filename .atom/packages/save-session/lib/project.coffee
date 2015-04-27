@@ -1,38 +1,32 @@
-{$} = require 'atom'
+{$} = require 'atom-space-pen-views'
 Config = require './config'
 
 module.exports =
 
   activate: ->
-    @resetProject = true
-    project = Config.project()
-    if Config.restoreProject() and project? and not atom.project.getPath()?
-      @restore(project)
+    projects = Config.projects()
+
+    if (Config.restoreProjects() and projects?)
+        @restore(projects)
 
     @addListeners()
 
   save: ->
-    Config.project atom.project.getPath()
+    Config.projects atom.project.getPaths()
 
-  restore: (path) ->
-    if path isnt '0'
-      atom.project.setPath path
-
-  onNewWindow: ->
-    if @resetProject
-      Config.project(undefined, true)
-      @resetProject = true
+  restore: (paths) ->
+    if Config.isArray(paths) and localStorage.sessionRestore is 'true'
+      localStorage.sessionRestore = false
+      for path in paths
+        atom.project.addPath(path)
 
   onReopenProject: ->
-    @resetProject = false
-    atom.workspaceView.trigger 'application:new-window'
+    localStorage.sessionRestore = true
+    atom.commands.dispatch(atom.views.getView(atom.workspace), 'application:new-window')
 
   addListeners: ->
     $(window).on 'focus', (event) =>
       @save()
-
-    atom.emitter.preempt 'application:new-window', =>
-      @onNewWindow()
 
     atom.commands.add 'atom-workspace', 'save-session:reopen-project', =>
       @onReopenProject()

@@ -1,3 +1,57 @@
+## 0.13.5
+* Added another check to project paths to help prevent an error.
+
+## 0.13.4
+* Fixed an issue where the package wouldn't activate.
+
+## 0.13.3
+* Forgot to move to master on my last push.
+* This has 0.13.2's changes.
+
+## 0.13.2
+* Should more reliably deactivate thanks to JohnMurga.
+
+## 0.13.1
+* Removed an alert that was left from debugging (sorry), again, thanks to
+anthonyraymond for catching this.
+
+## 0.13.0
+* Big changes here. Mostly thanks to anthonyraymond
+* Files are saved far more efficiently.
+* Deprecations have been taken care of.
+* Some issues have shown up when saving while closing editors, so that is
+disabled for now.
+* Multiple projects will now be restored on the project tree.
+* Probably some other changes as well...
+
+
+## 0.12.5
+* Added some of JohnMurga's changes.
+* New windows work better now, but still aren't perfect.
+
+## 0.12.4
+* Removed some debugging messages.
+
+## 0.12.3
+* Really fixed the issue from 0.12.2.
+* Removed the backwards compatibility for now.
+
+## 0.12.2
+* Fixed an issue with checking for the path incorrectly.
+
+## 0.12.1
+* Fixed an issue with saving/opening projects with Atom's new project setup
+thanks to smiffy6969.
+
+## 0.12.0
+* Now saves fullscreen thanks to quarterto.
+
+## 0.11.5
+* Fixed a deprecation issue.
+
+## 0.11.4
+* Something went wrong so this version was skipped.
+
 ## 0.11.3
 * Fixed an thrown error in Atom 0.166.0
 

@@ -12,6 +12,11 @@ class LinterInitializer
     lintOnChange:
       type: 'boolean'
       default: true
+    lintOnChangeMethod:
+      type: 'string'
+      default: 'debounce'
+      enum: ['throttle', 'debounce']
+      description: 'Change method between two lint on change'
     clearOnChange:
       type: 'boolean'
       default: false
@@ -45,6 +50,16 @@ class LinterInitializer
       type: 'integer'
       default: 5000
       description: 'Linter executables are killed after this timeout. Set to 0 to disable.'
+    ignoredLinterErrors:
+      type: 'array'
+      default: []
+      items:
+        type: 'string'
+    subtleLinterErrors:
+      type: 'array'
+      default: []
+      items:
+        type: 'string'
 
   # Internal: Prevent old deprecated config to be visible in the package settings
   setDefaultOldConfig: ->

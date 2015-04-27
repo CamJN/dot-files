@@ -1,6 +1,6 @@
 {
   "name": "cucumber",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
   "description": "Cucumber support for atom. Converted from https://github.com/cucumber/cucumber-tmbundle",
   "repository": {
@@ -18,12 +18,10 @@
     "url": "https://github.com/edda/cucumber-atom/issues"
   },
   "homepage": "https://github.com/edda/cucumber-atom",
-  "_id": "cucumber@0.4.1",
-  "dist": {
-    "shasum": "122729d32f58c51c7afd51daadfb0bd0e9ed9855"
-  },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-115022-36164-racnwk/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-115022-36164-racnwk/package.tgz",
+  "_id": "cucumber@0.5.0",
+  "_shasum": "fd261d62a659ec597455ad08927880816df18be0",
+  "_resolved": "file:../d-11539-14643-viopuk/package.tgz",
+  "_from": "../d-11539-14643-viopuk/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

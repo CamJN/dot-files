@@ -1,5 +1,11 @@
 # Save Session (Atom Package) [![Build Status](https://travis-ci.org/mpeterson2/save-session.svg?branch=master)](https://travis-ci.org/mpeterson2/save-session)
 
+## Project Status
+
+I haven't been working on Save Session lately because I have stopped using Atom, and I am finishing up school and have less time for side projects than when I started it. I'll still look at pull requests and give my thoughts on issues, but I probably won't be writing much more code for this project. Luckily, it looks like the Atom developers have decided to include this into Atom core and this package will eventually be deprecated. Here is the [issue](https://github.com/atom/atom/issues/1603) for more info.
+
+## What is Save Session
+
 Save Session is designed to reopen your last session in [Atom](https://atom.io/).
 It automatically saves all file's contents and other session information in the
 background so you don't have to worry as much about losing an important file.
@@ -33,7 +39,7 @@ If you haven't downloaded the package yet, this is what you can customize.
  automatically restored on load. This has no effect if `Restore Open Files` is
  disabled.
  - `Restore Open Files` - Whether or not files will be reopened.
- - `Restore Project` - Whether or not the project will be reopened.
+ - `Restore Projects` - Whether or not projects will be reopened.
  - `Restore Window` - Whether or not the window size/positions will be saved.
  - `Skip Save Prompt` - This will disable the save on exit prompt.
  - `Extra Delay` - Adds an extra delay for saving files when typing.

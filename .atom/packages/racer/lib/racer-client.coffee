@@ -18,34 +18,34 @@ class RacerClient
       if err
         console.error(err)
         cb null
+      else
+        tempFilePath = info.path
+        cb null unless tempFilePath
 
-      tempFilePath = info.path
-      cb null unless tempFilePath
+        text = editor.getText()
+        fs.writeFileSync tempFilePath, text
+        fs.close(info.fd);
+        options =
+          command: @racer_bin
+          args: ["complete", row + 1, col, tempFilePath]
+          stdout: (output) =>
+            parsed = @parse_single(output)
+            @candidates.push(parsed) if parsed
+            return
+          exit: (code) =>
+            @candidates = _.uniq(_.compact(_.flatten(@candidates)), (e) => e.word + e.file + e.type )
+            cb @candidates
+            return
 
-      text = editor.getText()
-      fs.writeFileSync tempFilePath, text
-
-      options =
-        command: @racer_bin
-        args: ["complete", row + 1, col, tempFilePath]
-        stdout: (output) =>
-          parsed = @parse_single(output)
-          @candidates.push(parsed) if parsed
-          return
-        exit: (code) =>
-          @candidates = _.uniq(_.compact(_.flatten(@candidates)), (e) => e.word + e.file + e.type )
-          cb @candidates
-          return
-
-      @candidates = []
-      process = new BufferedProcess(options)
-      return
+        @candidates = []
+        process = new BufferedProcess(options)
+        return
     return
 
   process_env_vars: ->
     @racer_bin = @racer_bin or atom.config.get("racer.racerBinPath")
     @rust_src = @rust_src or atom.config.get("racer.rustSrcPath")
-    @project_path = @project_path or atom.project.getPath()
+    @project_path = @project_path or atom.project.getPaths()[0]
     separator = if process.platform is 'win32' then ';' else ':'
     "#{@rust_src}#{separator}#{@project_path}"
 

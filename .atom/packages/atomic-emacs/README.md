@@ -62,14 +62,18 @@ It's super incomplete, very alpha stage. Basically, just these:
 
 #### Some things that might not work as expected
 
-There is a set-marks command. However, the ctrl-space mapping is being used by atom-core, and this package cannot override the core mappings. To use this command, the user must include the following lines in the user's keymap.cson (accessed through menu Atom -> Open Your Keymap):
+There is a known issue that suddenly borks the keybindings. Please check issue [#17](https://github.com/avendael/atomic-emacs/issues/17) for the workaround.
+
+### Configuration options
+
+You can opt to use native navigation keys for ctrl-n,p,b, and f:
 
 ```
-'.editor':
-  'ctrl-space': 'atomic-emacs:set-mark'
+  "atomic-emacs":
+    useNativeNavigationKeys: false
 ```
 
-There is also a known issue that suddenly borks the keybindings. Please check issue [#17](https://github.com/avendael/atomic-emacs/issues/17) for the workaround.
+This would cause the marks to not work properly, but it's reportedly the workaround to #37.
 
 ### Future Work
 

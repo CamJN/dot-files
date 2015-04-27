@@ -1,4 +1,5 @@
 Os = require 'os'
+Crypto = require('crypto')
 
 module.exports =
 
@@ -13,10 +14,14 @@ module.exports =
     @config 'restoreOpenFilesPerProject', val, force
 
   saveFolder: (val, force) ->
-    @config 'dataSaveFolder', val, force
+    saveFolderPath = @config 'dataSaveFolder', val, force
+    if not saveFolderPath?
+      @setSaveFolderDefault()
+      saveFolderPath = @saveFolder()
+    return saveFolderPath
 
-  restoreProject: (val, force) ->
-    @config 'restoreProject', val, force
+  restoreProjects: (val, force) ->
+    @config 'restoreProjects', val, force
 
   restoreWindow: (val, force) ->
     @config 'restoreWindow', val, force
@@ -43,8 +48,8 @@ module.exports =
     @config 'extraDelay', val, force
 
   # Saving specific configs
-  project: (val, force) ->
-    @config 'project', val, force
+  projects: (val, force) ->
+    @config 'projects', val, force
 
   windowX: (val, force) ->
     @config 'windowX', val, force
@@ -58,11 +63,14 @@ module.exports =
   windowHeight: (val, force) ->
     @config 'windowHeight', val, force
 
+  fullScreen: (val, force) ->
+    @config 'fullScreen', val, force
+
   treeSize: (val, force) ->
     @config 'treeSize', val, force
 
   #Helpers
-  saveFolderDefault: ->
+  setSaveFolderDefault: ->
     @saveFolder(atom.packages.getPackageDirPaths() + @pathSeparator() + 'save-session' + @pathSeparator() + 'projects')
 
   pathSeparator: ->
@@ -73,18 +81,25 @@ module.exports =
   isWindows: ->
     return Os.platform() is 'win32'
 
+  isArray: (value) ->
+    value and
+      typeof value is 'object' and
+        value instanceof Array and
+        typeof value.length is 'number' and
+        typeof value.splice is 'function' and
+        not (value.propertyIsEnumerable 'length')
+
   saveFile: ->
-    folder = @saveFolder()
+    saveFolderPath = @saveFolder()
 
-    if not folder?
-      @saveFolderDefault()
-      folder = @saveFolder()
+    if @restoreOpenFilesPerProject() and atom.project.getPaths().length > 0
+      projects = @projects()
+      projectPath = projects[0] if (projects? and projects.length > 0)
+      if projectPath?
+        path = @transformProjectPath(projectPath)
+        return saveFolderPath + @pathSeparator() + path + @pathSeparator() + 'project.json'
 
-    if @restoreOpenFilesPerProject() and atom.project.path?
-      path = @transformProjectPath(atom.project.path)
-      return folder + @pathSeparator() + path + @pathSeparator() + 'project.json'
-    else
-      return folder + @pathSeparator() + 'undefined' + @pathSeparator() + 'project.json'
+    return saveFolderPath + @pathSeparator() + 'project.json'
 
   transformProjectPath: (path) ->
     if @isWindows
@@ -93,6 +108,13 @@ module.exports =
         return path.substring(0, colon) + path.substring(colon + 1, path.length)
 
     return path
+
+  hashMyStr: (str) ->
+    hash = "" #return empty hash for empy string
+    if str? and str isnt ""
+      hash = Crypto.createHash('md5').update(str).digest("hex")
+
+    return hash
 
   config: (key, val, force) ->
     if val? or (force? and force)

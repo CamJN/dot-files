@@ -374,6 +374,7 @@
                         this.upload.dispatchEvent(new sinon.Event("load", false, false, this));
                         if (supportsProgress) {
                             this.upload.dispatchEvent(new sinon.ProgressEvent("progress", {loaded: 100, total: 100}));
+                            this.dispatchEvent(new sinon.ProgressEvent("progress", {loaded: 100, total: 100}));
                         }
                         break;
                 }
@@ -420,7 +421,7 @@
                     if (this.requestHeaders[contentType]) {
                         var value = this.requestHeaders[contentType].split(";");
                         this.requestHeaders[contentType] = value[0] + ";charset=utf-8";
-                    } else {
+                    } else if (!(data instanceof FormData)) {
                         this.requestHeaders["Content-Type"] = "text/plain;charset=utf-8";
                     }
 
@@ -536,6 +537,12 @@
                 }
             },
 
+            downloadProgress: function downloadProgress(progressEventRaw) {
+                if (supportsProgress) {
+                    this.dispatchEvent(new sinon.ProgressEvent("progress", progressEventRaw));
+                }
+            },
+
             uploadError: function uploadError(error) {
                 if (supportsCustomEvent) {
                     this.upload.dispatchEvent(new sinon.CustomEvent("error", {detail: error}));
@@ -593,7 +600,9 @@
 
     function loadDependencies(require, exports, module) {
         var sinon = require("./core");
+        require("../extend");
         require("./event");
+        require("../log_error");
         makeApi(sinon);
         module.exports = sinon;
     }
@@ -608,4 +617,4 @@
         makeApi(sinon);
     }
 
-})(typeof self !== "undefined" ? self : this);
+})(typeof global !== "undefined" ? global : this);

@@ -1,4 +1,4 @@
-{$} = require 'atom'
+{$} = require 'atom-space-pen-views'
 Fs = require 'fs'
 Config = require './config'
 Dimensions = require './dimensions'
@@ -14,10 +14,10 @@ module.exports =
       type: 'boolean'
       default: true
       description: 'Auto close the default file opened by Atom'
-    restoreProject:
+    restoreProjects:
       type: 'boolean'
       default: true
-      description: 'Restore the last opened project'
+      description: 'Restore last opened projects'
     restoreWindow:
       type: 'boolean'
       default: true
@@ -52,12 +52,14 @@ module.exports =
       description: 'Disable the save on exit prompt'
     extraDelay:
       type: 'integer'
-      default: 0
-      description: "Add an extra delay time in ms for saving files after typing"
-    project:
-      type: 'string'
+      default: 500
+      description: "Add an extra delay time in ms for auto saving files after typing."
+    projects:
+      type: 'array'
       default: '0'
-      description: 'The last open project that will be restored'
+      description: 'An array of the projects that will be restored'
+      items:
+        type: 'string'
     windowX:
       type: 'integer'
       default: -1
@@ -82,11 +84,13 @@ module.exports =
       type: 'string'
       description: 'The folder in which to save project states'
 
-
   activate: (state) ->
     # Default settings that couldn't be set up top.
     if not Config.saveFolder()?
       Config.saveFolderDefault()
+
+    (localStorage.sessionRestore = true) if not localStorage.sessionRestore?
+    sessionRestore = localStorage.sessionRestore
 
     # Activate everything
     Project.activate()
@@ -94,3 +98,16 @@ module.exports =
     SavePrompt.activate()
     FirstBuffer.activate()
     Files.activate()
+
+    @addListeners()
+
+  addListeners: ->
+    $(window).on 'focus', (event) =>
+      localStorage.sessionRestore = false
+
+    $(window).on 'unload', (event) =>
+      localStorage.sessionRestore = true
+
+
+  deactivate: ->
+    localStorage.sessionRestore = true

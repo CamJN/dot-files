@@ -7,7 +7,7 @@
     "autocomplete",
     "autocomplete-plus"
   ],
-  "version": "0.9.1",
+  "version": "0.10.1",
   "author": {
     "name": "Eric West",
     "email": "esw9999@gmail.com",
@@ -52,10 +52,10 @@
   },
   "readme": "# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
   "readmeFilename": "README.md",
-  "_id": "racer@0.9.1",
-  "_shasum": "49a5f9d8c42b23e2149cad0070a6945b527ca27d",
-  "_resolved": "file:../d-11516-31751-1jm6oid/package.tgz",
-  "_from": "../d-11516-31751-1jm6oid/package.tgz",
+  "_id": "racer@0.10.1",
+  "_shasum": "1d980885cf1532bc25f24e59e76238bf3f5e8b98",
+  "_resolved": "file:../d-115315-5677-7s6z17/package.tgz",
+  "_from": "../d-115315-5677-7s6z17/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

@@ -2,6 +2,7 @@
 
 [![Gitter](https://img.shields.io/badge/gitter-join%20chat-1dce73.svg?style=flat)](https://gitter.im/AtomLinter/Linter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://img.shields.io/travis/AtomLinter/Linter.svg?style=flat)](https://travis-ci.org/AtomLinter/Linter)
+[![Stories in Ready](https://badge.waffle.io/atomlinter/linter.png?label=ready&title=Ready)](https://waffle.io/atomlinter/linter)
 
 Lint your code with ease in [Atom](http://atom.io).
 
@@ -35,6 +36,8 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 - [linter-ruby](https://atom.io/packages/linter-ruby), for Ruby, using `ruby -wc`
 - [linter-erb](https://atom.io/packages/linter-erb), for .erb files, using `erb -x`
 - [linter-haml](https://atom.io/packages/linter-haml), for .haml files, using `haml-lint`
+- [linter-reek](https://atom.io/packages/linter-reek), for Ruby, using `reek`
+- [linter-slim](https://atom.io/packages/linter-slim), for .slim files, using `slimrb -c`
 
 #### for PHP
 - [linter-php](https://atom.io/packages/linter-php), for PHP using `php -l`
@@ -52,10 +55,12 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Java
 - [linter-javac](https://atom.io/packages/linter-javac), for Java, using `javac`
 
-#### for CSS / SASS / SCSS / LESS
+#### for CSS / SASS / SCSS / LESS / STYLUS
 - [linter-scss-lint](https://atom.io/packages/linter-scss-lint), for SASS/SCSS, using `scss-lint`
 - [linter-less](https://atom.io/packages/linter-less), for LESS, using `less`
 - [linter-csslint](https://atom.io/packages/linter-csslint), for CSS, using `csslint`
+- [linter-stylint](https://atom.io/packages/linter-stylint), for Stylus, using `stylint`
+- [linter-stylus](https://atom.io/packages/linter-stylus), for Stylus, using `stylus`
 
 #### for XML
 - [linter-xmllint](https://atom.io/packages/linter-xmllint), for XML, using `xmllint`
@@ -109,8 +114,20 @@ The idea is to stop the linter plugins war, by providing a top level API for lin
 #### for Erlang
 - [linter-erlc](https://atom.io/packages/linter-erlc), for Erlang, using `erlc`
 
+#### for JSONiq & XQuery
+- [language-jsoniq](https://github.com/wcandillon/language-jsoniq), for JSONiq & XQuery using `xqlint`
+
 #### for ActionScript/Flash/Flex/AIR
 - [linter-flexpmd](https://atom.io/packages/linter-flexpmd),for ActionScript/Flash/Flex/AIR, using flexpmd
+
+#### for Swift
+- [linter-swiftc](https://atom.io/packages/linter-swiftc), for Swift, using `swiftc`
+
+#### for LaTeX
+- [linter-chktex](https://atom.io/packages/linter-chktex), for LaTeX, using `chktex`
+
+#### for Crystal
+- [linter-crystal](https://atom.io/packages/linter-crystal), for Crystal using `crystal`
 
 ## Features
 

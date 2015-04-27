@@ -1,7 +1,7 @@
 /**
  * @depend times_in_words.js
  * @depend util/core.js
- * @depend stub.js
+ * @depend match.js
  * @depend format.js
  */
 /**
@@ -30,13 +30,18 @@
                     assert.fail("fake is not a spy");
                 }
 
-                if (typeof method != "function") {
-                    assert.fail(method + " is not a function");
+                if (method.proxy) {
+                    verifyIsStub(method.proxy);
+                } else {
+                    if (typeof method != "function") {
+                        assert.fail(method + " is not a function");
+                    }
+
+                    if (typeof method.getCall != "function") {
+                        assert.fail(method + " is not stubbed");
+                    }
                 }
 
-                if (typeof method.getCall != "function") {
-                    assert.fail(method + " is not stubbed");
-                }
             }
         }
 
@@ -66,7 +71,7 @@
                 }
 
                 if (failed) {
-                    failAssertion(this, fake.printf.apply(fake, [message].concat(args)));
+                    failAssertion(this, (fake.printf || fake.proxy.printf).apply(fake, [message].concat(args)));
                 } else {
                     assert.pass(name);
                 }
@@ -192,6 +197,7 @@
     function loadDependencies(require, exports, module) {
         var sinon = require("./util/core");
         require("./match");
+        require("./format");
         module.exports = makeApi(sinon);
     }
 

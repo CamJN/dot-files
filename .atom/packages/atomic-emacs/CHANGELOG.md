@@ -1,3 +1,12 @@
+## 0.5.0
+* Move out of using deprecated APIs
+
+## 0.4.2
+* Do not override keymappings when autocomplete is active
+
+## 0.4.1
+* Add ctrl-a and ctrl-e keybindings for Linux
+
 ## 0.4
 * Added a setting to use core navigation keys instead of the atomic-emacs versions
 

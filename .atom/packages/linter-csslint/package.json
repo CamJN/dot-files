@@ -8,8 +8,8 @@
   ],
   "main": "./lib/init",
   "linter-package": true,
-  "activationEvents": [],
-  "version": "0.0.11",
+  "activationCommands": {},
+  "version": "0.0.12",
   "description": "Lint CSS on the fly, using csslint",
   "repository": {
     "type": "git",
@@ -28,12 +28,10 @@
     "url": "https://github.com/AtomLinter/linter-csslint/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-csslint",
-  "_id": "linter-csslint@0.0.11",
-  "dist": {
-    "shasum": "d2ee5dac9d33563e2cf979b9aab6a50ac9d1d25e"
-  },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30034-cpwgub/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30034-cpwgub/package.tgz",
+  "_id": "linter-csslint@0.0.12",
+  "_shasum": "96041cf73f84f796e452f79532fc6fb46beae92b",
+  "_resolved": "file:../d-11541-99657-1f7nncc/package.tgz",
+  "_from": "../d-11541-99657-1f7nncc/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

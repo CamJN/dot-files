@@ -1,4 +1,4 @@
-{View, $, $$} = require 'atom'
+{View, $, $$} = require 'atom-space-pen-views'
 
 git = require './git'
 
@@ -12,23 +12,29 @@ BranchDialog = require './dialogs/branch-dialog'
 CommitDialog = require './dialogs/commit-dialog'
 ConfirmDialog = require './dialogs/confirm-dialog'
 MergeDialog = require './dialogs/merge-dialog'
+FlowDialog = require './dialogs/flow-dialog'
 
 module.exports =
 class GitControlView extends View
   @content: ->
-    @div class: 'git-control', =>
-      @subview 'menuView', new MenuView()
-      @div class: 'content', outlet: 'contentView', =>
-        @div class: 'sidebar', =>
-          @subview 'filesView', new FileView()
-          @subview 'localBranchView', new BranchView(name: 'Local', local: true)
-          @subview 'remoteBranchView', new BranchView(name: 'Remote')
-        @div class: 'domain', =>
-          @subview 'diffView', new DiffView()
-        @subview 'branchDialog', new BranchDialog()
-        @subview 'commitDialog', new CommitDialog()
-        @subview 'mergeDialog', new MergeDialog()
-      @subview 'logView', new LogView()
+    if git.isInitialised()
+      @div class: 'git-control', =>
+        @subview 'menuView', new MenuView()
+        @div class: 'content', outlet: 'contentView', =>
+          @div class: 'sidebar', =>
+            @subview 'filesView', new FileView()
+            @subview 'localBranchView', new BranchView(name: 'Local', local: true)
+            @subview 'remoteBranchView', new BranchView(name: 'Remote')
+          @div class: 'domain', =>
+            @subview 'diffView', new DiffView()
+          @subview 'branchDialog', new BranchDialog()
+          @subview 'commitDialog', new CommitDialog()
+          @subview 'mergeDialog', new MergeDialog()
+          @subview 'flowDialog', new FlowDialog()
+        @subview 'logView', new LogView()
+    else #This is so that no error messages can be created by pushing buttons that are unavailable.
+        @div class: 'git-control', =>
+          @subview 'logView', new LogView()
 
   serialize: ->
 
@@ -39,6 +45,9 @@ class GitControlView extends View
 
     @active = true
     @branchSelected = null
+
+    if !git.isInitialised()
+      git.alert "> This project is not a git repository. Either open another project or create a repository."
 
     return
 
@@ -51,12 +60,13 @@ class GitControlView extends View
     return 'git:control'
 
   update: (nofetch) ->
-    @loadBranches()
-    @showStatus()
+    if git.isInitialised()
+      @loadBranches()
+      @showStatus()
 
-    unless nofetch
-      @fetchMenuClick()
-      @diffView.clearAll()
+      unless nofetch
+        @fetchMenuClick()
+        @diffView.clearAll()
 
     return
 
@@ -71,21 +81,23 @@ class GitControlView extends View
     return
 
   branchCount: (count) ->
-    remotes = git.hasOrigin()
+    if git.isInitialised()
+      remotes = git.hasOrigin()
 
-    @menuView.activate('upstream', remotes and count.behind)
-    @menuView.activate('downstream', remotes and (count.ahead or !git.getRemoteBranch()))
-    @menuView.activate('remote', remotes)
+      @menuView.activate('upstream', remotes and count.behind)
+      @menuView.activate('downstream', remotes and (count.ahead or !git.getRemoteBranch()))
+      @menuView.activate('remote', remotes)
     return
 
   loadBranches: ->
-    @selectedBranch = git.getLocalBranch()
+    if git.isInitialised()
+      @selectedBranch = git.getLocalBranch()
 
-    git.getBranches().then (branches) =>
-      @branches = branches
-      @remoteBranchView.addAll(branches.remote)
-      @localBranchView.addAll(branches.local, true)
-      return
+      git.getBranches().then (branches) =>
+        @branches = branches
+        @remoteBranchView.addAll(branches.remote)
+        @localBranchView.addAll(branches.local, true)
+        return
 
     return
 
@@ -145,7 +157,8 @@ class GitControlView extends View
     return
 
   fetchMenuClick: ->
-    return unless git.hasOrigin()
+    if git.isInitialised()
+      return unless git.hasOrigin()
 
     git.fetch().then => @loadBranches()
     return
@@ -156,6 +169,14 @@ class GitControlView extends View
 
   merge: (branch) =>
     git.merge(branch).then => @update()
+    return
+
+  flowMenuClick: ->
+    @flowDialog.activate(@branches.local)
+    return
+
+  flow: (type,action,branch) =>
+    git.flow(type,action,branch).then => @update()
     return
 
   pullMenuClick: ->

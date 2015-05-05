@@ -13,6 +13,8 @@
       "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
       "/Users/camdennarzt/Developer/Ruby/KingOfStrain"
       "/Users/camdennarzt/Developer/Ruby/nmr"
+      "/Users/camdennarzt/Developer/Ruby/blog"
+      "/Users/camdennarzt/Developer/Ruby/m2"
     ]
   "exception-reporting":
     userId: "6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a"
@@ -42,3 +44,5 @@
     googleChrome: false
   linter: {}
   "linter-rust": {}
+  "autocomplete-plus": {}
+  "autocomplete-ruby": {}

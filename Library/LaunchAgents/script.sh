@@ -17,3 +17,4 @@ git add data.json application.css application_min.js
 
 git commit -m 'daily json/version update'
 git push
+git checkout ajax-data

@@ -1,6 +1,6 @@
 {
   "name": "autocomplete-plus",
-  "version": "2.12.1",
+  "version": "2.13.1",
   "main": "./lib/main",
   "description": "Display possible completions in the editor while typing",
   "repository": {
@@ -46,10 +46,10 @@
     "url": "https://github.com/atom-community/autocomplete-plus/issues"
   },
   "homepage": "https://github.com/atom-community/autocomplete-plus",
-  "_id": "autocomplete-plus@2.12.1",
-  "_shasum": "c67363e22bb5c4dd44fe583d82c1c12ce81aa0f3",
-  "_resolved": "file:../d-115329-10092-1unevr2/package.tgz",
-  "_from": "../d-115329-10092-1unevr2/package.tgz",
+  "_id": "autocomplete-plus@2.13.1",
+  "_shasum": "14c9af4045c02ab7498aac4d29b6db074363e8cf",
+  "_resolved": "file:../d-115410-72921-jvnqin/package.tgz",
+  "_from": "../d-115410-72921-jvnqin/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -80,7 +80,7 @@
       },
       {
         "name": "coffeestack",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "path": "node_modules/grim/node_modules/coffeestack/index.js"
       },
       {
@@ -95,7 +95,7 @@
       },
       {
         "name": "fs-plus",
-        "version": "2.7.1",
+        "version": "2.8.0",
         "path": "node_modules/grim/node_modules/coffeestack/node_modules/fs-plus/lib/fs-plus.js"
       },
       {
@@ -190,7 +190,7 @@
       },
       {
         "name": "semver",
-        "version": "4.3.3",
+        "version": "4.3.4",
         "path": "node_modules/semver/semver.js"
       },
       {

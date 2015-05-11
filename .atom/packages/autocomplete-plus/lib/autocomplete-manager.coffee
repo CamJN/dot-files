@@ -1,7 +1,7 @@
 {Range, TextEditor, CompositeDisposable, Disposable}  = require 'atom'
-_ = require 'underscore-plus'
 path = require 'path'
 semver = require 'semver'
+fuzzaldrin = require 'fuzzaldrin'
 
 ProviderManager = require './provider-manager'
 SuggestionList = require './suggestion-list'
@@ -101,7 +101,11 @@ class AutocompleteManager
     @subscriptions.add(atom.config.observe('autocomplete-plus.backspaceTriggersAutocomplete', (value) => @backspaceTriggersAutocomplete = value))
     @subscriptions.add(atom.config.observe('autocomplete-plus.enableAutoActivation', (value) => @autoActivationEnabled = value))
     @subscriptions.add atom.config.observe 'autocomplete-plus.suppressActivationForEditorClasses', (value) =>
-      @suppressForClasses = _.chain(value).map((classNames) -> classNames?.trim().split('.').map((className) -> className?.trim())).compact().value()
+      @suppressForClasses = []
+      for selector in value
+        classes = (className.trim() for className in selector.trim().split('.') when className.trim())
+        @suppressForClasses.push(classes) if classes.length
+      return
 
     # Handle events from suggestion list
     @subscriptions.add(@suggestionList.onDidConfirm(@confirm))
@@ -109,9 +113,9 @@ class AutocompleteManager
 
   handleCommands: =>
     @subscriptions.add atom.commands.add 'atom-text-editor',
-      'autocomplete-plus:activate': =>
+      'autocomplete-plus:activate': (event) =>
         @shouldDisplaySuggestions = true
-        @findSuggestions(true)
+        @findSuggestions(event.detail?.activatedManually ? true)
 
   # Private: Finds suggestions for the current prefix, sets the list items,
   # positions the overlay and shows it
@@ -142,7 +146,10 @@ class AutocompleteManager
         upgradedOptions = options
       else
         getSuggestions = provider.requestHandler.bind(provider)
-        upgradedOptions = _.extend {}, options,
+        upgradedOptions =
+          editor: options.editor
+          prefix: options.prefix
+          bufferPosition: options.bufferPosition
           position: options.bufferPosition
           scope: options.scopeDescriptor
           scopeChain: options.scopeDescriptor.getScopeChain()
@@ -175,6 +182,7 @@ class AutocompleteManager
           suggestion.provider = provider
           @addManualActivationStrictPrefix(provider, suggestion.replacementPrefix) if activatedManually
 
+        providerSuggestions = @filterSuggestions(providerSuggestions, options) if provider.filterSuggestions
         providerSuggestions
 
     return unless providerPromises?.length
@@ -188,6 +196,31 @@ class AutocompleteManager
           @confirm(suggestions[0])
         else
           @displaySuggestions(suggestions, options)
+
+  filterSuggestions: (suggestions, {prefix}) ->
+    results = []
+    for suggestion, i in suggestions
+      # sortScore mostly preserves in the original sorting. The function is
+      # chosen such that suggestions with a very high match score can break out.
+      suggestion.sortScore = Math.max(-i / 10 + 3, 0) + 1
+      suggestion.score = null
+
+      text = (suggestion.snippet or suggestion.text)
+      suggestionPrefix = suggestion.replacementPrefix ? prefix
+      prefixIsEmpty = not suggestionPrefix or suggestionPrefix is ' '
+      firstCharIsMatch = not prefixIsEmpty and suggestionPrefix[0].toLowerCase() is text[0].toLowerCase()
+
+      if prefixIsEmpty
+        results.push(suggestion)
+      if firstCharIsMatch and (score = fuzzaldrin.score(text, suggestionPrefix)) > 0
+        suggestion.score = score * suggestion.sortScore
+        results.push(suggestion)
+
+    results.sort(@reverseSortOnScoreComparator)
+    results
+
+  reverseSortOnScoreComparator: (a, b) ->
+    (b.score ? b.sortScore) - (a.score ? a.sortScore)
 
   # providerSuggestions - array of arrays of suggestions provided by all called providers
   mergeSuggestionsFromProviders: (providerSuggestions) ->
@@ -246,11 +279,21 @@ class AutocompleteManager
     hasDeprecations
 
   displaySuggestions: (suggestions, options) =>
-    suggestions = _.uniq(suggestions, (s) -> s.text + s.snippet)
+    suggestions = @getUniqueSuggestions(suggestions)
     if @shouldDisplaySuggestions and suggestions.length
       @showSuggestionList(suggestions, options)
     else
       @hideSuggestionList()
+
+  getUniqueSuggestions: (suggestions) ->
+    seen = {}
+    result = []
+    for suggestion in suggestions
+      val = suggestion.text + suggestion.snippet
+      unless seen[val]
+        result.push(suggestion)
+        seen[val] = true
+    result
 
   getPrefix: (editor, bufferPosition) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
@@ -404,11 +447,7 @@ class AutocompleteManager
         # Suggestion list must be either active or backspaceTriggersAutocomplete must be true for activation to occur
         # Activate on removal of a space, a non-whitespace character, or a bracket-matcher pair
         shouldActivate = oldText is ' ' or oldText.trim().length is 1 or oldText in @bracketMatcherPairs
-
-      # Suppress activation if the editorView has classes that match the suppression list
-      if shouldActivate
-        for classNames in @suppressForClasses
-          shouldActivate = false if _.intersection(@editorView.classList, classNames)?.length is classNames.length
+      shouldActivate = false if shouldActivate and @shouldSuppressActivationForEditorClasses()
 
     if shouldActivate
       @cancelHideSuggestionListRequest()
@@ -416,6 +455,14 @@ class AutocompleteManager
     else
       @cancelNewSuggestionsRequest()
       @hideSuggestionList()
+
+  shouldSuppressActivationForEditorClasses: ->
+    for classNames in @suppressForClasses
+      containsCount = 0
+      for className in classNames
+        containsCount += 1 if @editorView.classList.contains(className)
+      return true if containsCount is classNames.length
+    false
 
   # Public: Clean up, stop listening to events
   dispose: =>

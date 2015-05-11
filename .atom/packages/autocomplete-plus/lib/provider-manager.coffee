@@ -57,10 +57,11 @@ class ProviderManager
     matchingProviders = _.without(matchingProviders, @defaultProvider) if disableDefaultProvider
     matchingProviders = (provider for provider in matchingProviders when (provider.inclusionPriority ? 0) >= lowestIncludedPriority)
     stableSort matchingProviders, (providerA, providerB) =>
-      specificityA = @metadataForProvider(providerA).getSpecificity(scopeChain)
-      specificityB = @metadataForProvider(providerB).getSpecificity(scopeChain)
-      difference = specificityB - specificityA
-      difference = (providerB.suggestionPriority ? 1) - (providerA.suggestionPriority ? 1) if difference is 0
+      difference = (providerB.suggestionPriority ? 1) - (providerA.suggestionPriority ? 1)
+      if difference is 0
+        specificityA = @metadataForProvider(providerA).getSpecificity(scopeChain)
+        specificityB = @metadataForProvider(providerB).getSpecificity(scopeChain)
+        difference = specificityB - specificityA
       difference
 
   toggleDefaultProvider: (enabled) =>
@@ -151,7 +152,7 @@ class ProviderManager
 
     unless @isValidProvider(provider, apiVersion)
       console.warn "Provider #{provider.constructor.name} is not valid", provider
-      return
+      return new Disposable()
 
     return if @isProviderRegistered(provider)
 

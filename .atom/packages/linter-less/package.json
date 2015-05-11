@@ -1,10 +1,9 @@
 {
   "name": "linter-less",
   "main": "./lib/init",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Lint `less` on the fly, using less",
   "linter-package": true,
-  "activationEvents": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/AtomLinter/linter-less"
@@ -22,12 +21,10 @@
     "url": "https://github.com/AtomLinter/linter-less/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-less",
-  "_id": "linter-less@0.3.1",
-  "dist": {
-    "shasum": "4385b34123fcd469c4ea4d66be5d1457b8caef95"
-  },
-  "_resolved": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30205-h3u4l0/package.tgz",
-  "_from": "/private/var/folders/0x/gvllnpys5p9cngslb8r5pnq80000gn/T/d-114926-30205-h3u4l0/package.tgz",
+  "_id": "linter-less@0.4.0",
+  "_shasum": "7eab32249f8a4da939f73c7e5c7a8e48cbd053e2",
+  "_resolved": "file:../d-11547-2410-12lnog5/package.tgz",
+  "_from": "../d-11547-2410-12lnog5/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -38,7 +35,7 @@
       },
       {
         "name": "clean-css",
-        "version": "2.2.16",
+        "version": "2.2.23",
         "path": "node_modules/less/node_modules/clean-css/index.js"
       },
       {
@@ -48,7 +45,7 @@
       },
       {
         "name": "graceful-fs",
-        "version": "3.0.4",
+        "version": "3.0.6",
         "path": "node_modules/less/node_modules/graceful-fs/graceful-fs.js"
       },
       {
@@ -93,7 +90,7 @@
       },
       {
         "name": "combined-stream",
-        "version": "0.0.5",
+        "version": "0.0.7",
         "path": "node_modules/less/node_modules/request/node_modules/form-data/node_modules/combined-stream/lib/combined_stream.js"
       },
       {
@@ -128,7 +125,7 @@
       },
       {
         "name": "http-signature",
-        "version": "0.10.0",
+        "version": "0.10.1",
         "path": "node_modules/less/node_modules/request/node_modules/http-signature/lib/index.js"
       },
       {
@@ -138,12 +135,12 @@
       },
       {
         "name": "assert-plus",
-        "version": "0.1.2",
+        "version": "0.1.5",
         "path": "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/assert-plus/assert.js"
       },
       {
         "name": "ctype",
-        "version": "0.5.2",
+        "version": "0.5.3",
         "path": "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/ctype.js"
       },
       {
@@ -158,7 +155,7 @@
       },
       {
         "name": "node-uuid",
-        "version": "1.4.1",
+        "version": "1.4.3",
         "path": "node_modules/less/node_modules/request/node_modules/node-uuid/uuid.js"
       },
       {
@@ -178,13 +175,8 @@
       },
       {
         "name": "tough-cookie",
-        "version": "0.12.1",
+        "version": "1.1.0",
         "path": "node_modules/less/node_modules/request/node_modules/tough-cookie/lib/cookie.js"
-      },
-      {
-        "name": "punycode",
-        "version": "1.3.2",
-        "path": "node_modules/less/node_modules/request/node_modules/tough-cookie/node_modules/punycode/punycode.js"
       },
       {
         "name": "tunnel-agent",
@@ -193,7 +185,7 @@
       },
       {
         "name": "source-map",
-        "version": "0.1.40",
+        "version": "0.1.43",
         "path": "node_modules/less/node_modules/source-map/lib/source-map.js"
       },
       {
@@ -442,30 +434,6 @@
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/ctf.js",
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/ctio.js",
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/ctype.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.fail.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.float.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.int.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.psinfo.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.struct.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/tst.typedef.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/float/tst.rfloat.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/float/tst.wfloat.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/int/tst.64.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/int/tst.rint.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/int/tst.wbounds.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/int/tst.wint.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/uint/tst.64.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/uint/tst.roundtrip.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/uint/tst.ruint.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctio/uint/tst.wuint.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.basicr.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.basicw.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.char.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.endian.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.oldwrite.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.readSize.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.structw.js",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctype/tst.writeStruct.js",
         "node_modules/less/node_modules/request/node_modules/json-stringify-safe/stringify.js",
         "node_modules/less/node_modules/request/node_modules/json-stringify-safe/test.js",
         "node_modules/less/node_modules/request/node_modules/mime-types/lib/index.js",
@@ -485,8 +453,6 @@
         "node_modules/less/node_modules/request/node_modules/tough-cookie/lib/memstore.js",
         "node_modules/less/node_modules/request/node_modules/tough-cookie/lib/pubsuffix.js",
         "node_modules/less/node_modules/request/node_modules/tough-cookie/lib/store.js",
-        "node_modules/less/node_modules/request/node_modules/tough-cookie/node_modules/punycode/punycode.js",
-        "node_modules/less/node_modules/request/node_modules/tough-cookie/test.js",
         "node_modules/less/node_modules/request/node_modules/tunnel-agent/index.js",
         "node_modules/less/node_modules/request/request.js",
         "node_modules/less/node_modules/source-map/Makefile.dryice.js",
@@ -499,6 +465,7 @@
         "node_modules/less/node_modules/source-map/lib/source-map/base64-vlq.js",
         "node_modules/less/node_modules/source-map/lib/source-map/base64.js",
         "node_modules/less/node_modules/source-map/lib/source-map/binary-search.js",
+        "node_modules/less/node_modules/source-map/lib/source-map/mapping-list.js",
         "node_modules/less/node_modules/source-map/lib/source-map/source-map-consumer.js",
         "node_modules/less/node_modules/source-map/lib/source-map/source-map-generator.js",
         "node_modules/less/node_modules/source-map/lib/source-map/source-node.js",
@@ -531,11 +498,6 @@
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/asn1/package.json",
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json",
         "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/package.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/float.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/int.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/psinfo.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/struct.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/tst/ctf/typedef.json",
         "node_modules/less/node_modules/request/node_modules/http-signature/package.json",
         "node_modules/less/node_modules/request/node_modules/json-stringify-safe/package.json",
         "node_modules/less/node_modules/request/node_modules/mime-types/component.json",
@@ -543,12 +505,12 @@
         "node_modules/less/node_modules/request/node_modules/mime-types/lib/mime.json",
         "node_modules/less/node_modules/request/node_modules/mime-types/lib/node.json",
         "node_modules/less/node_modules/request/node_modules/mime-types/package.json",
+        "node_modules/less/node_modules/request/node_modules/node-uuid/bower.json",
         "node_modules/less/node_modules/request/node_modules/node-uuid/component.json",
         "node_modules/less/node_modules/request/node_modules/node-uuid/package.json",
         "node_modules/less/node_modules/request/node_modules/oauth-sign/package.json",
         "node_modules/less/node_modules/request/node_modules/qs/package.json",
         "node_modules/less/node_modules/request/node_modules/stringstream/package.json",
-        "node_modules/less/node_modules/request/node_modules/tough-cookie/node_modules/punycode/package.json",
         "node_modules/less/node_modules/request/node_modules/tough-cookie/package.json",
         "node_modules/less/node_modules/request/node_modules/tunnel-agent/package.json",
         "node_modules/less/node_modules/request/package.json",
@@ -714,18 +676,9 @@
           "node_modules/less/node_modules/request/node_modules/http-signature"
         ],
         "dependencies": {
-          "assert-plus": "0.1.2",
+          "assert-plus": "^0.1.5",
           "asn1": "0.1.11",
-          "ctype": "0.5.2"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/less/node_modules/request/node_modules/tough-cookie",
-          "node_modules/less/node_modules/request/node_modules/tough-cookie/lib"
-        ],
-        "dependencies": {
-          "punycode": ">=0.2.0"
+          "ctype": "0.5.3"
         }
       },
       {

@@ -10,11 +10,11 @@
     dataSaveFolder: "/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects"
     fullScreen: true
     projects: [
-      "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
       "/Users/camdennarzt/Developer/Ruby/KingOfStrain"
       "/Users/camdennarzt/Developer/Ruby/nmr"
       "/Users/camdennarzt/Developer/Ruby/blog"
       "/Users/camdennarzt/Developer/Ruby/m2"
+      "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
     ]
   "exception-reporting":
     userId: "6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a"

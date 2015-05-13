@@ -23,7 +23,7 @@ mv tmp/application.css application.css
 cat tmp/data.json | tr -d ' ' > data.json
 cat tmp/stats.json | tr -d ' ' > stats.json
 sed -e 's|/public/assets/[^/]*/||g' tmp/index.html > index.html
-git add {data,stats}.json application.css application_min.js index.html
+git add {data,stats}.json application.css application.js index.html
 
 git commit -m 'daily json/version update'
 git push

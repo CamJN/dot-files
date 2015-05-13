@@ -113,7 +113,7 @@ function cssh {
 }
 
 function getIp {
-    \curl -s http://icanhazip.com
+    \curl -s http://icanhazip.com/s
 }
 
 function mailIpTo {

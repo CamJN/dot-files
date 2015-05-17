@@ -26,7 +26,7 @@ class LinterJsYaml extends Linter
   constructor: (editor) ->
     super(editor)
 
-    atom.config.observe 'linter-js-yaml.jsYamlExecutablePath', =>
+    @executablePathListener = atom.config.observe 'linter-js-yaml.jsYamlExecutablePath', =>
       @executablePath = atom.config.get 'linter-js-yaml.jsYamlExecutablePath'
 
   lintFile: (filePath, callback) ->
@@ -47,6 +47,6 @@ class LinterJsYaml extends Linter
     super(match)
 
   destroy: ->
-    atom.config.unobserve 'linter-js-yaml.jsYamlExecutablePath'
+    @executablePathListener.dispose()
 
 module.exports = LinterJsYaml

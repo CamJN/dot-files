@@ -3,7 +3,7 @@
   "linter-package": true,
   "activationCommands": [],
   "main": "./lib/init",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Lint `Ruby` on the fly, using rubocop",
   "repository": {
     "type": "git",
@@ -20,10 +20,10 @@
     "url": "https://github.com/AtomLinter/linter-rubocop/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rubocop",
-  "_id": "linter-rubocop@0.2.3",
-  "_shasum": "35757ecc09dd2c84287ddaa5197ecaed3f459917",
-  "_resolved": "file:../d-115327-64989-1fe6eps/package.tgz",
-  "_from": "../d-115327-64989-1fe6eps/package.tgz",
+  "_id": "linter-rubocop@0.2.4",
+  "_shasum": "f8dab366c4378b3e55103b5adbb08d959b32c574",
+  "_resolved": "file:../d-115417-23542-qkt54v/package.tgz",
+  "_from": "../d-115417-23542-qkt54v/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

@@ -1,7 +1,9 @@
 module.exports =
-  configDefaults:
-    erbExecutablePath: null
-    rubyOnRailsMode: false
+  config:
+    erbExecutablePath:
+      default: ''
+      title: 'Erb Executable Path'
+      type: 'string'
 
   activate: ->
     console.log 'activate linter-erb'

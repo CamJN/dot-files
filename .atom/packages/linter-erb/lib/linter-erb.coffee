@@ -6,7 +6,7 @@ Linter = require "#{linterPath}/lib/linter"
 class LinterErb extends Linter
   # The syntax that the linter handles. May be a string or
   # list/tuple of strings. Names should be all lowercase.
-  @syntax: ['text.html.erb']
+  @syntax: ['text.html.erb', 'text.html.ruby']
 
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
@@ -14,8 +14,6 @@ class LinterErb extends Linter
   erbCmd: 'erb -x -T -'
 
   executablePath: null
-  
-  rubyOnRailsMode: false
 
   linterName: 'erb'
 
@@ -25,15 +23,11 @@ class LinterErb extends Linter
   constructor: (editor) ->
     super(editor)
 
-    atom.config.observe 'linter-erb.erbExecutablePath', =>
+    @executablePathListener = atom.config.observe 'linter-erb.erbExecutablePath', =>
       @executablePath = atom.config.get 'linter-erb.erbExecutablePath'
 
-    atom.config.observe 'linter-erb.rubyOnRailsMode', =>
-      @rubyOnRailsMode = atom.config.get 'linter-erb.rubyOnRailsMode'
-
   destroy: ->
-    atom.config.unobserve 'linter-erb.erbExecutablePath'
-    atom.config.unobserve 'linter-erb.rubyOnRailsMode'
+    @executablePathListener.dispose()
 
   lintFile: (filePath, callback) ->
     # build the command with arguments to lint the file
@@ -46,7 +40,6 @@ class LinterErb extends Linter
     rubyOptions = {stdio: ['pipe', null, null]}
     erbOptions = {cwd: @cwd}
 
-    that = this
     data = []
 
     rubyStderr = (output) ->
@@ -56,15 +49,15 @@ class LinterErb extends Linter
     rubyExit = =>
       @processMessage data, callback
 
-    erbStdout = (output) ->
+    erbStdout = (output) =>
       # deal with the <%= function_with trailing block do %> ... <% end %>
-      if that.rubyOnRailsMode
+      if @editor.getGrammar().scopeName == 'text.html.ruby'
         output = output.replace(/_erbout.concat\(\((.+?do.+?)\).to_s\)/g, '\$1')
 
       log 'stdout', output
       rubyProcess.process.stdin.write(output)
 
-    erbExit = =>
+    erbExit = ->
       rubyProcess.process.stdin.end()
 
     rubyProcess = new BufferedProcess({command: rubyCommand, args: rubyArgs

@@ -9,7 +9,7 @@ class LinterRubocop extends Linter
 
   # A string, list, tuple or callable that returns a string, list or tuple,
   # containing the command line (with arguments) used to lint.
-  cmd: 'rubocop --format emacs'
+  cmd: 'rubocop --force-exclusion --format emacs'
 
   linterName: 'rubocop'
 
@@ -23,16 +23,16 @@ class LinterRubocop extends Linter
     super(editor)
 
     if editor.getGrammar().scopeName == 'source.ruby.rails'
-      @cmd += " -R"
+      @cmd += " --rails"
 
     config = findFile(@cwd, '.rubocop.yml')
     if config
       @cmd += " --config #{config}"
 
-    atom.config.observe 'linter-rubocop.rubocopExecutablePath', =>
+    @executablePathListener = atom.config.observe 'linter-rubocop.rubocopExecutablePath', =>
       @executablePath = atom.config.get 'linter-rubocop.rubocopExecutablePath'
 
   destroy: ->
-    atom.config.unobserve 'linter-rubocop.rubocopExecutablePath'
+    @executablePathListener.dispose()
 
 module.exports = LinterRubocop

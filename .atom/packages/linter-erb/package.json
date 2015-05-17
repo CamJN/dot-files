@@ -1,9 +1,9 @@
 {
   "name": "linter-erb",
   "linter-package": true,
-  "activationEvents": [],
+  "activationCommands": {},
   "main": "./lib/init",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Linter plugin for ERB, using erb -x",
   "repository": {
     "type": "git",
@@ -14,16 +14,16 @@
     "atom": ">0.50.0"
   },
   "dependencies": {},
-  "readme": "# linter-erb\n\nThis package will lint your `.erb` opened files in Atom through [erb -x](http://www.ruby-lang.org/).\n\n## Installation\n\n* Install [ruby](http://www.ruby-lang.org/)\n* `$ apm install language-ruby` (if you don't have [language-ruby](https://github.com/atom/language-ruby) installed)\n* `$ apm install linter` (if you don't have [linter](https://github.com/AtomLinter/Linter) installed)\n* `$ apm install linter-erb`\n\n## Settings\nYou can configure linter-erb by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```\n'linter-erb':\n  'erbExecutablePath': null # erb path. run 'which erb' to find the path\n  'rubyOnRailsMode': false  # deal with the <%= function_with trailing block do %> ... <% end %>\n```\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
+  "readme": "# linter-erb\n\nThis package will lint your `.erb` opened files in Atom through [erb -x](http://www.ruby-lang.org/).\n\n## Installation\n\n* Install [ruby](http://www.ruby-lang.org/)\n* `$ apm install language-ruby` (if you don't have [language-ruby](https://github.com/atom/language-ruby) installed)\n* `$ apm install linter` (if you don't have [linter](https://github.com/AtomLinter/Linter) installed)\n* `$ apm install linter-erb`\n\n## Settings\nYou can configure linter-erb by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```\n'linter-erb':\n  'erbExecutablePath': null # erb path. run 'which erb' to find the path\n```\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-erb/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-erb",
-  "_id": "linter-erb@0.1.0",
-  "_shasum": "9190fe4d4b954ffc5f20dd2c1d8b2f8814ef291a",
-  "_resolved": "file:../d-115115-38209-jp4eqw/package.tgz",
-  "_from": "../d-115115-38209-jp4eqw/package.tgz",
+  "_id": "linter-erb@0.1.1",
+  "_shasum": "066dae81176be77cc398728cb9472405221340fa",
+  "_resolved": "file:../d-115417-23528-mosb5a/package.tgz",
+  "_from": "../d-115417-23528-mosb5a/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

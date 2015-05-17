@@ -38,11 +38,16 @@
   editor:
     fontFamily: "menlo"
     fontSize: 14
-    invisibles: {}
+    invisibles:
+      {}
   "browser-refresh":
     firefoxDeveloperEdition: true
     googleChrome: false
-  linter: {}
-  "linter-rust": {}
-  "autocomplete-plus": {}
-  "autocomplete-ruby": {}
+  linter:
+    {}
+  "linter-rust":
+    {}
+  "autocomplete-plus":
+    {}
+  "autocomplete-ruby":
+    {}

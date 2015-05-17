@@ -1,9 +1,9 @@
 {
   "name": "linter-js-yaml",
   "linter-package": true,
-  "activationEvents": [],
+  "activationCommands": {},
   "main": "./lib/init",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Linter plugin for YAML, using js-yaml",
   "repository": {
     "type": "git",
@@ -22,10 +22,10 @@
     "url": "https://github.com/AtomLinter/linter-js-yaml/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-js-yaml",
-  "_id": "linter-js-yaml@1.0.0",
-  "_shasum": "4d9a318419db3f74bcee3ecfbbb17827bdf2be5e",
-  "_resolved": "file:../d-115120-60941-1wfe33o/package.tgz",
-  "_from": "../d-115120-60941-1wfe33o/package.tgz",
+  "_id": "linter-js-yaml@1.0.1",
+  "_shasum": "1744abdd755c06e9ad32d8e3493ed6ee63942777",
+  "_resolved": "file:../d-115417-23539-1894acw/package.tgz",
+  "_from": "../d-115417-23539-1894acw/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

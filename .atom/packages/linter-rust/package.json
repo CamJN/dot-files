@@ -2,7 +2,7 @@
   "name": "linter-rust",
   "linter-package": true,
   "main": "./lib/init",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "Lint Rust on the fly, using rustc",
   "repository": {
     "type": "git",
@@ -12,29 +12,69 @@
   "engines": {
     "atom": ">0.50.0"
   },
-  "dependencies": {},
-  "readme": "# linter-rust\n\nThis package will lint your Rust-files in Atom, using [rustc](http://www.rust-lang.org).\nFiles will be checked when you open or save them.\n\n## Installation\n\n* Install [Rust](http://www.rust-lang.org).\n* `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).\n* `$ apm install linter-rust`\n\n## Other available linters\nThere are other linters available - take a look at the linters [mainpage](https://github.com/AtomLinter/Linter).\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
+  "dependencies": {
+    "tmp": "0.0.26"
+  },
+  "readme": "# linter-rust\n\nLinting your Rust-files on the fly using [rustc](http://www.rust-lang.org) with [Atom](https://atom.io).\n\n## Installation\n\n* Install [Rust](http://www.rust-lang.org).\n* `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).\n* `$ apm install linter-rust`\n\n## Other available linters\nThere are other linters available - take a look at the linters [mainpage](https://github.com/AtomLinter/Linter).\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-rust/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rust",
-  "_id": "linter-rust@0.0.11",
-  "_shasum": "38d0b2f01f81dee7cdc0eeb47f4ddf1f368e14eb",
-  "_resolved": "file:../d-11547-2418-tkqjx5/package.tgz",
-  "_from": "../d-11547-2418-tkqjx5/package.tgz",
+  "_id": "linter-rust@0.0.13",
+  "_shasum": "9a0b2e69d4599299d8ea9f660590d85f369f4ab6",
+  "_resolved": "file:../d-115420-16857-3ngg1i/package.tgz",
+  "_from": "../d-115420-16857-3ngg1i/package.tgz",
   "_atomModuleCache": {
     "version": 1,
-    "dependencies": [],
+    "dependencies": [
+      {
+        "name": "tmp",
+        "version": "0.0.26",
+        "path": "node_modules/tmp/lib/tmp.js"
+      },
+      {
+        "name": "os-tmpdir",
+        "version": "1.0.1",
+        "path": "node_modules/tmp/node_modules/os-tmpdir/index.js"
+      }
+    ],
     "extensions": {
       ".coffee": [
         "lib/init.coffee",
         "lib/linter-rust.coffee"
       ],
+      ".js": [
+        "node_modules/tmp/lib/tmp.js",
+        "node_modules/tmp/node_modules/os-tmpdir/index.js"
+      ],
       ".json": [
+        "node_modules/tmp/node_modules/os-tmpdir/package.json",
+        "node_modules/tmp/package.json",
         "package.json"
       ]
     },
-    "folders": []
+    "folders": [
+      {
+        "paths": [
+          "lib",
+          ""
+        ],
+        "dependencies": {
+          "tmp": "0.0.26"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/tmp/lib",
+          "node_modules/tmp",
+          "node_modules/tmp/test",
+          "node_modules/tmp/test/symlinkme"
+        ],
+        "dependencies": {
+          "os-tmpdir": "~1.0.0"
+        }
+      }
+    ]
   }
 }

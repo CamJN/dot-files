@@ -12,7 +12,7 @@ cwd = undefined
 project = atom.project
 
 if project
-  repo = project.getRepo()
+  repo = project.getRepositories()[0]
   cwd = if repo then repo.getWorkingDirectory() #prevent startup errors if repo is undefined
 
 
@@ -31,7 +31,7 @@ getBranches = -> q.fcall ->
     branches.local.push h.replace('refs/heads/', '')
 
   for h in refs.remotes
-    branches.remote.push h.replace('refs/remotes/origin/', '')
+    branches.remote.push h.replace('refs/remotes/', '')
 
   return branches
 
@@ -66,6 +66,9 @@ parseStatus = (data) -> q.fcall ->
     [type, name] = line.replace(/\ \ /g, ' ').trim().split(' ')
     files.push
       name: name
+      selected: switch type[type.length - 1]
+        when 'C','M','R','D','A' then true
+        else false
       type: switch type[type.length - 1]
         when 'A' then 'added'
         when 'C' then 'modified' #'copied'
@@ -124,7 +127,7 @@ module.exports =
     return refs and refs.remotes and refs.remotes.length
 
   hasOrigin: ->
-    return repo.getOriginUrl() isnt null
+    return repo.getOriginURL() isnt null
 
   add: (files) ->
     return noop() unless files.length
@@ -162,8 +165,9 @@ module.exports =
   fetch: ->
     return callGit "fetch --prune", parseDefault
 
-  merge: (branch) ->
-    return callGit "merge #{branch}", (data) ->
+  merge: (branch,noff) ->
+    noffOutput = if noff then "--no-ff" else ""
+    return callGit "merge #{noffOutput} #{branch}", (data) ->
       atomRefresh()
       return parseDefault(data)
 
@@ -177,10 +181,8 @@ module.exports =
       atomRefresh()
       return parseDefault(data)
 
-  push: ->
-    cmd = "-c push.default=simple push --porcelain"
-    unless repo.getUpstreamBranch()
-      cmd = "#{cmd} --set-upstream origin #{repo.getShortHead()}"
+  push: (remote,branch)->
+    cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
 
     return callGit cmd, (data) ->
       atomRefresh()

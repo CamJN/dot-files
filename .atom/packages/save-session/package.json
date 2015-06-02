@@ -1,7 +1,7 @@
 {
   "name": "save-session",
   "main": "./lib/save-session",
-  "version": "0.15.2",
+  "version": "0.15.5",
   "description": "An Atom package to restore your session.",
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
     "url": "https://github.com/mpeterson2/save-session/issues"
   },
   "homepage": "https://github.com/mpeterson2/save-session",
-  "_id": "save-session@0.15.2",
-  "_shasum": "606f0c1cd0de2eb943bf714e8cffa237f5890533",
-  "_resolved": "file:../d-115421-35261-fpszoo/package.tgz",
-  "_from": "../d-115421-35261-fpszoo/package.tgz",
+  "_id": "save-session@0.15.5",
+  "_shasum": "9a4c3e5fe0e53ea07171bc2734692b6383ad8c7c",
+  "_resolved": "file:../d-115428-9622-mztext/package.tgz",
+  "_from": "../d-115428-9622-mztext/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

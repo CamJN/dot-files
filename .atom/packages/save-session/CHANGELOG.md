@@ -1,3 +1,12 @@
+## 0.15.5
+* Made the specs run... Poorly.
+
+## 0.15.4
+* Fixed some issues an undefined function.
+
+## 0.15.3
+* May have fixed the `getPath` issue.
+
 ## 0.15.2
 * Removed the "what is saved" section of the readme.
 

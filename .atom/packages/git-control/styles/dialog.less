@@ -20,7 +20,7 @@
   .body {
     margin-bottom: 15px;
   }
-  
+
   .heading {
     margin-bottom: 15px;
 
@@ -46,6 +46,12 @@
     padding: 10px;
   }
 
+  .checkbox {
+    width: 5%;
+    display: inline;
+    vertical-align: -30%;
+  }
+
   input[readonly], textarea[readonly], select[readonly] {
     color: @text-color-subtle;
   }
@@ -59,6 +65,9 @@
   textarea {
     height: 150px;
     resize: none;
+    &.over-fifty {
+      color: @text-color-error;
+    }
   }
 
   button {

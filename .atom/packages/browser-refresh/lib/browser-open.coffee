@@ -99,12 +99,22 @@ Commands = {
   }
 }
 
+OpenPanel = (params) ->
+  statusView = new StatusView(params)
+  statusPanel = atom.workspace.addBottomPanel(item: statusView)
+  setTimeout ->
+    statusView?.destroy()
+    statusView = null
+    statusPanel?.destroy()
+    statusPanel = null
+  , 2000
+
 RunMacCmd = (BrowserCmd) ->
   new BufferedProcess({
     command: 'osascript'
     args: ['-e', BrowserCmd]
     stderr: (data) ->
-      new StatusView(type: 'alert', message: data.toString())
+      OpenPanel(type: 'alert', message: data.toString())
   })
 
 RunLinuxCmd = (BrowserArgs) ->
@@ -112,9 +122,8 @@ RunLinuxCmd = (BrowserArgs) ->
     command: 'xdotool'
     args: BrowserArgs
     stderr: (data) ->
-      new StatusView(type: 'alert', message: data.toString())
+      OpenPanel(type: 'alert', message: data.toString())
   })
-
 
 RunCmd = (browser) ->
   if OS.platform() == 'darwin'
@@ -122,8 +131,7 @@ RunCmd = (browser) ->
   else if OS.platform() == 'linux' and browser isnt 'safari'
     RunLinuxCmd(Commands['linux'][browser])
   else
-    new StatusView(type: 'alert', message: 'Unsupported platform')
-
+    OpenPanel(type: 'alert', message: 'Unsupported platform')
 
 BrowserOpen = ()->
   if(atom.config.get 'browser-refresh.saveCurrentFileBeforeRefresh')

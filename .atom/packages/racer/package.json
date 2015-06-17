@@ -7,7 +7,7 @@
     "autocomplete",
     "autocomplete-plus"
   ],
-  "version": "0.11.0",
+  "version": "0.14.0",
   "author": {
     "name": "Eric West",
     "email": "esw9999@gmail.com",
@@ -50,19 +50,24 @@
       }
     }
   },
-  "readme": "# Racer\n\nProviding intelligent code completion for Rust, via [Racer](https://github.com/phildawes/racer) and using [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus).\n\n### Installation\n\nFirst, ensure you have both [Racer](https://github.com/phildawes/racer) and [Autocomplete+](https://github.com/saschagehlich/autocomplete-plus) properly installed. Then install this package via Atom's package manager. You will also need a copy of the Rust src code.\n\n### Usage\n\nGo to Atom/Preferences/Racer and set the correct paths to both your Racer installation, as well as your local copy of the Rust source code. The path to Racer should point to the Racer binary, while the Rust source will point to the directory.\n\n- Racer Bin Path\n  `/Users/me/software/racer/bin/racer`\n\n- Rust Src Path\n  `/Users/me/code/rust/src/`\n\n\nThen usage is as easy as typing.\n\n![A screenshot of your spankin' package](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n",
+  "readme": "# [Racer](https://atom.io/packages/racer)\n\n> Providing intelligent code completion for Rust via [Racer](https://github.com/phildawes/racer).\n\n![A screenshot of racer at work](https://cloud.githubusercontent.com/assets/1395968/2886329/0396e8a4-d4e2-11e3-9813-f6697a01d959.gif)\n\n## Installation\n\n1. Ensure you have [Racer](https://github.com/phildawes/racer) properly installed.\n2. Ensure you have a copy of the [rustc source code](http://www.rust-lang.org/install.html) extracted on your disk.\n3. Install this package via Atom's package manager:\n * go to `Preferences > Packages`, search for `racer`, and install it\n * **OR** use the command line `apm install racer`).\n\n## Configuration\n\ngo to `Preferences > Packages`, search for `racer`, and click `Settings`\n\n* **WARNINGS:** The path to Racer has to point to the *Racer binary executable* (this is **NOT a directory** we request here).\n* The Rustc source has to point to the *base directory of the source code*.\n\n| Display Name                           | Description                                                                                                       | Required | Name                          |\n|:---------------------------------------|:------------------------------------------------------------------------------------------------------------------|:---------|:------------------------------|\n| Path to the Racer executable           | Full path (including executable) of Racer's binary (e.g. `/Users/me/racer/bin/racer` or `c:\\racer\\bin\\racer.exe`) | `YES`    | `racer.racerBinPath`          |\n| Path to the Rust source code directory | Should point to the rustc source directory (e.g. `/Users/me/code/rust/src/`)                                      | `YES`    | `racer.rustSrcPath`           |\n| Autocomplete Scope Blacklist           | Scopes for which no suggestions will be made (e.g. `.source.go .comment`)                                         | `NO`     | `racer.autocompleteBlacklist` |\n\n## Usage\n\nJust type some code in a `.rs` file, and racer will automatically show you some suggestions (using the autocomplete+ package provided by Atom).\n",
   "readmeFilename": "README.md",
-  "_id": "racer@0.11.0",
-  "_shasum": "d0bb28b704c3be88547a2c0782c11a7e81afef7a",
-  "_resolved": "file:../d-115420-16866-1iz3tfv/package.tgz",
-  "_from": "../d-115420-16866-1iz3tfv/package.tgz",
+  "_id": "racer@0.14.0",
+  "_shasum": "1b7e791ebf40849aa57c74fc8de8bd9dbf025fd1",
+  "_resolved": "file:../d-115517-2090-s2dfy9/package.tgz",
+  "_from": "../d-115517-2090-s2dfy9/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
         "name": "temp",
-        "version": "0.8.1",
+        "version": "0.8.3",
         "path": "node_modules/temp/lib/temp.js"
+      },
+      {
+        "name": "os-tmpdir",
+        "version": "1.0.1",
+        "path": "node_modules/temp/node_modules/os-tmpdir/index.js"
       },
       {
         "name": "rimraf",
@@ -93,6 +98,7 @@
         "node_modules/temp/no_cleanup.js",
         "node_modules/temp/no_cleanup_on_exit.js",
         "node_modules/temp/no_cleanup_on_exit.spec.js",
+        "node_modules/temp/node_modules/os-tmpdir/index.js",
         "node_modules/temp/node_modules/rimraf/bin.js",
         "node_modules/temp/node_modules/rimraf/rimraf.js",
         "node_modules/underscore-plus/lib/underscore-plus.js",
@@ -100,6 +106,7 @@
         "node_modules/underscore-plus/node_modules/underscore/underscore.js"
       ],
       ".json": [
+        "node_modules/temp/node_modules/os-tmpdir/package.json",
         "node_modules/temp/node_modules/rimraf/package.json",
         "node_modules/temp/package.json",
         "node_modules/underscore-plus/node_modules/underscore/package.json",
@@ -127,6 +134,7 @@
           "node_modules/temp/test"
         ],
         "dependencies": {
+          "os-tmpdir": "^1.0.0",
           "rimraf": "~2.2.6"
         }
       },

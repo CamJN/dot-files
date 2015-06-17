@@ -1,13 +1,9 @@
-{View} = require 'atom'
+{View} = require 'atom-space-pen-views'
 
 module.exports =
   class StatusView extends View
     @content = (params) ->
-      @div class: 'browser-refresh overlay from-bottom', =>
-        @div class: "#{params.type} message", params.message
+      @div class: 'browser-refresh-view', =>
+        @div class: "type-#{params.type}", 'Browser Refresh: ' + params.message
 
-    initialize: ->
-      atom.workspaceView.append(this)
-      setTimeout =>
-        @detach()
-      , 2000
+    destroy: ->

@@ -1,7 +1,7 @@
 {
   "name": "atomic-emacs",
   "main": "./lib/atomic-emacs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "An atomic implementation of emacs keybindings",
   "activationCommands": {
     "atom-text-editor": [
@@ -32,9 +32,12 @@
       "atomic-emacs:scroll-down",
       "atomic-emacs:recenter-top-bottom",
       "atomic-emacs:just-one-space",
+      "atomic-emacs:delete-indentation",
       "atomic-emacs:delete-horizontal-space",
       "atomic-emacs:backward-paragraph",
-      "atomic-emacs:forward-paragraph"
+      "atomic-emacs:forward-paragraph",
+      "atomic-emacs:kill-word",
+      "atomic-emacs:backward-kill-word"
     ]
   },
   "repository": {
@@ -52,10 +55,10 @@
     "url": "https://github.com/avendael/atomic-emacs/issues"
   },
   "homepage": "https://github.com/avendael/atomic-emacs",
-  "_id": "atomic-emacs@0.6.0",
-  "_shasum": "9137e6e42ecc357f9193bda61a484ca62b47a7a2",
-  "_resolved": "file:../d-11551-26479-kz4ttt/package.tgz",
-  "_from": "../d-11551-26479-kz4ttt/package.tgz",
+  "_id": "atomic-emacs@0.7.0",
+  "_shasum": "281f986f45db842d50d9c7239f5ef14def40f49e",
+  "_resolved": "file:../d-115510-2464-1di582j/package.tgz",
+  "_from": "../d-115510-2464-1di582j/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

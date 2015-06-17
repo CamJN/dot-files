@@ -38,18 +38,13 @@
   editor:
     fontFamily: "menlo"
     fontSize: 14
-    invisibles:
-      {}
+    invisibles: {}
+    softWrap: true
   "browser-refresh":
     firefoxDeveloperEdition: true
     googleChrome: false
-  linter:
-    {}
-  "linter-rust":
-    {}
-  "autocomplete-plus":
-    {}
-  "autocomplete-ruby":
-    {}
-  "linter-tidy":
-    {}
+  linter: {}
+  "linter-rust": {}
+  "autocomplete-plus": {}
+  "autocomplete-ruby": {}
+  "linter-tidy": {}

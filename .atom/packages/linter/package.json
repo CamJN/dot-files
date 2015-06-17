@@ -1,7 +1,7 @@
 {
   "name": "linter",
   "main": "./lib/init",
-  "version": "0.12.6",
+  "version": "0.12.7",
   "private": true,
   "description": "Validates your code using linters.",
   "repository": {
@@ -47,10 +47,10 @@
     "url": "https://github.com/AtomLinter/Linter/issues"
   },
   "homepage": "https://github.com/AtomLinter/Linter",
-  "_id": "linter@0.12.6",
-  "_shasum": "8e44671bd02533e6b13f05d1a6da44a8fe422f0b",
-  "_resolved": "file:../d-115420-16841-1wae40t/package.tgz",
-  "_from": "../d-115420-16841-1wae40t/package.tgz",
+  "_id": "linter@0.12.7",
+  "_shasum": "bea089cea695c3dac3b9905e8779bd4ccfbf1ff8",
+  "_resolved": "file:../d-11559-2384-1rcpill/package.tgz",
+  "_from": "../d-11559-2384-1rcpill/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -131,7 +131,7 @@
       },
       {
         "name": "jshint",
-        "version": "2.7.0",
+        "version": "2.8.0",
         "path": "node_modules/jshint/src/jshint.js"
       },
       {
@@ -181,7 +181,7 @@
       },
       {
         "name": "htmlparser2",
-        "version": "3.8.2",
+        "version": "3.8.3",
         "path": "node_modules/jshint/node_modules/htmlparser2/lib/index.js"
       },
       {
@@ -246,7 +246,7 @@
       },
       {
         "name": "lodash",
-        "version": "3.6.0",
+        "version": "3.7.0",
         "path": "node_modules/jshint/node_modules/lodash/index.js"
       },
       {
@@ -286,7 +286,7 @@
       },
       {
         "name": "rimraf",
-        "version": "2.3.4",
+        "version": "2.4.0",
         "path": "node_modules/rimraf/rimraf.js"
       },
       {
@@ -426,7 +426,7 @@
       },
       {
         "name": "amdefine",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "path": "node_modules/space-pen/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/amdefine.js"
       },
       {
@@ -441,8 +441,13 @@
       },
       {
         "name": "temp",
-        "version": "0.8.1",
+        "version": "0.8.3",
         "path": "node_modules/temp/lib/temp.js"
+      },
+      {
+        "name": "os-tmpdir",
+        "version": "1.0.1",
+        "path": "node_modules/temp/node_modules/os-tmpdir/index.js"
       },
       {
         "name": "rimraf",
@@ -563,6 +568,7 @@
         "node_modules/space-pen/node_modules/underscore-plus/node_modules/underscore/package.json",
         "node_modules/space-pen/node_modules/underscore-plus/package.json",
         "node_modules/space-pen/package.json",
+        "node_modules/temp/node_modules/os-tmpdir/package.json",
         "node_modules/temp/node_modules/rimraf/package.json",
         "node_modules/temp/package.json",
         "node_modules/xregexp/package.json",
@@ -1252,6 +1258,7 @@
         "node_modules/jshint/node_modules/lodash/internal/arraySum.js",
         "node_modules/jshint/node_modules/lodash/internal/assignDefaults.js",
         "node_modules/jshint/node_modules/lodash/internal/assignOwnDefaults.js",
+        "node_modules/jshint/node_modules/lodash/internal/assignWith.js",
         "node_modules/jshint/node_modules/lodash/internal/baseAssign.js",
         "node_modules/jshint/node_modules/lodash/internal/baseAt.js",
         "node_modules/jshint/node_modules/lodash/internal/baseCallback.js",
@@ -1275,6 +1282,7 @@
         "node_modules/jshint/node_modules/lodash/internal/baseForOwnRight.js",
         "node_modules/jshint/node_modules/lodash/internal/baseForRight.js",
         "node_modules/jshint/node_modules/lodash/internal/baseFunctions.js",
+        "node_modules/jshint/node_modules/lodash/internal/baseGet.js",
         "node_modules/jshint/node_modules/lodash/internal/baseIndexOf.js",
         "node_modules/jshint/node_modules/lodash/internal/baseIsEqual.js",
         "node_modules/jshint/node_modules/lodash/internal/baseIsEqualDeep.js",
@@ -1287,6 +1295,8 @@
         "node_modules/jshint/node_modules/lodash/internal/baseMerge.js",
         "node_modules/jshint/node_modules/lodash/internal/baseMergeDeep.js",
         "node_modules/jshint/node_modules/lodash/internal/baseProperty.js",
+        "node_modules/jshint/node_modules/lodash/internal/basePropertyDeep.js",
+        "node_modules/jshint/node_modules/lodash/internal/basePullAt.js",
         "node_modules/jshint/node_modules/lodash/internal/baseRandom.js",
         "node_modules/jshint/node_modules/lodash/internal/baseReduce.js",
         "node_modules/jshint/node_modules/lodash/internal/baseSetData.js",
@@ -1347,13 +1357,17 @@
         "node_modules/jshint/node_modules/lodash/internal/extremumBy.js",
         "node_modules/jshint/node_modules/lodash/internal/getData.js",
         "node_modules/jshint/node_modules/lodash/internal/getFuncName.js",
+        "node_modules/jshint/node_modules/lodash/internal/getLength.js",
+        "node_modules/jshint/node_modules/lodash/internal/getSymbols.js",
         "node_modules/jshint/node_modules/lodash/internal/getView.js",
         "node_modules/jshint/node_modules/lodash/internal/indexOfNaN.js",
         "node_modules/jshint/node_modules/lodash/internal/initCloneArray.js",
         "node_modules/jshint/node_modules/lodash/internal/initCloneByTag.js",
         "node_modules/jshint/node_modules/lodash/internal/initCloneObject.js",
+        "node_modules/jshint/node_modules/lodash/internal/invokePath.js",
         "node_modules/jshint/node_modules/lodash/internal/isIndex.js",
         "node_modules/jshint/node_modules/lodash/internal/isIterateeCall.js",
+        "node_modules/jshint/node_modules/lodash/internal/isKey.js",
         "node_modules/jshint/node_modules/lodash/internal/isLaziable.js",
         "node_modules/jshint/node_modules/lodash/internal/isLength.js",
         "node_modules/jshint/node_modules/lodash/internal/isObjectLike.js",
@@ -1382,6 +1396,7 @@
         "node_modules/jshint/node_modules/lodash/internal/sortedUniq.js",
         "node_modules/jshint/node_modules/lodash/internal/toIterable.js",
         "node_modules/jshint/node_modules/lodash/internal/toObject.js",
+        "node_modules/jshint/node_modules/lodash/internal/toPath.js",
         "node_modules/jshint/node_modules/lodash/internal/trimmedLeftIndex.js",
         "node_modules/jshint/node_modules/lodash/internal/trimmedRightIndex.js",
         "node_modules/jshint/node_modules/lodash/internal/unescapeHtmlChar.js",
@@ -1431,6 +1446,7 @@
         "node_modules/jshint/node_modules/lodash/object/forOwn.js",
         "node_modules/jshint/node_modules/lodash/object/forOwnRight.js",
         "node_modules/jshint/node_modules/lodash/object/functions.js",
+        "node_modules/jshint/node_modules/lodash/object/get.js",
         "node_modules/jshint/node_modules/lodash/object/has.js",
         "node_modules/jshint/node_modules/lodash/object/invert.js",
         "node_modules/jshint/node_modules/lodash/object/keys.js",
@@ -1442,6 +1458,7 @@
         "node_modules/jshint/node_modules/lodash/object/pairs.js",
         "node_modules/jshint/node_modules/lodash/object/pick.js",
         "node_modules/jshint/node_modules/lodash/object/result.js",
+        "node_modules/jshint/node_modules/lodash/object/set.js",
         "node_modules/jshint/node_modules/lodash/object/transform.js",
         "node_modules/jshint/node_modules/lodash/object/values.js",
         "node_modules/jshint/node_modules/lodash/object/valuesIn.js",
@@ -1478,6 +1495,8 @@
         "node_modules/jshint/node_modules/lodash/utility/iteratee.js",
         "node_modules/jshint/node_modules/lodash/utility/matches.js",
         "node_modules/jshint/node_modules/lodash/utility/matchesProperty.js",
+        "node_modules/jshint/node_modules/lodash/utility/method.js",
+        "node_modules/jshint/node_modules/lodash/utility/methodOf.js",
         "node_modules/jshint/node_modules/lodash/utility/mixin.js",
         "node_modules/jshint/node_modules/lodash/utility/noop.js",
         "node_modules/jshint/node_modules/lodash/utility/property.js",
@@ -1704,6 +1723,7 @@
         "node_modules/temp/no_cleanup.js",
         "node_modules/temp/no_cleanup_on_exit.js",
         "node_modules/temp/no_cleanup_on_exit.spec.js",
+        "node_modules/temp/node_modules/os-tmpdir/index.js",
         "node_modules/temp/node_modules/rimraf/bin.js",
         "node_modules/temp/node_modules/rimraf/rimraf.js",
         "node_modules/xregexp/xregexp-all.js"
@@ -2014,7 +2034,7 @@
           "minimatch": "2.0.x",
           "shelljs": "0.3.x",
           "strip-json-comments": "1.0.x",
-          "lodash": "3.6.x"
+          "lodash": "3.7.x"
         }
       },
       {
@@ -2309,6 +2329,7 @@
           "node_modules/temp/test"
         ],
         "dependencies": {
+          "os-tmpdir": "^1.0.0",
           "rimraf": "~2.2.6"
         }
       }

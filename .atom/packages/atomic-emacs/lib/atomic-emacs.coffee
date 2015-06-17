@@ -24,27 +24,44 @@ deactivateCursors = (editor) ->
 class AtomicEmacs
   Mark: Mark
 
-  editor: ->
-    atom.workspace.getActiveTextEditor()
+  editor: (event) ->
+    if event.target
+      event.target.getModel()
+    else
+      atom.workspace.getActiveTextEditor()
 
   upcaseRegion: (event) ->
-    @editor().upperCase()
+    @editor(event).upperCase()
 
   downcaseRegion: (event) ->
-    @editor().lowerCase()
+    @editor(event).lowerCase()
 
   openLine: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     editor.insertNewline()
     editor.moveUp()
 
   transposeChars: (event) ->
-    editor = @editor()
+    editor = @editor(event)
+    bob_cursor_ids = {}
+
+    editor.moveCursors (cursor) ->
+      {row, column} = cursor.getBufferPosition()
+      if row == 0 and column == 0
+        bob_cursor_ids[cursor.id] = 1
+      line = editor.lineTextForBufferRow(row)
+      cursor.moveLeft() if column == line.length
+
     editor.transpose()
-    editor.moveCursorRight()
+
+    editor.moveCursors (cursor) ->
+      if bob_cursor_ids.hasOwnProperty(cursor.id)
+        cursor.moveLeft()
+      else if cursor.getBufferColumn() > 0
+        cursor.moveRight()
 
   transposeWords: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     editor.transact =>
       for cursor in editor.getCursors()
         cursorTools = new CursorTools(cursor)
@@ -65,7 +82,7 @@ class AtomicEmacs
         cursor.setBufferPosition(cursor.getBufferPosition())
 
   transposeLines: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     cursor = editor.getLastCursor()
     row = cursor.getBufferRow()
 
@@ -81,21 +98,21 @@ class AtomicEmacs
       editor.setTextInBufferRange([[row - 1, 0], [row - 1, 0]], text)
 
   markWholeBuffer: (event) ->
-    @editor().selectAll()
+    @editor(event).selectAll()
 
   setMark: (event) ->
-    for cursor in @editor().getCursors()
+    for cursor in @editor(event).getCursors()
       Mark.for(cursor).set().activate()
 
   keyboardQuit: (event) ->
-    deactivateCursors(@editor())
+    deactivateCursors(@editor(event))
 
   exchangePointAndMark: (event) ->
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       Mark.for(cursor).exchange()
 
   copy: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     editor.copySelectedText()
     deactivateCursors(editor)
 
@@ -103,11 +120,11 @@ class AtomicEmacs
     if atom.config.get('atomic-emacs.useNativeNavigationKeys')
       event.abortKeyBinding()
       return
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       cursor.moveRight()
 
   backwardChar: (event) ->
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       mark = Mark.for(cursor)
       if mark?.isActive()
         cursor.selection.selectLeft()
@@ -118,33 +135,44 @@ class AtomicEmacs
         cursor.moveLeft()
 
   forwardWord: (event) ->
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       tools = new CursorTools(cursor)
       tools.skipNonWordCharactersForward()
       tools.skipWordCharactersForward()
 
   backwardWord: (event) ->
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       tools = new CursorTools(cursor)
       tools.skipNonWordCharactersBackward()
       tools.skipWordCharactersBackward()
+
+  backToIndentation: (event) ->
+    editor = @editor(event)
+    editor.moveCursors (cursor) ->
+      position = cursor.getBufferPosition()
+      line = editor.lineTextForBufferRow(position.row)
+      targetColumn = line.search(/\S/)
+      targetColumn = line.length if targetColumn == -1
+
+      if position.column != targetColumn
+        cursor.setBufferPosition([position.row, targetColumn])
 
   nextLine: (event) ->
     if atom.config.get('atomic-emacs.useNativeNavigationKeys')
       event.abortKeyBinding()
       return
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       cursor.moveDown()
 
   previousLine: (event) ->
     if atom.config.get('atomic-emacs.useNativeNavigationKeys')
       event.abortKeyBinding()
       return
-    @editor().moveCursors (cursor) ->
+    @editor(event).moveCursors (cursor) ->
       cursor.moveUp()
 
   scrollUp: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     [firstRow,lastRow] = editor.getVisibleRowRange()
     currentRow = editor.cursors[0].getBufferRow()
     rowCount = (lastRow - firstRow) - (currentRow - firstRow)
@@ -153,7 +181,7 @@ class AtomicEmacs
     editor.moveDown(rowCount)
 
   scrollDown: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     [firstRow,lastRow] = editor.getVisibleRowRange()
     currentRow = editor.cursors[0].getBufferRow()
     rowCount = (lastRow - firstRow) - (lastRow - currentRow)
@@ -162,7 +190,7 @@ class AtomicEmacs
     editor.moveUp(rowCount)
 
   backwardParagraph: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     for cursor in editor.getCursors()
       currentRow = editor.getCursorBufferPosition().row
 
@@ -184,7 +212,7 @@ class AtomicEmacs
       editor.moveUp(rowCount)
 
   forwardParagraph: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     lineCount = editor.buffer.getLineCount() - 1
 
     for cursor in editor.getCursors()
@@ -204,7 +232,7 @@ class AtomicEmacs
       editor.moveDown(rowCount)
 
   backwardKillWord: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     editor.transact =>
       for selection in editor.getSelections()
         selection.modifySelection ->
@@ -215,7 +243,7 @@ class AtomicEmacs
           selection.deleteSelectedText()
 
   killWord: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     editor.transact =>
       for selection in editor.getSelections()
         selection.modifySelection ->
@@ -226,19 +254,19 @@ class AtomicEmacs
           selection.deleteSelectedText()
 
   justOneSpace: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     for cursor in editor.cursors
       range = horizontalSpaceRange(cursor)
       editor.setTextInBufferRange(range, ' ')
 
   deleteHorizontalSpace: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     for cursor in editor.cursors
       range = horizontalSpaceRange(cursor)
       editor.setTextInBufferRange(range, '')
 
   recenterTopBottom: (event) ->
-    editor = @editor()
+    editor = @editor(event)
     return unless editor
     editorElement = atom.views.getView(editor)
     minRow = Math.min((c.getBufferRow() for c in editor.getCursors())...)
@@ -248,10 +276,10 @@ class AtomicEmacs
     editor.setScrollTop((minOffset.top + maxOffset.top - editor.getHeight())/2)
 
   deleteIndentation: =>
-    editor = @editor()
+    editor = @editor(event)
     return unless editor
     editor.transact ->
-      editor.moveCursorUp()
+      editor.moveUp()
       editor.joinLines()
 
 module.exports =
@@ -279,6 +307,7 @@ module.exports =
       "atomic-emacs:just-one-space": (event) -> atomicEmacs.justOneSpace(event)
       "atomic-emacs:kill-word": (event) -> atomicEmacs.killWord(event)
       "atomic-emacs:mark-whole-buffer": (event) -> atomicEmacs.markWholeBuffer(event)
+      "atomic-emacs:back-to-indentation": (event) -> atomicEmacs.backToIndentation(event)
       "atomic-emacs:next-line": (event) -> atomicEmacs.nextLine(event)
       "atomic-emacs:open-line": (event) -> atomicEmacs.openLine(event)
       "atomic-emacs:previous-line": (event) -> atomicEmacs.previousLine(event)

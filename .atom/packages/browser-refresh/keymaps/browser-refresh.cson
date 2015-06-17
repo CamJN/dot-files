@@ -7,6 +7,6 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
-'.workspace':
+'atom-workspace':
   'alt-shift-cmd-s' : 'browser-refresh:open'
   'f5'          : 'browser-refresh:open'

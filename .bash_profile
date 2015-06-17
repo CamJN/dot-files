@@ -4,6 +4,7 @@ if [[  ! ( $- =~ "i" ) ]]; then
 fi
 #environment variables
 export CATALINA_HOME=/Library/Tomcat/
+export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx

@@ -21,7 +21,7 @@ Before using this plugin, you must ensure that `scss-lint` is installed on your 
 
 2. Install [scss-lint](https://github.com/causes/scss-lint) by typing the following in a terminal:
    ```
-   gem install scss-lint
+   gem install scss_lint
    ```
 
 Now you can proceed to install the linter-scss-lint plugin.
@@ -33,10 +33,15 @@ $ apm install linter-scss-lint
 
 ## Settings
 You can configure linter-scss-lint by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):
-```
+```cson
 'linter-scss-lint':
-  'executablePath': null #scss-lint path. run 'which scss-lint' to find the path
-  'excludedLinters': [] # a list of linters to exclude from running. run 'scss-lint --show-linters' to see a list of linters that can be excluded.
+
+  # Optionally specify additional arguments to be passed to `scss-lint`.
+  # Run `scss-lint -h` to see available options.
+  'additionalArguments': null
+
+  # The `scss-lint` path. Run `which scss-lint` to find this path.
+  'executablePath': null
 ```
 
 ## Config file

@@ -32,19 +32,27 @@
       "welcome"
       "racer"
       "linter-csslint"
-      "linter-scss-lint"
+      "autocomplete-ruby"
     ]
     projectHome: "/Users/camdennarzt/Developer"
   editor:
     fontFamily: "menlo"
-    fontSize: 14
     invisibles: {}
     softWrap: true
   "browser-refresh":
     firefoxDeveloperEdition: true
     googleChrome: false
-  linter: {}
+  linter:
+    subtleLinterErrors: [
+      "scss-lint"
+    ]
   "linter-rust": {}
   "autocomplete-plus": {}
   "autocomplete-ruby": {}
-  "linter-tidy": {}
+  "linter-tidy":
+    tidyExecutablePath: "/usr/local/bin/tidy5"
+  "linter-js-yaml": {}
+  "linter-less": {}
+  "linter-scss-lint":
+    executablePath: "/Users/camdennarzt/.rbenv/shims/scss-lint"
+    additionalArguments: "--exclude-linter EmptyLineBetweenBlocks,ZeroUnit,LeadingZero,StringQuotes,PropertySortOrder,SelectorDepth,NestingDepth,SelectorFormat,QualifyingElement,IdSelector,PlaceholderInExtend,SingleLinePerSelector"

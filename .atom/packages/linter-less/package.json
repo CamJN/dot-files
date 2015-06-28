@@ -1,30 +1,39 @@
 {
   "name": "linter-less",
   "main": "./lib/init",
-  "version": "0.5.0",
+  "version": "2.0.3",
   "description": "Lint `less` on the fly, using less",
-  "linter-package": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/AtomLinter/linter-less"
   },
   "license": "MIT",
+  "scripts": {
+    "lint": "coffeelint lib"
+  },
   "engines": {
     "atom": ">0.50.0"
   },
   "dependencies": {
     "less": "^1.7.5"
   },
-  "readme": "# linter-less\n\nThis linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [less](http://lesscss.org).\n\n## Configuration\n\n* **Ignore undefined variables**\n* **IE Compatibility Checks**\n* **Strict Math:** Turn on or off strict math, where in strict mode, math requires brackets.\n* **Strict Units:** Allow mixed units, e.g. 1px+1em or 1px*1px which have units that cannot be represented.\n\nSee also: [lesscss.org](http://lesscss.org/usage/#command-line-usage).\n",
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "# linter-less\n\n[![Build Status](https://travis-ci.org/AtomLinter/linter-less.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-less)\n\nThis linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [less](http://lesscss.org).\n\n## Configuration\n\n* **Ignore undefined variables**\n* **IE Compatibility Checks**\n* **Strict Math:** Turn on or off strict math, where in strict mode, math requires brackets.\n* **Strict Units:** Allow mixed units, e.g. 1px+1em or 1px*1px which have units that cannot be represented.\n\nSee also: [lesscss.org](http://lesscss.org/usage/#command-line-usage).\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-less/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-less",
-  "_id": "linter-less@0.5.0",
-  "_shasum": "56ed98fbf17b359ed112b6a9805abe9982fe3d53",
-  "_resolved": "file:../d-11559-2395-gkl36u/package.tgz",
-  "_from": "../d-11559-2395-gkl36u/package.tgz",
+  "_id": "linter-less@2.0.3",
+  "_shasum": "72aca34ec03afaaaba57c72c8858a7a3121bb495",
+  "_resolved": "file:../d-115526-10725-v2fig0/package.tgz",
+  "_from": "../d-115526-10725-v2fig0/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -175,7 +184,7 @@
       },
       {
         "name": "tough-cookie",
-        "version": "1.2.0",
+        "version": "2.0.0",
         "path": "node_modules/less/node_modules/request/node_modules/tough-cookie/lib/cookie.js"
       },
       {
@@ -195,9 +204,55 @@
       }
     ],
     "extensions": {
+      ".json": [
+        "coffeelint.json",
+        "node_modules/less/bower.json",
+        "node_modules/less/node_modules/clean-css/node_modules/commander/package.json",
+        "node_modules/less/node_modules/clean-css/package.json",
+        "node_modules/less/node_modules/graceful-fs/package.json",
+        "node_modules/less/node_modules/mime/package.json",
+        "node_modules/less/node_modules/mkdirp/node_modules/minimist/package.json",
+        "node_modules/less/node_modules/mkdirp/package.json",
+        "node_modules/less/node_modules/request/node_modules/aws-sign2/package.json",
+        "node_modules/less/node_modules/request/node_modules/forever-agent/package.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/bower.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/component.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/package.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/combined-stream/node_modules/delayed-stream/package.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/combined-stream/package.json",
+        "node_modules/less/node_modules/request/node_modules/form-data/package.json",
+        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/boom/package.json",
+        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/cryptiles/package.json",
+        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/hoek/package.json",
+        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/sntp/package.json",
+        "node_modules/less/node_modules/request/node_modules/hawk/package.json",
+        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/asn1/package.json",
+        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json",
+        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/package.json",
+        "node_modules/less/node_modules/request/node_modules/http-signature/package.json",
+        "node_modules/less/node_modules/request/node_modules/json-stringify-safe/package.json",
+        "node_modules/less/node_modules/request/node_modules/mime-types/component.json",
+        "node_modules/less/node_modules/request/node_modules/mime-types/lib/custom.json",
+        "node_modules/less/node_modules/request/node_modules/mime-types/lib/mime.json",
+        "node_modules/less/node_modules/request/node_modules/mime-types/lib/node.json",
+        "node_modules/less/node_modules/request/node_modules/mime-types/package.json",
+        "node_modules/less/node_modules/request/node_modules/node-uuid/bower.json",
+        "node_modules/less/node_modules/request/node_modules/node-uuid/component.json",
+        "node_modules/less/node_modules/request/node_modules/node-uuid/package.json",
+        "node_modules/less/node_modules/request/node_modules/oauth-sign/package.json",
+        "node_modules/less/node_modules/request/node_modules/qs/package.json",
+        "node_modules/less/node_modules/request/node_modules/stringstream/package.json",
+        "node_modules/less/node_modules/request/node_modules/tough-cookie/package.json",
+        "node_modules/less/node_modules/request/node_modules/tunnel-agent/package.json",
+        "node_modules/less/node_modules/request/package.json",
+        "node_modules/less/node_modules/source-map/node_modules/amdefine/package.json",
+        "node_modules/less/node_modules/source-map/package.json",
+        "node_modules/less/package.json",
+        "package.json"
+      ],
       ".coffee": [
         "lib/init.coffee",
-        "lib/linter-less.coffee"
+        "lib/linter-less-provider.coffee"
       ],
       ".js": [
         "node_modules/less/.grunt/grunt-contrib-jasmine/boot.js",
@@ -476,58 +531,14 @@
         "node_modules/less/node_modules/source-map/node_modules/amdefine/amdefine.js",
         "node_modules/less/node_modules/source-map/node_modules/amdefine/intercept.js",
         "node_modules/less/tmp/less.js"
-      ],
-      ".json": [
-        "node_modules/less/bower.json",
-        "node_modules/less/node_modules/clean-css/node_modules/commander/package.json",
-        "node_modules/less/node_modules/clean-css/package.json",
-        "node_modules/less/node_modules/graceful-fs/package.json",
-        "node_modules/less/node_modules/mime/package.json",
-        "node_modules/less/node_modules/mkdirp/node_modules/minimist/package.json",
-        "node_modules/less/node_modules/mkdirp/package.json",
-        "node_modules/less/node_modules/request/node_modules/aws-sign2/package.json",
-        "node_modules/less/node_modules/request/node_modules/forever-agent/package.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/bower.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/component.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/async/package.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/combined-stream/node_modules/delayed-stream/package.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/node_modules/combined-stream/package.json",
-        "node_modules/less/node_modules/request/node_modules/form-data/package.json",
-        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/boom/package.json",
-        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/cryptiles/package.json",
-        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/hoek/package.json",
-        "node_modules/less/node_modules/request/node_modules/hawk/node_modules/sntp/package.json",
-        "node_modules/less/node_modules/request/node_modules/hawk/package.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/asn1/package.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/assert-plus/package.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/node_modules/ctype/package.json",
-        "node_modules/less/node_modules/request/node_modules/http-signature/package.json",
-        "node_modules/less/node_modules/request/node_modules/json-stringify-safe/package.json",
-        "node_modules/less/node_modules/request/node_modules/mime-types/component.json",
-        "node_modules/less/node_modules/request/node_modules/mime-types/lib/custom.json",
-        "node_modules/less/node_modules/request/node_modules/mime-types/lib/mime.json",
-        "node_modules/less/node_modules/request/node_modules/mime-types/lib/node.json",
-        "node_modules/less/node_modules/request/node_modules/mime-types/package.json",
-        "node_modules/less/node_modules/request/node_modules/node-uuid/bower.json",
-        "node_modules/less/node_modules/request/node_modules/node-uuid/component.json",
-        "node_modules/less/node_modules/request/node_modules/node-uuid/package.json",
-        "node_modules/less/node_modules/request/node_modules/oauth-sign/package.json",
-        "node_modules/less/node_modules/request/node_modules/qs/package.json",
-        "node_modules/less/node_modules/request/node_modules/stringstream/package.json",
-        "node_modules/less/node_modules/request/node_modules/tough-cookie/package.json",
-        "node_modules/less/node_modules/request/node_modules/tunnel-agent/package.json",
-        "node_modules/less/node_modules/request/package.json",
-        "node_modules/less/node_modules/source-map/node_modules/amdefine/package.json",
-        "node_modules/less/node_modules/source-map/package.json",
-        "node_modules/less/package.json",
-        "package.json"
       ]
     },
     "folders": [
       {
         "paths": [
+          "",
           "lib",
-          ""
+          "spec"
         ],
         "dependencies": {
           "less": "^1.7.5"

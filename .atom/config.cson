@@ -46,6 +46,7 @@
     subtleLinterErrors: [
       "scss-lint"
     ]
+    showErrorPanel: false
   "linter-rust": {}
   "autocomplete-plus": {}
   "autocomplete-ruby": {}

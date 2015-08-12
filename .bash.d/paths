@@ -11,6 +11,7 @@ MANPATH=/Applications/Emacs.app/Contents/Resources/man:$MANPATH
 
 PATH=/usr/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
+PATH=/usr/local/opt/qt5/bin:$PATH
 PATH=/usr/local/etc/openssl/misc:$PATH
 PATH=/usr/local/opt/openssl/bin:$PATH
 PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-darwin

@@ -1,15 +1,16 @@
 {
   "name": "atomic-emacs",
   "main": "./lib/atomic-emacs",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "An atomic implementation of emacs keybindings",
   "activationCommands": {
     "atom-text-editor": [
       "atomic-emacs:beginning-of-buffer",
       "atomic-emacs:end-of-buffer",
       "atomic-emacs:back-to-indentation",
-      "atomic-emacs:upcase-region",
-      "atomic-emacs:downcase-region",
+      "atomic-emacs:upcase-word-or-region",
+      "atomic-emacs:downcase-word-or-region",
+      "atomic-emacs:capitalize-word-or-region",
       "atomic-emacs:open-line",
       "atomic-emacs:transpose-chars",
       "atomic-emacs:transpose-words",
@@ -19,6 +20,7 @@
       "atomic-emacs:mark-whole-buffer",
       "atomic-emacs:exchange-point-and-mark",
       "atomic-emacs:copy",
+      "atomic-emacs:close-other-panes",
       "atomic-emacs:kill-region",
       "atomic-emacs:forward-char",
       "atomic-emacs:backward-char",
@@ -55,10 +57,10 @@
     "url": "https://github.com/avendael/atomic-emacs/issues"
   },
   "homepage": "https://github.com/avendael/atomic-emacs",
-  "_id": "atomic-emacs@0.7.1",
-  "_shasum": "38927e7b59c199fb66654f2217d78ad16254091a",
-  "_resolved": "file:../d-115521-1953-1lvibby/package.tgz",
-  "_from": "../d-115521-1953-1lvibby/package.tgz",
+  "_id": "atomic-emacs@0.7.2",
+  "_shasum": "d224073a004e4bf676ae3163d942b9f665aa94ac",
+  "_resolved": "file:../d-115619-16026-zvwkid/package.tgz",
+  "_from": "../d-115619-16026-zvwkid/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

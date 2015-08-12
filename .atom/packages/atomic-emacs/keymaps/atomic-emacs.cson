@@ -7,7 +7,7 @@
   'ctrl-x 3': 'pane:split-right'
   'ctrl-x 2': 'pane:split-down'
   'ctrl-x 0': 'pane:close'
-  'ctrl-x 1': 'pane:close-other-items'
+  'ctrl-x 1': 'atomic-emacs:close-other-panes'
   'ctrl-x o': 'window:focus-next-pane'
 
 'atom-workspace atom-text-editor':
@@ -28,8 +28,8 @@
   'ctrl-_': 'core:undo'
   'ctrl-space': 'atomic-emacs:set-mark'
   'ctrl-x ctrl-s': 'core:save'
-  'ctrl-x ctrl-u': 'atomic-emacs:upcase-region'
-  'ctrl-x ctrl-l': 'atomic-emacs:downcase-region'
+  'ctrl-x ctrl-u': 'atomic-emacs:upcase-word-or-region'
+  'ctrl-x ctrl-l': 'atomic-emacs:downcase-word-or-region'
   'ctrl-x ctrl-t': 'atomic-emacs:transpose-lines'
   'ctrl-x h': 'atomic-emacs:mark-whole-buffer'
   'ctrl-x ctrl-x': 'atomic-emacs:exchange-point-and-mark'
@@ -54,6 +54,9 @@
   'alt-space': 'atomic-emacs:just-one-space'
   'alt-{': 'atomic-emacs:backward-paragraph'
   'alt-}': 'atomic-emacs:forward-paragraph'
+  'alt-c': 'atomic-emacs:capitalize-word-or-region'
+  'alt-l': 'atomic-emacs:downcase-word-or-region'
+  'alt-u': 'atomic-emacs:upcase-word-or-region'
   'left': 'atomic-emacs:backward-char'
   'right': 'atomic-emacs:forward-char'
 
@@ -67,6 +70,10 @@
 
 '.platform-linux atom-text-editor':
   'ctrl-e': 'editor:move-to-end-of-screen-line'
+
+'.platform-win32 atom-text-editor':
+  'ctrl-e': 'editor:move-to-end-of-screen-line'
+  'ctrl-k ctrl-k': 'editor:cut-to-end-of-line'
 
 '.find-and-replace':
   'ctrl-s': 'find-and-replace:find-next'

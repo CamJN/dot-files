@@ -28,10 +28,7 @@
       "Thumbs.db"
     ]
     disabledPackages: [
-      "linter-rubocop"
       "welcome"
-      "racer"
-      "linter-csslint"
       "autocomplete-ruby"
     ]
     projectHome: "/Users/camdennarzt/Developer"
@@ -57,3 +54,8 @@
   "linter-scss-lint":
     executablePath: "/Users/camdennarzt/.rbenv/shims/scss-lint"
     additionalArguments: "--exclude-linter EmptyLineBetweenBlocks,ZeroUnit,LeadingZero,StringQuotes,PropertySortOrder,SelectorDepth,NestingDepth,SelectorFormat,QualifyingElement,IdSelector,PlaceholderInExtend,SingleLinePerSelector"
+  pigments: {}
+  whitespace: {}
+  "linter-erb": {}
+  "linter-rubocop":
+    executablePath: "/Users/camdennarzt/.rbenv/shims/rubocop"

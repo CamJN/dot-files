@@ -6,34 +6,43 @@
     "linter",
     "lint"
   ],
-  "main": "./lib/init",
-  "linter-package": true,
-  "version": "0.0.14",
+  "main": "./lib/main",
+  "version": "1.0.5",
   "description": "Lint CSS on the fly, using csslint",
   "repository": {
     "type": "git",
     "url": "https://github.com/AtomLinter/linter-csslint"
   },
   "license": "MIT",
-  "engines": {
-    "atom": ">0.50.0"
-  },
   "dependencies": {
-    "csslint": "~0.10.0"
+    "csslint": "git+https://github.com/AtomLinter/csslint",
+    "atom-linter": "^3.1.0"
   },
-  "readme": "linter-csslint\n=========================\n\nThis linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [csslint](https://github.com/CSSLint/csslint). It will be used with files that have the “CSS” or “HTML” syntax.\n\n## Installation\nLinter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).\n\n### Plugin installation\n```\n$ apm install linter-csslint\n```\n\n## Settings\nYou can configure linter-csslint by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```\n'linter-csslint':\n  'csslintExecutablePath': null #csslint path. run 'which csslint' to find the path\n```\n\n## Contributing\nIf you would like to contribute enhancements or fixes, please do the following:\n\n1. Fork the plugin repository.\n1. Hack on a separate topic branch created from the latest `master`.\n1. Commit and push the topic branch.\n1. Make a pull request.\n1. welcome to the club\n\nPlease note that modifications should follow these coding guidelines:\n\n- Indent is 2 spaces.\n- Code should pass coffeelint linter.\n- Vertical whitespace helps readability, don’t be afraid to use it.\n\nThank you for helping out!\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
+  "providedServices": {
+    "linter": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    }
+  },
+  "readme": "linter-csslint\n=========================\n\nThis linter plugin for [Linter](https://github.com/AtomLinter/Linter) provides an interface to [csslint](https://github.com/CSSLint/csslint). It will be used with files that have the “CSS” or “HTML” syntax.\n\n## Installation\nLinter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).\n\n### Plugin installation\n```ShellSession\n$ apm install linter-csslint\n```\n\n## Settings\nYou can configure linter-csslint by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```cson\n'linter-csslint':\n  #csslint path. run 'which csslint' to find the path\n  'executablePath': null\n```\n\n## Contributing\nIf you would like to contribute enhancements or fixes, please do the following:\n\n1. Fork the plugin repository.\n1. Hack on a separate topic branch created from the latest `master`.\n1. Commit and push the topic branch.\n1. Make a pull request.\n1. Welcome to the club!\n\nPlease note that modifications should follow these coding guidelines:\n\n- Indent is 2 spaces.\n- Code should pass [CoffeeLint](http://www.coffeelint.org/) with the provided `coffeelint.json`\n- Vertical whitespace helps readability, don’t be afraid to use it.\n\n**Thank you for helping out!**\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-csslint/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-csslint",
-  "_id": "linter-csslint@0.0.14",
-  "_shasum": "5eac8ba625ee23d7f71ba1662c9f1574c0f2c7e7",
-  "_resolved": "file:../d-115526-41550-1iqvmpv/package.tgz",
-  "_from": "../d-115526-41550-1iqvmpv/package.tgz",
+  "_id": "linter-csslint@1.0.5",
+  "_shasum": "d647f7382be1e0e4388c9b43fa10898cd491bb8f",
+  "_resolved": "file:../d-11578-27307-1jna34b/package.tgz",
+  "_from": "../d-11578-27307-1jna34b/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
+      {
+        "name": "xregexp",
+        "version": "2.0.0",
+        "path": "node_modules/atom-linter/node_modules/xregexp/xregexp-all.js"
+      },
       {
         "name": "csslint",
         "version": "0.10.0",
@@ -46,29 +55,33 @@
       }
     ],
     "extensions": {
-      ".coffee": [
-        "lib/init.coffee",
-        "lib/linter-csslint.coffee"
-      ],
-      ".js": [
-        "node_modules/csslint/cli.js",
-        "node_modules/csslint/lib/csslint-node.js",
-        "node_modules/csslint/node_modules/parserlib/lib/node-parserlib.js"
-      ],
       ".json": [
+        "coffeelint.json",
+        "node_modules/atom-linter/node_modules/xregexp/package.json",
+        "node_modules/atom-linter/package.json",
         "node_modules/csslint/node_modules/parserlib/package.json",
         "node_modules/csslint/package.json",
         "package.json"
+      ],
+      ".coffee": [
+        "lib/main.coffee",
+        "node_modules/atom-linter/lib/helpers.coffee"
+      ],
+      ".js": [
+        "node_modules/atom-linter/node_modules/xregexp/xregexp-all.js",
+        "node_modules/csslint/cli.js",
+        "node_modules/csslint/lib/csslint-node.js",
+        "node_modules/csslint/node_modules/parserlib/lib/node-parserlib.js"
       ]
     },
     "folders": [
       {
         "paths": [
-          "lib",
-          ""
+          "",
+          "lib"
         ],
         "dependencies": {
-          "csslint": "~0.10.0"
+          "atom-linter": "^3.1.0"
         }
       },
       {

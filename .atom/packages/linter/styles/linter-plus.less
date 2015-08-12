@@ -1,17 +1,21 @@
 @import "ui-variables";
 @import 'octicon-utf-codes';
 
+@spacing: 3px;
+
 linter-message {
   display: flex;
   align-items: flex-end;
-  padding: 2px;
+  flex-wrap: wrap;
   font-size: @font-size;
-  span {
-    padding: 0 6px;
-  }
+  line-height: 1.2;
   & > .badge {
     align-self: flex-start;
   }
+}
+
+.linter-message-item {
+  margin: @spacing;
 }
 
 linter-multiline-message {
@@ -44,11 +48,11 @@ linter-multiline-message {
   }
 }
 
-#linter-panel {
+linter-panel {
   display: block;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 150px;
-  padding: 4px 8px;
+  padding: @spacing;
   &[hidden]{
     display: none;
   }
@@ -59,7 +63,7 @@ linter-multiline-message {
   @linter-inline-fg: @base-background-color;
   @linter-inline-bg: @text-color;
   margin-top: 4px;
-  padding: 4px;
+  padding: @spacing;
   color: @linter-inline-fg;
   border-radius: @component-border-radius * 1.5;
   border-top-left-radius: 0;
@@ -82,7 +86,9 @@ linter-multiline-message {
   }
   a {
     color: @linter-inline-link;
-    margin-right: 4px;
+    &:last-of-type {
+      padding-right: @spacing*1.5; // a bit extra space for visual pleasing
+    }
   }
 }
 
@@ -91,16 +97,16 @@ linter-bottom-tab {
   margin-right: -1px; // hide left border
   padding: 0 .6em;
   line-height: 1.8em;
-  vertical-align: middle;
   color: @text-color-subtle;
   border: 1px solid @button-border-color;
   background: fade(@button-background-color, 33%);
   cursor: pointer;
-  &.first-tab {
+  vertical-align: middle;
+  &:first-of-type {
     border-top-left-radius: @component-border-radius;
     border-bottom-left-radius: @component-border-radius;
   }
-  &.last-tab {
+  &:last-of-type {
     margin-right: .6em;
     border-top-right-radius: @component-border-radius;
     border-bottom-right-radius: @component-border-radius;
@@ -130,6 +136,8 @@ atom-text-editor::shadow .linter-highlight .icon-right{
 atom-text-editor::shadow .linter-highlight, .linter-highlight{
   &.badge {
     border-radius: @component-border-radius;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &.error {
     &:not(.line-number){

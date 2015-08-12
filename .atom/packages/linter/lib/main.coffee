@@ -12,21 +12,17 @@ module.exports =
       type: 'boolean'
       default: true
     showErrorTabLine:
-      title: 'Show line tab in error panel'
+      title: 'Show Line tab in Bottom Panel'
       type: 'boolean'
       default: false
     showErrorTabFile:
-      title: 'Show file tab in error panel'
+      title: 'Show File tab in Bottom Panel'
       type: 'boolean'
       default: true
     showErrorTabProject:
-      title: 'Show project tab in error panel'
+      title: 'Show Project tab in Bottom Panel'
       type: 'boolean'
       default: true
-    defaultErrorTab:
-      type: 'string'
-      default: 'File'
-      enum: ['Line', 'File', 'Project']
     showErrorInline:
       title: 'Show Inline Tooltips'
       descriptions: 'Show inline tooltips for errors'
@@ -36,23 +32,32 @@ module.exports =
       title: 'Underline Issues'
       type: 'boolean'
       default: true
-    statusIconPosition:
-      title: 'Position of Status Icon on Bottom Bar'
-      description: 'Requires a reload/restart to update'
-      enum: ['Left', 'Right']
+    ignoredMessageTypes:
+      title: "Ignored message Types"
+      type: 'array'
+      default: []
+      items:
+        type: 'string'
+    statusIconScope:
+      title: "Scope of messages to show in status icon"
       type: 'string'
-      default: 'Left'
+      enum: ['File', 'Line', 'Project']
+      default: 'Project'
 
-  activate: ->
+  activate: (state) ->
     LinterPlus = require('./linter-plus.coffee')
-    @instance = new LinterPlus()
-
-    legacy = require('./legacy.coffee')
+    @instance = new LinterPlus state
+    {deprecate} = require('grim')
     for atomPackage in atom.packages.getLoadedPackages()
-      if atomPackage.metadata['linter-package'] is true
-        implementation = atomPackage.metadata['linter-implementation'] ? atomPackage.name
-        linter = legacy(require("#{atomPackage.path}/lib/#{implementation}"))
-        @consumeLinter(linter)
+      deprecate('AtomLinter legacy API has been removed.
+        Please refer to the Linter docs to update and the latest API:
+        https://github.com/atom-community/linter/wiki/Migrating-to-the-new-API', {
+        packageName: atomPackage.name
+      }) if atomPackage.metadata['linter-package']
+
+
+  serialize: ->
+    @instance.serialize()
 
   consumeLinter: (linters) ->
     unless linters instanceof Array

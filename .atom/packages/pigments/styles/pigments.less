@@ -1,0 +1,420 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+@import "syntax-variables";
+
+//    ##     ## ######## ##       ########  ######## ########   ######
+//    ##     ## ##       ##       ##     ## ##       ##     ## ##    ##
+//    ##     ## ##       ##       ##     ## ##       ##     ## ##
+//    ######### ######   ##       ########  ######   ########   ######
+//    ##     ## ##       ##       ##        ##       ##   ##         ##
+//    ##     ## ##       ##       ##        ##       ##    ##  ##    ##
+//    ##     ## ######## ######## ##        ######## ##     ##  ######
+
+.absolute-box {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.background-color {
+  z-index: -2;
+
+  &:before {
+    content: '';
+    background: url(atom://pigments/resources/transparent-background.png);
+    z-index: -1;
+    border-radius: inherit;
+    .absolute-box;
+  }
+
+  &:after {
+    content: '';
+    background: inherit;
+    z-index: -1;
+    border-radius: inherit;
+    .absolute-box;
+  }
+}
+
+.icon-pigments::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-image: url(atom://pigments/resources/icon.svg);
+  background-size: 16px;
+  vertical-align: middle;
+}
+
+//    ##     ##    ###    ########  ##    ## ######## ########   ######
+//    ###   ###   ## ##   ##     ## ##   ##  ##       ##     ## ##    ##
+//    #### ####  ##   ##  ##     ## ##  ##   ##       ##     ## ##
+//    ## ### ## ##     ## ########  #####    ######   ########   ######
+//    ##     ## ######### ##   ##   ##  ##   ##       ##   ##         ##
+//    ##     ## ##     ## ##    ##  ##   ##  ##       ##    ##  ##    ##
+//    ##     ## ##     ## ##     ## ##    ## ######## ##     ##  ######
+
+atom-text-editor::shadow pigments-markers,
+pigments-markers {
+  position: relative;
+  display: block;
+  z-index: 1;
+
+  &.above-editor-content {
+    z-index: 1;
+  }
+}
+atom-text-editor::shadow pigments-markers::shadow pigments-color-marker,
+pigments-markers::shadow pigments-color-marker,
+pigments-color-marker {
+  display: block;
+  position: absolute;
+
+  .region {
+    position: absolute;
+    white-space: pre;
+
+    &.background {
+      border-radius: 2px;
+    }
+
+    &.outline {
+      margin-left: -1px;
+      margin-top: -2px;
+      padding-left: 4px;
+
+      border-radius: 0;
+
+      &::before {
+        box-sizing: border-box;
+        border: 2px solid transparent;
+        border-image: -webkit-repeating-linear-gradient(45deg, #808080 4px, #6A6A6A 4px, #6A6A6A 8px, #808080 8px, #808080 12px) 1 1 1 1 round;
+        content: '';
+        border-radius: inherit;
+        background-color: inherit;
+        border-radius: inherit;
+        .absolute-box;
+      }
+
+      &::after {
+        box-sizing: border-box;
+        content: '';
+        display: block;
+        border: 2px solid transparent;
+        border-color: inherit;
+        border-radius: inherit;
+        .absolute-box;
+      }
+    }
+
+    &.underline {
+      height: 2px !important;
+      margin-top: 1.3em; // adjust to your liking
+    }
+
+    &.background, &.underline {
+      .background-color;
+    }
+  }
+
+  &.dot {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    vertical-align: bottom;
+    transform: translate(0, -50%);
+
+    &:before {
+      content: '';
+      background: url(atom://pigments/resources/transparent-background.png);
+      background-size: 100%;
+      border-radius: inherit;
+      .absolute-box;
+    }
+
+    &:after {
+      content: '';
+      background: inherit;
+      border-radius: inherit;
+      .absolute-box;
+    }
+
+    &.square {
+      border-radius: 0;
+    }
+  }
+}
+
+//     ######  ##     ##  ######    ######   ########  ######  ########
+//    ##    ## ##     ## ##    ##  ##    ##  ##       ##    ##    ##
+//    ##       ##     ## ##        ##        ##       ##          ##
+//     ######  ##     ## ##   #### ##   #### ######    ######     ##
+//          ## ##     ## ##    ##  ##    ##  ##             ##    ##
+//    ##    ## ##     ## ##    ##  ##    ##  ##       ##    ##    ##
+//     ######   #######   ######    ######   ########  ######     ##
+
+.color-suggestion .label {
+  opacity: 1 !important;
+}
+.color-suggestion-preview {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+}
+
+//     ######  ########    ###    ########   ######  ##     ##
+//    ##    ## ##         ## ##   ##     ## ##    ## ##     ##
+//    ##       ##        ##   ##  ##     ## ##       ##     ##
+//     ######  ######   ##     ## ########  ##       #########
+//          ## ##       ######### ##   ##   ##       ##     ##
+//    ##    ## ##       ##     ## ##    ##  ##    ## ##     ##
+//     ######  ######## ##     ## ##     ##  ######  ##     ##
+
+pigments-color-results {
+  display: block;
+  width: 100%;
+
+  atom-panel.preview-pane {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // overflow: auto;
+  }
+
+  .match.color-match {
+    padding: 2px 4px
+  }
+
+  .preview-pane {
+    position: relative;
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+
+    .results-view {
+      overflow: auto;
+      position: relative;
+      padding: 0 10px;
+      -webkit-flex: 1;
+
+      .line-number {
+        margin-right: 1ex;
+        text-align: right;
+        display: inline-block;
+      }
+
+      .search-result {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        cursor: alias;
+
+        &:hover {
+          background: @background-color-highlight;
+        }
+      }
+    }
+  }
+}
+
+//     ######   ##     ##    ###    ########  ########
+//    ##    ##  ##     ##   ## ##   ##     ## ##     ##
+//    ##        ##     ##  ##   ##  ##     ## ##     ##
+//    ##   #### ##     ## ##     ## ########  ##     ##
+//    ##    ##  ##     ## ######### ##   ##   ##     ##
+//    ##    ##  ##     ## ##     ## ##    ##  ##     ##
+//     ######    #######  ##     ## ##     ## ########
+
+pigments-sources-popup {
+  .inset-panel {
+    margin-bottom: 0.75em;
+  }
+}
+
+//    ########     ###    ##       ######## ######## ######## ########
+//    ##     ##   ## ##   ##       ##          ##       ##    ##
+//    ##     ##  ##   ##  ##       ##          ##       ##    ##
+//    ########  ##     ## ##       ######      ##       ##    ######
+//    ##        ######### ##       ##          ##       ##    ##
+//    ##        ##     ## ##       ##          ##       ##    ##
+//    ##        ##     ## ######## ########    ##       ##    ########
+
+pigments-palette {
+  background: @syntax-background-color;
+  color: @text-color;
+  font-size: 1.2em;
+
+  .pigments-palette-list, .pigments-palette-controls {
+    display: -webkit-flex;
+    position: relative;
+    width: 100%;
+  }
+
+  //    ##       ####  ######  ########
+  //    ##        ##  ##    ##    ##
+  //    ##        ##  ##          ##
+  //    ##        ##   ######     ##
+  //    ##        ##        ##    ##
+  //    ##        ##  ##    ##    ##
+  //    ######## ####  ######     ##
+
+  ol {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 10px;
+    list-style: none;
+    border-bottom: 1px solid @base-border-color;
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+
+    &.pigments-color-group {
+      padding: 0;
+      border-bottom: none;
+      -webkit-flex-direction: column;
+    }
+  }
+  [data-variable-id] {
+    cursor: alias;
+    pointer-events: auto;
+    padding-left: 1em;
+    display: inline-block;
+  }
+  [data-variable-id] * {
+    pointer-events: none;
+  }
+
+  .path, .line {
+    color: @text-color-subtle;
+  }
+
+  .pigments-color-group .path {
+    display: none;
+  }
+
+  .pigments-color-group-header-content {
+    border-bottom: 1px solid @base-border-color;
+    display: inline-block;
+    background: @syntax-background-color;
+    padding: 10px;
+    width: 100%;
+
+    &.fixed {
+      position: fixed;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    &.absolute {
+      position: absolute;
+    }
+  }
+
+  .pigments-palette-list {
+    overflow-y: auto;
+    background: @tool-panel-background-color;
+  }
+
+  .pigments-color, .pigments-color-details {
+    display: -webkit-flex;
+  }
+
+  .pigments-color-details {
+    -webkit-flex-flow: column;
+    -webkit-flex: 1;
+  }
+
+  .pigments-color {
+    -webkit-flex-flow: row;
+  }
+
+  .pigments-color-properties {
+    width: 8em;
+
+    span {
+      display: block;
+      float: left;
+      width: 50%;
+      color: @text-color;
+    }
+
+    strong {
+      color: @text-color-subtle;
+    }
+  }
+
+  .pigments-color-preview {
+    .background-color;
+
+    position: relative;
+    width: 3em;
+    height: 3em;
+    margin-right: 10px;
+    z-index: 0;
+
+    &:before {
+      z-index: 0;
+    }
+    &:after {
+      z-index: 1;
+    }
+  }
+
+  //     ######  ######## ########  ##        ######
+  //    ##    ##    ##    ##     ## ##       ##    ##
+  //    ##          ##    ##     ## ##       ##
+  //    ##          ##    ########  ##        ######
+  //    ##          ##    ##   ##   ##             ##
+  //    ##    ##    ##    ##    ##  ##       ##    ##
+  //     ######     ##    ##     ## ########  ######
+
+  select {
+    margin: 0 0.5em;
+    background: @input-background-color;
+    border: 1px solid @input-border-color;
+    color: @text-color;
+    font-family: @font-family;
+  }
+
+  .settings-view input[type="checkbox"] {
+    margin: 0 0.5em 0 0;
+    vertical-align: text-bottom;
+    font-size: 0.8em;
+  }
+
+  .pigments-palette-panel {
+    display: -webkit-flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-flex-flow: column;
+  }
+
+  .pigments-palette-controls {
+    min-height: -webkit-min-content;
+  }
+
+  .pigments-palette-controls-wrapper {
+    border-bottom: 1px solid @base-border-color;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .input-group-inline {
+    margin-right: 1em;
+  }
+}

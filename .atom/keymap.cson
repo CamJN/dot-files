@@ -26,3 +26,5 @@
   'ctrl-x ctrl-d': 'editor:duplicate-lines'
   'alt-/': 'autocomplete-plus:activate'
   'ctrl-x 1': 'tabs:close-other-tabs'
+  'alt-u': 'editor:upper-case'
+  'alt-l': 'editor:lower-case'

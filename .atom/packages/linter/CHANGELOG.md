@@ -1,3 +1,63 @@
+# 1.3.4
+
+* Messages are now deleted when a linter provider is deleted/deactivated.
+
+# 1.3.3
+
+* Fix linter-panel's `overflow-y` to only display the scrollbar when necessary.
+* Fix some error cases where markers won't be destroyed properly.
+
+# 1.3.2
+
+* Increase messages refresh interval, which should result in a cpu load decrease
+
+# 1.3.1
+
+* Fix a critical typo affecting multi line messages
+
+# 1.3.0
+
+* Fix a bug where messages would be updated for a lazy linter after text editor has closed and there is no way to make them disappear
+* Fix a bug where linter:toggle won't clear errors
+* Fix a bug where linter:lint won't update the bottom status icon count
+* Add statusIconScope configuration
+* Fix a bug where panel won't be toggled if you click the bottom tab twice
+* Fix a bug where stringish errors from providers won't be handled properly
+* Fix several typos
+* Add efficient marker updates mechanism (:racehorse:)
+* Lots of cleanups and re-organization
+* Add a bunch of new Events for self-api consumers
+* :fire: Remove support for legacy providers completely!
+* :art: Fix wrapping of issue messages
+* Remove `alt` keybindings to avoid conflict with core's
+* Add contribution guidelines
+* Fixed a marker leak with bubbles, which would make editor slower over time.
+* Remove an oudated config (`statusIconPosition`).
+* Invalidate Range when a range is removed from buffer.
+
+# 1.2.3
+
+* Fix a bug where panel won't be hidden even with no errors.
+
+# 1.2.2
+
+* Fix a bug where count wont be updated on render.
+
+# 1.2.1
+
+* Fix a bug with legacy Linter API
+
+# 1.2.0
+
+* Fix a bug when Error Panel won't collapse even when there's no errors with File as Active Tab
+* Speed Improvements
+* Remove the "Default Error Tab" config option in favor of storing the currently selected tab in the package state.
+* Fix a bug where require time errors of legacy API providers would be shown as linter errors
+* Tweak the status line item positioning
+* Add Helpers which aid the creation of Command Line Linters.
+* Add `linter:togglePanel` command to toggle bottom panel
+* Add `linter.ignoredMessageTypes` config to ignore certain message types
+
 # 1.1.0
 
 * Add support for collapsible messages

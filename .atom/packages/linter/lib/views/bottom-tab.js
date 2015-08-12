@@ -2,44 +2,54 @@
 
 class BottomTab extends HTMLElement{
 
-  initialize(Content, onClick) {
-    this._active = false
-    this.innerHTML = Content
+  prepare(name) {
+    this.name = name
+    this.attached = false
+    this.active = false
     this.classList.add('linter-tab')
-
     this.countSpan = document.createElement('span')
     this.countSpan.classList.add('count')
     this.countSpan.textContent = '0'
-
-    this.appendChild(document.createTextNode(' '))
+    this.innerHTML = this.name + ' '
     this.appendChild(this.countSpan)
-
-    this.addEventListener('click', onClick)
+    this.count = 0
+    return this
   }
+
+  attachedCallback() {
+    this.attached = true
+  }
+
+  detachedCallback() {
+    this.attached = false
+  }
+
   get active() {
     return this._active
   }
+
   set active(value) {
+    this._active = value
     if (value) {
       this.classList.add('active')
     } else {
       this.classList.remove('active')
     }
-    this._active = value
   }
+
+  get count(){
+    return this._count
+  }
+
   set count(value) {
     this._count = value
     this.countSpan.textContent = value
   }
-  set visibility(value){
-    if(value){
-      this.removeAttribute('hidden')
-    } else {
-      this.setAttribute('hidden', true)
-    }
-  }
+
 }
 
-module.exports = BottomTab = document.registerElement('linter-bottom-tab', {
-  prototype: BottomTab.prototype
-})
+module.exports = BottomTab = document
+  .registerElement(
+    'linter-bottom-tab',
+    {prototype: BottomTab.prototype}
+  )

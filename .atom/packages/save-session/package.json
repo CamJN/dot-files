@@ -1,7 +1,7 @@
 {
   "name": "save-session",
   "main": "./lib/save-session",
-  "version": "0.15.6",
+  "version": "0.15.7",
   "description": "An Atom package to restore your session.",
   "repository": {
     "type": "git",
@@ -24,10 +24,10 @@
     "url": "https://github.com/mpeterson2/save-session/issues"
   },
   "homepage": "https://github.com/mpeterson2/save-session",
-  "_id": "save-session@0.15.6",
-  "_shasum": "ae8202e398c078e6b4b3923f7199ee430d507ae1",
-  "_resolved": "file:../d-115529-4578-1hw84u2/package.tgz",
-  "_from": "../d-115529-4578-1hw84u2/package.tgz",
+  "_id": "save-session@0.15.7",
+  "_shasum": "7db2aa14fc44e9636cc0ce463b7ee4ac717026d9",
+  "_resolved": "file:../d-115615-56347-e2p75c/package.tgz",
+  "_from": "../d-115615-56347-e2p75c/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -93,7 +93,7 @@
       },
       {
         "name": "amdefine",
-        "version": "0.1.1",
+        "version": "1.0.0",
         "path": "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/amdefine.js"
       },
       {

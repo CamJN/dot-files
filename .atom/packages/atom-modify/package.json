@@ -1,0 +1,41 @@
+{
+  "name": "atom-modify",
+  "main": "./lib/atom-modify",
+  "version": "0.1.0",
+  "description": "Atom package that takes selected text and converts necessary characters into html entities.",
+  "activationEvents": [
+    "atom-modify:convert"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amesarosh/atom-modify"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {},
+  "readme": "# atom-modify\n\nAtom package that takes selected text and converts necessary characters into html entities.\n\nUse `cmd-alt-m` to modify the selected text\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/amesarosh/atom-modify/issues"
+  },
+  "homepage": "https://github.com/amesarosh/atom-modify",
+  "_id": "atom-modify@0.1.0",
+  "_shasum": "6c679208177284c7f42208309162fcef5c64efdc",
+  "_resolved": "file:../d-11564-70559-14hz8nt/package.tgz",
+  "_from": "../d-11564-70559-14hz8nt/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/atom-modify.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

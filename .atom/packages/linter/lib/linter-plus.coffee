@@ -4,104 +4,115 @@ LinterViews = require './linter-views'
 EditorLinter = require './editor-linter'
 Helpers = require './helpers'
 Commands = require './commands'
+{deprecate} = require 'grim'
 
 class Linter
-  constructor: ->
+  # State is an object by default; never null or undefined
+  constructor: (@state)  ->
+    @state.scope ?= 'File'
+
     # Public Stuff
     @lintOnFly = true # A default art value, to be immediately replaced by the observe config below
-    @views = new LinterViews this # Used by editor-linter to trigger views.render
-    @commands = new Commands this
 
     # Private Stuff
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
-    @editorLinters = new Map
-    @messagesProject = new Map # Values set in editor-linter and consumed in views.render
-    @linters = new Set # Values are pushed here from Main::consumeLinter
+    @linters = new (require('./linter-registry'))()
+    @editors = new (require('./editor-registry'))()
+    @messages = new (require('./message-registry'))()
+    @views = new LinterViews(this)
+    @commands = new Commands(this)
 
-    @subscriptions.add atom.config.observe 'linter.showErrorInline', (showBubble) =>
-      @views.setShowBubble(showBubble)
-    @subscriptions.add atom.config.observe 'linter.showErrorPanel', (showPanel) =>
-      @views.setShowPanel(showPanel)
-    @subscriptions.add atom.config.observe 'linter.underlineIssues', (underlineIssues) =>
-      @views.setUnderlineIssues(underlineIssues)
+    @subscriptions.add @linters.onDidUpdateMessages (info) =>
+      @messages.set(info)
+    @subscriptions.add @messages.onDidUpdateMessages (messages) =>
+      @views.render(messages)
+
     @subscriptions.add atom.config.observe 'linter.lintOnFly', (value) =>
       @lintOnFly = value
     @subscriptions.add atom.project.onDidChangePaths =>
       @commands.lint()
-    @subscriptions.add atom.workspace.onDidChangeActivePaneItem =>
-      @commands.lint()
 
-    @subscriptions.add atom.workspace.observeTextEditors (editor) =>
-      currentEditorLinter = new EditorLinter @, editor
-      @editorLinters.set editor, currentEditorLinter
-      @emitter.emit 'observe-editor-linters', currentEditorLinter
-      currentEditorLinter.lint false
-      editor.onDidDestroy =>
-        currentEditorLinter.destroy()
-        @editorLinters.delete editor
+    @subscriptions.add atom.workspace.observeTextEditors (editor) => @createEditorLinter(editor)
+
+  serialize: -> @state
 
   addLinter: (linter) ->
-    try
-      if(Helpers.validateLinter(linter))
-        @linters.add(linter)
-    catch err
-      atom.notifications.addError("Invalid Linter: #{err.message}", {
-        detail: err.stack,
-        dismissable: true
-      })
+    @linters.addLinter(linter)
 
   deleteLinter: (linter) ->
     return unless @hasLinter(linter)
-    @linters.delete(linter)
-    if linter.scope is 'project'
-      @deleteProjectMessages(linter)
-    else
-      @eachEditorLinter((editorLinter) ->
-        editorLinter.deleteMessages(linter)
-      )
-    @views.render()
+    @linters.deleteLinter(linter)
+    @deleteMessages(linter)
 
   hasLinter: (linter) ->
-    @linters.has(linter)
+    @linters.hasLinter(linter)
 
   getLinters: ->
-    @linters
+    @linters.getLinters()
 
-  onDidChangeProjectMessages: (callback)->
-    @emitter.on 'did-change-project-messages', callback
+  setMessages: (linter, messages) ->
+    @messages.set({linter, messages})
+
+  deleteMessages: (linter) ->
+    @messages.deleteMessages(linter)
+
+  getMessages: ->
+    @messages.publicMessages
+
+  onDidUpdateMessages: (callback) ->
+    @messages.onDidUpdateMessages(callback)
+
+  onDidChangeMessages: (callback) ->
+    deprecate("Linter::onDidChangeMessages is deprecated, use Linter::onDidUpdateMessages instead")
+    @onDidUpdateMessages(callback)
+
+  onDidChangeProjectMessages: (callback) ->
+    deprecate("Linter::onDidChangeProjectMessages is deprecated, use Linter::onDidChangeMessages instead")
+    @onDidChangeMessages(callback)
 
   getProjectMessages: ->
-    @messagesProject
+    deprecate("Linter::getProjectMessages is deprecated, use Linter::getMessages instead")
+    @getMessages()
 
   setProjectMessages: (linter, messages) ->
-    @messagesProject.set(linter, Helpers.validateResults(messages))
-    @emitter.emit 'did-change-project-messages', @messagesProject
-    @views.render()
+    deprecate("Linter::setProjectMessages is deprecated, use Linter::setMessages instead")
+    @setMessages(linter, messages)
 
   deleteProjectMessages: (linter) ->
-    @messagesProject.delete(linter)
-    @emitter.emit 'did-change-project-messages', @messagesProject
-    @views.render()
+    deprecate("Linter::deleteProjectMessages is deprecated, use Linter::deleteMessages instead")
+    @deleteMessages(linter)
 
   getActiveEditorLinter: ->
-    return @getEditorLinter atom.workspace.getActiveTextEditor()
+    @editors.ofActiveTextEditor()
 
   getEditorLinter: (editor) ->
-    return @editorLinters.get editor
+    @editors.ofTextEditor(editor)
 
   eachEditorLinter: (callback) ->
-    @editorLinters.forEach(callback)
+    @editors.forEach(callback)
 
   observeEditorLinters: (callback) ->
-    @eachEditorLinter callback
-    @emitter.on 'observe-editor-linters', callback
+    @editors.observe(callback)
+
+  createEditorLinter: (editor) ->
+    editorLinter = @editors.create(editor)
+    editorLinter.onShouldUpdateBubble =>
+      @views.renderBubble()
+    editorLinter.onShouldUpdateLineMessages =>
+      @views.renderLineMessages(true)
+    editorLinter.onShouldLint (onChange) =>
+      @linters.lint({onChange, editorLinter})
+    editorLinter.onDidDestroy =>
+      editorLinter.deactivate()
+      @messages.deleteEditorMessages(editor)
 
   deactivate: ->
     @subscriptions.dispose()
-    @eachEditorLinter (linter) ->
-      linter.destroy()
     @views.destroy()
+    @editors.deactivate()
+    @linters.deactivate()
     @commands.destroy()
+    @messages.deactivate()
 
 module.exports = Linter

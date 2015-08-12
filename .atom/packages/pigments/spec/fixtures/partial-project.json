@@ -1,0 +1,21 @@
+{
+  "deserializer": "ColorProject",
+  "timestamp": "#{timestamp}",
+  "version": "#{version}",
+  "markersVersion": "#{markersVersion}",
+  "globalSourceNames": [
+    "*.styl",
+    "*.less"
+  ],
+  "globalIgnoredNames": [],
+  "ignoredNames": [
+    "vendor/*"
+  ],
+  "paths": [
+    "#{root}/styles/buttons.styl"
+  ],
+  "variables": {
+    "deserializer": "VariablesCollection",
+    "content": []
+  }
+}

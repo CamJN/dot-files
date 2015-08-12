@@ -2,14 +2,22 @@
 
 module.exports =
   config:
-    rustHome:
+    rustcPath:
       type: 'string'
-      default: '/usr/local'
-      description: 'Path to Rust\'s home directory. rustc should exist in /bin/rustc from here.'
+      default: 'rustc'
+      description: "Path to Rust's compiler `rustc`."
+    cargoPath:
+      type: 'string'
+      default: 'cargo'
+      description: "Path to Rust's package manager `cargo`."
     useCargo:
       type: 'boolean'
       default: true
-      description: 'Use Cargo if it\'s possible'
+      description: "Use Cargo if it's possible"
+    buildTest:
+      type: 'boolean'
+      default: false
+      description: "Lint test code"
     cargoManifestFilename:
       type: 'string'
       default: 'Cargo.toml'
@@ -35,20 +43,23 @@ module.exports =
       Please install https://github.com/zargony/atom-language-rust'
 
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.observe 'linter-rust.rustHome',
-    (rustHome) =>
-      @rustHome = rustHome
 
-    @subscriptions.add atom.config.observe 'linter-rust.useCargo',
-    (useCargo) =>
+    @subscriptions.add atom.config.observe 'linter-rust.rustcPath', (rustcPath) =>
+      @rustcPath = rustcPath
+
+    @subscriptions.add atom.config.observe 'linter-rust.cargoPath', (cargoPath) =>
+      @cargoPath = cargoPath
+
+    @subscriptions.add atom.config.observe 'linter-rust.useCargo', (useCargo) =>
       @useCargo = useCargo
 
-    @subscriptions.add atom.config.observe 'linter-rust.cargoManifestFilename',
-    (cargoManifestFilename) =>
+    @subscriptions.add atom.config.observe 'linter-rust.buildTest', (buildTest) =>
+      @useCargo = buildTest
+
+    @subscriptions.add atom.config.observe 'linter-rust.cargoManifestFilename', (cargoManifestFilename) =>
       @cargoManifestFilename = cargoManifestFilename
 
-    @subscriptions.add atom.config.observe 'linter-rust.jobsNumber',
-    (jobsNumber) =>
+    @subscriptions.add atom.config.observe 'linter-rust.jobsNumber', (jobsNumber) =>
       @jobsNumber = jobsNumber
 
   deactivate: ->
@@ -56,11 +67,11 @@ module.exports =
 
 
   provideLinter: ->
-      LinterRust = require('./linter-rust')
-      @provider = new LinterRust()
-      return {
-        grammarScopes: ['source.rust']
-        scope: 'project'
-        lint: @provider.lint
-        lintOnFly: false
-      }
+    LinterRust = require('./linter-rust')
+    @provider = new LinterRust()
+    return {
+      grammarScopes: ['source.rust']
+      scope: 'project'
+      lint: @provider.lint
+      lintOnFly: false
+    }

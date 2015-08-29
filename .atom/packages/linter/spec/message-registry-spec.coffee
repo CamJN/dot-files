@@ -26,7 +26,7 @@ describe 'message-registry', ->
     waitsForPromise ->
       atom.workspace.destroyActivePaneItem()
       atom.workspace.open('test.txt').then ->
-        messageRegistry?.deactivate()
+        messageRegistry?.dispose()
         messageRegistry = new MessageRegistry()
 
   describe '::set', ->
@@ -40,7 +40,7 @@ describe 'message-registry', ->
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()
     it 'ignores deactivated linters', ->
       {linterRegistry, editorLinter, linter} = getLinterRegistry()
       messageRegistry.set({linter, messages: [getMessage('Error'), getMessage('Warning')]})
@@ -56,21 +56,41 @@ describe 'message-registry', ->
       expect(messageRegistry.publicMessages.length).toBe(1)
 
   describe '::onDidUpdateMessages', ->
-    it 'is triggered asyncly with results', ->
+    it 'is triggered asyncly with results and provides a diff', ->
       wasUpdated = false
       {linterRegistry, editorLinter} = getLinterRegistry()
       linterRegistry.onDidUpdateMessages (linterInfo) ->
         messageRegistry.set(linterInfo)
         expect(messageRegistry.hasChanged).toBe(true)
         messageRegistry.updatePublic()
-      gotMessages = null
-      messageRegistry.onDidUpdateMessages (messages) ->
+      messageRegistry.onDidUpdateMessages ({added, removed, messages}) ->
         wasUpdated = true
-        gotMessages = messages
+        expect(added.length).toBe(1)
+        expect(removed.length).toBe(0)
+        expect(messages.length).toBe(1)
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(true)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()
+    it 'provides the same objects when they dont change', ->
+      wasUpdated = false
+      {linterRegistry, editorLinter} = getLinterRegistry()
+      linterRegistry.onDidUpdateMessages (linterInfo) ->
+        messageRegistry.set(linterInfo)
+        messageRegistry.updatePublic()
+      disposable = messageRegistry.onDidUpdateMessages ({added}) ->
+        expect(added.length).toBe(1)
+        obj = added[0]
+        disposable.dispose()
+        messageRegistry.onDidUpdateMessages ({messages}) ->
+          wasUpdated = true
+          expect(messages[0]).toBe(obj)
+      waitsForPromise ->
+        linterRegistry.lint({onChange: false, editorLinter}).then( ->
+          return linterRegistry.lint({onChange: false, editorLinter})
+        ).then ->
+          expect(wasUpdated).toBe(true)
+          linterRegistry.dispose()
 
   describe '::deleteEditorMessages', ->
     it 'removes messages for that editor', ->
@@ -88,4 +108,4 @@ describe 'message-registry', ->
       waitsForPromise ->
         linterRegistry.lint({onChange: false, editorLinter}).then ->
           expect(wasUpdated).toBe(1)
-          linterRegistry.deactivate()
+          linterRegistry.dispose()

@@ -9,6 +9,7 @@ class ColorMarker
     @subscriptions.add @marker.onDidDestroy => @markerWasDestroyed()
     @subscriptions.add @marker.onDidChange =>
       if @marker.isValid()
+        @invalidateScreenRangeCache()
         @checkMarkerScope()
       else
         @destroy()
@@ -63,22 +64,27 @@ class ColorMarker
       @ignored = @colorBuffer.ignoredScopes.some (scopeRegExp) ->
         scopeChain.match(scopeRegExp)
 
-
       @lastScopeChain = scopeChain
     catch e
       console.error e
 
   isIgnored: -> @ignored
 
+  getScreenRange: -> @screenRangeCache ?= @marker.getScreenRange()
+
+  invalidateScreenRangeCache: -> @screenRangeCache = null
+
   convertContentToHex: ->
     hex = '#' + fill(@color.hex, 6)
 
     @marker.displayBuffer.buffer.setTextInRange(@marker.getBufferRange(), hex)
 
+  convertContentToRGB: ->
+    rgba = "rgb(#{Math.round @color.red}, #{Math.round @color.green}, #{Math.round @color.blue})"
+
+    @marker.displayBuffer.buffer.setTextInRange(@marker.getBufferRange(), rgba)
+
   convertContentToRGBA: ->
-    if @color.alpha is 1
-      rgba = "rgb(#{Math.round @color.red}, #{Math.round @color.green}, #{Math.round @color.blue})"
-    else
-      rgba = "rgba(#{Math.round @color.red}, #{Math.round @color.green}, #{Math.round @color.blue}, #{@color.alpha})"
+    rgba = "rgba(#{Math.round @color.red}, #{Math.round @color.green}, #{Math.round @color.blue}, #{@color.alpha})"
 
     @marker.displayBuffer.buffer.setTextInRange(@marker.getBufferRange(), rgba)

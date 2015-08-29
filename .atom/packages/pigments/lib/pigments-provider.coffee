@@ -1,11 +1,10 @@
 _ = require 'underscore-plus'
 {CompositeDisposable, Range}  = require 'atom'
-fuzzaldrin = require 'fuzzaldrin'
 {variables: variablesRegExp} = require './regexes'
 
 module.exports =
 class PigmentsProvider
-  constructor: (@project) ->
+  constructor: (@pigments) ->
     @subscriptions = new CompositeDisposable
     @selector = atom.config.get('pigments.autocompleteScopes').join(',')
 
@@ -15,16 +14,20 @@ class PigmentsProvider
 
   dispose: ->
     @subscriptions.dispose()
-    @project = null
+    @pigments = null
+
+  getProject: -> @pigments.getProject()
 
   getSuggestions: ({editor, bufferPosition}) ->
     prefix = @getPrefix(editor, bufferPosition)
+    project = @getProject()
     return unless prefix?.length
+    return unless project?
 
     if @extendAutocompleteToVariables
-      variables = @project.getVariables()
+      variables = project.getVariables()
     else
-      variables = @project.getColorVariables()
+      variables = project.getColorVariables()
 
     suggestions = @findSuggestionsForPrefix(variables, prefix)
     suggestions

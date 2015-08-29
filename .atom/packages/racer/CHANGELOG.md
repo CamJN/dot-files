@@ -1,6 +1,12 @@
 # Changelog
 
-## v0.15.3 (2015-08-04)
+## v0.17.1 (2015-08-16)
+Prints error from stderr if there is any.
+
+## v0.17.0 (2015-08-14)
+Adds snippet functionality and shows return type of functions.
+
+## v0.16.0 (2015-08-04)
 Alert users with useful notifications when error conditions occur.
 
 ## v0.15.2 (2015-06-24)

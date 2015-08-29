@@ -14,19 +14,24 @@ findFile = (dir, file, cb) ->
 
 lint = (editor, command, args) ->
   filePath = editor.getPath()
+  fileDir = dirname(filePath)
   tmpPath = join tmpdir(), randomBytes(32).toString 'hex'
   out = ''
+  err = ''
 
   appendToOut = (data) -> out += data
-  getConfig = (cb) -> findFile filePath, '.rubocop.yml', cb
+  appendToErr = (data) -> err += data
+  getConfig = (cb) -> findFile fileDir, '.rubocop.yml', cb
+  getCwd = (cb) -> findFile fileDir, '', cb
   writeTmp = (cb) -> writeFile tmpPath, editor.getText(), cb
   cleanup = (cb) -> unlink tmpPath, cb
 
-  new Promise (resolve, reject) -> getConfig (config) -> writeTmp (er) ->
+  new Promise (resolve, reject) -> getConfig (config) -> writeTmp (er) -> getCwd (cwd) ->
     return reject er if er
     new BufferedProcess
-      command: command
+      command: command[0]
       args: [
+        command.slice(1)...
         '-f'
         'json'
         (if config then ['-c', config] else [])...
@@ -34,11 +39,12 @@ lint = (editor, command, args) ->
         tmpPath
       ]
       options:
-        cwd: dirname(editor.getPath())
+        cwd: cwd
       stdout: appendToOut
-      stderr: appendToOut
+      stderr: appendToErr
       exit: -> cleanup ->
         try {offenses: errors} = JSON.parse(out).files[0]
+        console.error err if err
         return reject new Error out unless errors
         resolve errors.map (error) ->
           {line, column, length} =
@@ -67,7 +73,7 @@ module.exports =
     prefix = 'linter-rubocop.'
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe "#{prefix}executablePath",
-      (executablePath) => @executablePath = executablePath
+      (args) => @executablePath = if args then args.split ' ' else ['rubocop']
     @subscriptions.add atom.config.observe "#{prefix}additionalArguments",
       (args) => @additionalArguments = if args then args.split ' ' else []
 

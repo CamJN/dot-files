@@ -1,7 +1,7 @@
 {
   "name": "linter-rust",
   "main": "./lib/init",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "description": "Lint Rust-files, using rustc and/or cargo",
   "repository": {
     "type": "git",
@@ -27,10 +27,10 @@
     "url": "https://github.com/AtomLinter/linter-rust/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rust",
-  "_id": "linter-rust@0.2.6",
-  "_shasum": "0ea8a9f8ff2903c9b51771b28ff6638ef4b36031",
-  "_resolved": "file:../d-115631-77857-1bhxta5/package.tgz",
-  "_from": "../d-115631-77857-1bhxta5/package.tgz",
+  "_id": "linter-rust@0.2.8",
+  "_shasum": "65a19125c68113cf55f852e9f50d33d53ac5659e",
+  "_resolved": "file:../d-115720-18155-1vtjfwg/package.tgz",
+  "_from": "../d-115720-18155-1vtjfwg/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

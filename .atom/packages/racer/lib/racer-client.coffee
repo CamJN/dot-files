@@ -10,6 +10,7 @@ class RacerClient
   rust_src: null
   project_path: null
   candidates: null
+  last_stderr: null
 
   check_generator = (racer_action) ->
     (editor, row, col, cb) ->
@@ -27,7 +28,6 @@ class RacerClient
       tempOptions =
         prefix: "._" + original_file_name + ".racertmp"
         dir: temp_folder_path
-
 
       temp.open tempOptions, (err, info) =>
         if err
@@ -47,6 +47,9 @@ class RacerClient
               parsed = @parse_single(output)
               @candidates.push(parsed) if parsed
               return
+            stderr: (output) =>
+                @last_stderr = output
+                return
             exit: (code) =>
               @candidates = _.uniq(_.compact(_.flatten(@candidates)), (e) => e.word + e.file + e.type )
               cb @candidates
@@ -54,7 +57,7 @@ class RacerClient
               if code == 3221225781
                 atom.notifications.addWarning "racer could not find a required DLL; copy racer to your Rust bin directory"
               else if code != 0
-                atom.notifications.addWarning "racer returned a non-zero exit code: #{code}"
+                atom.notifications.addWarning "racer returned a non-zero exit code: #{code}\n#{@last_stderr}"
               return
 
           @candidates = []
@@ -98,10 +101,10 @@ class RacerClient
 
   parse_single: (line) ->
     matches = []
-    rcrgex = /MATCH (\w*)\,(\d*)\,(\d*)\,([^\,]*)\,(\w*)\,.*\n/mg
+    rcrgex = /MATCH (\w*)\,(\d*)\,(\d*)\,([^\,]*)\,(\w*)\,(.*)\n/mg
     while match = rcrgex.exec(line)
       if match?.length > 4
-        candidate = {word: match[1], line: parseInt(match[2], 10), column: parseInt(match[3], 10), filePath: match[4], file: "this", type: match[5]}
+        candidate = {word: match[1], line: parseInt(match[2], 10), column: parseInt(match[3], 10), filePath: match[4], file: "this", type: match[5], context: match[6]}
         file_name = path.basename(match[4])
         if path.extname(match[4]).indexOf(".racertmp") == 0
           candidate.filePath = path.dirname(match[4]) + path.sep + file_name.match(/\._(.*)\.racertmp.*?$/)[1]

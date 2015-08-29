@@ -46,28 +46,34 @@ class MessageRegistry {
     this.hasChanged = true
   }
   updatePublic() {
+    let latestMessages = []
     let publicMessages = []
     let added = []
     let removed = []
     let currentKeys
     let lastKeys
 
-    this.linterResponses.forEach(messages => publicMessages = publicMessages.concat(messages))
+    this.linterResponses.forEach(messages => latestMessages = latestMessages.concat(messages))
     this.editorMessages.forEach(editorMessages =>
-      editorMessages.forEach(messages => publicMessages = publicMessages.concat(messages))
+      editorMessages.forEach(messages => latestMessages = latestMessages.concat(messages))
     )
 
-    currentKeys = publicMessages.map(i => i.key)
+    currentKeys = latestMessages.map(i => i.key)
     lastKeys = this.publicMessages.map(i => i.key)
 
-    publicMessages.forEach(function(i) {
-      if (lastKeys.indexOf(i.key) === -1)
+    for (let i of latestMessages) {
+      if (lastKeys.indexOf(i.key) === -1) {
         added.push(i)
-    })
-    this.publicMessages.forEach(function(i) {
+        publicMessages.push(i)
+      }
+    }
+
+    for (let i of this.publicMessages)
       if (currentKeys.indexOf(i.key) === -1)
         removed.push(i)
-    })
+      else
+        publicMessages.push(i)
+
     this.publicMessages = publicMessages
     this.emitter.emit('did-update-messages', {added, removed, messages: publicMessages})
   }
@@ -88,7 +94,7 @@ class MessageRegistry {
     this.editorMessages.delete(editor)
     this.hasChanged = true
   }
-  deactivate() {
+  dispose() {
     this.shouldRefresh = false
     this.subscriptions.dispose()
     this.linterResponses.clear()

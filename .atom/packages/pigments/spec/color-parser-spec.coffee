@@ -474,7 +474,9 @@ describe 'ColorParser', ->
 
   itParses('spin(#F00, 120)').asColor(0, 255, 0)
   itParses('spin(#F00, 120)').asColor(0, 255, 0)
+  itParses('spin(#F00, 120deg)').asColor(0, 255, 0)
   itParses('spin(#F00, -120)').asColor(0, 0, 255)
+  itParses('spin(#F00, -120deg)').asColor(0, 0, 255)
   itParses('spin(@c, @a)').withContext({
     '@c': asColor '#F00'
     '@a': '120'
@@ -612,3 +614,64 @@ describe 'ColorParser', ->
     '@base': asColor 'red'
   }).asColor('#00ffff')
   itParses('complement(@base)').asInvalid()
+
+  itParses('transparentify(#808080)').asColor(0,0,0,0.5)
+  itParses('transparentify(#414141, black)').asColor(255,255,255,0.25)
+  itParses('transparentify(#91974C, 0xF34949, 0.5)').asColor(47,229,79,0.5)
+  itParses('transparentify(a)').withContext({
+    'a': asColor '#808080'
+  }).asColor(0,0,0,0.5)
+  itParses('transparentify(a, b, 0.5)').withContext({
+    'a': asColor '#91974C'
+    'b': asColor '#F34949'
+  }).asColor(47,229,79,0.5)
+  itParses('transparentify(a)').asInvalid()
+
+  itParses('red(#000, 255)').asColor(255,0,0)
+  itParses('red(a, b)').withContext({
+    'a': asColor '#000'
+    'b': '255'
+  }).asColor(255,0,0)
+  itParses('red(a, b)').asInvalid()
+
+  itParses('green(#000, 255)').asColor(0,255,0)
+  itParses('green(a, b)').withContext({
+    'a': asColor '#000'
+    'b': '255'
+  }).asColor(0,255,0)
+  itParses('green(a, b)').asInvalid()
+
+  itParses('blue(#000, 255)').asColor(0,0,255)
+  itParses('blue(a, b)').withContext({
+    'a': asColor '#000'
+    'b': '255'
+  }).asColor(0,0,255)
+  itParses('blue(a, b)').asInvalid()
+
+  itParses('alpha(#000, 0.5)').asColor(0,0,0,0.5)
+  itParses('alpha(a, b)').withContext({
+    'a': asColor '#000'
+    'b': '0.5'
+  }).asColor(0,0,0,0.5)
+  itParses('alpha(a, b)').asInvalid()
+
+  itParses('hue(#00c, 90deg)').asColor(0x66,0xCC,0)
+  itParses('hue(a, b)').withContext({
+    'a': asColor '#00c'
+    'b': '90deg'
+  }).asColor(0x66,0xCC,0)
+  itParses('hue(a, b)').asInvalid()
+
+  itParses('saturation(#00c, 50%)').asColor(0x33,0x33,0x99)
+  itParses('saturation(a, b)').withContext({
+    'a': asColor '#00c'
+    'b': '50%'
+  }).asColor(0x33,0x33,0x99)
+  itParses('saturation(a, b)').asInvalid()
+
+  itParses('lightness(#00c, 80%)').asColor(0x99,0x99,0xff)
+  itParses('lightness(a, b)').withContext({
+    'a': asColor '#00c'
+    'b': '80%'
+  }).asColor(0x99,0x99,0xff)
+  itParses('lightness(a, b)').asInvalid()

@@ -1,15 +1,20 @@
 {
   "name": "pigments",
   "main": "./lib/pigments",
-  "version": "0.9.3",
+  "version": "0.12.0",
   "description": "A package to display colors in project and files.",
   "keywords": [
     "colors",
-    "palette"
+    "palette",
+    "less",
+    "sass",
+    "scss",
+    "css",
+    "stylus"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/abe33/atom-pigments"
+    "url": "git+https://github.com/abe33/atom-pigments.git"
   },
   "license": "MIT",
   "engines": {
@@ -22,7 +27,6 @@
     "css-color-function": "0.1.x",
     "minimatch": "0.3.x",
     "delegato": "^1.0.0",
-    "fuzzaldrin": "2.x",
     "atom-utils": ">=0.5.0"
   },
   "devDependencies": {
@@ -40,16 +44,16 @@
       }
     }
   },
-  "readme": "[![Build Status](https://travis-ci.org/abe33/atom-pigments.svg?branch=master)](https://travis-ci.org/abe33/atom-pigments)\n\n![Pigments Logo](https://cdn.rawgit.com/abe33/atom-pigments/master/resources/pigments-logo.svg)\n\nA package to display colors in project and files.\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/pigments.gif?raw=true)\n\n## Install\n\nUsing `apm`:\n\n```\napm install pigments\n```\n\nOr search for `pigments` in Atom settings view.\n\n## Commands\n\n### Pigments: Show Palette\n\nYou can display the project's palette through the `Pigments: Show Palette` command from the command palette:\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/palette.gif?raw=true)\n\nThis command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-p': 'pigments:show-palette'\n```\n\n### Pigments: Find Colors\n\nYou can search for all colors in every source files using the `Pigments: Find Colors` command from the command palette:\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/search.gif?raw=true)\n\nThis command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-f': 'pigments:find-colors'\n```\n\n### Pigments: Reload\n\nThis command will force a reload of all variables in the project, this can be useful when the serialized state of the plugin contains invalid data and you want to get rid of them without having to touch to the content of the `.atom/storage` directory.\n\nThis command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-r': 'pigments:reload'\n```\n\n### Pigments: Convert To Hexadecimal/Pigments: Convert to RGBA\n\nIt evaluates and replace a color by either its hexadecimal notation or rgba notation.\nAccessible from the command palette or by right clicking on a color.\n\n![pigments-conversion](https://github.com/abe33/atom-pigments/blob/master/resources/context-menu-conversion.gif?raw=true)\n\nThese commands can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-h': 'pigments:convert-to-hex'\n  'alt-shift-g': 'pigments:convert-to-rgba'\n```\n\nWhen triggered from the command palette or from the keyboard, the conversion will operate on every cursors positioned on color markers.\n\n## Settings\n\n### Source Names\n\nAn array of glob patterns of the files to use as source for the project's variables and colors.\n\n* Key: `pigments.sourceNames`\n* Default: `'**/*.styl', '**/*.stylus', '**/*.less', '**/*.sass', '**/*.scss'`\n\n### Ignored Names\n\nAn array of glob patterns of the files to ignore as source files for the project's variables and colors.\n\n* Key: `pigments.ignoredNames`\n* Default: `['node_modules/*']`\n\n### Ignored Scopes\n\nAn array of regular expressions strings to match scopes to ignore when rendering colors in a text editor.\n\nFor instance, if you want to ignore colors in comments and strings in your source files, use the following value:\n\n```\n\\.comment, \\.string\n```\n\n* Key: `pigments.ignoredScopes`\n* Default: `[]`\n\n### Autocomplete Scopes\n\nThe autocomplete provider will only complete color names in editors whose scope is present in this list.\n\n* Key: `pigments.autocompleteScopes`\n* Default: `'.source.css', '.source.css.less', '.source.sass', '.source.css.scss', '.source.stylus'`\n\n### Extend Autocomplete To Variables\n\nWhen enabled, the autocomplete provider will also provides completion for non-color variables.\n\n* Key: `pigments.extendAutocompleteToVariables`\n* Default: `false`\n\n### Traverse Into Symlink Directories\n\nWhether to traverse symlinked directories to find source files or not.\n\n* Key: `pigments.traverseIntoSymlinkDirectories`\n* Default: `false`\n\n### Marker Type\n\nDefines the render mode of color markers. The possible values are:\n\n<table>\n  <tr>\n    <th>background</th>\n    <th>outline</th>\n    <th>underline</th>\n  </tr>\n  <tr>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/background-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/outline-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/underline-renderer.png?raw=true'/>\n    </td>\n  </tr>\n  <tr>\n    <th>dot</th>\n    <th>square-dot</th>\n  </tr>\n  <tr>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/dot-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/square-dot-renderer.png?raw=true'/>\n    </td>\n  </tr>\n</table>\n\n* Key: `pigments.markerType`\n* Default: `'background'`\n\n### Sort Palette Colors\n\nThe type of sorting applied to the colors in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.sortPaletteColors`\n* Default: `'none'`\n\n### Group Palette Colors\n\nDefines how the colors are grouped together in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.groupPaletteColors`\n* Default: `'none'`\n\n### Merge Duplicates\n\nDefines whether to merge colors duplicates together as a single result in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.mergeDuplicates`\n* Default: `false`\n",
+  "readme": "[![Build Status](https://travis-ci.org/abe33/atom-pigments.svg?branch=master)](https://travis-ci.org/abe33/atom-pigments)\n\n## <img src='https://cdn.rawgit.com/abe33/atom-pigments/master/resources/logo.svg' width='320' height='80'>\n\nA package to display colors in project and files:\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/pigments.gif?raw=true)\n\n## Install\n\nUsing `apm`:\n\n```\napm install pigments\n```\n\nOr search for `pigments` in Atom settings view.\n\n## Commands\n\n**Note:** Pigments doesn't define any keybindings for the provided commands, instead it'll let you define your own keybindings.\n\n### Pigments: Show Palette\n\nYou can display the project's palette through the `Pigments: Show Palette` command from the command palette:\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/palette.gif?raw=true)\n\nThe project palette is made of all the colors that are affected to a variable, which means it won't display hardcoded colors affected to a CSS property. If you want to find every colors used in a project, including the hardcoded colors in CSS files, use the `Pigments: Find Colors` instead.\n\nPatterns for Less, Sass, Scss and Stylus variables are currently supported, which includes:\n\n```stylus\nmy-var = #123456 // stylus\n```\n```sass\n$my-var: #123456 // sass\n$my-var: #123456; // scss\n```\n```css\n@my-var: #123456; /* less */\n\n```\n\nAs with every commands, this command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-p': 'pigments:show-palette'\n```\n\n### Pigments: Find Colors\n\nYou can search for all colors in your project using the `Pigments: Find Colors` command from the command palette:\n\n![Screenshot](https://github.com/abe33/atom-pigments/blob/master/resources/search.gif?raw=true)\n\nThe results will include colors declared in variables, places where the color variables are used as well as hardcoded color values in every files that matches one of the patterns defined in both `pigments.sourceNames` and `pigments.extendedSearchNames` settings.\n\nBy default this includes:\n\n```\n**/*.css\n**/*.less\n**/*.scss\n**/*.sass\n**/*.styl\n**/*.stylus\n```\n\nThis command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-f': 'pigments:find-colors'\n```\n\n### Pigments: Convert To Hexadecimal/Pigments: Convert to RGB(A)\n\nIt evaluates and replace a color by either its hexadecimal notation or rgb/rgba notation.\nAccessible from the command palette or by right clicking on a color.\n\n![pigments-conversion](https://github.com/abe33/atom-pigments/blob/master/resources/context-menu-conversion.gif?raw=true)\n\nThese commands can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-h': 'pigments:convert-to-hex'\n  'alt-shift-g': 'pigments:convert-to-rgb'\n  'alt-shift-j': 'pigments:convert-to-rgba'\n```\n\nWhen triggered from the command palette or from the keyboard, the conversion will operate on every cursors positioned on color markers.\n\n### Pigments: Reload\n\nThis command will force a reload of all variables in the project, this can be useful when the serialized state of the plugin contains invalid data and you want to get rid of them without having to touch to the content of the `.atom/storage` directory.\n\nThis command can be triggered using the keyboard by defining a keybinding like this:\n\n```coffee\n'atom-workspace':\n  'alt-shift-r': 'pigments:reload'\n```\n\n## Settings\n\n### Source Names\n\nAn array of glob patterns of the files to use as source for the project's variables and colors.\n\n* Key: `pigments.sourceNames`\n* Default: `['**/*.styl', '**/*.stylus', '**/*.less', '**/*.sass', '**/*.scss']`\n\n### Ignored Names\n\nAn array of glob patterns of the files to ignore as source files for the project's variables and colors.\n\n* Key: `pigments.ignoredNames`\n* Default: `['node_modules/*']`\n\n### Extended Search Names\n\nAn array of glob patterns of files to include in the `Pigments: Find Colors` scanning process.\n\n* Key: `pigments.extendedSearchNames`\n* Default: `['**/*.css']`\n\n### Ignored Scopes\n\nAn array of regular expressions strings to match scopes to ignore when rendering colors in a text editor.\n\nFor instance, if you want to ignore colors in comments and strings in your source files, use the following value:\n\n```\n\\.comment, \\.string\n```\n\nAs you can notice, the `.` character in scopes are escaped. This is due to the fact that this setting uses javascript `RegExp` to test the token's scope and the `.` is used to match against any character.\n\nFor instance, to ignores colors in html attributes you can use the following expression:\n\n```\n\\.text\\.html(.*)\\.string\n```\n\nNote the `(.*)` in the middle of the expression. It'll ensure that we're searching for the `.string` scope in the `.text.html` grammar even if there's other scope between them by catching any character between the two classnames.\n\nTo find which scope is applied at a given position in a buffer you can use the `editor:log-cursor-scope` command. From that you'll be able to determine what expression to use to match the scope.\n\n* Key: `pigments.ignoredScopes`\n* Default: `[]`\n\n### Autocomplete Scopes\n\nThe autocomplete provider will only complete color names in editors whose scope is present in this list.\n\n* Key: `pigments.autocompleteScopes`\n* Default: `['.source.css', '.source.css.less', '.source.sass', '.source.css.scss', '.source.stylus']`\n\n### Extend Autocomplete To Variables\n\nWhen enabled, the autocomplete provider will also provides completion for non-color variables.\n\n* Key: `pigments.extendAutocompleteToVariables`\n* Default: `false`\n\n### Traverse Into Symlink Directories\n\nWhether to traverse symlinked directories to find source files or not.\n\n* Key: `pigments.traverseIntoSymlinkDirectories`\n* Default: `false`\n\n### Ignore VCS Ignored Paths\n\nWhen this setting is enabled, every files that are ignored by the VCS will also be ignored in Pigments. That means they'll be excluded when searching for colors and when building the project palette.\n\n* Key: `pigments.ignoreVcsIgnoredPaths`\n* Default: `true`\n\n### Marker Type\n\nDefines the render mode of color markers. The possible values are:\n\n<table>\n  <tr>\n    <th>background</th>\n    <th>outline</th>\n    <th>underline</th>\n  </tr>\n  <tr>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/background-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/outline-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/underline-renderer.png?raw=true'/>\n    </td>\n  </tr>\n  <tr>\n    <th>dot</th>\n    <th>square-dot</th>\n  </tr>\n  <tr>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/dot-renderer.png?raw=true'/>\n    </td>\n    <td>\n      <img src='https://github.com/abe33/atom-pigments/blob/master/resources/square-dot-renderer.png?raw=true'/>\n    </td>\n  </tr>\n</table>\n\n* Key: `pigments.markerType`\n* Default: `'background'`\n\n### Sort Palette Colors\n\nThe type of sorting applied to the colors in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.sortPaletteColors`\n* Default: `'none'`\n\n### Group Palette Colors\n\nDefines how the colors are grouped together in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.groupPaletteColors`\n* Default: `'none'`\n\n### Merge Duplicates\n\nDefines whether to merge colors duplicates together as a single result in the palette view. It can be changed directly from the palette view.\n\n* Key: `pigments.mergeDuplicates`\n* Default: `false`\n\n### Delay Before Scan\n\nPigments rescans the text buffer once you stopped editing it, however as the process can be sometime expensive, it'll apply an extra delay after the dispatch of the `did-stop-changing` event before starting the scanning process. This setting define the number of milliseconds to wait after the `did-stop-changing` event before starting to scan the buffer again. If your start typing in the buffer again in this interval, the rescan process will be aborted.\n\n* Key: `pigments.delayBeforeScan`\n* Default: `500` (ms)\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/abe33/atom-pigments/issues"
   },
-  "homepage": "https://github.com/abe33/atom-pigments",
-  "_id": "pigments@0.9.3",
-  "_shasum": "45023732b976ffb1ceef182a3929f3081c53e0a9",
-  "_resolved": "file:../d-11574-16365-2pwexz/package.tgz",
-  "_from": "../d-11574-16365-2pwexz/package.tgz",
+  "homepage": "https://github.com/abe33/atom-pigments#readme",
+  "_id": "pigments@0.12.0",
+  "_shasum": "7a466d2873bb7f2e7a6d1b661c1865d0746dccb3",
+  "_resolved": "file:../d-115729-90251-iqbiaa/package.tgz",
+  "_from": "../d-115729-90251-iqbiaa/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -65,38 +69,13 @@
       },
       {
         "name": "event-kit",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "path": "node_modules/atom-utils/node_modules/event-kit/lib/event-kit.js"
       },
       {
         "name": "grim",
-        "version": "1.4.1",
+        "version": "1.4.2",
         "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/lib/grim.js"
-      },
-      {
-        "name": "coffeestack",
-        "version": "1.1.2",
-        "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/index.js"
-      },
-      {
-        "name": "coffee-script",
-        "version": "1.8.0",
-        "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/coffee-script.js"
-      },
-      {
-        "name": "mkdirp",
-        "version": "0.3.5",
-        "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/node_modules/mkdirp/index.js"
-      },
-      {
-        "name": "source-map",
-        "version": "0.1.43",
-        "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map.js"
-      },
-      {
-        "name": "amdefine",
-        "version": "1.0.0",
-        "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/amdefine.js"
       },
       {
         "name": "emissary",
@@ -204,11 +183,6 @@
         "path": "node_modules/fs-plus/node_modules/rimraf/rimraf.js"
       },
       {
-        "name": "fuzzaldrin",
-        "version": "2.1.0",
-        "path": "node_modules/fuzzaldrin/lib/fuzzaldrin.js"
-      },
-      {
         "name": "minimatch",
         "version": "0.3.0",
         "path": "node_modules/minimatch/minimatch.js"
@@ -239,11 +213,6 @@
         "coffeelint.json",
         "node_modules/async/package.json",
         "node_modules/atom-utils/node_modules/event-kit/api.json",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/node_modules/mkdirp/package.json",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/package.json",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/package.json",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/package.json",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/package.json",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/d/package.json",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/package.json",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es6-iterator/package.json",
@@ -270,7 +239,6 @@
         "node_modules/fs-plus/node_modules/mkdirp/package.json",
         "node_modules/fs-plus/node_modules/rimraf/package.json",
         "node_modules/fs-plus/package.json",
-        "node_modules/fuzzaldrin/package.json",
         "node_modules/minimatch/node_modules/lru-cache/package.json",
         "node_modules/minimatch/node_modules/sigmund/package.json",
         "node_modules/minimatch/package.json",
@@ -289,6 +257,7 @@
         "lib/color-marker-element.coffee",
         "lib/color-marker.coffee",
         "lib/color-parser.coffee",
+        "lib/color-project-element.coffee",
         "lib/color-project.coffee",
         "lib/color-results-element.coffee",
         "lib/color-scanner.coffee",
@@ -340,45 +309,6 @@
         "node_modules/atom-utils/node_modules/event-kit/lib/event-kit.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/lib/deprecation.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/lib/grim.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/index.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/browser.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/cake.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/coffee-script.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/command.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/grammar.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/helpers.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/index.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/lexer.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/nodes.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/optparse.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/parser.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/register.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/repl.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/rewriter.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/scope.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script/sourcemap.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/node_modules/mkdirp/examples/pow.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/node_modules/mkdirp/index.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/register.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/repl.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/Makefile.dryice.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build/assert-shim.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build/mini-require.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build/suffix-browser.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build/test-prefix.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build/test-suffix.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/array-set.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/base64-vlq.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/base64.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/binary-search.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/mapping-list.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/source-map-consumer.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/source-map-generator.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/source-node.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map/util.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/amdefine.js",
-        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/node_modules/amdefine/intercept.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/lib/behavior.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/lib/emissary.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/lib/emitter.js",
@@ -818,10 +748,6 @@
         "node_modules/fs-plus/node_modules/mkdirp/index.js",
         "node_modules/fs-plus/node_modules/rimraf/bin.js",
         "node_modules/fs-plus/node_modules/rimraf/rimraf.js",
-        "node_modules/fuzzaldrin/lib/filter.js",
-        "node_modules/fuzzaldrin/lib/fuzzaldrin.js",
-        "node_modules/fuzzaldrin/lib/matcher.js",
-        "node_modules/fuzzaldrin/lib/scorer.js",
         "node_modules/minimatch/minimatch.js",
         "node_modules/minimatch/node_modules/lru-cache/lib/lru-cache.js",
         "node_modules/minimatch/node_modules/sigmund/bench.js",
@@ -850,7 +776,6 @@
           "css-color-function": "0.1.x",
           "minimatch": "0.3.x",
           "delegato": "^1.0.0",
-          "fuzzaldrin": "2.x",
           "atom-utils": ">=0.5.0"
         }
       },
@@ -880,40 +805,7 @@
           "node_modules/atom-utils/node_modules/event-kit/node_modules/grim"
         ],
         "dependencies": {
-          "coffeestack": "^1",
           "emissary": "^1.2.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack"
-        ],
-        "dependencies": {
-          "coffee-script": "~1.8.0",
-          "fs-plus": "^2.5.0",
-          "source-map": "~0.1.43"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script/lib/coffee-script",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/coffee-script"
-        ],
-        "dependencies": {
-          "mkdirp": "~0.3.5"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/build",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib/source-map",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/lib",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/test",
-          "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/coffeestack/node_modules/source-map/test/source-map"
-        ],
-        "dependencies": {
-          "amdefine": ">=0.0.4"
         }
       },
       {

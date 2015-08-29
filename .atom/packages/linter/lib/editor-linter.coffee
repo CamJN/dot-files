@@ -5,6 +5,7 @@ class EditorLinter
     throw new Error("Given editor isn't really an editor") unless @editor instanceof TextEditor
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
+    @subscriptions.add @emitter
     @subscriptions.add @editor.onDidDestroy =>
       @emitter.emit 'did-destroy'
 
@@ -16,7 +17,7 @@ class EditorLinter
     # The onDidStopChanging callbacks are invoked immediately on creation, We are just
     # gonna wait until a bit to get real events
     setImmediate =>
-      @subscriptions.add @editor.onDidStopChanging => setImmediate => @emitter.emit('should-lint', true)
+      @subscriptions.add @editor.onDidStopChanging => @lint(true)
 
   lint: (onChange = false) ->
     @emitter.emit('should-lint', onChange)
@@ -35,10 +36,9 @@ class EditorLinter
 
   destroy: ->
     @emitter.emit('did-destroy')
-    @deactivate()
+    @dispose()
 
-  deactivate: ->
-    @emitter.dispose()
+  dispose: ->
     @subscriptions.dispose()
 
 module.exports = EditorLinter

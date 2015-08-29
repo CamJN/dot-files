@@ -23,7 +23,8 @@ class ColorProject
 
   @deserialize: (state) ->
     markersVersion = SERIALIZE_MARKERS_VERSION
-    state = {} if state?.version isnt SERIALIZE_VERSION
+    if state?.version isnt SERIALIZE_VERSION
+      state = {}
 
     if state?.markersVersion isnt markersVersion
       delete state.variables
@@ -37,7 +38,7 @@ class ColorProject
     new ColorProject(state)
 
   constructor: (state={}) ->
-    {@ignoredNames, @paths, variables, timestamp, buffers} = state
+    {@ignoredNames, @sourceNames, @ignoredScopes, @paths, variables, timestamp, buffers} = state
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @colorBuffersByEditorId = {}
@@ -56,10 +57,11 @@ class ColorProject
     @subscriptions.add atom.config.observe 'pigments.ignoredNames', =>
       @updatePaths()
 
+    @subscriptions.add atom.config.observe 'pigments.ignoredScopes', =>
+      @emitter.emit('did-change-ignored-scopes', @getIgnoredScopes())
+
     @subscriptions.add atom.config.observe 'pigments.markerType', (type) ->
       ColorMarkerElement.setMarkerType(type) if type?
-
-    @subscriptions.add atom.config.observe 'pigments.sourcesWarningThreshold', (@sourcesWarningThreshold) =>
 
     @subscriptions.add atom.config.observe 'pigments.ignoreVcsIgnoredPaths', =>
       @loadPathsAndVariables()
@@ -82,6 +84,9 @@ class ColorProject
 
   onDidCreateColorBuffer: (callback) ->
     @emitter.on 'did-create-color-buffer', callback
+
+  onDidChangeIgnoredScopes: (callback) ->
+    @emitter.on 'did-change-ignored-scopes', callback
 
   observeColorBuffers: (callback) ->
     callback(colorBuffer) for id,colorBuffer of @colorBuffersByEditorId
@@ -156,8 +161,9 @@ class ColorProject
       @variables.updateCollection(results) if results?
 
   findAllColors: ->
+    patterns = @getSearchNames()
     new ColorSearch
-      sourceNames: atom.config.get 'pigments.sourceNames'
+      sourceNames: patterns
       ignoredNames: @getIgnoredNames()
       context: @getContext()
 
@@ -225,7 +231,7 @@ class ColorProject
         knownPaths: if noKnownPaths then [] else @paths
         paths: atom.project.getPaths()
         traverseIntoSymlinkDirectories: atom.config.get 'pigments.traverseIntoSymlinkDirectories'
-        sourceNames: atom.config.get('pigments.sourceNames') ? []
+        sourceNames: @getSourceNames()
         ignoreVcsIgnores: atom.config.get('pigments.ignoreVcsIgnoredPaths')
       }
       PathsLoader.startTask config, (results) -> resolve(results)
@@ -240,6 +246,20 @@ class ColorProject
       @paths.push(p) for p in dirtied when p not in @paths
 
       @reloadVariablesForPaths(dirtied)
+
+  getSourceNames: ->
+    sourceNames = @sourceNames ? []
+    sourceNames = sourceNames.concat(atom.config.get('pigments.sourceNames') ? [])
+
+  setSourceNames: (sourceNames) ->
+    @sourceNames = sourceNames ? []
+
+    return if not @initialized? and not @initializePromise?
+
+    @initialize().then => @loadPathsAndVariables(true)
+
+  getSearchNames: ->
+    @getSourceNames().concat(atom.config.get 'pigments.extendedSearchNames')
 
   getIgnoredNames: ->
     ignoredNames = @ignoredNames ? []
@@ -265,7 +285,7 @@ class ColorProject
   isVariablesSourcePath: (path) ->
     return false unless path
     path = atom.project.relativize(path)
-    sources = atom.config.get('pigments.sourceNames')
+    sources = @getSourceNames()
     return true for source in sources when minimatch(path, source, matchBase: true, dot: true)
 
   isIgnoredPath: (path) ->
@@ -300,6 +320,15 @@ class ColorProject
   getVariableByName: (name) -> @variables.getVariableByName(name)
 
   getColorVariables: -> @variables.getColorVariables()
+
+  getIgnoredScopes: ->
+    ignoredScopes = @ignoredScopes ? []
+    ignoredScopes = ignoredScopes.concat(atom.config.get('pigments.ignoredScopes') ? [])
+
+  setIgnoredScopes: (ignoredScopes=[]) ->
+    @ignoredScopes = ignoredScopes
+
+    @emitter.emit('did-change-ignored-scopes', @getIgnoredScopes())
 
   showVariableInFile: (variable) ->
     atom.workspace.open(variable.path).then (editor) ->
@@ -362,7 +391,9 @@ class ColorProject
       globalSourceNames: atom.config.get('pigments.sourceNames')
       globalIgnoredNames: atom.config.get('pigments.ignoredNames')
 
+    data.ignoredScopes = @ignoredScopes if @ignoredScopes?
     data.ignoredNames = @ignoredNames if @ignoredNames?
+    data.sourceNames = @sourceNames if @sourceNames?
     data.buffers = @serializeBuffers()
 
     if @isInitialized()

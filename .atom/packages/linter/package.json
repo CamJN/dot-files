@@ -4,7 +4,7 @@
   "author": {
     "name": "atom-community"
   },
-  "version": "1.3.4",
+  "version": "1.4.3",
   "description": "A Base Linter with Cow Powers",
   "repository": {
     "type": "git",
@@ -47,10 +47,10 @@
     "url": "https://github.com/atom-community/linter/issues"
   },
   "homepage": "https://github.com/atom-community/linter",
-  "_id": "linter@1.3.4",
-  "_shasum": "2793ea96a7fd2e19ce23a28733041e5e160990e4",
-  "_resolved": "file:../d-115711-71119-705dk6/package.tgz",
-  "_from": "../d-115711-71119-705dk6/package.tgz",
+  "_id": "linter@1.4.3",
+  "_shasum": "a5fa697d7e1cffa2ec15e683bec1e512f85273d4",
+  "_resolved": "file:../d-115720-18134-acivv4/package.tgz",
+  "_from": "../d-115720-18134-acivv4/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -222,19 +222,19 @@
         "lib/editor-linter.coffee",
         "lib/editor-registry.coffee",
         "lib/helpers.coffee",
-        "lib/linter-plus.coffee",
         "lib/linter-registry.coffee",
         "lib/linter-views.coffee",
+        "lib/linter.coffee",
         "lib/main.coffee",
-        "lib/validate.coffee",
-        "lib/views/bottom-container.coffee",
-        "lib/views/message.coffee"
+        "lib/ui/bottom-container.coffee",
+        "lib/validate.coffee"
       ],
       ".js": [
         "lib/message-registry.js",
-        "lib/views/bottom-panel.js",
-        "lib/views/bottom-status.js",
-        "lib/views/bottom-tab.js",
+        "lib/ui/bottom-panel.js",
+        "lib/ui/bottom-status.js",
+        "lib/ui/bottom-tab.js",
+        "lib/ui/message-element.js",
         "node_modules/grim/lib/deprecation.js",
         "node_modules/grim/lib/grim.js",
         "node_modules/grim/node_modules/coffeestack/index.js",
@@ -713,9 +713,10 @@
         "paths": [
           "",
           "lib",
-          "lib/views",
+          "lib/ui",
           "spec/config",
-          "spec"
+          "spec",
+          "spec/ui"
         ],
         "dependencies": {
           "grim": "^1.4.1",

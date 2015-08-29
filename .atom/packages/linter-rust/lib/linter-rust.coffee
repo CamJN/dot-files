@@ -9,7 +9,7 @@ class LinterRust
   lintProcess: null
   pattern: XRegExp('(?<file>[^\n\r]+):(?<from_line>\\d+):(?<from_col>\\d+):\\s*\
     (?<to_line>\\d+):(?<to_col>\\d+)\\s+\
-    ((?<error>error|fatal error)|(?<warning>warning)|(?<info>note)):\\s+\
+    ((?<error>error|fatal error)|(?<warning>warning)|(?<info>note|help)):\\s+\
     (?<message>.+?)[\n\r]+($|(?=[^\n\r]+:\\d+))', 's')
 
   lint: (textEditor) =>
@@ -47,24 +47,30 @@ class LinterRust
 
   parse: (output) =>
     messages = []
+    lastMessage = null
     XRegExp.forEach output, @pattern, (match) ->
-      type = if match.error
-        "Error"
-      else if match.warning
-        "Warning"
-
       if match.from_col == match.to_col
         match.to_col = parseInt(match.to_col) + 1
+      range = [
+        [match.from_line - 1, match.from_col - 1],
+        [match.to_line - 1, match.to_col - 1]
+      ]
 
-      messages.push {
-        type: type or 'Warning'
-        text: match.message
-        filePath: match.file
-        range: [
-          [match.from_line - 1, match.from_col - 1],
-          [match.to_line - 1, match.to_col - 1]
-        ]
-      }
+      if match.info and lastMessage
+        lastMessage.trace or= []
+        lastMessage.trace.push
+          type: "Trace"
+          text: match.message
+          filePath: match.file
+          range: range
+      else
+        lastMessage =
+          type: if match.error then "Error" else "Warning"
+          text: match.message
+          filePath: match.file
+          range: range
+        messages.push lastMessage
+
     return messages
 
   config: (key) ->

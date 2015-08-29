@@ -53,25 +53,17 @@ LinterLess =
 
     cwd = path.dirname filePath
 
-    parser = new less.Parser(
+    options =
       verbose: false
       silent: true
       paths: [cwd, @config('includePath')...]
       filename: filePath
-    )
+      ieCompat: @config 'ieCompatibilityChecks'
+      strictUnits: @config 'strictUnits'
+      strictMath: @config 'strictMath'
 
-    parser.parse text, (err, tree) =>
-      if not err
-        try
-          tree.toCSS(
-            ieCompat: @config 'ieCompatibilityChecks'
-            strictUnits: @config 'strictUnits'
-            strictMath: @config 'strictMath'
-          )
-        catch toCssErr
-          err = toCssErr
-
-      callback err
+    less.render text, options, (error, output) ->
+      callback error
 
   config: (key) ->
     atom.config.get "linter-less.#{key}"

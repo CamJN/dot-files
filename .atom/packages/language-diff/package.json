@@ -1,6 +1,6 @@
 {
   "name": "language-diff",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Interact with *.diff files",
   "repository": {
@@ -18,10 +18,10 @@
     "url": "https://github.com/miketheman/language-diff/issues"
   },
   "homepage": "https://github.com/miketheman/language-diff",
-  "_id": "language-diff@0.3.0",
-  "_shasum": "567a444baf5bd57107da9626028e0398a10559b2",
-  "_resolved": "file:../d-11564-70546-y36a1u/package.tgz",
-  "_from": "../d-11564-70546-y36a1u/package.tgz",
+  "_id": "language-diff@0.3.1",
+  "_shasum": "ed34d85150cc8675666980542f582883c36334c5",
+  "_resolved": "file:../d-115713-6128-19ehuv3/package.tgz",
+  "_from": "../d-115713-6128-19ehuv3/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

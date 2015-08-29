@@ -282,6 +282,12 @@
     '(setq mumamo-per-buffer-local-vars
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
+;; rust
+(setq racer-rust-src-path "/usr/local/share/rust_src/src/")
+(setq racer-cmd "/usr/local/bin/racer")
+(add-hook 'rust-mode-hook #'racer-mode)
+
+
 (provide 'init)
 
 ;;; init.el ends here

@@ -1,4 +1,5 @@
 {CompositeDisposable} = require 'atom'
+uris = require './uris'
 ColorProject = require './color-project'
 [PigmentsProvider, PigmentsAPI, url] = []
 
@@ -93,7 +94,7 @@ module.exports =
     atom.commands.add 'atom-workspace',
       'pigments:find-colors': => @findColors()
       'pigments:show-palette': => @showPalette()
-      'pigments:settings': => @showSettings()
+      'pigments:project-settings': => @showSettings()
       'pigments:reload': => @reloadProjectVariables()
 
     convertMethod = (action) => (event) =>
@@ -167,32 +168,26 @@ module.exports =
   getProject: -> @project
 
   findColors: ->
-    uri = "pigments://search"
-
-    pane = atom.workspace.paneForURI(uri)
+    pane = atom.workspace.paneForURI(uris.SEARCH)
     pane ||= atom.workspace.getActivePane()
 
-    atom.workspace.openURIInPane(uri, pane, {})
+    atom.workspace.openURIInPane(uris.SEARCH, pane, {})
 
   showPalette: ->
     @project.initialize().then ->
-      uri = "pigments://palette"
-
-      pane = atom.workspace.paneForURI(uri)
+      pane = atom.workspace.paneForURI(uris.PALETTE)
       pane ||= atom.workspace.getActivePane()
 
-      atom.workspace.openURIInPane(uri, pane, {})
+      atom.workspace.openURIInPane(uris.PALETTE, pane, {})
     .catch (reason) ->
       console.error reason
 
   showSettings: ->
     @project.initialize().then ->
-      uri = "pigments://settings"
-
-      pane = atom.workspace.paneForURI(uri)
+      pane = atom.workspace.paneForURI(uris.SETTINGS)
       pane ||= atom.workspace.getActivePane()
 
-      atom.workspace.openURIInPane(uri, pane, {})
+      atom.workspace.openURIInPane(uris.SETTINGS, pane, {})
     .catch (reason) ->
       console.error reason
 

@@ -1,4 +1,4 @@
-{Point} = require('atom')
+{CompositeDisposable, Point} = require('atom')
 
 # Represents an Emacs-style mark.
 #
@@ -18,9 +18,7 @@ class Mark
     @marker = @editor.markBufferPosition(cursor.getBufferPosition())
     @active = false
     @updating = false
-
-    @cursorDestroyedCallback = (event) => @_destroy()
-    @cursorDestroyedSubscription = @cursor.onDidDestroy @cursorDestroyedCallback
+    @lifetimeSubscription = @cursor.onDidDestroy (event) => @_destroy()
 
   set: ->
     @deactivate()
@@ -32,21 +30,19 @@ class Mark
 
   activate: ->
     if not @active
-      @movedCallback ?= (event) => @_updateSelection(event)
-      @modifiedCallback ?= (event) =>
-        return if @_isIndent(event) or @_isOutdent(event)
-        @deactivate()
-      @movedSubscription = @cursor.onDidChangePosition @movedCallback
-      @editor.getBuffer().onDidChange @modifiedCallback
+      @activeSubscriptions = new CompositeDisposable
+      @activeSubscriptions.add @cursor.onDidChangePosition (event) =>
+        @_updateSelection(event)
+      @activeSubscriptions.add @editor.getBuffer().onDidChange (event) =>
+        unless @_isIndent(event) or @_isOutdent(event)
+          @deactivate()
       @active = true
 
   deactivate: ->
     if @active
-      @movedSubscription.dispose()
-      @editor.getBuffer().onDidChange @modifiedCallback
+      @activeSubscriptions.dispose()
       @active = false
     @cursor.clearSelection()
-    @cursor.selection.screenRangeChanged(@marker)  # force redraw of selection
 
   isActive: ->
     @active
@@ -59,7 +55,7 @@ class Mark
   _destroy: ->
     @deactivate() if @active
     @marker.destroy()
-    @cursorDestroyedSubscription.dispose()
+    @lifetimeSubscription.dispose()
     delete @cursor._atomicEmacsMark
 
   _updateSelection: (event) ->
@@ -68,11 +64,18 @@ class Mark
     if !@updating
       @updating = true
       try
-        a = @marker.getHeadBufferPosition()
-        b = @cursor.getBufferPosition()
-        @cursor.selection.setBufferRange([a, b], reversed: Point.min(a, b) is b)
+        head = @cursor.getBufferPosition()
+        tail = @marker.getHeadBufferPosition()
+        @setSelectionRange(head, tail)
       finally
         @updating = false
+
+  getSelectionRange: ->
+    @cursor.selection.getBufferRange()
+
+  setSelectionRange: (head, tail) ->
+    reversed = Point.min(head, tail) is head
+    @cursor.selection.setBufferRange([head, tail], reversed: reversed)
 
   Mark.for = (cursor) ->
    cursor._atomicEmacsMark ?= new Mark(cursor)

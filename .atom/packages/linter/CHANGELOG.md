@@ -1,6 +1,19 @@
+## 1.5.1
+
+* Messages are now tracked on a per-buffer basis rather than per-editor,
+  improving the multi-pane experience by eliminating the potential for stale
+  results.
+* Fix extra padding in panel when there's no messages
+
+## 1.5.0
+
+* Fix baseline alignment of text on the bottom bar
+* Fix a bug where linter:togglePanel won't work
+* Stricter message validation, helps catching provider bugs
+
 ## 1.4.3
 
-* Fix a bug where bottom tabs's count won't be updated on pane change unless lint is triggered.
+* Fix a bug where bottom tabs's count won't be updated on pane change unless lint is triggered
 * Fix a bug where paths would be shown at first even when file tab is selected.
 
 ## 1.4.2

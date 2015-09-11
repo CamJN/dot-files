@@ -1,9 +1,13 @@
 Color = require '../lib/color'
 Palette = require '../lib/palette'
+{THEME_VARIABLES} = require '../lib/uris'
 {change, click} = require './helpers/events'
 
 describe 'PaletteElement', ->
-  [palette, paletteElement, workspaceElement, pigments, project] = []
+  [nextID, palette, paletteElement, workspaceElement, pigments, project] = [0]
+
+  createVar = (name, color, path, line) ->
+    {name, color, path, line, id: nextID++}
 
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
@@ -20,16 +24,22 @@ describe 'PaletteElement', ->
 
   describe 'as a view provider', ->
     beforeEach ->
-      palette = new Palette
-        red: new Color '#ff0000'
-        green: new Color '#00ff00'
-        blue: new Color '#0000ff'
-        redCopy: new Color '#ff0000'
+      palette = new Palette([
+        createVar 'red', new Color('#ff0000'), 'file.styl', 0
+        createVar 'green', new Color('#00ff00'), 'file.styl', 1
+        createVar 'blue', new Color('#0000ff'), 'file.styl', 2
+        createVar 'redCopy', new Color('#ff0000'), 'file.styl', 3
+        createVar 'red', new Color('#ff0000'), THEME_VARIABLES, 0
+      ])
 
       paletteElement = atom.views.getView(palette)
+      jasmine.attachToDOM(paletteElement)
 
     it 'is associated with the Palette model', ->
       expect(paletteElement).toBeDefined()
+
+    it 'does not render the file link when the variable comes from a theme', ->
+      expect(paletteElement.querySelectorAll('li')[4].querySelector(' [data-variable-id]')).not.toExist()
 
   describe 'when pigments:show-palette commands is triggered', ->
     beforeEach ->
@@ -47,7 +57,7 @@ describe 'PaletteElement', ->
 
     it 'creates as many list item as there is colors in the project', ->
       expect(paletteElement.querySelectorAll('li').length).not.toEqual(0)
-      expect(paletteElement.querySelectorAll('li').length).toEqual(palette.tuple().length)
+      expect(paletteElement.querySelectorAll('li').length).toEqual(palette.variables.length)
 
     it 'binds colors with project variables', ->
       projectVariables = project.getColorVariables()
@@ -73,7 +83,7 @@ describe 'PaletteElement', ->
         sortedColors = project.getPalette().sortedByColor()
         lis = paletteElement.querySelectorAll('li')
 
-        for [name,color],i in sortedColors
+        for {name},i in sortedColors
           expect(lis[i].querySelector('.name').textContent).toEqual(name)
 
     describe 'when the sortPaletteColors settings is set to name', ->
@@ -84,7 +94,7 @@ describe 'PaletteElement', ->
         sortedColors = project.getPalette().sortedByName()
         lis = paletteElement.querySelectorAll('li')
 
-        for [name,color],i in sortedColors
+        for {name},i in sortedColors
           expect(lis[i].querySelector('.name').textContent).toEqual(name)
 
     describe 'when the groupPaletteColors setting is set to file', ->
@@ -93,11 +103,11 @@ describe 'PaletteElement', ->
 
       it 'renders the list with sublists for each files', ->
         ols = paletteElement.querySelectorAll('ol ol')
-        expect(ols.length).toEqual(3)
+        expect(ols.length).toEqual(4)
 
       it 'adds a header with the file path for each sublist', ->
         ols = paletteElement.querySelectorAll('.pigments-color-group-header')
-        expect(ols.length).toEqual(3)
+        expect(ols.length).toEqual(4)
 
       describe 'and the sortPaletteColors is set to name', ->
         beforeEach ->
@@ -113,7 +123,7 @@ describe 'PaletteElement', ->
             lis = ol.querySelectorAll('li')
             sortedColors = palette.sortedByName()
 
-            for [name,color],i in sortedColors
+            for {name},i in sortedColors
               expect(lis[i].querySelector('.name').textContent).toEqual(name)
 
       describe 'when the mergeColorDuplicates', ->
@@ -123,7 +133,7 @@ describe 'PaletteElement', ->
         it 'groups identical colors together', ->
           lis = paletteElement.querySelectorAll('li')
 
-          expect(lis.length).not.toEqual(37)
+          expect(lis.length).toEqual(37)
 
     describe 'sorting selector', ->
       [sortSelect] = []

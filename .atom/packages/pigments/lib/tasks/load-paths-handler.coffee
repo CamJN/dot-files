@@ -23,7 +23,10 @@ class PathLoader
 
   load: (done) ->
     @loadPath @rootPath, =>
-      @lostPaths.push(p) for p in @knownPaths when p not in @scannedPaths
+      for p in @knownPaths
+        if p not in @scannedPaths and p.indexOf(@rootPath) is 0
+          @lostPaths.push(p)
+
       @flushPaths()
       @repo?.destroy()
       done()

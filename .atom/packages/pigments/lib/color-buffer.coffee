@@ -16,7 +16,8 @@ class ColorBuffer
 
     @subscriptions.add @editor.onDidDestroy => @destroy()
     @subscriptions.add @editor.displayBuffer.onDidTokenize =>
-      @getColorMarkers()?.forEach (marker) -> marker.checkMarkerScope()
+      @getColorMarkers()?.forEach (marker) ->
+        marker.checkMarkerScope(true)
 
     @subscriptions.add @editor.onDidChange =>
       @terminateRunningTask() if @initialized and @variableInitialized
@@ -40,13 +41,8 @@ class ColorBuffer
       return unless @variableInitialized
       @scanBufferForColors().then (results) => @updateColorMarkers(results)
 
-    @subscriptions.add @project.onDidChangeIgnoredScopes (ignoredScopes=[]) =>
-      @ignoredScopes = ignoredScopes.map (scope) ->
-        try new RegExp(scope)
-      .filter (re) -> re?
-
-      @getColorMarkers()?.forEach (marker) -> marker.checkMarkerScope(true)
-      @emitter.emit 'did-update-color-markers', {created: [], destroyed: []}
+    @subscriptions.add @project.onDidChangeIgnoredScopes =>
+      @updateIgnoredScopes()
 
     @subscriptions.add atom.config.observe 'pigments.delayBeforeScan', (@delayBeforeScan=0) =>
 
@@ -57,6 +53,7 @@ class ColorBuffer
       @restoreMarkersState(colorMarkers)
       @cleanUnusedTextEditorMarkers()
 
+    @updateIgnoredScopes()
     @initialize()
 
   onDidUpdateColorMarkers: (callback) ->
@@ -159,6 +156,17 @@ class ColorBuffer
     @project.isIgnoredPath(p) or not atom.project.contains(p)
 
   isDestroyed: -> @destroyed
+
+  getPath: -> @editor.getPath()
+
+  updateIgnoredScopes: ->
+    @ignoredScopes = @project.getIgnoredScopes().map (scope) ->
+      try new RegExp(scope)
+    .filter (re) -> re?
+
+    @getColorMarkers()?.forEach (marker) -> marker.checkMarkerScope(true)
+    @emitter.emit 'did-update-color-markers', {created: [], destroyed: []}
+
 
   ##    ##     ##    ###    ########   ######
   ##    ##     ##   ## ##   ##     ## ##    ##
@@ -369,6 +377,7 @@ class ColorBuffer
 
     config =
       buffer: @editor.getText()
+      bufferPath: @getPath()
       variables: variables
       colorVariables: variables.filter (v) -> v.isColor
 

@@ -33,6 +33,7 @@
   'ctrl-x ctrl-t': 'atomic-emacs:transpose-lines'
   'ctrl-x h': 'atomic-emacs:mark-whole-buffer'
   'ctrl-x ctrl-x': 'atomic-emacs:exchange-point-and-mark'
+  'ctrl-alt-space': 'atomic-emacs:mark-sexp'
   'alt-f': 'atomic-emacs:forward-word'
   'alt-b': 'atomic-emacs:backward-word'
   'alt-d': 'atomic-emacs:kill-word'
@@ -57,6 +58,8 @@
   'alt-c': 'atomic-emacs:capitalize-word-or-region'
   'alt-l': 'atomic-emacs:downcase-word-or-region'
   'alt-u': 'atomic-emacs:upcase-word-or-region'
+  'ctrl-alt-b': 'atomic-emacs:backward-sexp'
+  'ctrl-alt-f': 'atomic-emacs:forward-sexp'
   'left': 'atomic-emacs:backward-char'
   'right': 'atomic-emacs:forward-char'
 
@@ -68,16 +71,18 @@
   'ctrl-v': 'atomic-emacs:scroll-up'
   'alt-v': 'atomic-emacs:scroll-down'
 
-'.platform-linux atom-text-editor':
+'.platform-linux atom-workspace.atomic-emacs atom-text-editor':
+  'ctrl-d': 'core:delete'
   'ctrl-e': 'editor:move-to-end-of-screen-line'
 
-'.platform-win32 atom-text-editor':
+'.platform-win32 atom-workspace.atomic-emacs atom-text-editor':
+  'ctrl-d': 'core:delete'
   'ctrl-e': 'editor:move-to-end-of-screen-line'
   'ctrl-k ctrl-k': 'editor:cut-to-end-of-line'
 
-'.find-and-replace':
-  'ctrl-s': 'find-and-replace:find-next'
-  'ctrl-r': 'find-and-replace:find-previous'
+'atom-workspace .find-and-replace atom-text-editor':
+  'ctrl-s': 'find-and-replace:confirm'
+  'ctrl-r': 'find-and-replace:show-previous'
 
 '.go-to-line atom-text-editor[mini] input':
   'ctrl-g': 'core:cancel'

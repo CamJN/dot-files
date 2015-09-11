@@ -34,15 +34,16 @@ describe 'ColorParser', ->
     withContext: (variables) ->
       vars = []
       colorVars = []
+      path = "/path/to/file.styl"
       for name,value of variables
         if value.indexOf('color:') isnt -1
           value = value.replace('color:', '')
-          vars.push {name, value}
-          colorVars.push {name, value}
+          vars.push {name, value, path}
+          colorVars.push {name, value, path}
 
         else
-          vars.push {name, value}
-      @context = new ColorContext(vars, colorVars)
+          vars.push {name, value, path}
+      @context = new ColorContext({variables: vars, colorVariables: colorVars})
       @description = "with variables context #{jasmine.pp variables} "
 
       return this
@@ -140,6 +141,7 @@ describe 'ColorParser', ->
   }).asColor(64, 149, 191, 0.5)
 
   itParses('hsv(200,50%,50%)').asColor(64, 106, 128)
+  itParses('hsb(200,50%,50%)').asColor(64, 106, 128)
   itParses('hsv($h,$s,$v,)').asUndefined()
   itParses('hsv($h,$s,$v)').asInvalid()
   itParses('hsv($h,0%,0%)').asInvalid()
@@ -152,6 +154,7 @@ describe 'ColorParser', ->
   }).asColor(64, 106, 128)
 
   itParses('hsva(200,50%,50%,0.5)').asColor(64, 106, 128, 0.5)
+  itParses('hsba(200,50%,50%,0.5)').asColor(64, 106, 128, 0.5)
   itParses('hsva(200,50%,50%,.5)').asColor(64, 106, 128, 0.5)
   itParses('hsva(200,50%,50%,)').asUndefined()
   itParses('hsva($h,$s,$v,$a)').asInvalid()
@@ -247,6 +250,8 @@ describe 'ColorParser', ->
   itParses('transparentize(cyan, 0.5)').asColor(0, 255, 255, 0.5)
   itParses('transparentize(cyan, .5)').asColor(0, 255, 255, 0.5)
   itParses('fadeout(cyan, 0.5)').asColor(0, 255, 255, 0.5)
+  itParses('fade-out(cyan, 0.5)').asColor(0, 255, 255, 0.5)
+  itParses('fade_out(cyan, 0.5)').asColor(0, 255, 255, 0.5)
   itParses('fadeout(cyan, .5)').asColor(0, 255, 255, 0.5)
   itParses('fadeout(cyan, @r)').asInvalid()
   itParses('fadeout($c, $r)').withContext({
@@ -268,6 +273,8 @@ describe 'ColorParser', ->
   itParses('opacify(0x7800FFFF, 0.5)').asColor(0, 255, 255, 1)
   itParses('opacify(0x7800FFFF, .5)').asColor(0, 255, 255, 1)
   itParses('fadein(0x7800FFFF, 0.5)').asColor(0, 255, 255, 1)
+  itParses('fade-in(0x7800FFFF, 0.5)').asColor(0, 255, 255, 1)
+  itParses('fade_in(0x7800FFFF, 0.5)').asColor(0, 255, 255, 1)
   itParses('fadein(0x7800FFFF, .5)').asColor(0, 255, 255, 1)
   itParses('fadein(0x7800FFFF, @r)').asInvalid()
   itParses('fadein($c, $r)').withContext({

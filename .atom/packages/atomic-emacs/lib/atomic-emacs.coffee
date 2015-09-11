@@ -1,4 +1,3 @@
-{CompositeDisposable} = require 'atom'
 CursorTools = require './cursor-tools'
 Mark = require './mark'
 
@@ -192,6 +191,18 @@ class AtomicEmacs
       tools.skipNonWordCharactersBackward()
       tools.skipWordCharactersBackward()
 
+  forwardSexp: (event) ->
+    @editor(event).moveCursors (cursor) ->
+      new CursorTools(cursor).skipSexpForward()
+
+  backwardSexp: (event) ->
+    @editor(event).moveCursors (cursor) ->
+      new CursorTools(cursor).skipSexpBackward()
+
+  markSexp: (event) ->
+    @editor(event).moveCursors (cursor) ->
+      new CursorTools(cursor).markSexp()
+
   backToIndentation: (event) ->
     editor = @editor(event)
     editor.moveCursors (cursor) ->
@@ -311,11 +322,11 @@ class AtomicEmacs
 module.exports =
   AtomicEmacs: AtomicEmacs
   Mark: Mark
-  disposables: new CompositeDisposable
 
   activate: ->
     atomicEmacs = new AtomicEmacs()
-    @disposables.add atom.commands.add 'atom-text-editor',
+    document.getElementsByTagName('atom-workspace')[0]?.classList?.add('atomic-emacs')
+    @disposable = atom.commands.add 'atom-text-editor',
       "atomic-emacs:backward-char": (event) -> atomicEmacs.backwardChar(event)
       "atomic-emacs:backward-kill-word": (event) -> atomicEmacs.backwardKillWord(event)
       "atomic-emacs:backward-paragraph": (event) -> atomicEmacs.backwardParagraph(event)
@@ -332,6 +343,9 @@ module.exports =
       "atomic-emacs:forward-char": (event) -> atomicEmacs.forwardChar(event)
       "atomic-emacs:forward-paragraph": (event) -> atomicEmacs.forwardParagraph(event)
       "atomic-emacs:forward-word": (event) -> atomicEmacs.forwardWord(event)
+      "atomic-emacs:forward-sexp": (event) -> atomicEmacs.forwardSexp(event)
+      "atomic-emacs:backward-sexp": (event) -> atomicEmacs.backwardSexp(event)
+      "atomic-emacs:mark-sexp": (event) -> atomicEmacs.markSexp(event)
       "atomic-emacs:just-one-space": (event) -> atomicEmacs.justOneSpace(event)
       "atomic-emacs:kill-word": (event) -> atomicEmacs.killWord(event)
       "atomic-emacs:mark-whole-buffer": (event) -> atomicEmacs.markWholeBuffer(event)
@@ -349,5 +363,7 @@ module.exports =
       "atomic-emacs:upcase-word-or-region": (event) -> atomicEmacs.upcaseWordOrRegion(event)
       "core:cancel": (event) -> atomicEmacs.keyboardQuit(event)
 
-  destroy: ->
-    @disposables.dispose()
+  deactivate: ->
+    document.getElementsByTagName('atom-workspace')[0]?.classList?.remove('atomic-emacs')
+    @disposable?.dispose()
+    @disposable = null

@@ -1,4 +1,4 @@
-{Emitter} = require('atom')
+{Emitter, CompositeDisposable} = require('atom')
 validate = require('./validate')
 helpers = require('./helpers')
 
@@ -9,6 +9,8 @@ class LinterRegistry
       Regular: new WeakSet
       Fly: new WeakSet
     @emitter = new Emitter
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add @emitter
 
   getLinters: ->
     return @linters.slice() # Clone the array
@@ -56,16 +58,17 @@ class LinterRegistry
     return new Promise((resolve) ->
       resolve(linter.lint(editor))
     ).then((results) =>
-      if results then @emitter.emit('did-update-messages', {linter, messages: results, editor})
+      if results
+        @emitter.emit('did-update-messages', {linter, messages: results, editor})
     ).catch((e) -> helpers.error(e))
 
   onDidUpdateMessages: (callback) ->
     return @emitter.on('did-update-messages', callback)
 
   dispose: ->
-    @emitter.dispose()
+    @subscriptions.dispose()
     # Intentionally set it to empty array instead of null 'cause this would
-    # disallow further execution, while still not throwing in current one
+    # disallow further execution, while still not throwing errors in current one
     @linters = []
 
 module.exports = LinterRegistry

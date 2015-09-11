@@ -2,6 +2,7 @@
 minimatch = require 'minimatch'
 
 {SERIALIZE_VERSION, SERIALIZE_MARKERS_VERSION} = require './versions'
+{THEME_VARIABLES} = require './uris'
 ColorBuffer = require './color-buffer'
 ColorContext = require './color-context'
 ColorSearch = require './color-search'
@@ -10,6 +11,71 @@ PathsLoader = require './paths-loader'
 PathsScanner = require './paths-scanner'
 ColorMarkerElement = require './color-marker-element'
 VariablesCollection = require './variables-collection'
+
+ATOM_VARIABLES = [
+  'text-color'
+  'text-color-subtle'
+  'text-color-highlight'
+  'text-color-selected'
+  'text-color-info'
+  'text-color-success'
+  'text-color-warning'
+  'text-color-error'
+  'background-color-info'
+  'background-color-success'
+  'background-color-warning'
+  'background-color-error'
+  'background-color-highlight'
+  'background-color-selected'
+  'app-background-color'
+  'base-background-color'
+  'base-border-color'
+  'pane-item-background-color'
+  'pane-item-border-color'
+  'input-background-color'
+  'input-border-color'
+  'tool-panel-background-color'
+  'tool-panel-border-color'
+  'inset-panel-background-color'
+  'inset-panel-border-color'
+  'panel-heading-background-color'
+  'panel-heading-border-color'
+  'overlay-background-color'
+  'overlay-border-color'
+  'button-background-color'
+  'button-background-color-hover'
+  'button-background-color-selected'
+  'button-border-color'
+  'tab-bar-background-color'
+  'tab-bar-border-color'
+  'tab-background-color'
+  'tab-background-color-active'
+  'tab-border-color'
+  'tree-view-background-color'
+  'tree-view-border-color'
+  'ui-site-color-1'
+  'ui-site-color-2'
+  'ui-site-color-3'
+  'ui-site-color-4'
+  'ui-site-color-5'
+  'syntax-text-color'
+  'syntax-cursor-color'
+  'syntax-selection-color'
+  'syntax-background-color'
+  'syntax-wrap-guide-color'
+  'syntax-indent-guide-color'
+  'syntax-invisible-character-color'
+  'syntax-result-marker-color'
+  'syntax-result-marker-color-selected'
+  'syntax-gutter-text-color'
+  'syntax-gutter-text-color-selected'
+  'syntax-gutter-background-color'
+  'syntax-gutter-background-color-selected'
+  'syntax-color-renamed'
+  'syntax-color-added'
+  'syntax-color-modified'
+  'syntax-color-removed'
+]
 
 compareArray = (a,b) ->
   return false if not a? or not b?
@@ -38,7 +104,9 @@ class ColorProject
     new ColorProject(state)
 
   constructor: (state={}) ->
-    {@ignoredNames, @sourceNames, @ignoredScopes, @paths, variables, timestamp, buffers} = state
+    {
+      includeThemes, @ignoredNames, @sourceNames, @ignoredScopes, @paths, @searchNames, @ignoreGlobalSourceNames, @ignoreGlobalIgnoredNames, @ignoreGlobalIgnoredScopes, @ignoreGlobalSearchNames, variables, timestamp, buffers
+    } = state
     @emitter = new Emitter
     @subscriptions = new CompositeDisposable
     @colorBuffersByEditorId = {}
@@ -69,6 +137,8 @@ class ColorProject
     @bufferStates = buffers ? {}
 
     @timestamp = new Date(Date.parse(timestamp)) if timestamp?
+
+    @setIncludeThemes(includeThemes) if includeThemes
 
     @initialize() if @paths? and @variables.length?
     @initializeBuffers()
@@ -225,16 +295,27 @@ class ColorProject
 
   loadPaths: (noKnownPaths=false) ->
     new Promise (resolve, reject) =>
+      rootPaths = @getRootPaths()
+      knownPaths = if noKnownPaths then [] else @paths ? []
       config = {
+        knownPaths
         @timestamp
         ignoredNames: @getIgnoredNames()
-        knownPaths: if noKnownPaths then [] else @paths
-        paths: atom.project.getPaths()
+        paths: rootPaths
         traverseIntoSymlinkDirectories: atom.config.get 'pigments.traverseIntoSymlinkDirectories'
         sourceNames: @getSourceNames()
         ignoreVcsIgnores: atom.config.get('pigments.ignoreVcsIgnoredPaths')
       }
-      PathsLoader.startTask config, (results) -> resolve(results)
+      PathsLoader.startTask config, (results) =>
+        for p in knownPaths
+          isDescendentOfRootPaths = rootPaths.some (root) ->
+            p.indexOf(root) is 0
+
+          unless isDescendentOfRootPaths
+            results.removed ?= []
+            results.removed.push(p)
+
+        resolve(results)
 
   updatePaths: ->
     return Promise.resolve() unless @initialized
@@ -246,41 +327,6 @@ class ColorProject
       @paths.push(p) for p in dirtied when p not in @paths
 
       @reloadVariablesForPaths(dirtied)
-
-  getSourceNames: ->
-    sourceNames = @sourceNames ? []
-    sourceNames = sourceNames.concat(atom.config.get('pigments.sourceNames') ? [])
-
-  setSourceNames: (sourceNames) ->
-    @sourceNames = sourceNames ? []
-
-    return if not @initialized? and not @initializePromise?
-
-    @initialize().then => @loadPathsAndVariables(true)
-
-  getSearchNames: ->
-    @getSourceNames().concat(atom.config.get 'pigments.extendedSearchNames')
-
-  getIgnoredNames: ->
-    ignoredNames = @ignoredNames ? []
-    ignoredNames = ignoredNames.concat(@getGlobalIgnoredNames() ? [])
-    ignoredNames = ignoredNames.concat(atom.config.get('core.ignoredNames') ? [])
-
-  getGlobalIgnoredNames: ->
-    atom.config.get('pigments.ignoredNames')?.map (p) ->
-      if /\/\*$/.test(p) then p + '*' else p
-
-  setIgnoredNames: (ignoredNames) ->
-    @ignoredNames = ignoredNames ? []
-
-    return if not @initialized? and not @initializePromise?
-
-    @initialize().then =>
-      dirtied = @paths.filter (p) => @isIgnoredPath(p)
-      @deleteVariablesForPaths(dirtied)
-
-      @paths = @paths.filter (p) => !@isIgnoredPath(p)
-      @loadPathsAndVariables(true)
 
   isVariablesSourcePath: (path) ->
     return false unless path
@@ -304,12 +350,7 @@ class ColorProject
 
   getPalette: ->
     return new Palette unless @isInitialized()
-
-    colors = {}
-    @getColorVariables().forEach (variable) ->
-      colors[variable.name] = variable.color
-
-    new Palette(colors)
+    new Palette(@getColorVariables())
 
   getContext: -> @variables.getContext()
 
@@ -320,15 +361,6 @@ class ColorProject
   getVariableByName: (name) -> @variables.getVariableByName(name)
 
   getColorVariables: -> @variables.getColorVariables()
-
-  getIgnoredScopes: ->
-    ignoredScopes = @ignoredScopes ? []
-    ignoredScopes = ignoredScopes.concat(atom.config.get('pigments.ignoredScopes') ? [])
-
-  setIgnoredScopes: (ignoredScopes=[]) ->
-    @ignoredScopes = ignoredScopes
-
-    @emitter.emit('did-change-ignored-scopes', @getIgnoredScopes())
 
   showVariableInFile: (variable) ->
     atom.workspace.open(variable.path).then (editor) ->
@@ -380,6 +412,129 @@ class ColorProject
     else
       PathsScanner.startTask paths, (results) -> callback(results)
 
+  loadThemesVariables: ->
+    iterator = 0
+    variables = []
+    html = ''
+    ATOM_VARIABLES.forEach (v) -> html += "<div class='#{v}'>#{v}</div>"
+
+    div = document.createElement('div')
+    div.className = 'pigments-sampler'
+    div.innerHTML = html
+    document.body.appendChild(div)
+
+    ATOM_VARIABLES.forEach (v,i) ->
+      node = div.children[i]
+      color = getComputedStyle(node).color
+      end = iterator + v.length + color.length + 4
+
+      variable =
+        name: "@#{v}"
+        line: i
+        value: color
+        range: [iterator,end]
+        path: THEME_VARIABLES
+
+      iterator = end
+      variables.push(variable)
+
+    document.body.removeChild(div)
+    return variables
+
+  ##     ######  ######## ######## ######## #### ##    ##  ######    ######
+  ##    ##    ## ##          ##       ##     ##  ###   ## ##    ##  ##    ##
+  ##    ##       ##          ##       ##     ##  ####  ## ##        ##
+  ##     ######  ######      ##       ##     ##  ## ## ## ##   ####  ######
+  ##          ## ##          ##       ##     ##  ##  #### ##    ##        ##
+  ##    ##    ## ##          ##       ##     ##  ##   ### ##    ##  ##    ##
+  ##     ######  ########    ##       ##    #### ##    ##  ######    ######
+
+  getRootPaths: -> atom.project.getPaths()
+
+  getSourceNames: ->
+    names = ['.pigments']
+    names = names.concat(@sourceNames ? [])
+    unless @ignoreGlobalSourceNames
+      names = names.concat(atom.config.get('pigments.sourceNames') ? [])
+    names
+
+  setSourceNames: (@sourceNames=[]) ->
+    return if not @initialized? and not @initializePromise?
+
+    @initialize().then => @loadPathsAndVariables(true)
+
+  setIgnoreGlobalSourceNames: (@ignoreGlobalSourceNames) ->
+    @updatePaths()
+
+  getSearchNames: ->
+    names = []
+    names = names.concat(@sourceNames ? [])
+    names = names.concat(@searchNames ? [])
+    unless @ignoreGlobalSearchNames
+      names = names.concat(atom.config.get('pigments.sourceNames') ? [])
+      names = names.concat(atom.config.get('pigments.extendedSearchNames') ? [])
+    names
+
+  setSearchNames: (@searchNames=[]) ->
+
+  setIgnoreGlobalSearchNames: (@ignoreGlobalSearchNames) ->
+
+  getIgnoredNames: ->
+    names = @ignoredNames ? []
+    unless @ignoreGlobalIgnoredNames
+      names = names.concat(@getGlobalIgnoredNames() ? [])
+      names = names.concat(atom.config.get('core.ignoredNames') ? [])
+    names
+
+  getGlobalIgnoredNames: ->
+    atom.config.get('pigments.ignoredNames')?.map (p) ->
+      if /\/\*$/.test(p) then p + '*' else p
+
+  setIgnoredNames: (@ignoredNames=[]) ->
+    return if not @initialized? and not @initializePromise?
+
+    @initialize().then =>
+      dirtied = @paths.filter (p) => @isIgnoredPath(p)
+      @deleteVariablesForPaths(dirtied)
+
+      @paths = @paths.filter (p) => !@isIgnoredPath(p)
+      @loadPathsAndVariables(true)
+
+  setIgnoreGlobalIgnoredNames: (@ignoreGlobalIgnoredNames) ->
+    @updatePaths()
+
+  getIgnoredScopes: ->
+    scopes = @ignoredScopes ? []
+    unless @ignoreGlobalIgnoredScopes
+      scopes = scopes.concat(atom.config.get('pigments.ignoredScopes') ? [])
+    scopes
+
+  setIgnoredScopes: (@ignoredScopes=[]) ->
+    @emitter.emit('did-change-ignored-scopes', @getIgnoredScopes())
+
+  setIgnoreGlobalIgnoredScopes: (@ignoreGlobalIgnoredScopes) ->
+    @emitter.emit('did-change-ignored-scopes', @getIgnoredScopes())
+
+  themesIncluded: -> @includeThemes
+
+  setIncludeThemes: (includeThemes) ->
+    return Promise.resolve() if includeThemes is @includeThemes
+
+    @includeThemes = includeThemes
+    if @includeThemes
+      @themesSubscription = atom.themes.onDidChangeActiveThemes =>
+        return unless @includeThemes
+
+        variables = @loadThemesVariables()
+        @variables.updatePathCollection(THEME_VARIABLES, variables)
+
+      @subscriptions.add @themesSubscription
+      @variables.addMany(@loadThemesVariables())
+    else
+      @subscriptions.remove @themesSubscription
+      @variables.deleteVariablesForPaths([THEME_VARIABLES])
+      @themesSubscription.dispose()
+
   getTimestamp: -> new Date()
 
   serialize: ->
@@ -391,9 +546,25 @@ class ColorProject
       globalSourceNames: atom.config.get('pigments.sourceNames')
       globalIgnoredNames: atom.config.get('pigments.ignoredNames')
 
-    data.ignoredScopes = @ignoredScopes if @ignoredScopes?
-    data.ignoredNames = @ignoredNames if @ignoredNames?
-    data.sourceNames = @sourceNames if @sourceNames?
+    if @ignoreGlobalSourceNames?
+      data.ignoreGlobalSourceNames = @ignoreGlobalSourceNames
+    if @ignoreGlobalSearchNames?
+      data.ignoreGlobalSearchNames = @ignoreGlobalSearchNames
+    if @ignoreGlobalIgnoredNames?
+      data.ignoreGlobalIgnoredNames = @ignoreGlobalIgnoredNames
+    if @ignoreGlobalIgnoredScopes?
+      data.ignoreGlobalIgnoredScopes = @ignoreGlobalIgnoredScopes
+    if @includeThemes?
+      data.includeThemes = @includeThemes
+    if @ignoredScopes?
+      data.ignoredScopes = @ignoredScopes
+    if @ignoredNames?
+      data.ignoredNames = @ignoredNames
+    if @sourceNames?
+      data.sourceNames = @sourceNames
+    if @searchNames?
+      data.searchNames = @searchNames
+
     data.buffers = @serializeBuffers()
 
     if @isInitialized()

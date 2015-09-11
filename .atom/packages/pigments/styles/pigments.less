@@ -44,12 +44,22 @@
 
 .icon-pigments::before {
   content: '';
-  width: 16px;
-  height: 16px;
+  width: 1.6em;
+  height: 1.6em;
   display: inline-block;
   background-image: url(atom://pigments/resources/icon.svg);
-  background-size: 16px;
+  background-size: 1.6em;
   vertical-align: middle;
+}
+
+.icon[data-name=".pigments"]::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  background-image: url(atom://pigments/resources/icon.svg);
+  background-size: 1em;
+  margin-top: 0.2em;
 }
 
 //    ##     ##    ###    ########  ##    ## ######## ########   ######
@@ -196,7 +206,7 @@ pigments-color-results {
   }
 
   .match.color-match {
-    padding: 2px 4px
+    padding: 0.25em 0.4em;
   }
 
   .preview-pane {
@@ -207,7 +217,7 @@ pigments-color-results {
     .results-view {
       overflow: auto;
       position: relative;
-      padding: 0 10px;
+      padding: 0 @component-padding;
       -webkit-flex: 1;
 
       .line-number {
@@ -217,13 +227,17 @@ pigments-color-results {
       }
 
       .search-result {
-        padding-top: 2px;
-        padding-bottom: 2px;
+        padding-top: 0.25em;
+        padding-bottom: 0.25em;
         cursor: alias;
 
         &:hover {
           background: @background-color-highlight;
         }
+      }
+
+      .preview {
+        font-family: monospace;
       }
     }
   }
@@ -277,7 +291,7 @@ pigments-palette {
   }
 
   li {
-    padding: 10px;
+    padding: @component-padding;
     list-style: none;
     border-bottom: 1px solid @base-border-color;
     display: -webkit-flex;
@@ -311,7 +325,7 @@ pigments-palette {
     border-bottom: 1px solid @base-border-color;
     display: inline-block;
     background: @syntax-background-color;
-    padding: 10px;
+    padding: @component-padding;
     width: 100%;
 
     &.fixed {
@@ -365,7 +379,7 @@ pigments-palette {
     position: relative;
     width: 3em;
     height: 3em;
-    margin-right: 10px;
+    margin-right: @component-padding;
     z-index: 0;
 
     &:before {
@@ -414,11 +428,147 @@ pigments-palette {
 
   .pigments-palette-controls-wrapper {
     border-bottom: 1px solid @base-border-color;
-    padding: 10px;
+    padding: @component-padding;
     width: 100%;
   }
 
   .input-group-inline {
     margin-right: 1em;
+  }
+}
+
+//     ######  ######## ######## ######## #### ##    ##  ######    ######
+//    ##    ## ##          ##       ##     ##  ###   ## ##    ##  ##    ##
+//    ##       ##          ##       ##     ##  ####  ## ##        ##
+//     ######  ######      ##       ##     ##  ## ## ## ##   ####  ######
+//          ## ##          ##       ##     ##  ##  #### ##    ##        ##
+//    ##    ## ##          ##       ##     ##  ##   ### ##    ##  ##    ##
+//     ######  ########    ##       ##    #### ##    ##  ######    ######
+
+pigments-color-project {
+  color: @text-color;
+  position: relative;
+
+  .header {
+    border-bottom: 1px solid @input-border-color;
+    padding-bottom: @component-padding * 2;
+    text-align: left;
+    overflow: hidden;
+
+    .logo {
+      float: left;
+      margin-right: @component-padding;
+    }
+
+    p {
+      margin: (@component-padding * 1.5) 0 0;
+    }
+  }
+
+  .settings-view {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .settings-wrapper {
+    width: 90%;
+    max-width: 750px;
+  }
+
+  .control-group {
+    margin-bottom: @component-padding * 2;
+
+    &.boolean {
+      padding-left: 150px;
+
+      .controls {
+        display: block;
+      }
+
+      .control-label {
+        width: auto;
+      }
+
+      input {
+        margin: 0.3em 0.75em 0 0;
+      }
+
+      .setting-description {
+        margin-top: 0.6em;
+      }
+    }
+
+    &.array {
+      .setting-description {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        & > div:first-child {
+          flex: 1 1 0;
+          padding-right: @component-padding * 2;
+        }
+      }
+
+      .boolean {
+        margin: 0;
+        padding-left: 0;
+
+        input {
+          margin-right: 0;
+          order: 2;
+        }
+        .controls {
+          display: flex;
+        }
+        .control-label {
+          padding-right: @component-padding;
+        }
+        .setting-description {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .fields {
+    margin-top: @component-padding * 2;
+  }
+
+  .fields .controls, .fields .fields-header {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+
+    h5 {
+      text-align: center;
+      font-size: 1.6em;
+      font-weight: normal;
+      margin-bottom: @component-padding * 2;
+    }
+
+  }
+  .control-label {
+    margin: 0;
+    line-height: 2em;
+    width: 150px;
+    padding-right: @component-padding;
+  }
+
+  .control-wrapper {
+    padding: 0;
+    flex: 1 1 0;
+
+    .setting-description {
+      margin-top: 0.4em;
+    }
   }
 }

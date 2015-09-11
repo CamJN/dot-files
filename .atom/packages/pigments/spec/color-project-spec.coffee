@@ -675,6 +675,161 @@ describe 'ColorProject', ->
         it 'loads the variables from these new paths', ->
           expect(project.getVariables().length).toEqual(TOTAL_VARIABLES_IN_PROJECT)
 
+    describe 'when the extendedSearchNames setting is changed', ->
+      [updateSpy] = []
+
+      beforeEach ->
+        project.setSearchNames(['*.foo'])
+
+      it 'updates the search names', ->
+        expect(project.getSearchNames().length).toEqual(3)
+
+      it 'serializes the setting', ->
+        expect(project.serialize().searchNames).toEqual(['*.foo'])
+
+    describe 'when the ignore global config settings are enabled', ->
+      describe 'for the sourceNames field', ->
+        beforeEach ->
+          project.sourceNames = ['*.foo']
+          waitsForPromise -> project.setIgnoreGlobalSourceNames(true)
+
+        it 'ignores the content of the global config', ->
+          expect(project.getSourceNames()).toEqual(['.pigments','*.foo'])
+
+        it 'serializes the project setting', ->
+          expect(project.serialize().ignoreGlobalSourceNames).toBeTruthy()
+
+      describe 'for the ignoredNames field', ->
+        beforeEach ->
+          atom.config.set 'pigments.ignoredNames', ['*.foo']
+          project.ignoredNames = ['*.bar']
+
+          project.setIgnoreGlobalIgnoredNames(true)
+
+        it 'ignores the content of the global config', ->
+          expect(project.getIgnoredNames()).toEqual(['*.bar'])
+
+        it 'serializes the project setting', ->
+          expect(project.serialize().ignoreGlobalIgnoredNames).toBeTruthy()
+
+      describe 'for the ignoredScopes field', ->
+        beforeEach ->
+          atom.config.set 'pigments.ignoredScopes', ['\\.comment']
+          project.ignoredScopes = ['\\.source']
+
+          project.setIgnoreGlobalIgnoredScopes(true)
+
+        it 'ignores the content of the global config', ->
+          expect(project.getIgnoredScopes()).toEqual(['\\.source'])
+
+        it 'serializes the project setting', ->
+          expect(project.serialize().ignoreGlobalIgnoredScopes).toBeTruthy()
+
+      describe 'for the searchNames field', ->
+        beforeEach ->
+          atom.config.set 'pigments.extendedSearchNames', ['*.css']
+          project.searchNames = ['*.foo']
+
+          project.setIgnoreGlobalSearchNames(true)
+
+        it 'ignores the content of the global config', ->
+          expect(project.getSearchNames()).toEqual(['*.less','*.foo'])
+
+        it 'serializes the project setting', ->
+          expect(project.serialize().ignoreGlobalSearchNames).toBeTruthy()
+
+
+    describe '::loadThemesVariables', ->
+      beforeEach ->
+        atom.packages.activatePackage('atom-light-ui')
+        atom.packages.activatePackage('atom-light-syntax')
+
+        atom.config.set('core.themes', ['atom-light-ui', 'atom-light-syntax'])
+
+        waitsForPromise ->
+          atom.themes.activateThemes()
+
+        waitsForPromise ->
+          atom.packages.activatePackage('pigments')
+
+      afterEach ->
+        atom.themes.deactivateThemes()
+        atom.themes.unwatchUserStylesheet()
+
+      it 'returns an array of 62 variables', ->
+        themeVariables = project.loadThemesVariables()
+        expect(themeVariables.length).toEqual(62)
+
+    describe 'when the includeThemes setting is enabled', ->
+      [paths, spy] = []
+      beforeEach ->
+        paths = project.getPaths()
+        expect(project.getColorVariables().length).toEqual(10)
+
+        atom.packages.activatePackage('atom-light-ui')
+        atom.packages.activatePackage('atom-light-syntax')
+        atom.packages.activatePackage('atom-dark-ui')
+        atom.packages.activatePackage('atom-dark-syntax')
+
+        atom.config.set('core.themes', ['atom-light-ui', 'atom-light-syntax'])
+
+        waitsForPromise ->
+          atom.themes.activateThemes()
+
+        waitsForPromise ->
+          atom.packages.activatePackage('pigments')
+
+        waitsForPromise ->
+          project.initialize()
+
+        runs ->
+          spy = jasmine.createSpy('did-change-active-themes')
+          atom.themes.onDidChangeActiveThemes(spy)
+          project.setIncludeThemes(true)
+
+      afterEach ->
+        atom.themes.deactivateThemes()
+        atom.themes.unwatchUserStylesheet()
+
+      it 'includes the variables set for ui and syntaxt themes in the palette', ->
+        expect(project.getColorVariables().length).toEqual(72)
+
+      it 'still includes the paths from the project', ->
+        for p in paths
+          expect(project.getPaths().indexOf p).not.toEqual(-1)
+
+      it 'serializes the setting with the project', ->
+        serialized = project.serialize()
+
+        expect(serialized.includeThemes).toEqual(true)
+
+      describe 'and then disabled', ->
+        beforeEach ->
+          project.setIncludeThemes(false)
+
+        it 'removes all the paths to the themes stylesheets', ->
+          expect(project.getColorVariables().length).toEqual(10)
+
+        describe 'when the core.themes setting is modified', ->
+          beforeEach ->
+            spyOn(project, 'loadThemesVariables').andCallThrough()
+            atom.config.set('core.themes', ['atom-dark-ui', 'atom-dark-syntax'])
+
+            waitsFor -> spy.callCount > 0
+
+          it 'does not trigger a paths update', ->
+            expect(project.loadThemesVariables).not.toHaveBeenCalled()
+
+      describe 'when the core.themes setting is modified', ->
+        beforeEach ->
+          spyOn(project, 'loadThemesVariables').andCallThrough()
+          atom.config.set('core.themes', ['atom-dark-ui', 'atom-dark-syntax'])
+
+          waitsFor -> spy.callCount > 0
+
+        it 'triggers a paths update', ->
+          expect(project.loadThemesVariables).toHaveBeenCalled()
+
   ##    ########  ########  ######  ########  #######  ########  ########
   ##    ##     ## ##       ##    ##    ##    ##     ## ##     ## ##
   ##    ##     ## ##       ##          ##    ##     ## ##     ## ##
@@ -839,7 +994,7 @@ describe 'ColorProject', ->
 ##    ##     ## ##       ##       ##     ## ##     ## ##          ##
 ##    ########  ######## ##       ##     ##  #######  ########    ##
 
-xdescribe 'ColorProject', ->
+describe 'ColorProject', ->
   [project, rootPath] = []
   describe 'when the project has a pigments defaults file', ->
     beforeEach ->
@@ -853,6 +1008,5 @@ xdescribe 'ColorProject', ->
 
       waitsForPromise -> project.initialize()
 
-    it 'uses the defaults in the .pigments file in priority', ->
-      expect(project.getColorVariables().length).toEqual(4)
-      expect(project.getVariableByName('$button-color').getColor()).toBeColor(255,255,255,1)
+    it 'loads the defaults file content', ->
+      expect(project.getColorVariables().length).toEqual(6)

@@ -1,5 +1,6 @@
 {CompositeDisposable} = require 'atom'
 {SpacePenDSL, EventsDelegation} = require 'atom-utils'
+{THEME_VARIABLES} = require './uris'
 pigments = require './pigments'
 Palette = require './palette'
 StickyTitle = require './sticky-title'
@@ -85,7 +86,7 @@ class PaletteElement extends HTMLElement
     switch @sortPaletteColors
       when 'by color' then palette.sortedByColor()
       when 'by name' then palette.sortedByName()
-      else palette.tuple()
+      else palette.variables.slice()
 
   renderList: ->
     @stickyTitle?.dispose()
@@ -116,7 +117,10 @@ class PaletteElement extends HTMLElement
 
     content = document.createElement('div')
     content.className = 'pigments-color-group-header-content'
-    content.textContent = label
+    if label is THEME_VARIABLES
+      content.textContent = 'Atom Themes'
+    else
+      content.textContent = label
 
     header.appendChild(content)
     header
@@ -124,22 +128,20 @@ class PaletteElement extends HTMLElement
   getFilesPalettes: ->
     palettes = {}
 
-    @palette.eachColor (name, color) =>
-      variable = @project.getVariableByName(name)
-      return unless variable?
-
+    @palette.eachColor (variable) =>
       {path} = variable
 
-      palettes[path] ?= new Palette
-      palettes[path].colors[name] = color
+      palettes[path] ?= new Palette []
+      palettes[path].variables.push(variable)
 
     palettes
 
   buildList: (container, paletteColors) ->
     paletteColors = @checkForDuplicates(paletteColors)
-    for [names, color] in paletteColors
+    for variables in paletteColors
       li = document.createElement('li')
       li.className = 'pigments-color-item'
+      {color} = variables[0]
       html = """
       <div class="pigments-color">
         <span class="pigments-color-preview"
@@ -155,16 +157,17 @@ class PaletteElement extends HTMLElement
       <div class="pigments-color-details">
       """
 
-      for name in names
+      for {name, path, line, id} in variables
         html += """
         <span class="pigments-color-occurence">
             <span class="name">#{name}</span>
         """
-        if variable = @project.getVariableByName(name)
+
+        if path isnt THEME_VARIABLES
           html += """
-          <span data-variable-id="#{variable.id}">
-            <span class="path">#{atom.project.relativize(variable.path)}</span>
-            <span class="line">at line #{variable.line + 1}</span>
+          <span data-variable-id="#{id}">
+            <span class="path">#{atom.project.relativize(path)}</span>
+            <span class="line">at line #{line + 1}</span>
           </span>
           """
 
@@ -186,18 +189,18 @@ class PaletteElement extends HTMLElement
       findColor = (color) ->
         return col for col in colors when col.isEqual(color)
 
-      for [k,v] in paletteColors
-        if key = findColor(v)
-          map.get(key).push(k)
+      for v in paletteColors
+        if key = findColor(v.color)
+          map.get(key).push(v)
         else
-          map.set(v, [k])
-          colors.push(v)
+          map.set(v.color, [v])
+          colors.push(v.color)
 
-      map.forEach (names, color) -> results.push [names, color]
+      map.forEach (vars, color) -> results.push vars
 
       return results
     else
-      return ([[name], color] for [name, color] in paletteColors)
+      return ([v] for v in paletteColors)
 
 
 module.exports = PaletteElement =

@@ -1,12 +1,10 @@
 path = require 'path'
 
 module.exports =
-  activate: ->
-
   provideLinter: ->
     yaml = require('js-yaml')
     provider =
-      grammarScopes: ['source.yaml']
+      grammarScopes: ['source.yaml', 'source.yml']
       scope: 'file'
       lintOnFly: true
       processMessage: (type, path, message)->

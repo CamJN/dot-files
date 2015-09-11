@@ -1,7 +1,7 @@
 {
   "name": "atomic-emacs",
   "main": "./lib/atomic-emacs",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "An atomic implementation of emacs keybindings",
   "activationCommands": {
     "atom-text-editor": [
@@ -26,6 +26,9 @@
       "atomic-emacs:backward-char",
       "atomic-emacs:forward-word",
       "atomic-emacs:backward-word",
+      "atomic-emacs:forward-sexp",
+      "atomic-emacs:backward-sexp",
+      "atomic-emacs:mark-sexp",
       "atomic-emacs:next-line",
       "atomic-emacs:previous-line",
       "atomic-emacs:move-beginning-of-line",
@@ -44,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/avendael/atomic-emacs"
+    "url": "git+https://github.com/avendael/atomic-emacs.git"
   },
   "license": "MIT",
   "engines": {
@@ -56,11 +59,11 @@
   "bugs": {
     "url": "https://github.com/avendael/atomic-emacs/issues"
   },
-  "homepage": "https://github.com/avendael/atomic-emacs",
-  "_id": "atomic-emacs@0.7.2",
-  "_shasum": "d224073a004e4bf676ae3163d942b9f665aa94ac",
-  "_resolved": "file:../d-115619-16026-zvwkid/package.tgz",
-  "_from": "../d-115619-16026-zvwkid/package.tgz",
+  "homepage": "https://github.com/avendael/atomic-emacs#readme",
+  "_id": "atomic-emacs@0.7.3",
+  "_shasum": "f6b5c458d98381ded805ac9901ab60868a87ee25",
+  "_resolved": "file:../d-11587-58138-1irhuzx/package.tgz",
+  "_from": "../d-11587-58138-1irhuzx/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

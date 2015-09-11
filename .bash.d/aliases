@@ -29,6 +29,7 @@ alias killFlash='rm -rf ~/Library/Preferences/Macromedia/Flash\ Player/macromedi
 alias lastLogin="last -1 `whoami` | head -1 | \sed -Ee 's/`whoami` +([^ ]+) +([^:]*:[0-9]\.?[0-9]) +(.*)/Last Login: \2 on \1/g'"
 alias less='/usr/share/vim/vim*/macros/less.sh'
 alias locate='clocate'
+alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 alias loveSongs='loveSongsForCamden'
 alias ls='ls -hG'
 alias mkdir='mkdir -p'

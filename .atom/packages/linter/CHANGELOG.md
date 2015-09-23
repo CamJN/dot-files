@@ -1,3 +1,12 @@
+## 1.6.0
+
+* Fixed messages so that they line up and don't wrap in weird ways (Fixes #859)
+* Lint is toggled everytime you toggle enable linter
+
+## 1.5.2
+
+* Add `displayLinterInfo` config to toggle visibility of bottom panel
+
 ## 1.5.1
 
 * Messages are now tracked on a per-buffer basis rather than per-editor,

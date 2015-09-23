@@ -53,7 +53,8 @@
   'raw_string_literal': {
     'comment': 'Raw double-quote string literal'
     'name': 'string.quoted.double.raw.rust'
-    'match': 'b?r(#*)".*?"(\\1)'
+    'begin': 'b?r(#*)"'
+    'end': '"\\1'
   }
   'sigils': {
     'comment': 'Sigil'
@@ -91,25 +92,30 @@
       '2': { 'name': 'entity.name.lifetime.rust' }
     }
   }
-  'types': {
-    'comment': 'Built-in type'
-    'name': 'storage.type.rust'
-    'match': '\\b(bool|char|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|str|Self)\\b'
+  'core_types': {
+    'comment': 'Built-in/core type'
+    'name': 'storage.type.core.rust'
+    'match': '\\b(bool|char|usize|isize|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|str|Self|Option|Result)\\b'
   }
-  'marker': {
+  'core_vars': {
+    'comment': 'Core type variant'
+    'name': 'support.constant.core.rust'
+    'match': '\\b(Some|None|Ok|Err)\\b'
+  }
+  'core_marker': {
     'comment': 'Core trait (marker)'
     'name': 'support.type.marker.rust'
     'match': '\\b(Copy|Send|Sized|Sync)\\b'
   }
-  'ops': {
-    'comment': 'Core trait (op)'
-    'name': 'support.type.ops.rust'
-    'match': '\\b(Drop|Fn|FnMut|FnOnce)\\b'
+  'traits': {
+    'comment': 'Core trait'
+    'name': 'support.type.core.rust'
+    'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|IntoIterator|Iterator|DoubleEndedIterator|Extend|ExactSizeIterator)\\b'
   }
   'std_types': {
     'comment': 'Standard library type'
     'name': 'storage.class.std.rust'
-    'match': '\\b(Box|Option|Path|PathBuf|Result|String|Vec)\\b'
+    'match': '\\b(Box|String|Vec|Path|PathBuf)\\b'
   }
   'std_vars': {
     'comment': 'Standard library type variant'
@@ -119,12 +125,12 @@
   'std_traits': {
     'comment': 'Standard library trait'
     'name': 'support.type.std.rust'
-    'match': '\\b(Clone|PartialEq|PartialOrd|Eq|Ord|Read|Write|Seek|BufRead|DoubleEndedIterator|ExactSizeIterator|Iterator|Extend|AsPath|AsSlice|Str|ToString)\\b'
+    'match': '\\b(ToOwned|ToString)\\b'
   }
   'type_params': {
     'comment': 'Type parameters'
     'name': 'meta.type_params.rust'
-    'begin': '<'
+    'begin': '<(?![=<])'
     'end': '>'
     'patterns': [
       { 'include': '#block_comment' }
@@ -132,12 +138,12 @@
       { 'include': '#sigils' }
       { 'include': '#mut' }
       { 'include': '#lifetime' }
-      { 'include': '#types' }
-      { 'include': '#marker' }
-      { 'include': '#ops' }
+      { 'include': '#core_types' }
+      { 'include': '#core_marker' }
+      { 'include': '#traits' }
+      { 'include': '#std_types' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }
-      { 'include': '#std_types' }
     ]
   }
 }
@@ -248,12 +254,13 @@
   {
     'comment': 'Operator'
     'name': 'keyword.operator.rust'
-    'match': '(\\+|-|/|\\*|=|\\^|&|\\||!|>|<|%|::|\\bas\\b)'
+    'match': '(\\+|-|/|\\*|=|<=|>=|\\^|&|\\||!|%|::|\\bas\\b|<<|>>|>|<)'
   }
   # Standard types and traits
-  { 'include': '#types' }
-  { 'include': '#marker' }
-  { 'include': '#ops' }
+  { 'include': '#core_types' }
+  { 'include': '#core_vars' }
+  { 'include': '#core_marker' }
+  { 'include': '#traits' }
   { 'include': '#std_types' }
   { 'include': '#std_vars' }
   { 'include': '#std_traits' }
@@ -304,22 +311,58 @@
       '2': { 'name': 'entity.name.function.rust' }
     }
     'patterns': [
+      { 'include': '#block_comment' }
+      { 'include': '#line_comment' }
+      { 'include': '#sigils' }
+      { 'include': '#self' }
+      { 'include': '#mut' }
+      { 'include': '#ref_lifetime' }
+      { 'include': '#core_types' }
+      { 'include': '#core_marker' }
+      { 'include': '#traits' }
+      { 'include': '#std_types' }
+      { 'include': '#std_traits' }
       { 'include': '#type_params' }
-      { 'include': '$self' }
     ]
   }
   # Type declaration
   {
     'comment': 'Type declaration'
-    'begin': '\\b(enum|struct|trait|type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+    'begin': '\\b(enum|struct|trait)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
     'end': '[\\{;]'
     'beginCaptures': {
       '1': { 'name': 'storage.type.rust' }
       '2': { 'name': 'entity.name.type.rust' }
     }
     'patterns': [
+      { 'include': '#block_comment' }
+      { 'include': '#line_comment' }
+      { 'include': '#traits' }
+      { 'include': '#std_traits' }
       { 'include': '#type_params' }
-      { 'include': '$self' }
+    ]
+  }
+  # Type alias
+  {
+    'comment': 'Type alias'
+    'begin': '\\b(type)\\s+([a-zA-Z_][a-zA-Z0-9_]*)'
+    'end': ';'
+    'beginCaptures': {
+      '1': { 'name': 'storage.type.rust' }
+      '2': { 'name': 'entity.name.type.rust' }
+    }
+    'patterns': [
+      { 'include': '#block_comment' }
+      { 'include': '#line_comment' }
+      { 'include': '#sigils' }
+      { 'include': '#mut' }
+      { 'include': '#ref_lifetime' }
+      { 'include': '#core_types' }
+      { 'include': '#core_marker' }
+      { 'include': '#traits' }
+      { 'include': '#std_types' }
+      { 'include': '#std_traits' }
+      { 'include': '#type_params' }
     ]
   }
   # Implementation
@@ -331,18 +374,21 @@
       '1': { 'name': 'storage.type.rust' }
     }
     'patterns': [
+      { 'include': '#block_comment' }
+      { 'include': '#line_comment' }
+      { 'include': '#sigils' }
+      { 'include': '#mut' }
+      { 'include': '#ref_lifetime' }
+      { 'include': '#core_types' }
+      { 'include': '#core_marker' }
+      { 'include': '#traits' }
+      { 'include': '#std_types' }
+      { 'include': '#std_traits' }
       { 'include': '#type_params' }
-      { 'include': '$self' }
-    ]
-  }
-  # Variable declaration
-  {
-    'comment': 'Variable declaration'
-    'begin': ':'
-    'end': '[=;,\\)\\|]'
-    'patterns': [
-      { 'include': '#type_params' }
-      { 'include': '$self' }
+      {
+        'name': 'storage.type.rust'
+        'match': '\\bfor\\b'
+      }
     ]
   }
 ]

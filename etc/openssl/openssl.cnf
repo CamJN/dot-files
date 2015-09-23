@@ -229,12 +229,14 @@ subjectAltName          = @alt_names
 DNS.1 = localhost
 DNS.2 = SECUR-T.local
 DNS.3 = barcoding.dev
-DNS.4 = matrix.dev
-DNS.5 = blog.dev
+DNS.4 = arewesmallyet.dev
+DNS.5 = nmr.metabolistics.dev
 DNS.6 = metabolistics.dev
 DNS.7 = silversshadows.dev
 DNS.8 = mote.scanimetrics.dev
-DNS.9 = 127.0.0.1
+DNS.9 = m2.dev
+DNS.10 = kingofstrain.dev
+DNS.11 = 127.0.0.1
 
 [ v3_ca ]
 

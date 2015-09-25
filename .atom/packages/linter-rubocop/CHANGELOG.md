@@ -1,3 +1,18 @@
+# 0.4.1
+
+### Bug Fixes
+
+* The linter will now ignore stderr output from rubocop if it is still able to
+  parse stdout.
+
+# 0.4.0
+
+### New Features
+
+* Use STDIN for linting
+  [#72](https://github.com/AtomLinter/linter-rubocop/pull/72/files). This
+  version requires `rubocop >= 0.34.0`.
+
 # 0.2.2
 
 ### Bugs fixed

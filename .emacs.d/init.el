@@ -51,6 +51,7 @@
 (require 'shell)
 (require 'vc-git)
 (require 'web-mode nil t)
+(require 'ess-site nil t)
 
 (setq custom-file "custom.el")
 (load custom-file nil t t t)
@@ -183,7 +184,12 @@
                                                    (let
                                                        ((comint-buffer-maximum-size 0))
                                                      (comint-truncate-buffer))))
-
+;;-------R stuff ---------
+(define-key inferior-ess-mode-map (kbd "C-l") (lambda ()
+                                                (interactive)
+                                                (let
+                                                    ((comint-buffer-maximum-size 0))
+                                                  (comint-truncate-buffer))))
 ;;----------Server stuff------------------------------------
 ;; (when (fboundp 'server-running-p)(unless (server-running-p) (server-start)))
 

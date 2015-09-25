@@ -1,6 +1,9 @@
 #!/bin/bash
 
 if [ `uname` = "Darwin" ]; then
+
+    export HOMEBREW_INSTALL_BADGE=🍷
+
     function project {
         if [ "$1" = 'size' ]; then
             find . -type f \( -iname '*.h' -o -name '*.m' -o -name '*.pch' \) -print0 | xargs -0 wc -l | sort -nr

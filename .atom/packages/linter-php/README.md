@@ -1,10 +1,13 @@
 # linter-php
 =========================
 
-This package will lint your `.php` opened filed in Atom through [php -l](http://www.php.net/manual/en/features.commandline.options.php).
+This package will lint PHP files and embedded PHP within HTML files in Atom through
+[php -l](http://www.php.net/manual/en/features.commandline.options.php).
 
 ## Installation
-Linter package must be installed in order to use this plugin. If Linter is not installed, please follow the instructions [here](https://github.com/AtomLinter/Linter).
+As this package only provides a service, you will need something to run it. As
+such, the Linter package will be installed for you if it isn't already installed.
+This provides the interface and runs the linter for you.
 
 * Install [php](http://php.net).
 * `$ apm install linter-php`
@@ -33,3 +36,10 @@ Please note that modifications should follow these coding guidelines:
 - Vertical whitespace helps readability, don’t be afraid to use it.
 
 **Thank you for helping out!**
+
+## Maintainers
+
+The following people have stepped up to take responsibility for this repository and should be consulted on any releases or major changes.
+
+* [steelbrain](http://github.com/steelbrain) - Release Maintainer
+* [Arcanemagus](http://github.com/Arcanemagus)

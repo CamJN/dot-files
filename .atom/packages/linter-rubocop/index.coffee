@@ -1,18 +1,30 @@
+path = require 'path'
 helpers = require 'atom-linter'
 
-COMMAND_CONFIG_KEY = 'linter-rubocop.executablePath'
-ARGS_CONFIG_KEY = 'linter-rubocop.additionalArguments'
+COMMAND_CONFIG_KEY = 'linter-rubocop.command'
+OLD_EXEC_PATH_CONFIG_KEY = 'linter-rubocop.executablePath'
+OLD_ARGS_CONFIG_KEY = 'linter-rubocop.additionalArguments'
 DEFAULT_LOCATION = {line: 1, column: 1, length: 0}
 DEFAULT_ARGS = ['--cache', 'false', '--force-exclusion', '-f', 'json', '-s']
 DEFAULT_MESSAGE = 'Unknown Error'
 WARNINGS = new Set(['refactor', 'convention', 'warning'])
 
+convertOldConfig = ->
+  execPath = atom.config.get OLD_EXEC_PATH_CONFIG_KEY
+  args = atom.config.get OLD_ARGS_CONFIG_KEY
+  return unless execPath || args
+  atom.config.set COMMAND_CONFIG_KEY, "#{execPath || ''} #{args || ''}".trim()
+  atom.config.set OLD_EXEC_PATH_CONFIG_KEY, undefined
+  atom.config.set OLD_ARGS_CONFIG_KEY, undefined
+
 lint = (editor) ->
-  command = atom.config.get(COMMAND_CONFIG_KEY)
-  args = atom.config.get(ARGS_CONFIG_KEY).split(/\s+/).filter((i) -> i)
-    .concat(DEFAULT_ARGS, path = editor.getPath())
-  options = {stdin: editor.getText(), stream: 'both'}
-  helpers.exec(command, args, options).then (result) ->
+  convertOldConfig()
+  command = atom.config.get(COMMAND_CONFIG_KEY).split(/\s+/).filter((i) -> i)
+    .concat(DEFAULT_ARGS, filePath = editor.getPath())
+  cwd = path.dirname helpers.findFile filePath, '.'
+  stdin = editor.getText()
+  stream = 'both'
+  helpers.exec(command[0], command[1..], {cwd, stdin, stream}).then (result) ->
     {stdout, stderr} = result
     parsed = try JSON.parse(stdout)
     throw new Error stderr || stdout unless typeof parsed is 'object'
@@ -22,7 +34,7 @@ lint = (editor) ->
       type: if WARNINGS.has(severity) then 'Warning' else 'Error'
       text: (message || DEFAULT_MESSAGE) +
         (if cop_name then " (#{cop_name})" else '')
-      filePath: path
+      filePath: filePath
       range: [[line - 1, column - 1], [line - 1, column + length - 1]]
 
 linter =
@@ -38,13 +50,15 @@ linter =
 
 module.exports =
   config:
-    executablePath:
+    command:
       type: 'string'
-      title: 'Executable Path'
+      title: 'Command'
       default: 'rubocop'
-    additionalArguments:
-      title: 'Additional Arguments'
-      type: 'string'
-      default: ''
+      description: '
+        This is the absolute path to your `rubocop` command. You may need to run
+        `which rubocop` or `rbenv which rubocop` to find this. Examples:
+        `/usr/local/bin/rubocop` or `/usr/local/bin/bundle exec rubocop --config
+        /my/rubocop.yml`.
+      '
 
   provideLinter: -> linter

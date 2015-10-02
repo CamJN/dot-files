@@ -1,18 +1,18 @@
 {
   "name": "linter-scss-lint",
   "main": "./lib/init",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "Lint SCSS on the fly, using scss-lint",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AtomLinter/linter-scss-lint"
+    "url": "git+https://github.com/AtomLinter/linter-scss-lint.git"
   },
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=1.0.0"
   },
   "dependencies": {
-    "atom-linter": "~3.0.0"
+    "atom-linter": "^3.2.0"
   },
   "providedServices": {
     "linter": {
@@ -26,14 +26,24 @@
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-scss-lint/issues"
   },
-  "homepage": "https://github.com/AtomLinter/linter-scss-lint",
-  "_id": "linter-scss-lint@2.0.0",
-  "_shasum": "e907593c0a831d935f71107adb1da350699451fc",
-  "_resolved": "file:../d-115628-5412-1qb4srh/package.tgz",
-  "_from": "../d-115628-5412-1qb4srh/package.tgz",
+  "homepage": "https://github.com/AtomLinter/linter-scss-lint#readme",
+  "_id": "linter-scss-lint@2.2.0",
+  "_shasum": "77e731f004fb7b49f047c71bfc2ba071c223c87c",
+  "_resolved": "file:../d-115829-34797-neqc27/package.tgz",
+  "_from": "../d-115829-34797-neqc27/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
+      {
+        "name": "tmp",
+        "version": "0.0.28",
+        "path": "node_modules/atom-linter/node_modules/tmp/lib/tmp.js"
+      },
+      {
+        "name": "os-tmpdir",
+        "version": "1.0.1",
+        "path": "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/index.js"
+      },
       {
         "name": "xregexp",
         "version": "2.0.0",
@@ -45,13 +55,18 @@
         "lib/init.coffee",
         "node_modules/atom-linter/lib/helpers.coffee"
       ],
+      ".js": [
+        "node_modules/atom-linter/node_modules/tmp/Gruntfile.js",
+        "node_modules/atom-linter/node_modules/tmp/lib/tmp.js",
+        "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/index.js",
+        "node_modules/atom-linter/node_modules/xregexp/xregexp-all.js"
+      ],
       ".json": [
+        "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/package.json",
+        "node_modules/atom-linter/node_modules/tmp/package.json",
         "node_modules/atom-linter/node_modules/xregexp/package.json",
         "node_modules/atom-linter/package.json",
         "package.json"
-      ],
-      ".js": [
-        "node_modules/atom-linter/node_modules/xregexp/xregexp-all.js"
       ]
     },
     "folders": [
@@ -61,7 +76,29 @@
           ""
         ],
         "dependencies": {
-          "atom-linter": "~3.0.0"
+          "atom-linter": "^3.2.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-linter/lib",
+          "node_modules/atom-linter",
+          "node_modules/atom-linter/spec/fixtures",
+          "node_modules/atom-linter/spec"
+        ],
+        "dependencies": {
+          "xregexp": "^2.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-linter/node_modules/tmp",
+          "node_modules/atom-linter/node_modules/tmp/lib",
+          "node_modules/atom-linter/node_modules/tmp/test",
+          "node_modules/atom-linter/node_modules/tmp/test/symlinkme"
+        ],
+        "dependencies": {
+          "os-tmpdir": "~1.0.1"
         }
       }
     ]

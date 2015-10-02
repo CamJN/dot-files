@@ -1,6 +1,6 @@
 {
   "name": "linter-rubocop",
-  "version": "0.4.1",
+  "version": "0.4.4",
   "description": "Lint `Ruby` on the fly, using rubocop",
   "repository": {
     "type": "git",
@@ -26,16 +26,16 @@
     "url": "https://github.com/AtomLinter/linter-rubocop/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rubocop#readme",
-  "_id": "linter-rubocop@0.4.1",
-  "_shasum": "620b05a1dfad393c5e55f648b1d648db38688e94",
-  "_resolved": "file:../d-115825-29544-voekm5/package.tgz",
-  "_from": "../d-115825-29544-voekm5/package.tgz",
+  "_id": "linter-rubocop@0.4.4",
+  "_shasum": "8e238286eaa70fb17d34c31f6e88ac5697d29ef1",
+  "_resolved": "file:../d-115829-34793-1vgrwjv/package.tgz",
+  "_from": "../d-115829-34793-1vgrwjv/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
         "name": "tmp",
-        "version": "0.0.27",
+        "version": "0.0.28",
         "path": "node_modules/atom-linter/node_modules/tmp/lib/tmp.js"
       },
       {
@@ -55,6 +55,7 @@
         "node_modules/atom-linter/lib/helpers.coffee"
       ],
       ".js": [
+        "node_modules/atom-linter/node_modules/tmp/Gruntfile.js",
         "node_modules/atom-linter/node_modules/tmp/lib/tmp.js",
         "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/index.js",
         "node_modules/atom-linter/node_modules/xregexp/xregexp-all.js"
@@ -89,13 +90,13 @@
       },
       {
         "paths": [
-          "node_modules/atom-linter/node_modules/tmp/lib",
           "node_modules/atom-linter/node_modules/tmp",
+          "node_modules/atom-linter/node_modules/tmp/lib",
           "node_modules/atom-linter/node_modules/tmp/test",
           "node_modules/atom-linter/node_modules/tmp/test/symlinkme"
         ],
         "dependencies": {
-          "os-tmpdir": "~1.0.0"
+          "os-tmpdir": "~1.0.1"
         }
       }
     ]

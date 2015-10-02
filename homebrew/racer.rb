@@ -24,8 +24,8 @@ class Racer < Formula
   end
 
   resource "rust_source" do
-    url "https://static.rust-lang.org/dist/rustc-1.2.0-src.tar.gz"
-    sha256 "ea6eb983daf2a073df57186a58f0d4ce0e85c711bec13c627a8c85d51b6a6d78"
+    url "https://static.rust-lang.org/dist/rustc-1.3.0-src.tar.gz"
+    sha256 "ea02d7bc9e7de5b8be3fe6b37ea9b2bd823f9a532c8e4c47d02f37f24ffa3126"
   end
 
   def caveats

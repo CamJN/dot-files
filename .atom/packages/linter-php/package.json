@@ -1,20 +1,29 @@
 {
   "name": "linter-php",
   "main": "./lib/main",
-  "version": "1.0.5",
+  "version": "1.1.1",
   "description": "Lint PHP on the fly, using php -l",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AtomLinter/linter-php.git"
   },
   "license": "MIT",
+  "activationHooks": [
+    "language-php:grammar-used"
+  ],
   "dependencies": {
-    "atom-linter": "^3.0.0",
+    "atom-linter": "^3.1.0",
     "atom-package-deps": "^2.1.3"
+  },
+  "devDependencies": {
+    "coffeelint": "^1.12.1"
   },
   "package-deps": [
     "linter"
   ],
+  "scripts": {
+    "lint": "coffeelint lib"
+  },
   "providedServices": {
     "linter": {
       "versions": {
@@ -22,16 +31,16 @@
       }
     }
   },
-  "readme": "# linter-php\n=========================\n\nThis package will lint PHP files and embedded PHP within HTML files in Atom through\n[php -l](http://www.php.net/manual/en/features.commandline.options.php).\n\n## Installation\nAs this package only provides a service, you will need something to run it. As\nsuch, the Linter package will be installed for you if it isn't already installed.\nThis provides the interface and runs the linter for you.\n\n* Install [php](http://php.net).\n* `$ apm install linter-php`\n\n## Settings\nYou can configure linter-php by editing ~/.atom/config.cson (choose Open Your Config in Atom menu):\n```cson\n'linter-php':\n  # php path. run 'which php' to find the path\n  'executablePath': null\n```\n\n## Contributing\nIf you would like to contribute enhancements or fixes, please do the following:\n\n1. Fork the plugin repository.\n1. Hack on a separate topic branch created from the latest `master`.\n1. Commit and push the topic branch.\n1. Make a pull request.\n1. Welcome to the club!\n\nPlease note that modifications should follow these coding guidelines:\n\n- Indent is 2 spaces.\n- Code should pass [CoffeeLint](http://www.coffeelint.org/) with the provided `coffeelint.json`\n- Vertical whitespace helps readability, don’t be afraid to use it.\n\n**Thank you for helping out!**\n\n## Maintainers\n\nThe following people have stepped up to take responsibility for this repository and should be consulted on any releases or major changes.\n\n* [steelbrain](http://github.com/steelbrain) - Release Maintainer\n* [Arcanemagus](http://github.com/Arcanemagus)\n",
+  "readme": "# linter-php\n[![Build Status](https://travis-ci.org/AtomLinter/linter-php.svg)](https://travis-ci.org/AtomLinter/linter-php)\n[![Dependency Status](https://david-dm.org/AtomLinter/linter-php.svg)](https://david-dm.org/AtomLinter/linter-php)\n[![apm](https://img.shields.io/apm/v/linter-php.svg)](https://atom.io/packages/linter-php)\n[![apm](https://img.shields.io/apm/dm/linter-php.svg)](https://atom.io/packages/linter-php)\n\nThis package will lint PHP files and embedded PHP within HTML files in Atom through\n[php -l](http://www.php.net/manual/en/features.commandline.options.php).\n\n## Installation\nYou will need to have [php](http://php.net) installed on your system before trying\nto use this package, please follow the instructions on their site to accomplish this.\n\nAfter installing `php` on your system you can install this package by either searching\nfor it within Atom's package installation section of the settings or by running the\nfollowing command in a terminal:\n```ShellSession\napm install linter-php\n```\n\n_As this package only provides a service, you will need something to run it. As\nsuch, the [Linter](https://atom.io/packages/linter) package will be installed\nautomatically for you if it isn't already installed. This will provide the user interface and run the linter for you._\n\n### Setup\nOnce the package is installed you may need to specify the path to the `php`\nexecutable if Atom is not able to find it automatically. You can do this from\nAtom's settings menu or by editing your `~/.atom/config.cson` file (choose Open Your Config in Atom's menu). If editing the file by hand you should modify/create a\nsection like the following:\n```cson\n'linter-php':\n  # php path. run 'which php' to find the path\n  'executablePath': /usr/bin/php\n```\n\n## Maintainers\n\nThe following people have stepped up to take responsibility for this repository and should be consulted on any releases or major changes.\n\n* [steelbrain](http://github.com/steelbrain) - Release Maintainer\n* [Arcanemagus](http://github.com/Arcanemagus)\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-php/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-php#readme",
-  "_id": "linter-php@1.0.5",
-  "_shasum": "261bfd572a1a4b0dae0d172338b97f9e0d9c3df3",
-  "_resolved": "file:../d-11591-60989-s5cs6u/package.tgz",
-  "_from": "../d-11591-60989-s5cs6u/package.tgz",
+  "_id": "linter-php@1.1.1",
+  "_shasum": "fd8284fe4d04e44ac9ccfdf30f85deb118db8262",
+  "_resolved": "file:../d-115108-18729-1f29y56/package.tgz",
+  "_from": "../d-115108-18729-1f29y56/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -84,10 +93,11 @@
       {
         "paths": [
           "",
-          "lib"
+          "lib",
+          "spec"
         ],
         "dependencies": {
-          "atom-linter": "^3.0.0",
+          "atom-linter": "^3.1.0",
           "atom-package-deps": "^2.1.3"
         }
       },

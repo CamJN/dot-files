@@ -17,6 +17,17 @@ class BottomStatus extends HTMLElement{
     })
   }
 
+  get visibility() {
+    return !this.hasAttribute('hidden')
+  }
+  set visibility(value) {
+    if (value) {
+      this.removeAttribute('hidden')
+    } else {
+      this.setAttribute('hidden', true)
+    }
+  }
+
   get count() {
     return this._count
   }
@@ -44,4 +55,4 @@ class BottomStatus extends HTMLElement{
 
 }
 
-module.exports = BottomStatus = document.registerElement('linter-bottom-status', {prototype: BottomStatus.prototype})
+module.exports = document.registerElement('linter-bottom-status', {prototype: BottomStatus.prototype})

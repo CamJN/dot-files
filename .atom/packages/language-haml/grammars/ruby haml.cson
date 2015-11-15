@@ -19,14 +19,19 @@
   }
   {
     'match': '^(!!!)($|\\s.*)'
+    'name': 'meta.prolog.haml'
     'captures':
       '1':
         'name': 'punctuation.definition.prolog.haml'
-    'name': 'meta.prolog.haml'
   }
   {
-    'match': '^[\\w]+(?!\\#\\{)[^(\\#\\{)\\}]+(?=\\}),?'
-    'name': 'source.ruby.rails'
+    'match': '(?<=\\#\\{)([^#]+)(?=\\})'
+    'name': 'meta.embedded.ruby'
+    'captures':
+      '1':
+        'patterns': [
+          'include': 'source.ruby.rails'
+        ]
   }
   {
     'match': '^\\s*(\\-\\#|\\/|\\-\\s*\\/\\*+)\\s*\\S*.*$\\n?'
@@ -216,7 +221,20 @@
     ]
   }
   {
-    'begin': '^(\\s*)(:(s?(a|c)ss|styles?))$'
+    'begin': '^(\\s*)(:(css|styles?))$'
+    'end': '^(?!\\1\\s+)'
+    'name': 'meta.embedded.css'
+    'captures':
+      '2':
+        'name': 'entity.name.tag.haml'
+    'patterns': [
+      {
+        'include': 'source.css'
+      }
+    ]
+  }
+  {
+    'begin': '^(\\s*)(:sass)$'
     'end': '^(?!\\1\\s+)'
     'name': 'meta.embedded.sass'
     'captures':
@@ -225,6 +243,19 @@
     'patterns': [
       {
         'include': 'source.sass'
+      }
+    ]
+  }
+  {
+    'begin': '^(\\s*)(:scss)$'
+    'end': '^(?!\\1\\s+)'
+    'name': 'meta.embedded.scss'
+    'captures':
+      '2':
+        'name': 'entity.name.tag.haml'
+    'patterns': [
+      {
+        'include': 'source.css.scss'
       }
     ]
   }
@@ -312,21 +343,22 @@
         '2':
           'name': 'keyword.control.ruby.start-block'
       'patterns': [
-        # Begin matches for PHP control directives before Ruby
+        # Begin PHP keywords
+        # @TODO Make sure this doesn't break any inline Ruby
         {
-          'match': '\\s+((break|c(ase|ontinue)|d(e(clare|fault)|ie|o)|e(lse(if)?|nd(declare|for(each)?|if|switch|while)|xit)|for(each)?|if|return|switch|use|while|yield))'
+          'match': '\\s+((elseif|foreach|switch|declare|default|use))(?=\\s|\\()'
           'captures':
             '1':
               'name': 'keyword.control.php'
         }
         {
-          'match': '\\s+((require|include)_once)'
+          'match': '\\s+(require_once|include_once)(?=\\s|\\()'
           'captures':
             '1':
               'name': 'keyword.control.import.include.php'
         }
         {
-          'match': '\\s+(catch|try|throw|exception|finally)'
+          'match': '\\s+(catch|try|throw|exception|finally|die)(?=\\s|\\(|\\n)'
           'name': 'keyword.control.exception.php'
         }
         {
@@ -341,7 +373,7 @@
             '1':
               'name': 'keyword.control.php'
         }
-        # End PHP
+        # End PHP keywords
         {
           'match': '(\\||,|<|do|\\{)\\s*(\\#.*)?$\\n'
           'name': 'source.ruby'

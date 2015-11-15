@@ -66,3 +66,4 @@
     rustSrcPath: "/usr/local/share/rust_src/src/"
   "tree-view":
     hideIgnoredNames: true
+  "linter-php": {}

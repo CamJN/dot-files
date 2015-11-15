@@ -36,12 +36,16 @@ You can configure linter-scss-lint by editing ~/.atom/config.cson (choose Open Y
   # Run `scss-lint -h` to see available options.
   'additionalArguments': null
 
+  # Optionally disable `scss-lint` if you don't have an ``.scss-lint.yml` in
+  # your project directory
+  'disableWhenNoConfigFileInPath': false
+
   # The `scss-lint` path. Run `which scss-lint` to find this path.
   'executablePath': null
 ```
 
 ### Config file
-Linter will start looking for `.scss-lint.yml` file in the same directory as the file that's being linted. If not found, it will move one level up the directory tree all the way up to the filesystem root.
+Linter will start looking for `.scss-lint.yml` file in the same directory as the file that's being linted. If not found, it will move one level up the directory tree all the way up to the filesystem root (If you enabled `disableWhenNoConfigFileInPath`, then it will not search further).
 
 
 ### Using `rvm`
@@ -57,7 +61,7 @@ Consult rvm docs for further info not covered in this README - https://rvm.io/
 This will create a wrapper just for atom using your current ruby version:
 
 ```bash
-$ rvm wrapper current atom scss_lint
+$ rvm wrapper current atom scss-lint
 ```
 
 Then in `linter-scss-lint` set `executablePath` to `/path/to/rvm/bin/atom_scss-lint`

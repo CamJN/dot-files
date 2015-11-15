@@ -15,7 +15,7 @@
   (setq requirements (reverse requirements))
   (print requirements))
 
-(setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -290,9 +290,23 @@
 
 ;; rust
 (setq racer-rust-src-path "/usr/local/share/rust_src/src/")
+(unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
 (setq racer-cmd "/usr/local/bin/racer")
-(add-hook 'rust-mode-hook #'racer-mode)
-
+(setq company-idle-delay 0.2)
+(setq company-minimum-prefix-length 1)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(add-hook 'rust-mode-hook (lambda ()
+                            (racer-activate)
+                            (racer-turn-on-eldoc)
+                            (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+                            (set (make-local-variable
+                                  'company-backends)
+                                 '(company-racer))
+                            (local-set-key
+                             (kbd "M-.") #'racer-find-definition)
+                            (local-set-key
+                             (kbd "TAB") #'racer-complete-or-indent)
+                            ))
 
 (provide 'init)
 

@@ -39,11 +39,16 @@ export default {
       lintOnFly: true,
       lint: (TextEditor) => {
         const filePath = TextEditor.getPath();
-        const fileText = TextEditor.buffer.cachedText;
+        const fileText = TextEditor.getText();
 
         const messages = [];
         const processMessage = (type, message) => {
-          const line = message.mark.line;
+          let line = message.mark.line;
+          // Workaround for https://github.com/nodeca/js-yaml/issues/218
+          const maxLine = TextEditor.getLineCount() - 1;
+          if (line > maxLine) {
+            line = maxLine;
+          }
           const column = message.mark.column;
           return {
             type: type,

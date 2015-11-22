@@ -23,7 +23,7 @@ module.exports =
         atom.notifications.addError(title, {detail: message})
 
   activate: ->
-    require('atom-package-deps').install('linter-php')
+    require('atom-package-deps').install()
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe 'linter-php.executablePath',
       (executablePath) =>
@@ -45,7 +45,6 @@ module.exports =
         return Promise.resolve([]) unless command?
         parameters = []
         parameters.push('--syntax-check')
-        parameters.push('--no-php-ini')
         parameters.push('--define', 'display_errors=On')
         parameters.push('--define', 'log_errors=Off')
         text = textEditor.getText()

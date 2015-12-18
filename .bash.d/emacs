@@ -1,13 +1,11 @@
 #!/bin/bash
 
-EMACS=`which emacs`
-VERSION=`emacs --version | head -1 | awk '{print $3}' | \sed -Ee 's/([0-9]+\.[0-9]+)\.[0-9]+/\1/g'`
 export EMACS_SERVER_FILE=${TMPDIR}emacs`id -u`/server
-export EDITOR="/usr/local/Cellar/emacs/$VERSION/bin/emacsclient -t -s $EMACS_SERVER_FILE"
+export EDITOR="/usr/local/bin/emacsclient -t -s $EMACS_SERVER_FILE"
 
 if shlock -p $$ -f ~/.bash.d/emacs.lock; then
     if [ ! -e $EMACS_SERVER_FILE -o ! -S $EMACS_SERVER_FILE ]; then
-        $EMACS --daemon 2>/dev/null
+        /usr/local/bin/emacs --daemon 2>/dev/null
     fi
     rm  ~/.bash.d/emacs.lock;
 fi

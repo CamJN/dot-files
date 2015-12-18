@@ -18,16 +18,14 @@ LinterLess = {
 
     return new Promise((resolve, reject) => {
 
-      filePath = textEditor.getPath()
-      if (!filePath) { return resolve([]); }
+      const filePath = textEditor.getPath()
+      if (!filePath) { return resolve([]) }
 
-      text = textEditor.getText()
-
-      lineOffset = 0
-      variables = []
+      let text = textEditor.getText()
+      let lineOffset = 0
 
       if (this.config('ignoreUndefinedVariables')) {
-        for (variable of (text.match(/@[a-zA-Z0-9_-]+/g) || [])) {
+        for (let variable of (text.match(/@[a-zA-Z0-9_-]+/g) || [])) {
           lineOffset++
           text = `${variable}: 0;\n${text}`
         }
@@ -35,7 +33,7 @@ LinterLess = {
 
       if (this.config('ignoreUndefinedGlobalVariables')) {
         for (line of (text.match(/(^|\n)\/\/\s*global:\s*@[a-zA-Z0-9_-]+/g) || [])) {
-          variable = text.match(/@[a-zA-Z0-9_-]+/)
+          let variable = text.match(/@[a-zA-Z0-9_-]+/)
           lineOffset++
           text = `${variable}: 0;\n${text}`
         }
@@ -43,11 +41,13 @@ LinterLess = {
 
       this.lessParse(text, filePath, (err) => {
 
-        if (!err) { return resolve([]); }
+        if (!err) { return resolve([]) }
 
-        lineIdx = err.line - 1 - lineOffset
-        line = textEditor.lineTextForBufferRow(lineIdx)
-        if (line) { colEndIdx = line.length; }
+        let colEndIdx = 0
+        let lineIdx = err.line - 1 - lineOffset
+        let line = textEditor.lineTextForBufferRow(lineIdx)
+
+        if (line) { colEndIdx = line.length }
 
         resolve([{
           type: "Error",
@@ -61,9 +61,8 @@ LinterLess = {
 
   lessParse(text, filePath, callback) {
 
-    cwd = path.dirname(filePath)
-
-    options = {
+    const cwd = path.dirname(filePath)
+    const options = {
       verbose: false,
       silent: true,
       paths: [cwd, ...this.config('includePath')],

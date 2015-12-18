@@ -1,6 +1,6 @@
 {
   "name": "linter-js-yaml",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Linter plugin for YAML, using js-yaml",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "atom-linter": "^3.3.7",
-    "atom-package-deps": "^3.0.2",
+    "atom-package-deps": "^3.0.5",
     "js-yaml": "3.4.3"
   },
   "devDependencies": {
@@ -53,13 +53,18 @@
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-js-yaml/issues"
   },
-  "_id": "linter-js-yaml@1.2.3",
-  "_shasum": "47dbba9399f72619f06a8f63e4238dbc482449a7",
-  "_resolved": "file:../d-1151020-84512-6ugapg/package.tgz",
-  "_from": "../d-1151020-84512-6ugapg/package.tgz",
+  "_id": "linter-js-yaml@1.2.4",
+  "_shasum": "8edc3b5d38b2e427103e3b2bf215b7ab9b1a7e38",
+  "_resolved": "file:../d-1151028-32927-1hmaw39/package.tgz",
+  "_from": "../d-1151028-32927-1hmaw39/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
+      {
+        "name": "atom-linter",
+        "version": "3.4.0",
+        "path": "node_modules/atom-linter/lib/helpers.js"
+      },
       {
         "name": "tmp",
         "version": "0.0.28",
@@ -77,8 +82,13 @@
       },
       {
         "name": "atom-package-deps",
-        "version": "3.0.2",
+        "version": "3.0.5",
         "path": "node_modules/atom-package-deps/lib/main.js"
+      },
+      {
+        "name": "sb-callsite",
+        "version": "1.0.1",
+        "path": "node_modules/atom-package-deps/node_modules/sb-callsite/lib/main.js"
       },
       {
         "name": "js-yaml",
@@ -109,6 +119,7 @@
     "extensions": {
       ".js": [
         "lib/linter-js-yaml.js",
+        "node_modules/atom-linter/lib/helpers.js",
         "node_modules/atom-linter/node_modules/tmp/Gruntfile.js",
         "node_modules/atom-linter/node_modules/tmp/lib/tmp.js",
         "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/index.js",
@@ -116,6 +127,7 @@
         "node_modules/atom-package-deps/lib/helpers.js",
         "node_modules/atom-package-deps/lib/main.js",
         "node_modules/atom-package-deps/lib/view.js",
+        "node_modules/atom-package-deps/node_modules/sb-callsite/lib/main.js",
         "node_modules/js-yaml/bin/js-yaml.js",
         "node_modules/js-yaml/dist/js-yaml.js",
         "node_modules/js-yaml/dist/js-yaml.min.js",
@@ -608,14 +620,12 @@
         "node_modules/js-yaml/node_modules/esprima/bin/esvalidate.js",
         "node_modules/js-yaml/node_modules/esprima/esprima.js"
       ],
-      ".coffee": [
-        "node_modules/atom-linter/lib/helpers.coffee"
-      ],
       ".json": [
         "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/package.json",
         "node_modules/atom-linter/node_modules/tmp/package.json",
         "node_modules/atom-linter/node_modules/xregexp/package.json",
         "node_modules/atom-linter/package.json",
+        "node_modules/atom-package-deps/node_modules/sb-callsite/package.json",
         "node_modules/atom-package-deps/package.json",
         "node_modules/js-yaml/node_modules/argparse/node_modules/lodash/package.json",
         "node_modules/js-yaml/node_modules/argparse/node_modules/sprintf-js/bower.json",
@@ -635,16 +645,14 @@
         ],
         "dependencies": {
           "atom-linter": "^3.3.7",
-          "atom-package-deps": "^3.0.2",
+          "atom-package-deps": "^3.0.5",
           "js-yaml": "3.4.3"
         }
       },
       {
         "paths": [
           "node_modules/atom-linter/lib",
-          "node_modules/atom-linter",
-          "node_modules/atom-linter/spec/fixtures",
-          "node_modules/atom-linter/spec"
+          "node_modules/atom-linter"
         ],
         "dependencies": {
           "xregexp": "^2.0.0"
@@ -659,6 +667,15 @@
         ],
         "dependencies": {
           "os-tmpdir": "~1.0.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps/lib",
+          "node_modules/atom-package-deps"
+        ],
+        "dependencies": {
+          "sb-callsite": "^1.0.0"
         }
       },
       {

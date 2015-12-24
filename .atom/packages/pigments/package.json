@@ -1,7 +1,7 @@
 {
   "name": "pigments",
   "main": "./lib/pigments",
-  "version": "0.19.1",
+  "version": "0.19.5",
   "description": "A package to display colors in project and files.",
   "keywords": [
     "colors",
@@ -27,7 +27,7 @@
     "css-color-function": "0.1.x",
     "minimatch": "0.3.x",
     "delegato": "^1.0.0",
-    "atom-utils": ">=0.7.0"
+    "atom-utils": ">=0.9.2"
   },
   "devDependencies": {
     "temp": "~0.8.1"
@@ -58,10 +58,10 @@
     "url": "https://github.com/abe33/atom-pigments/issues"
   },
   "homepage": "https://github.com/abe33/atom-pigments#readme",
-  "_id": "pigments@0.19.1",
-  "_shasum": "5481018ef220439e757127b7048fdd8ec732ac8f",
-  "_resolved": "file:../d-1151028-32944-16t67ph/package.tgz",
-  "_from": "../d-1151028-32944-16t67ph/package.tgz",
+  "_id": "pigments@0.19.5",
+  "_shasum": "b0e5ae74990059f431536ec8f5f12dae1e2cf03d",
+  "_resolved": "file:../d-1151124-72608-ucy6ys/package.tgz",
+  "_from": "../d-1151124-72608-ucy6ys/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -72,12 +72,12 @@
       },
       {
         "name": "atom-utils",
-        "version": "0.7.4",
+        "version": "0.9.2",
         "path": "node_modules/atom-utils/lib/atom-utils.js"
       },
       {
         "name": "event-kit",
-        "version": "1.4.1",
+        "version": "1.5.0",
         "path": "node_modules/atom-utils/node_modules/event-kit/lib/event-kit.js"
       },
       {
@@ -102,7 +102,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.8",
+        "version": "0.10.11",
         "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/index.js"
       },
       {
@@ -112,7 +112,7 @@
       },
       {
         "name": "es6-symbol",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "path": "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/node_modules/es6-symbol/index.js"
       },
       {
@@ -322,12 +322,9 @@
       ".js": [
         "node_modules/async/lib/async.js",
         "node_modules/atom-utils/lib/atom-utils.js",
-        "node_modules/atom-utils/lib/custom-elements-updater.js",
-        "node_modules/atom-utils/lib/mixins/ancestors-methods.js",
         "node_modules/atom-utils/lib/mixins/ancestors.js",
         "node_modules/atom-utils/lib/mixins/disposable-events.js",
         "node_modules/atom-utils/lib/mixins/events-delegation.js",
-        "node_modules/atom-utils/lib/mixins/index.js",
         "node_modules/atom-utils/lib/mixins/resize-detection.js",
         "node_modules/atom-utils/lib/mixins/space-pen-dsl.js",
         "node_modules/atom-utils/lib/register-or-update-element.js",
@@ -620,6 +617,8 @@
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/copy.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/count.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/create.js",
+        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/ensure-natural-number-value.js",
+        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/ensure-natural-number.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/eq.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/every.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/filter.js",
@@ -635,6 +634,7 @@
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-copy-deep.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-copy.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-empty.js",
+        "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-number-value.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-object.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-plain-object.js",
         "node_modules/atom-utils/node_modules/event-kit/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is.js",
@@ -825,14 +825,15 @@
           "css-color-function": "0.1.x",
           "minimatch": "0.3.x",
           "delegato": "^1.0.0",
-          "atom-utils": ">=0.7.0"
+          "atom-utils": ">=0.9.2"
         }
       },
       {
         "paths": [
           "node_modules/atom-utils/lib",
           "node_modules/atom-utils/lib/mixins",
-          "node_modules/atom-utils"
+          "node_modules/atom-utils",
+          "node_modules/atom-utils/spec/fixtures"
         ],
         "dependencies": {
           "event-kit": "^1",
@@ -1048,7 +1049,7 @@
         ],
         "dependencies": {
           "es6-iterator": "2",
-          "es6-symbol": "3"
+          "es6-symbol": "~3.0.2"
         }
       },
       {
@@ -1071,7 +1072,7 @@
         ],
         "dependencies": {
           "d": "~0.1.1",
-          "es5-ext": "~0.10.8"
+          "es5-ext": "~0.10.10"
         }
       },
       {

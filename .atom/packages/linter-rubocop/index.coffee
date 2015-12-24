@@ -21,7 +21,7 @@ lint = (editor) ->
   convertOldConfig()
   command = atom.config.get(COMMAND_CONFIG_KEY).split(/\s+/).filter((i) -> i)
     .concat(DEFAULT_ARGS, filePath = editor.getPath())
-  cwd = path.dirname helpers.findFile filePath, '.'
+  cwd = path.dirname helpers.find filePath, '.'
   stdin = editor.getText()
   stream = 'both'
   helpers.exec(command[0], command[1..], {cwd, stdin, stream}).then (result) ->
@@ -38,6 +38,7 @@ lint = (editor) ->
       range: [[line - 1, column - 1], [line - 1, column + length - 1]]
 
 linter =
+  name: 'RuboCop'
   grammarScopes: [
     'source.ruby'
     'source.ruby.rails'

@@ -1,7 +1,7 @@
 {
   "name": "atomic-emacs",
   "main": "./lib/atomic-emacs",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "description": "An atomic implementation of emacs keybindings",
   "activationCommands": {
     "atom-text-editor": [
@@ -51,7 +51,7 @@
   },
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=1.0.8"
   },
   "dependencies": {},
   "readme": "## Atomic Emacs\n\nAn atomic implementation of emacs keybindings.\n![Build Status](https://travis-ci.org/avendael/atomic-emacs.svg?branch=master)\n\n### Important Note\n\nI love emacs, but this package will never implement all of emacs' features. It only aims to\nprovide a reasonable set of default emacs keybindings so that emacs refugees might find themselves\nat home.\n\nOSX already provides emacs-like keybindings to Atom, and those are not reimplemented in this\npackage. This might, however, cause a problem later on when Atom becomes available at other\nplatforms. Once that time comes, I will gladly include those keybindings in this package.\n\n### Current Status\n\nIt's super incomplete, very alpha stage. Basically, just these:\n\n* 'ctrl-f': 'atomic-emacs:forward-char'\n* 'ctrl-b': 'atomic-emacs:backward-char'\n* 'ctrl-n': 'atomic-emacs:next-line'\n* 'ctrl-p': 'atomic-emacs:previous-line'\n* 'ctrl-a': 'atomic-emacs:move-beginning-of-line'\n* 'ctrl-e': 'atomic-emacs:move-end-of-line'\n* 'ctrl-l': 'atomic-emacs:recenter-top-bottom'\n* 'ctrl-g': 'atomic-emacs:remove-mark'\n* 'ctrl-k': 'editor:cut-to-end-of-line'\n* 'ctrl-y': 'core:paste'\n* 'ctrl-w': 'atomic-emacs:kill-region'\n* 'ctrl-v': 'atomic-emacs:scroll-up'\n* 'ctrl-s': 'find-and-replace:show'\n* 'ctrl-r': 'find-and-replace:show'\n* 'ctrl-j': 'editor:newline'\n* 'ctrl-/': 'core:undo'\n* 'ctrl-o': 'atomic-emacs:open-line'\n* 'ctrl-t': 'atomic-emacs:transpose-chars'\n* 'ctrl-_': 'core:undo'\n* 'ctrl-space': 'atomic-emacs:set-mark'\n* 'ctrl-x ctrl-s': 'core:save'\n* 'ctrl-x ctrl-u': 'atomic-emacs:upcase-region'\n* 'ctrl-x ctrl-l': 'atomic-emacs:downcase-region'\n* 'ctrl-x ctrl-t': 'atomic-emacs:transpose-lines'\n* 'ctrl-x h': 'atomic-emacs:mark-whole-buffer'\n* 'ctrl-x ctrl-x': 'atomic-emacs:exchange-point-and-mark'\n* 'alt-f': 'atomic-emacs:forward-word'\n* 'alt-b': 'atomic-emacs:backward-word'\n* 'alt-q': 'autoflow:reflow-selection'\n* 'atl-t': 'atomic-emacs:transpose-words'\n* 'alt-w': 'atomic-emacs:copy'\n* 'alt-;': 'editor:toggle-line-comments'\n* 'alt-v': 'atomic-emacs:scroll-down'\n* 'alt-<': 'atomic-emacs:beginning-of-buffer'\n* 'alt->': 'atomic-emacs:end-of-buffer'\n* 'alt-m': 'atomic-emacs:back-to-indentation'\n* 'alt-/': 'autocomplete:toggle'\n* 'alt-.': 'symbols-view:toggle-file-symbols'\n* 'alt-\\\\': 'atomic-emacs:delete-horizontal-space'\n* 'alt-space': 'atomic-emacs:just-one-space'\n* 'alt-{': 'atomic-emacs:backward-paragraph'\n* 'alt-}': 'atomic-emacs:forward-paragraph'\n\n### Configuration options\n\nYou can opt to use native navigation keys for ctrl-n,p,b, and f:\n\n```\n  \"atomic-emacs\":\n    useNativeNavigationKeys: false\n```\n\nThis would cause the marks to not work properly, but it's reportedly the workaround to #37.\n\n### Future Work\n\nVersion 1.0.0 should be somewhat close to what [sublemacspro](https://github.com/grundprinzip/sublemacspro) currently has as of time of writing (03/04/14), and then improve further based on that. Next up are:\n\n* Kill ring\n* Macros\n* Motion commands for other platforms (OSX has the basic emacs motion commands by default)\n\n### Contributing\n\nYes please!\n",
@@ -60,10 +60,10 @@
     "url": "https://github.com/avendael/atomic-emacs/issues"
   },
   "homepage": "https://github.com/avendael/atomic-emacs#readme",
-  "_id": "atomic-emacs@0.7.4",
-  "_shasum": "e5e6ba19a8b2d625a4e2156e6c7b94c3e410ac85",
-  "_resolved": "file:../d-11596-3881-rry1yb/package.tgz",
-  "_from": "../d-11596-3881-rry1yb/package.tgz",
+  "_id": "atomic-emacs@0.8.0",
+  "_shasum": "90964ca798eb89033c9cdf2afa0f2f4db3b9a71e",
+  "_resolved": "file:../d-1151124-72555-zv99cs/package.tgz",
+  "_from": "../d-1151124-72555-zv99cs/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [],

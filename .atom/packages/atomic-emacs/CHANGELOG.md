@@ -1,3 +1,7 @@
+## 0.8.0 (2015-12-03)
+* C-v, M-v now consistently moves half a screen up/down.
+* C-l now cycles through middle-top-bottom, like Emacs' default.
+
 ## 0.7.4 (2015-10-05)
 * C-g now cancels auto-complete and multiple cursors, like escape.
 

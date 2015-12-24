@@ -1,7 +1,7 @@
 {
   "name": "linter-rust",
   "main": "./lib/init",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Lint Rust-files, using rustc and/or cargo",
   "repository": {
     "type": "git",
@@ -21,16 +21,16 @@
   "dependencies": {
     "xregexp": "~2.0.0"
   },
-  "readme": "# linter-rust [![Build Status](https://travis-ci.org/AtomLinter/linter-rust.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-rust)\n\nLinting your Rust-files in [Atom](https://atom.io), using [rustc](http://www.rust-lang.org) and [cargo](https://crates.io).\nFiles will be checked when you open or save them.\n\n## Installation\n\n* Install [Rust](http://www.rust-lang.org) and/or [Cargo](https://crates.io).\n* `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).\n* `$ apm install linter-rust`\n\n## Other available linters\nThere are other linters available - take a look at the linters [mainpage](https://github.com/AtomLinter/Linter).\n\n## Donation\n[![Share the love!](https://chewbacco-stuff.s3.amazonaws.com/donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KXUYS4ARNHCN8)\n",
+  "readme": "# linter-rust [![Build Status](https://travis-ci.org/AtomLinter/linter-rust.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-rust)\n\nLinting your Rust-files in [Atom](https://atom.io), using [rustc](http://www.rust-lang.org) and [cargo](https://crates.io).\nFiles will be checked when you open or save them.\n\n## Installation\n\n* Install [Rust](http://www.rust-lang.org) and/or [Cargo](https://crates.io).\n* `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).\n* `$ apm install linter-rust`\n\n## Other available linters\nThere are other linters available - take a look at the linters [mainpage](http://atomlinter.github.io).\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-rust/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rust#readme",
-  "_id": "linter-rust@0.2.10",
-  "_shasum": "fe830f5f2e0efdb28496ea4e8cf4a83e32f56368",
-  "_resolved": "file:../d-115916-1288-1ta3073/package.tgz",
-  "_from": "../d-115916-1288-1ta3073/package.tgz",
+  "_id": "linter-rust@0.3.0",
+  "_shasum": "d2e891135e18643a2d44a4aadf46ac2fde284193",
+  "_resolved": "file:../d-1151124-72593-21mp80/package.tgz",
+  "_from": "../d-1151124-72593-21mp80/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [

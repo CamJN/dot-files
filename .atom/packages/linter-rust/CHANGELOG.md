@@ -1,3 +1,9 @@
+# 0.3.0
+* Minor refactor + option for cargo-check (@colin-kiegel)
+
+# 0.2.11
+* Add option to use "cargo rustc" instead of "cargo build"
+
 # 0.2.10
 * Add name for the linter (@LegNeato)
 

@@ -1,6 +1,6 @@
 module.exports =
   activate: (state) ->
-    atom.workspaceView.command "atom-modify:convert", => @convert()
+    atom.commands.add 'atom-workspace',"atom-modify:convert", => @convert()
 
   convert: ->
     selection = atom.workspace.getActiveEditor().getSelection()

@@ -1,9 +1,10 @@
-{CompositeDisposable, Point} = require('atom')
+{CompositeDisposable, Point} = require 'atom'
+State = require './state'
 
 # Represents an Emacs-style mark.
 #
-# Get the mark for a cursor with Mark.for(cursor). If the cursor has no mark
-# yet, one will be created, and set to the cursor's position.
+# Each cursor may have a Mark. On construction, the mark is at the cursor's
+# position.
 #
 # The can then be set() at any time, which will move to where the cursor is.
 #
@@ -12,17 +13,28 @@
 # cursor is moved. If the buffer is edited, the mark is automatically
 # deactivated.
 class Mark
+  @deactivatable = []
+
+  @deactivatePending: ->
+    for mark in @deactivatable
+      mark.deactivate()
+    @deactivatable.length = 0
+
   constructor: (cursor) ->
     @cursor = cursor
     @editor = cursor.editor
     @marker = @editor.markBufferPosition(cursor.getBufferPosition())
     @active = false
     @updating = false
-    @lifetimeSubscription = @cursor.onDidDestroy (event) => @_destroy()
 
-  set: ->
+  destroy: ->
+    @deactivate() if @active
+    @marker.destroy()
+
+  set: (point=@cursor.getBufferPosition()) ->
     @deactivate()
-    @marker.setHeadBufferPosition(@cursor.getBufferPosition())
+    @marker.setHeadBufferPosition(point)
+    @_updateSelection()
     @
 
   getBufferPosition: ->
@@ -35,7 +47,14 @@ class Mark
         @_updateSelection(event)
       @activeSubscriptions.add @editor.getBuffer().onDidChange (event) =>
         unless @_isIndent(event) or @_isOutdent(event)
-          @deactivate()
+          # If we're in a command (as opposed to a simple character insert),
+          # delay the deactivation until the end of the command. Otherwise
+          # updating one selection may prematurely deactivate the mark and clear
+          # a second selection before it has a chance to be updated.
+          if State.isDuringCommand
+            Mark.deactivatable.push(this)
+          else
+            @deactivate()
       @active = true
 
   deactivate: ->
@@ -51,12 +70,6 @@ class Mark
     position = @marker.getHeadBufferPosition()
     @set().activate()
     @cursor.setBufferPosition(position)
-
-  _destroy: ->
-    @deactivate() if @active
-    @marker.destroy()
-    @lifetimeSubscription.dispose()
-    delete @cursor._atomicEmacsMark
 
   _updateSelection: (event) ->
     # Updating the selection updates the cursor marker, so guard against the
@@ -76,9 +89,6 @@ class Mark
   setSelectionRange: (head, tail) ->
     reversed = Point.min(head, tail) is head
     @cursor.selection.setBufferRange([head, tail], reversed: reversed)
-
-  Mark.for = (cursor) ->
-   cursor._atomicEmacsMark ?= new Mark(cursor)
 
   _isIndent: (event)->
     @_isIndentOutdent(event.newRange, event.newText)

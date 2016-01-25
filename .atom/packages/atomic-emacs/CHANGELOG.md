@@ -1,3 +1,14 @@
+## 0.9.0 (2016-01-02)
+
+* Updated readme.
+* Killing and yanking commands, multi-cursor aware. See readme for details.
+* transpose-{chars,words,lines} now works with multiple cursors.
+* Add "alt-g alt-g" as an alias for go-to-line:toggle.
+* Fix delete-indentation.
+* Fix issue with selection jumping erratically when moving after a mark-sexp.
+* open-line no longer jumps to the start of the line.
+* Fix undo behavior of just-one-space, {{up,down}case,capitalize}-word-or-region.
+
 ## 0.8.0 (2015-12-03)
 * C-v, M-v now consistently moves half a screen up/down.
 * C-l now cycles through middle-top-bottom, like Emacs' default.

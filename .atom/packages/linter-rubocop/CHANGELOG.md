@@ -1,3 +1,15 @@
+# 0.4.7
+
+### Maintenance
+
+* Upgrade to `atom-linter@4.3.0`.
+
+# 0.4.6
+
+### Maintenance
+
+* Upgrade to `atom-linter@4.2.0` which adds $PATH support.
+
 # 0.4.5
 
 ### Maintenance

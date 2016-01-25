@@ -51,5 +51,7 @@ if [ `uname` = "Darwin" ]; then
     export GOROOT=/usr/local/opt/go/libexec
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
+    export PATH=/Users/camdennarzt/.cargo/bin:$PATH
+    export RUST_SRC_PATH=/usr/local/share/rust_src/src/
 
 fi

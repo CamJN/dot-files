@@ -291,7 +291,7 @@
 ;; rust
 (setq racer-rust-src-path "/usr/local/share/rust_src/src/")
 (unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
-(setq racer-cmd "/usr/local/bin/racer")
+(setq racer-cmd "~/.cargo/bin/racer")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))

@@ -1,7 +1,21 @@
 # Change Log
 
-## [1.0.0](https://github.com/AtomLinter/linter-erb/tree/1.0.0) (2016-01-12)
-[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v0.1.1...1.0.0)
+## [1.0.1](https://github.com/AtomLinter/linter-erb/tree/1.0.1) (2016-02-01)
+[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v1.0.0...1.0.1)
+
+**Implemented enhancements:**
+
+- Update eslint-config-airbnb to version 4.0.0 🚀 [\#15](https://github.com/AtomLinter/linter-erb/pull/15) ([greenkeeperio-bot](https://github.com/greenkeeperio-bot))
+
+**Fixed bugs:**
+
+- Use getScopesArray [\#13](https://github.com/AtomLinter/linter-erb/issues/13)
+- Incompatible with Ruby-On-Rails erb [\#3](https://github.com/AtomLinter/linter-erb/issues/3)
+- fixes AtomLinter/linter-erb\#3 [\#16](https://github.com/AtomLinter/linter-erb/pull/16) ([MatthiasWinkelmann](https://github.com/MatthiasWinkelmann))
+- Use getScopesArray\(\) [\#14](https://github.com/AtomLinter/linter-erb/pull/14) ([Arcanemagus](https://github.com/Arcanemagus))
+
+## [v1.0.0](https://github.com/AtomLinter/linter-erb/tree/v1.0.0) (2016-01-12)
+[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v0.1.1...v1.0.0)
 
 **Fixed bugs:**
 

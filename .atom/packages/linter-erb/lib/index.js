@@ -79,8 +79,8 @@ export default {
           let rubyCode = erbOut;
           // Deal with the <%= function_with trailing block do %> ... <% end %>
           // From Ruby on Rails code
-          const scopes = textEditor.getLastCursor().getScopeDescriptor().scopes;
-          if (scopes.indexOf('text.html.ruby') !== -1) {
+          const scopes = textEditor.getLastCursor().getScopeDescriptor().getScopesArray();
+          if (scopes.indexOf('text.html.erb') !== -1) {
             rubyCode = erbOut.replace(/_erbout.concat\(\((.+?do.+?)\).to_s\)/g, '\$1');
           }
           // Run Ruby on the "de-templatized" code

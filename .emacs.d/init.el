@@ -43,6 +43,7 @@
 (require 'meese)
 (require 'pretty-lambdada)
 (require 'rust-mode nil t)
+(require 'racer-mode nil t)
 (require 'rhtml-mode)
 (require 'rinari)
 (require 'sass-mode)

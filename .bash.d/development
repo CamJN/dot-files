@@ -28,7 +28,8 @@ if [ `uname` = "Darwin" ]; then
         export SDKROOT=$PLATFORM_ROOT/SDKs/$DEV_PLATFORM$DEV_VERSION.sdk
         export TOOLCHAIN_DIR=$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr
 
-        PATH=$PATH:$DEVELOPER_DIR/usr/bin:$PLATFORM_ROOT/usr/bin:$SDKROOT/Developer/usr/bin:$SDKROOT/usr/bin
+        PATH=$PATH:$DEVELOPER_DIR/usr/bin:$PLATFORM_ROOT/usr/bin
+        #PATH=$PATH:$SDKROOT/Developer/usr/bin:$SDKROOT/usr/bin
         export PATH=$PATH:$TOOLCHAIN_DIR/bin
 
         OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$PLATFORM_ROOT/usr/include:$SDKROOT/usr/X11/include:$SDKROOT/usr/include

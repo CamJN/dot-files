@@ -77,6 +77,11 @@
         (mode . objc-mode)
         (mode . java-mode)
         (mode . c++-mode)))
+      ("rust code"
+       (or
+        (mode . rust-mode)
+        (mode . python-mode)
+        (mode . toml-mode)))
       ("other code"
        (or
         (mode . lisp-mode)
@@ -86,7 +91,9 @@
        (or
         (mode . html-mode)
         (mode . css-mode)
+        (mode . ruby-mode)
         (mode . javascript-mode)
+        (mode . js-mode)
         (mode . less-css-mode)
         (mode . php-mode)))
       ("git"
@@ -94,11 +101,13 @@
       ("help"
        (name . "^\\*\\(Help\\|Apropos\\|info\\)\\*$"))
       ("keep around"
-       (name . "^\\*\\(shell\\scratch\\)\\*$"))
+       (name . "^\\*\\(shell\\|scratch\\)\\*$"))
       ("built-in"
-       (name . "^\\*.+\\*$"))
+       (name . "^\\*.*\\*$"))
       ("Tags"
-       (filename . "TAGS"))))))
+       (filename . "TAGS"))
+      ("other"
+       (name . ".*"))))))
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
  '(icomplete-mode t)

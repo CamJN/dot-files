@@ -4,6 +4,7 @@ if [[  ! ( $- =~ "i" ) ]]; then
 fi
 #environment variables
 export CATALINA_HOME=/Library/Tomcat/
+export JAVA_HOME=`/usr/libexec/java_home`
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color
 export CLICOLOR=1
@@ -69,6 +70,6 @@ if which rbenv > /dev/null; then
 fi
 
 if [ "Darwin" = `uname` ]; then
-    archey -c
+    archey -c -p
     calendar
 fi

@@ -1,9 +1,9 @@
-helpers = require('atom-linter')
-path = require('path')
+helpers = null
+path = null
 
 module.exports =
   activate: ->
-    require('atom-package-deps').install()
+    require('atom-package-deps').install('linter-csslint')
 
   provideLinter: ->
     provider =
@@ -12,11 +12,16 @@ module.exports =
       scope: 'file'
       lintOnFly: true
       lint: (textEditor) ->
+        helpers ?= require('atom-linter')
+        path ?= require('path')
         filePath = textEditor.getPath()
         text = textEditor.getText()
         parameters = ['--format=json', '-']
         exec = path.join(__dirname, '..', 'node_modules', 'atomlinter-csslint', 'cli.js')
-        cwd = path.dirname(textEditor.getPath())
+        paths = atom.project.relativizePath(filePath)
+        cwd = paths[0]
+        if not (cwd)
+          cwd = path.dirname(textEditor.getPath())
         helpers.execNode(exec, parameters, {stdin: text, cwd: cwd}).then (output) ->
           lintResult = JSON.parse(output)
           toReturn = []

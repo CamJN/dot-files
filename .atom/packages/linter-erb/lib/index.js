@@ -68,9 +68,9 @@ export default {
 
         // Specify the trim mode, if needed
         if (this.trimMode !== 'None') {
-          erbArgs.concat('-T', this.trimMode);
+          erbArgs.push('-T', this.trimMode);
         }
-        erbArgs.concat('-');
+        erbArgs.push('-');
 
         // Call ERB to "de-templatize" the code
         return helpers.exec(this.erbPath, erbArgs,

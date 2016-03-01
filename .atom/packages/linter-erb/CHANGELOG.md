@@ -1,7 +1,14 @@
 # Change Log
 
-## [1.0.1](https://github.com/AtomLinter/linter-erb/tree/1.0.1) (2016-02-01)
-[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v1.0.0...1.0.1)
+## [1.0.2](https://github.com/AtomLinter/linter-erb/tree/1.0.2) (2016-02-03)
+[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v1.0.1...1.0.2)
+
+**Fixed bugs:**
+
+- Fix ERB trim mode [\#17](https://github.com/AtomLinter/linter-erb/pull/17) ([eXprojects](https://github.com/eXprojects))
+
+## [v1.0.1](https://github.com/AtomLinter/linter-erb/tree/v1.0.1) (2016-02-01)
+[Full Changelog](https://github.com/AtomLinter/linter-erb/compare/v1.0.0...v1.0.1)
 
 **Implemented enhancements:**
 

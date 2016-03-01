@@ -1,29 +1,14 @@
 "*":
-  welcome:
-    showOnStartup: false
-  "save-session":
-    project: "/Users/camdennarzt/Developer/Ruby/nmr"
-    windowX: 0
-    windowY: 0
-    windowWidth: 1440
-    windowHeight: 900
-    dataSaveFolder: "/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects"
-    fullScreen: true
-    projects: [
-      "/Users/camdennarzt/Developer/Ruby/KingOfStrain"
-      "/Users/camdennarzt/Developer/Ruby/nmr"
-      "/Users/camdennarzt/Developer/Ruby/blog"
-      "/Users/camdennarzt/Developer/Ruby/m2"
-      "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
-    ]
-  "exception-reporting":
-    userId: "6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a"
+  "autocomplete-plus": {}
+  "autocomplete-ruby": {}
+  "browser-refresh":
+    firefoxDeveloperEdition: true
+    googleChrome: false
   core:
     disabledPackages: [
       "welcome"
       "autocomplete-ruby"
     ]
-    projectHome: "/Users/camdennarzt/Developer"
     ignoredNames: [
       ".git"
       ".hg"
@@ -33,37 +18,52 @@
       "Thumbs.db"
       "._*"
     ]
+    projectHome: "/Users/camdennarzt/Developer"
   editor:
     fontFamily: "menlo"
     invisibles: {}
     softWrap: true
-  "browser-refresh":
-    firefoxDeveloperEdition: true
-    googleChrome: false
+  "exception-reporting":
+    userId: "6e20b0e4-6118-a36a-6c3c-d44ca2f90a8a"
   linter:
+    showErrorPanel: false
     subtleLinterErrors: [
       "scss-lint"
     ]
-    showErrorPanel: false
+  "linter-erb": {}
+  "linter-js-yaml": {}
+  "linter-less": {}
+  "linter-php": {}
+  "linter-rubocop":
+    command: "/Users/camdennarzt/.rbenv/shims/rubocop"
   "linter-rust":
     cargoPath: "/usr/local/bin/cargo"
     rustcPath: "/usr/local/bin/rustc"
-  "autocomplete-plus": {}
-  "autocomplete-ruby": {}
+  "linter-scss-lint":
+    additionalArguments: "--exclude-linter EmptyLineBetweenBlocks,ZeroUnit,LeadingZero,StringQuotes,PropertySortOrder,SelectorDepth,NestingDepth,SelectorFormat,QualifyingElement,IdSelector,PlaceholderInExtend,SingleLinePerSelector"
+    executablePath: "/Users/camdennarzt/.rbenv/shims/scss-lint"
   "linter-tidy":
     tidyExecutablePath: "/usr/local/bin/tidy5"
-  "linter-js-yaml": {}
-  "linter-less": {}
-  "linter-scss-lint":
-    executablePath: "/Users/camdennarzt/.rbenv/shims/scss-lint"
-    additionalArguments: "--exclude-linter EmptyLineBetweenBlocks,ZeroUnit,LeadingZero,StringQuotes,PropertySortOrder,SelectorDepth,NestingDepth,SelectorFormat,QualifyingElement,IdSelector,PlaceholderInExtend,SingleLinePerSelector"
   pigments: {}
-  whitespace: {}
-  "linter-erb": {}
-  "linter-rubocop":
-    command: "/Users/camdennarzt/.rbenv/shims/rubocop"
   racer:
     rustSrcPath: "/usr/local/share/rust_src/src/"
+  "save-session":
+    dataSaveFolder: "/Users/camdennarzt/Developer/Bash/dot-files/.atom/packages/save-session/projects"
+    fullScreen: true
+    project: "/Users/camdennarzt/Developer/Ruby/nmr"
+    projects: [
+      "/Users/camdennarzt/Developer/Ruby/KingOfStrain"
+      "/Users/camdennarzt/Developer/Ruby/nmr"
+      "/Users/camdennarzt/Developer/Ruby/blog"
+      "/Users/camdennarzt/Developer/Ruby/m2"
+      "/Users/camdennarzt/Developer/Ruby/arewesmallyet"
+    ]
+    windowHeight: 900
+    windowWidth: 1440
+    windowX: 0
+    windowY: 0
   "tree-view":
     hideIgnoredNames: true
-  "linter-php": {}
+  welcome:
+    showOnStartup: false
+  whitespace: {}

@@ -1,7 +1,7 @@
 {
   "name": "linter-rust",
   "main": "./lib/init",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "description": "Lint Rust-files, using rustc and/or cargo",
   "repository": {
     "type": "git",
@@ -19,25 +19,45 @@
     }
   },
   "dependencies": {
-    "xregexp": "~2.0.0"
+    "atom-package-deps": "^4.0.1",
+    "xregexp": "~3.1.0"
   },
+  "package-deps": [
+    "linter",
+    "language-rust"
+  ],
   "readme": "# linter-rust [![Build Status](https://travis-ci.org/AtomLinter/linter-rust.svg?branch=master)](https://travis-ci.org/AtomLinter/linter-rust)\n\nLinting your Rust-files in [Atom](https://atom.io), using [rustc](http://www.rust-lang.org) and [cargo](https://crates.io).\nFiles will be checked when you open or save them.\n\n## Installation\n\n* Install [Rust](http://www.rust-lang.org) and/or [Cargo](https://crates.io).\n* `$ apm install linter` (if you don't have [AtomLinter/Linter](https://github.com/AtomLinter/Linter) installed).\n* `$ apm install linter-rust`\n\n## Other available linters\nThere are other linters available - take a look at the linters [mainpage](http://atomlinter.github.io).\n",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-rust/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-rust#readme",
-  "_id": "linter-rust@0.3.0",
-  "_shasum": "d2e891135e18643a2d44a4aadf46ac2fde284193",
-  "_resolved": "file:../d-1151124-72593-21mp80/package.tgz",
-  "_from": "../d-1151124-72593-21mp80/package.tgz",
+  "_id": "linter-rust@0.4.1",
+  "_shasum": "ebb6d50409bc58bb0ae8e9d12b7de9a7e2142f69",
+  "_resolved": "file:../d-11621-25687-93hu71/package.tgz",
+  "_from": "../d-11621-25687-93hu71/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
+        "name": "atom-package-deps",
+        "version": "4.0.1",
+        "path": "node_modules/atom-package-deps/lib/index.js"
+      },
+      {
+        "name": "atom-package-path",
+        "version": "1.1.0",
+        "path": "node_modules/atom-package-deps/node_modules/atom-package-path/lib/index.js"
+      },
+      {
+        "name": "sb-callsite",
+        "version": "1.1.2",
+        "path": "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/lib/main.js"
+      },
+      {
         "name": "xregexp",
-        "version": "2.0.0",
-        "path": "node_modules/xregexp/xregexp-all.js"
+        "version": "3.1.0",
+        "path": "node_modules/xregexp/src/index.js"
       }
     ],
     "extensions": {
@@ -45,12 +65,28 @@
         "lib/init.coffee",
         "lib/linter-rust.coffee"
       ],
+      ".js": [
+        "node_modules/atom-package-deps/lib/helpers.js",
+        "node_modules/atom-package-deps/lib/index.js",
+        "node_modules/atom-package-deps/lib/view.js",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/lib/index.js",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/lib/main.js",
+        "node_modules/xregexp/src/addons/build.js",
+        "node_modules/xregexp/src/addons/matchrecursive.js",
+        "node_modules/xregexp/src/addons/unicode-base.js",
+        "node_modules/xregexp/src/addons/unicode-blocks.js",
+        "node_modules/xregexp/src/addons/unicode-categories.js",
+        "node_modules/xregexp/src/addons/unicode-properties.js",
+        "node_modules/xregexp/src/addons/unicode-scripts.js",
+        "node_modules/xregexp/src/index.js",
+        "node_modules/xregexp/src/xregexp.js"
+      ],
       ".json": [
+        "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/package.json",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/package.json",
+        "node_modules/atom-package-deps/package.json",
         "node_modules/xregexp/package.json",
         "package.json"
-      ],
-      ".js": [
-        "node_modules/xregexp/xregexp-all.js"
       ]
     },
     "folders": [
@@ -61,7 +97,27 @@
           "spec"
         ],
         "dependencies": {
-          "xregexp": "~2.0.0"
+          "atom-package-deps": "^4.0.1",
+          "xregexp": "~3.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps/lib",
+          "node_modules/atom-package-deps"
+        ],
+        "dependencies": {
+          "atom-package-path": "^1.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps/node_modules/atom-package-path/lib",
+          "node_modules/atom-package-deps/node_modules/atom-package-path",
+          "node_modules/atom-package-deps/node_modules/atom-package-path/spec"
+        ],
+        "dependencies": {
+          "sb-callsite": "^1.1.2"
         }
       }
     ]

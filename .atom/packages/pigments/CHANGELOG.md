@@ -1,3 +1,39 @@
+<a name="v0.24.2"></a>
+# v0.24.2 (2016-02-29)
+
+## Bug Fixes
+
+- Guard against destroyed project when creating a palette panel ([52187952](https://github.com/abe33/atom-pigments/commit/52187952288a52d4c75690c8a7c6524ea60351d6), [#145](https://github.com/abe33/atom-pigments/issues/145))
+- Fix access to editor shadow root in color buffer element ([39097489](https://github.com/abe33/atom-pigments/commit/39097489fc61788fb8d118026c5ed98b7fd5cac0), [#149](https://github.com/abe33/atom-pigments/issues/149))
+
+<a name="v0.24.1"></a>
+# v0.24.1 (2016-02-16)
+
+## Bug Fixes
+
+- Fix parsing issue in CRLF files ([07117e1f](https://github.com/abe33/atom-pigments/commit/07117e1fe1c5215bc921085dd516ce72d6af6604), [#144](https://github.com/abe33/atom-pigments/issues/144))
+
+<a name="v0.24.0"></a>
+# v0.24.0 (2016-02-15)
+
+## Features
+
+- Add a min-height on search results panel heading ([9959c281](https://github.com/abe33/atom-pigments/commit/9959c28139de48daf5c6c7e2857aa86282ac4aa9))
+- Add a new setting to show color variable value in autocomplete ([3a86e258](https://github.com/abe33/atom-pigments/commit/3a86e258043194b8c4f58b7636ca5dfe0b1418cb))
+
+## Bug Fixes
+
+- Ensure that all custom pane items are serialized on pane split ([0d39d82c](https://github.com/abe33/atom-pigments/commit/0d39d82c192a24bbc3558fc10b9e3f04f79122c5), [#139](https://github.com/abe33/atom-pigments/issues/139))
+
+a name="v0.23.1"></a>
+# v0.23.1 (2016-02-03)
+
+## Bug Fixes
+
+- Fix variables not recognised by the css color function ([01c4ecc0](https://github.com/abe33/atom-pigments/commit/01c4ecc00ed9dd3da2a80104716341eef3a94d54))
+- Fix css variable value using val instead of var ([4ef2c02a](https://github.com/abe33/atom-pigments/commit/4ef2c02a5e34ad4c76b9f4a7b4948e5e951ac4b8))
+- Fix require and console not available in registry vm context ([ebbeab77](https://github.com/abe33/atom-pigments/commit/ebbeab77969e9b8f4903c64349acceaf1b351f56))
+
 <a name="v0.23.0"></a>
 # v0.23.0 (2016-02-02)
 

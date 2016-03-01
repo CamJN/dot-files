@@ -1,7 +1,8 @@
 fs = require 'fs'
 path = require 'path'
 {BufferedProcess} = require 'atom'
-{XRegExp} = require 'xregexp'
+XRegExp = require 'xregexp'
+spawn = require ('child_process')
 
 
 class LinterRust
@@ -91,6 +92,7 @@ class LinterRust
       when 'check' then ['check']
       when 'test' then ['test', '--no-run']
       when 'rustc' then ['rustc', '-Zno-trans', '--color', 'never']
+      when 'clippy' then ['clippy']
       else ['build']
 
     if not @config('useCargo') or not cargoManifestPath
@@ -101,7 +103,7 @@ class LinterRust
         @cmd.push path.join path.dirname(cargoManifestPath), @cargoDependencyDir
       return editingFile
     else
-      @cmd = [cargoPath]
+      @cmd = @buildCargoPath cargoPath
         .concat cargoArgs
         .concat ['-j', @config('jobsNumber'), '--manifest-path']
       return cargoManifestPath
@@ -116,5 +118,16 @@ class LinterRust
       break if root_dir.test directory
       directory = path.resolve path.join(directory, '..')
     return false
+
+
+   buildCargoPath: (cargoPath) =>
+     if (@config 'cargoCommand') == 'clippy' and @usingMultirustForClippy
+       return ['multirust','run', 'nightly', 'cargo']
+     else
+       return [cargoPath]
+
+   usingMultirustForClippy: () =>
+     result = spawn.spawnSync 'multirust', ['--version']
+     return result.status == 0
 
 module.exports = LinterRust

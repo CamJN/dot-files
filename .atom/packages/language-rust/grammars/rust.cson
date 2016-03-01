@@ -76,6 +76,16 @@
     'name': 'storage.modifier.box.rust'
     'match': '\\bbox\\b'
   }
+  'const': {
+    'comment': 'Const storage modifier'
+    'name': 'storage.modifier.const.rust'
+    'match': '\\bconst\\b'
+  }
+  'pub': {
+    'comment': 'Visibility modifier'
+    'name': 'storage.modifier.visibility.rust'
+    'match': '\\bpub\\b'
+  }
   'lifetime': {
     'comment': 'Named lifetime'
     'name': 'storage.modifier.lifetime.rust'
@@ -107,20 +117,15 @@
     'name': 'support.type.marker.rust'
     'match': '\\b(Copy|Send|Sized|Sync)\\b'
   }
-  'traits': {
+  'core_traits': {
     'comment': 'Core trait'
     'name': 'support.type.core.rust'
-    'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|IntoIterator|Iterator|DoubleEndedIterator|Extend|ExactSizeIterator)\\b'
+    'match': '\\b(Drop|Fn|FnMut|FnOnce|Clone|PartialEq|PartialOrd|Eq|Ord|AsRef|AsMut|Into|From|Default|Iterator|Extend|IntoIterator|DoubleEndedIterator|ExactSizeIterator)\\b'
   }
   'std_types': {
     'comment': 'Standard library type'
     'name': 'storage.class.std.rust'
     'match': '\\b(Box|String|Vec|Path|PathBuf)\\b'
-  }
-  'std_vars': {
-    'comment': 'Standard library type variant'
-    'name': 'support.constant.std.rust'
-    'match': '\\b(Some|None|Ok|Err)\\b'
   }
   'std_traits': {
     'comment': 'Standard library trait'
@@ -140,7 +145,7 @@
       { 'include': '#lifetime' }
       { 'include': '#core_types' }
       { 'include': '#core_marker' }
-      { 'include': '#traits' }
+      { 'include': '#core_traits' }
       { 'include': '#std_types' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }
@@ -215,16 +220,6 @@
     'match': '\\bstatic\\b'
   }
   {
-    'comment': 'Const storage modifier'
-    'name': 'storage.modifier.const.rust'
-    'match': '\\bconst\\b'
-  }
-  {
-    'comment': 'Visibility modifier'
-    'name': 'storage.modifier.visibility.rust'
-    'match': '\\bpub\\b'
-  }
-  {
     'comment': 'Boolean constant'
     'name': 'constant.language.boolean.rust'
     'match': '\\b(true|false)\\b'
@@ -250,19 +245,40 @@
   { 'include': '#box' }
   { 'include': '#lifetime' }
   { 'include': '#ref_lifetime' }
+  { 'include': '#const' }
+  { 'include': '#pub' }
   # Operators
   {
-    'comment': 'Operator'
-    'name': 'keyword.operator.rust'
-    'match': '(\\+|-|/|\\*|=|<=|>=|\\^|&|\\||!|%|::|\\bas\\b|<<|>>|>|<)'
+    'comment': 'Miscellaneous operator'
+    'name': 'keyword.operator.misc.rust'
+    'match': '(=>|::|\\bas\\b)'
+  }
+  {
+    'comment': 'Comparison operator'
+    'name': 'keyword.operator.comparison.rust'
+    'match': '(&&|\\|\\||==|!=)'
+  }
+  {
+    'comment': 'Assignment operator'
+    'name': 'keyword.operator.assignment.rust'
+    'match': '(\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|=)'
+  }
+  {
+    'comment': 'Arithmetic operator'
+    'name': 'keyword.operator.arithmetic.rust'
+    'match': '(!|\\+|-|/|\\*|%|\\^|&|\\||<<|>>)'
+  }
+  {
+    'comment': 'Comparison operator (second group because of regex precedence)'
+    'name': 'keyword.operator.comparison.rust'
+    'match': '(<=|>=|<|>)'
   }
   # Standard types and traits
   { 'include': '#core_types' }
   { 'include': '#core_vars' }
   { 'include': '#core_marker' }
-  { 'include': '#traits' }
+  { 'include': '#core_traits' }
   { 'include': '#std_types' }
-  { 'include': '#std_vars' }
   { 'include': '#std_traits' }
   # TODO: procs and closures
   # Macros
@@ -319,10 +335,11 @@
       { 'include': '#ref_lifetime' }
       { 'include': '#core_types' }
       { 'include': '#core_marker' }
-      { 'include': '#traits' }
+      { 'include': '#core_traits' }
       { 'include': '#std_types' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }
+      { 'include': '#const' }
     ]
   }
   # Type declaration
@@ -337,9 +354,11 @@
     'patterns': [
       { 'include': '#block_comment' }
       { 'include': '#line_comment' }
-      { 'include': '#traits' }
+      { 'include': '#core_traits' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }
+      { 'include': '#core_types' }
+      { 'include': '#pub' }
     ]
   }
   # Type alias
@@ -359,7 +378,7 @@
       { 'include': '#ref_lifetime' }
       { 'include': '#core_types' }
       { 'include': '#core_marker' }
-      { 'include': '#traits' }
+      { 'include': '#core_traits' }
       { 'include': '#std_types' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }
@@ -381,7 +400,7 @@
       { 'include': '#ref_lifetime' }
       { 'include': '#core_types' }
       { 'include': '#core_marker' }
-      { 'include': '#traits' }
+      { 'include': '#core_traits' }
       { 'include': '#std_types' }
       { 'include': '#std_traits' }
       { 'include': '#type_params' }

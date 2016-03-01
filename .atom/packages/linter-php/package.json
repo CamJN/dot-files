@@ -1,7 +1,7 @@
 {
   "name": "linter-php",
   "main": "./lib/main",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "Lint PHP on the fly, using php -l",
   "repository": {
     "type": "git",
@@ -9,14 +9,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "atom-linter": "^4.0.1",
-    "atom-package-deps": "^3.0.5"
+    "atom-linter": "^4.4.0",
+    "atom-package-deps": "^4.0.1"
   },
   "devDependencies": {
-    "coffeelint": "^1.14.1",
-    "eslint": "^1.10.1",
-    "babel-eslint": "^4.1.5",
-    "eslint-config-airbnb": "latest"
+    "coffeelint": "^1.14.2",
+    "eslint": "^2.2.0",
+    "babel-eslint": "^5.0.0",
+    "eslint-config-airbnb": "^6.0.2"
   },
   "package-deps": [
     "linter"
@@ -87,42 +87,32 @@
     "url": "https://github.com/AtomLinter/linter-php/issues"
   },
   "homepage": "https://github.com/AtomLinter/linter-php#readme",
-  "_id": "linter-php@1.1.7",
-  "_shasum": "6b23a77fdf6746759287b3f50b21c2ad70504543",
-  "_resolved": "file:../d-116030-23899-18o5n1a/package.tgz",
-  "_from": "../d-116030-23899-18o5n1a/package.tgz",
+  "_id": "linter-php@1.2.0",
+  "_shasum": "79d653ed6f2d9095c06df437b416e9b96df7f51c",
+  "_resolved": "file:../d-11621-25683-264lr3/package.tgz",
+  "_from": "../d-11621-25683-264lr3/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
         "name": "atom-linter",
-        "version": "4.3.4",
-        "path": "node_modules/atom-linter/lib/helpers.js"
+        "version": "4.6.1",
+        "path": "node_modules/atom-linter/lib/index.js"
       },
       {
-        "name": "consistent-path",
-        "version": "1.0.3",
-        "path": "node_modules/atom-linter/node_modules/consistent-path/lib/index.js"
-      },
-      {
-        "name": "shell-path",
-        "version": "1.0.8",
-        "path": "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/index.js"
-      },
-      {
-        "name": "strip-ansi",
-        "version": "3.0.0",
-        "path": "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/index.js"
-      },
-      {
-        "name": "ansi-regex",
-        "version": "2.0.0",
-        "path": "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/node_modules/ansi-regex/index.js"
+        "name": "consistent-env",
+        "version": "1.1.0",
+        "path": "node_modules/atom-linter/node_modules/consistent-env/lib/index.js"
       },
       {
         "name": "named-js-regexp",
         "version": "1.3.1",
         "path": "node_modules/atom-linter/node_modules/named-js-regexp/lib/named-js-regexp.js"
+      },
+      {
+        "name": "sb-promisify",
+        "version": "1.1.1",
+        "path": "node_modules/atom-linter/node_modules/sb-promisify/lib/index.js"
       },
       {
         "name": "tmp",
@@ -136,13 +126,18 @@
       },
       {
         "name": "atom-package-deps",
-        "version": "3.0.7",
-        "path": "node_modules/atom-package-deps/lib/main.js"
+        "version": "4.0.1",
+        "path": "node_modules/atom-package-deps/lib/index.js"
+      },
+      {
+        "name": "atom-package-path",
+        "version": "1.1.0",
+        "path": "node_modules/atom-package-deps/node_modules/atom-package-path/lib/index.js"
       },
       {
         "name": "sb-callsite",
         "version": "1.1.2",
-        "path": "node_modules/atom-package-deps/node_modules/sb-callsite/lib/main.js"
+        "path": "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/lib/main.js"
       }
     ],
     "extensions": {
@@ -151,30 +146,30 @@
       ],
       ".js": [
         "node_modules/atom-linter/lib/helpers.js",
-        "node_modules/atom-linter/node_modules/consistent-path/lib/index.js",
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/index.js",
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/index.js",
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/node_modules/ansi-regex/index.js",
-        "node_modules/atom-linter/node_modules/consistent-path/src/index.js",
+        "node_modules/atom-linter/lib/index.js",
+        "node_modules/atom-linter/lib/types.js",
+        "node_modules/atom-linter/node_modules/consistent-env/lib/helpers.js",
+        "node_modules/atom-linter/node_modules/consistent-env/lib/index.js",
         "node_modules/atom-linter/node_modules/named-js-regexp/lib/named-js-regexp.js",
+        "node_modules/atom-linter/node_modules/sb-promisify/lib/index.js",
         "node_modules/atom-linter/node_modules/tmp/Gruntfile.js",
         "node_modules/atom-linter/node_modules/tmp/lib/tmp.js",
         "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/index.js",
         "node_modules/atom-package-deps/lib/helpers.js",
-        "node_modules/atom-package-deps/lib/main.js",
+        "node_modules/atom-package-deps/lib/index.js",
         "node_modules/atom-package-deps/lib/view.js",
-        "node_modules/atom-package-deps/node_modules/sb-callsite/lib/main.js"
+        "node_modules/atom-package-deps/node_modules/atom-package-path/lib/index.js",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/lib/main.js"
       ],
       ".json": [
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/node_modules/ansi-regex/package.json",
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi/package.json",
-        "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/package.json",
-        "node_modules/atom-linter/node_modules/consistent-path/package.json",
+        "node_modules/atom-linter/node_modules/consistent-env/package.json",
         "node_modules/atom-linter/node_modules/named-js-regexp/package.json",
+        "node_modules/atom-linter/node_modules/sb-promisify/package.json",
         "node_modules/atom-linter/node_modules/tmp/node_modules/os-tmpdir/package.json",
         "node_modules/atom-linter/node_modules/tmp/package.json",
         "node_modules/atom-linter/package.json",
-        "node_modules/atom-package-deps/node_modules/sb-callsite/package.json",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/node_modules/sb-callsite/package.json",
+        "node_modules/atom-package-deps/node_modules/atom-package-path/package.json",
         "node_modules/atom-package-deps/package.json",
         "package.json"
       ]
@@ -187,8 +182,8 @@
           "spec"
         ],
         "dependencies": {
-          "atom-linter": "^4.0.1",
-          "atom-package-deps": "^3.0.5"
+          "atom-linter": "^4.4.0",
+          "atom-package-deps": "^4.0.1"
         }
       },
       {
@@ -197,34 +192,10 @@
           "node_modules/atom-linter"
         ],
         "dependencies": {
-          "consistent-path": "^1.0.3",
-          "named-js-regexp": "^1.3.1"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-linter/node_modules/consistent-path/lib",
-          "node_modules/atom-linter/node_modules/consistent-path",
-          "node_modules/atom-linter/node_modules/consistent-path/src"
-        ],
-        "dependencies": {
-          "shell-path": "^1.0.4"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path"
-        ],
-        "dependencies": {
-          "strip-ansi": "^3.0.0"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/atom-linter/node_modules/consistent-path/node_modules/shell-path/node_modules/strip-ansi"
-        ],
-        "dependencies": {
-          "ansi-regex": "^2.0.0"
+          "consistent-env": "^1.0.1",
+          "named-js-regexp": "^1.3.1",
+          "sb-promisify": "^1.0.0",
+          "tmp": "~0.0.28"
         }
       },
       {
@@ -244,7 +215,17 @@
           "node_modules/atom-package-deps"
         ],
         "dependencies": {
-          "sb-callsite": "^1.0.0"
+          "atom-package-path": "^1.1.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/atom-package-deps/node_modules/atom-package-path/lib",
+          "node_modules/atom-package-deps/node_modules/atom-package-path",
+          "node_modules/atom-package-deps/node_modules/atom-package-path/spec"
+        ],
+        "dependencies": {
+          "sb-callsite": "^1.1.2"
         }
       }
     ]

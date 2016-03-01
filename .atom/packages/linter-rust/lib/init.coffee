@@ -21,9 +21,11 @@ module.exports =
     cargoCommand:
       type: 'string'
       default: 'build'
-      enum: ['build', 'check', 'test', 'rustc']
+      enum: ['build', 'check', 'test', 'rustc', 'clippy']
       description: "Use 'check' for fast linting (you need to install
-        `cargo-check`). Use 'test' to lint test code, too.
+        `cargo-check`). Use 'clippy' to increase amount of available lints
+        (you need to install `cargo-clippy`). 
+        Use 'test' to lint test code, too.
         Use 'rustc' for fast linting (note: does not build
         the project)."
     cargoManifestFilename:
@@ -40,15 +42,7 @@ module.exports =
     console.log 'Linter-Rust: package loaded,
                 ready to get initialized by AtomLinter.'
 
-    if not atom.packages.getLoadedPackage 'linter'
-      atom.notifications.addError 'Linter package not found',
-      detail: '[linter-rust] `linter` package not found. \
-      Please install https://github.com/AtomLinter/Linter'
-
-    if not atom.packages.getLoadedPackage 'language-rust'
-      atom.notifications.addError 'Language-rust package not found',
-      detail: '[linter-rust] `language-rust` package not found. \
-      Please install https://github.com/zargony/atom-language-rust'
+    do require('atom-package-deps').install
 
     @subscriptions = new CompositeDisposable
 

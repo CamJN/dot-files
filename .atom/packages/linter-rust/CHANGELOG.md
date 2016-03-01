@@ -1,3 +1,10 @@
+# 0.4.1
+* Update xregexp to version 3.1.0
+* Allow using multirust for clippy (@White-Oak)
+
+# 0.4.0
+* Add choice to use clippy for linting. Tanks to @White-Oak
+
 # 0.3.0
 * Minor refactor + option for cargo-check (@colin-kiegel)
 

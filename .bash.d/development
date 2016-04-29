@@ -22,19 +22,19 @@ if [ `uname` = "Darwin" ]; then
         DEV_VERSION=6.1
     fi
 
-    if [ -n "`xcode-select --print-path 2>/dev/null`" ]; then
-        export DEVELOPER_DIR=`xcode-select -print-path`
-        export PLATFORM_ROOT=$DEVELOPER_DIR/Platforms/$DEV_PLATFORM.platform/Developer
-        export SDKROOT=$PLATFORM_ROOT/SDKs/$DEV_PLATFORM$DEV_VERSION.sdk
-        export TOOLCHAIN_DIR=$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr
+    # if [ -n "`xcode-select --print-path 2>/dev/null`" ]; then
+    #     export DEVELOPER_DIR=`xcode-select -print-path`
+    #     export PLATFORM_ROOT=$DEVELOPER_DIR/Platforms/$DEV_PLATFORM.platform/Developer
+    #     export SDKROOT=$PLATFORM_ROOT/SDKs/$DEV_PLATFORM$DEV_VERSION.sdk
+    #     export TOOLCHAIN_DIR=$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr
 
-        PATH=$PATH:$DEVELOPER_DIR/usr/bin:$PLATFORM_ROOT/usr/bin
-        #PATH=$PATH:$SDKROOT/Developer/usr/bin:$SDKROOT/usr/bin
-        export PATH=$PATH:$TOOLCHAIN_DIR/bin
+    #     PATH=$PATH:$DEVELOPER_DIR/usr/bin:$PLATFORM_ROOT/usr/bin
+    #     #PATH=$PATH:$SDKROOT/Developer/usr/bin:$SDKROOT/usr/bin
+    #     export PATH=$PATH:$TOOLCHAIN_DIR/bin
 
-        OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$PLATFORM_ROOT/usr/include:$SDKROOT/usr/X11/include:$SDKROOT/usr/include
-        export OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$TOOLCHAIN_DIR/include
-    fi
+    #     OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$PLATFORM_ROOT/usr/include:$SDKROOT/usr/X11/include:$SDKROOT/usr/include
+    #     export OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$TOOLCHAIN_DIR/include
+    # fi
 
     #xcrun takes care of the above PATH modifications
 
@@ -53,6 +53,6 @@ if [ `uname` = "Darwin" ]; then
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     export PATH=/Users/camdennarzt/.cargo/bin:$PATH
-    export RUST_SRC_PATH=/usr/local/share/rust_src/src/
+    export RUST_SRC_PATH=/usr/local/share/rust_src/current
 
 fi

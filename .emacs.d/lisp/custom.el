@@ -32,6 +32,7 @@
  '(delete-active-region (quote kill))
  '(delete-old-versions 0)
  '(delete-selection-mode t)
+ '(dired-listing-switches "-alh")
  '(display-time-mode t)
  '(dynamic-completion-mode t)
  '(ediff-diff-options "-w -d")

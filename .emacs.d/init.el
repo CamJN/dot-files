@@ -290,13 +290,14 @@
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 ;; rust
-(setq racer-rust-src-path "/usr/local/share/rust_src/src/")
+(setq racer-rust-src-path "/usr/local/share/rust_src/current")
 (unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
-(setq racer-cmd "~/.cargo/bin/racer")
+(setq racer-cmd "/usr/local/bin/racer")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 (add-hook 'rust-mode-hook (lambda ()
+                            (company-mode)
                             (racer-activate)
                             (racer-turn-on-eldoc)
                             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)

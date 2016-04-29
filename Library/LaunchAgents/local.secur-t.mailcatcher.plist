@@ -6,10 +6,8 @@
     <string>me.mailcatcher</string>
     <key>ProgramArguments</key>
     <array>
-      <string>bash</string>
-      <string>-i</string>
-      <string>-c</string>
-      <string>mailcatcher --foreground</string>
+      <string>/Users/camdennarzt/.rbenv/shims/mailcatcher</string>
+      <string>--foreground</string>
     </array>
     <key>KeepAlive</key>
     <true/>

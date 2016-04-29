@@ -244,3 +244,7 @@ NR == FNR {
     print t[0],t[1],t[2]
 } ' /tmp/FileWithDates -
 }
+
+function unix {
+    date -r "$1"
+}

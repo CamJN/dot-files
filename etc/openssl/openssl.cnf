@@ -226,17 +226,27 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName          = @alt_names
 
 [alt_names]
-DNS.1 = localhost
-DNS.2 = SECUR-T.local
-DNS.3 = barcoding.dev
-DNS.4 = arewesmallyet.dev
-DNS.5 = nmr.metabolistics.dev
+DNS.1 = rattanlaw.dev
+DNS.2 = localhost
+DNS.3 = SECUR-T.local
+DNS.4 = mailcatcher.dev
+DNS.5 = barcoding.dev
 DNS.6 = metabolistics.dev
-DNS.7 = silversshadows.dev
-DNS.8 = mote.scanimetrics.dev
-DNS.9 = m2.dev
+DNS.7 = arewesmallyet.dev
+DNS.8 = silversshadows.dev
+DNS.9 = scanimetrics.dev
 DNS.10 = kingofstrain.dev
-DNS.11 = 127.0.0.1
+DNS.11 = m2.dev
+DNS.12 = rust.dev
+DNS.13 = *.rattanlaw.dev
+DNS.14 = *.barcoding.dev
+DNS.15 = *.arewesmallyet.dev
+DNS.16 = *.metabolistics.dev
+DNS.17 = *.silversshadows.dev
+DNS.18 = *.scanimetrics.dev
+DNS.19 = *.kingofstrain.dev
+DNS.20 = *.m2.dev
+DNS.21 = *.rust.dev
 
 [ v3_ca ]
 

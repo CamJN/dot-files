@@ -6,3 +6,4 @@
 /.bash.d/.bash-git-prompt
 .emacs.d/%backup%~
 .emacs.d/auto-save-files/*
+.atom

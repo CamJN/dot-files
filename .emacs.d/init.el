@@ -295,11 +295,13 @@
 (setq racer-cmd "/usr/local/bin/racer")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
+(setq company-tooltip-align-annotations t)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'rust-mode-hook (lambda ()
-                            (company-mode)
-                            (racer-activate)
-                            (racer-turn-on-eldoc)
+                            (racer-mode)
                             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
                             (set (make-local-variable
                                   'company-backends)
@@ -307,7 +309,7 @@
                             (local-set-key
                              (kbd "M-.") #'racer-find-definition)
                             (local-set-key
-                             (kbd "TAB") #'racer-complete-or-indent)
+                             (kbd "TAB") #'company-indent-or-complete-common)
                             ))
 
 (provide 'init)

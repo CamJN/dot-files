@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 export EMACS_SERVER_FILE=${TMPDIR}emacs`id -u`/server
 export EDITOR="/usr/local/bin/emacsclient -t -s $EMACS_SERVER_FILE"

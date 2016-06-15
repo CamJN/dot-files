@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 if [[  ! ( $- =~ "i" ) ]]; then
     return 0
 fi
@@ -9,7 +9,7 @@ export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
-#export GREP_OPTIONS='-I --color=always --exclude=*.xhprof'
+export GREP_OPTIONS='--color=auto'
 export HISTFILE=~/.bash.d/history
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000

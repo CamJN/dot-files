@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 MANPATH=/Library/Developer/CommandLineTools/usr/share/man
 MANPATH=/Library/Frameworks/R.framework/Versions/3.1/Resources:$MANPATH

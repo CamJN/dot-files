@@ -21,7 +21,7 @@ export LESS_TERMCAP_me=$'\E[0m'
 export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+export LESS_TERMCAP_us=$'\E[01;36m'
 
 stty -ixon
 
@@ -29,6 +29,8 @@ stty -ixon
 shopt -s histappend
 shopt -s extglob
 shopt -s xpg_echo
+
+#sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
 
 #paths
 if [ -f ~/.bash.d/paths ]; then

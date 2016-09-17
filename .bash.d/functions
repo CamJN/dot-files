@@ -1,5 +1,18 @@
 #!/usr/local/bin/bash
 
+function forward {
+    local=$1
+    if [[ $2 =~ .*:[0-9]+ ]]
+    then
+        server=$(echo $2 | cut -f1 -d:)
+        remote=$(echo $2 | cut -f2 -d:)
+    else
+        server=$2
+        remote=$3
+    fi
+    \ssh -NL $local:localhost:$remote $server
+}
+
 function cscp {
     # wkhtmltopdf.gz site-localhost.zip amazon2:
     rsync -Lvz --progress --timeout=10 --rsh=ssh "$@"

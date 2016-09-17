@@ -186,7 +186,7 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
   (cond ((fboundp 'global-subword-mode)(global-subword-mode 1))
         ((fboundp 'subword-mode)(subword-mode 1))
         ((fboundp 'c-subword-mode)(c-subword-mode 1)))
-  (turn-on-auto-fill)
+  ;;(turn-on-auto-fill)
   (pretty-lambda-for-modes)
   (guru-mode))
 

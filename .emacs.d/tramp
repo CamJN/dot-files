@@ -1,6 +1,23 @@
-;; -*- emacs-lisp -*- <16/05/31 14:43:29 /Users/camdennarzt/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <16/07/22 13:28:00 /Users/camdennarzt/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-((["sudo" "root" "localhost" nil nil]
+((["ssh" nil "vagrant" nil nil]
+  nil)
+ (["ssh" nil "unsafe" nil nil]
+  nil)
+ (["ssh" nil "crm" nil nil]
+  ("locale" "LC_ALL=en_US.utf8")
+  ("uname" "Linux 3.18.3-201.fc21.x86_64")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("remote-shell" "/bin/sh")
+  ("~" "/home/fedora")
+  ("stat" "/bin/stat")
+  ("file-exists" "test -e")
+  ("id" "/bin/id")
+  ("gid-string" "fedora")
+  ("gid-integer" 1000))
+ (["ssh" nil "scan.nat" nil nil]
   nil))

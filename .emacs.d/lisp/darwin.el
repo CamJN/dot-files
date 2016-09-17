@@ -10,7 +10,7 @@
   (require 'find-file)
 
   (setq locate-command "mdfind")
-  (setq compile-command "xcodebuild")
+  ;(setq compile-command "xcodebuild")
 
 (when (not (null (getenv "OBJC_INCLUDE_PATH")))
   (mapc

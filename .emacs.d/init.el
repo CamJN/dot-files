@@ -25,6 +25,7 @@
 ;;(load "nxhtml/autostart.el")
 
 (require 'defuns)
+(require 'dockerfile-mode nil t)
 (require 'accutex nil t)
 (require 'apache nil t)
 (require 'bison-mode nil t)
@@ -53,6 +54,9 @@
 (require 'vc-git)
 (require 'web-mode nil t)
 (require 'ess-site nil t)
+(require 'editorconfig nil t)
+
+(editorconfig-mode 1)
 
 (setq custom-file "custom.el")
 (load custom-file nil t t t)
@@ -124,6 +128,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
+(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 ;;----------Reverting Stuff-------------------------------------
 ;;(remove-hook 'after-revert-hook (car after-revert-hook))
 (add-hook 'after-revert-hook  (lambda ()
@@ -290,7 +295,7 @@
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 ;; rust
-(setq racer-rust-src-path "/usr/local/share/rust_src/current")
+(setq racer-rust-src-path "/usr/local/share/racer/rust_src/current")
 (unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
 (setq racer-cmd "/usr/local/bin/racer")
 (setq company-idle-delay 0.2)
@@ -302,6 +307,7 @@
 (add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'rust-mode-hook (lambda ()
                             (racer-mode)
+                            (setq compile-command "cargo build")
                             (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
                             (set (make-local-variable
                                   'company-backends)

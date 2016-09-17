@@ -19,7 +19,7 @@
     (cons ".*"
           (expand-file-name "~/.emacs.d/backup-files/"))))
  '(bell-volume 0)
- '(browse-url-browser-function (quote browse-url-firefox))
+ '(browse-url-browser-function (quote browse-url-default-macosx-browser))
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
  '(completion-styles (quote (substring partial-completion initials)))

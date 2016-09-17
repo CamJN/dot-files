@@ -1,12 +1,13 @@
 #!/usr/local/bin/bash
+set -e
 git checkout ajax-data
 /Users/camdennarzt/.rbenv/shims/bundle exec padrino rake update_once
 DATABASE_URL=postgres://camdennarzt@localhost:5432/arewesmallyet RACK_ENV=production /Users/camdennarzt/.rbenv/shims/bundle exec rake pipeline:compile
 mv app/public/stylesheets/application-*.css tmp/application.css
 mv app/public/javascripts/application-*.js tmp/application_min.js
-curl -O arewesmallyet.dev/data.json
-curl -O arewesmallyet.dev/stats.json
-\curl arewesmallyet.dev > tmp/index.html
+curl --cacert ~/Developer/Certs/demoCA/cacert.pem -L -O arewesmallyet.dev/data.json
+curl --cacert ~/Developer/Certs/demoCA/cacert.pem -L -O arewesmallyet.dev/stats.json
+\curl --cacert ~/Developer/Certs/demoCA/cacert.pem -L arewesmallyet.dev > tmp/index.html
 mv {data,stats}.json tmp/
 rm -rf app/public
 if git diff-index --quiet HEAD ; then

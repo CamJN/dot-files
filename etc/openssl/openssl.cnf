@@ -1,7 +1,7 @@
 #
 # OpenSSL example configuration file.
 # This is mostly being used for generation of certificate requests.
-# /System/Library/OpenSSL/openssl.cnf
+#
 
 # This definition stops the following lines choking if HOME isn't
 # defined.
@@ -44,13 +44,13 @@ certs		= $dir/certs		# Where the issued certs are kept
 crl_dir		= $dir/crl		# Where the issued crl are kept
 database	= $dir/index.txt	# database index file.
 unique_subject	= no			# Set to 'no' to allow creation of
-# several ctificates with same subject.
+                                        # several ctificates with same subject.
 new_certs_dir	= $dir/newcerts		# default place for new certs.
 
 certificate	= $dir/cacert.pem       # The CA certificate
 serial		= $dir/serial           # The current serial number
 crlnumber	= $dir/crlnumber	# the current crl number
-# must be commented out to leave a V1 CRL
+                                        # must be commented out to leave a V1 CRL
 crl		= $dir/crl.pem          # The current CRL
 private_key	= $dir/private/cakey.pem# The private key
 RANDFILE	= $dir/private/.rand	# private random number file
@@ -238,17 +238,22 @@ DNS.9 = scanimetrics.dev
 DNS.10 = kingofstrain.dev
 DNS.11 = m2.dev
 DNS.12 = rust.dev
-DNS.13 = *.rattanlaw.dev
-DNS.14 = *.barcoding.dev
-DNS.15 = *.arewesmallyet.dev
-DNS.16 = *.metabolistics.dev
-DNS.17 = *.silversshadows.dev
-DNS.18 = *.scanimetrics.dev
-DNS.19 = *.kingofstrain.dev
-DNS.20 = *.m2.dev
-DNS.21 = *.rust.dev
+DNS.13 = phusionpassenger.dev
+DNS.14 = *.rattanlaw.dev
+DNS.15 = *.barcoding.dev
+DNS.16 = *.arewesmallyet.dev
+DNS.17 = *.metabolistics.dev
+DNS.18 = *.silversshadows.dev
+DNS.19 = *.scanimetrics.dev
+DNS.20 = *.kingofstrain.dev
+DNS.21 = *.m2.dev
+DNS.22 = *.rust.dev
+DNS.23 = *.phusionpassenger.dev
+IP.1 = 127.0.0.1
+IP.2 = ::1
 
 [ v3_ca ]
+
 
 # Extensions for a typical CA
 
@@ -357,20 +362,20 @@ dir		= ./demoCA		# TSA root directory
 serial		= $dir/tsaserial	# The current serial number (mandatory)
 crypto_device	= builtin		# OpenSSL engine to use for signing
 signer_cert	= $dir/tsacert.pem      # The TSA signing certificate
-# (optional)
+                                        # (optional)
 certs		= $dir/cacert.pem	# Certificate chain to include in reply
-# (optional)
+                                        # (optional)
 signer_key	= $dir/private/tsakey.pem # The TSA private key (optional)
 
 default_policy	= tsa_policy1		# Policy if request did not specify it
-# (optional)
+                                        # (optional)
 other_policies	= tsa_policy2, tsa_policy3	# acceptable policies (optional)
 digests		= md5, sha1		# Acceptable message digests (mandatory)
 accuracy	= secs:1, millisecs:500, microsecs:100	# (optional)
 clock_precision_digits  = 0	# number of digits after dot. (optional)
 ordering		= yes	# Is ordering defined for timestamps?
-# (optional, default: no)
+                                        # (optional, default: no)
 tsa_name		= yes	# Must the TSA name be included in the reply?
-# (optional, default: no)
+                                        # (optional, default: no)
 ess_cert_id_chain	= no	# Must the ESS cert id chain be included?
-# (optional, default: no)
+                                        # (optional, default: no)

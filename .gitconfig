@@ -1,6 +1,7 @@
 [user]
 	name = Camden Narzt
-	email = admin@silversshadows.com
+	email = c.narzt@me.com
+	signingkey = E45D816B
 [core]
         editor = emacs
 	filemode = false
@@ -44,3 +45,7 @@
 	clean = git lfs clean %f
 	smudge = git lfs smudge %f
 	required = true
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = true

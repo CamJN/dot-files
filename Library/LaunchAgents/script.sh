@@ -1,5 +1,7 @@
 #!/usr/local/bin/bash
 set -e
+~/Developer/Bash/dot-files/Library/LaunchAgents/startup-gpg-agent.sh
+export PATH=$PATH:/usr/local/opt/gnupg2/bin
 git checkout ajax-data
 /Users/camdennarzt/.rbenv/shims/bundle exec padrino rake update_once
 DATABASE_URL=postgres://camdennarzt@localhost:5432/arewesmallyet RACK_ENV=production /Users/camdennarzt/.rbenv/shims/bundle exec rake pipeline:compile

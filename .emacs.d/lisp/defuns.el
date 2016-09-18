@@ -5,7 +5,6 @@
 
 ;;; Code:
 
-(require 'iswitchb)
 (require 'guru-mode)
 
 (defalias 'rebuilder 're-builder)
@@ -27,7 +26,7 @@
   "Never kill *scratch* buffer, just move it out of the way."
   (let ((the-arg (ad-get-arg 0)))
     (if (and (not (null the-arg)) (string= (buffer-name (get-buffer the-arg)) "*scratch*"))
-        (progn (when (minibufferp) (iswitchb-next-match))
+        (progn (when (minibufferp) (ido-next-match))
                (replace-buffer-in-windows "*scratch*"))
       ad-do-it)))
 

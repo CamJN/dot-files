@@ -112,16 +112,13 @@
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
  '(icomplete-mode t)
+ '(ido-use-virtual-buffers t nil (recentf))
  '(indent-tabs-mode nil)
  '(indicate-empty-lines t)
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
- '(iswitchb-mode t)
- '(iswitchb-regexp t)
- '(iswitchb-use-virtual-buffers t nil (recentf))
  '(kill-buffer-query-functions
-   (quote
-    (dont-kill-scratch server-kill-buffer-query-function process-kill-buffer-query-function)) t)
+   (cons 'dont-kill-scratch kill-buffer-query-functions) t)
  '(kill-read-only-ok 1)
  '(large-file-warning-threshold nil)
  '(list-colors-sort (quote hsv))

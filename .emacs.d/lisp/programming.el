@@ -13,7 +13,6 @@
 (require 'find-file)
 (require 'find-lisp)
 (require 'gud)
-(require 'iswitchb)
 (require 'semantic)
 
 ;; define functions
@@ -308,7 +307,6 @@ TODO: use clang or cedet to lookup if it's a system class."
         (setq tags-revert-without-query t)))
 
 ;; file switching
-;;(add-to-list 'iswitchb-buffer-ignore "TAGS")
 (mapc (lambda (list) (add-to-list 'cc-other-file-alist list))
       '(("\\.m$" (".h"))
         ("\\.mm$" (".h"))))

@@ -6,8 +6,8 @@
 ;; programming tasks.
 
 ;;; Code: elisp
-;;(setq stack-trace-on-error t)
-;;(setq debug-on-error t)
+(setq stack-trace-on-error t)
+(setq debug-on-error t)
 
 (defadvice package-compute-transaction
     (before package-compute-transaction-reverse (package-list requirements) activate compile)
@@ -35,13 +35,11 @@
 (require 'csv-mode nil t)
 (require 'guru-mode nil t)
 (require 'ibuffer)
-(require 'iswitchb)
 (require 'jam-mode nil t)
 (require 'less-css-mode nil t)
 (require 'linux nil t)
 (require 'lisp-mode)
 (require 'locate)
-(require 'meese)
 (require 'pretty-lambdada)
 (require 'rust-mode nil t)
 (require 'racer-mode nil t)
@@ -220,9 +218,28 @@
                               (name 16 -1)
                               " " filename)))
 
-(add-to-list 'iswitchb-buffer-ignore "^\\*\\([s][^c].*\\|[^s].*\\)")
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "personal")))
 
+
+;;----------buffer switching-------------------------------------
+
+
+(defvar ido-dont-ignore-buffer-names '("*scratch*"))
+
+(defun ido-ignore-most-star-buffers (name)
+  (and
+   (string-match-p "^*" name)
+   (not (member name ido-dont-ignore-buffer-names))))
+
+(add-to-list 'ido-ignore-buffers 'ido-ignore-most-star-buffers)
+
+(defun bind-ido-keys ()
+  "Keybindings for ido mode."
+  (define-key ido-completion-map "\C-n" 'ido-toggle-ignore))
+(add-hook 'ido-setup-hook #'bind-ido-keys)
+
+(ido-mode 1)
+(icomplete-mode 1)
 
 ;;----------Gui Emacs----------------------------------------
 (setq initial-frame-alist '(

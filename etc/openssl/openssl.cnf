@@ -249,6 +249,8 @@ DNS.20 = *.kingofstrain.dev
 DNS.21 = *.m2.dev
 DNS.22 = *.rust.dev
 DNS.23 = *.phusionpassenger.dev
+DNS.24 = dev
+DNS.25 = *.dev
 IP.1 = 127.0.0.1
 IP.2 = ::1
 

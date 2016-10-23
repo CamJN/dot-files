@@ -8,6 +8,7 @@
 ;;; Code: elisp
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
+(setq tramp-verbose 10)
 
 (defadvice package-compute-transaction
     (before package-compute-transaction-reverse (package-list requirements) activate compile)
@@ -20,7 +21,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.86/")
-(add-to-list 'load-path "~/.emacs.d/rinari")
 
 ;;(load "nxhtml/autostart.el")
 
@@ -44,14 +44,12 @@
 (require 'rust-mode nil t)
 (require 'racer-mode nil t)
 (require 'rhtml-mode)
-(require 'rinari)
 (require 'sass-mode)
 (require 'server)
 (require 'sql)
 (require 'shell)
 (require 'vc-git)
 (require 'web-mode nil t)
-(require 'ess-site nil t)
 (require 'editorconfig nil t)
 
 (editorconfig-mode 1)
@@ -188,12 +186,7 @@
                                                    (let
                                                        ((comint-buffer-maximum-size 0))
                                                      (comint-truncate-buffer))))
-;;-------R stuff ---------
-(define-key inferior-ess-mode-map (kbd "C-l") (lambda ()
-                                                (interactive)
-                                                (let
-                                                    ((comint-buffer-maximum-size 0))
-                                                  (comint-truncate-buffer))))
+
 ;;----------Server stuff------------------------------------
 ;; (when (fboundp 'server-running-p)(unless (server-running-p) (server-start)))
 
@@ -231,14 +224,13 @@
    (string-match-p "^*" name)
    (not (member name ido-dont-ignore-buffer-names))))
 
-(add-to-list 'ido-ignore-buffers 'ido-ignore-most-star-buffers)
-
 (defun bind-ido-keys ()
   "Keybindings for ido mode."
   (define-key ido-completion-map "\C-n" 'ido-toggle-ignore))
 (add-hook 'ido-setup-hook #'bind-ido-keys)
 
 (ido-mode 1)
+(add-to-list 'ido-ignore-buffers 'ido-ignore-most-star-buffers)
 (icomplete-mode 1)
 
 ;;----------Gui Emacs----------------------------------------
@@ -278,11 +270,6 @@
                           (indent-line-to 8)
                           (mark-paragraph)
                           (tabify (region-beginning) (region-end)))))))))
-
-;; --------Ruby stuff --------------------
-;;(add-hook 'projectile-mode-hook 'projectile-rails-on)
-;;(global-rinari-mode)
-
 
 ;;----------CC Mode stuff------------------------------------
 ;; change file extension meanings

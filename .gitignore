@@ -7,3 +7,5 @@
 .emacs.d/%backup%~
 .emacs.d/auto-save-files/*
 .atom
+/.emacs.d/ido.last
+/.emacs.d/tramp

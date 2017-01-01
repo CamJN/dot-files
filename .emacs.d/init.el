@@ -10,6 +10,8 @@
 (setq debug-on-error t)
 (setq tramp-verbose 10)
 
+;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
+
 (defadvice package-compute-transaction
     (before package-compute-transaction-reverse (package-list requirements) activate compile)
   "reverse the requirements"
@@ -127,18 +129,18 @@
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 ;;----------Reverting Stuff-------------------------------------
 ;;(remove-hook 'after-revert-hook (car after-revert-hook))
-(add-hook 'after-revert-hook  (lambda ()
-                                (beginning-of-buffer)
-                                (buffer-disable-undo)
-                                (flush-lines ".+PHP Strict Standards: +Non-static method .+ should not be called statically in.+")
-                                ;;(flush-lines "^ referer: .+$")
-                                (beginning-of-buffer)
-                                (while (re-search-forward ", referer:" nil t)(replace-match ",\n referer:" nil nil))
-                                (end-of-buffer)
-                                (highlight-regexp ".*\\([fF]atal\\|PHP Parse\\).*" 'hi-red-b)
-                                (highlight-regexp ".*\\([Ww]arning\\|[Nn]otice\\).*" 'hi-yellow)
-                                (highlight-regexp ".*Note:.*" 'hi-green-b)
-                                ))
+;; (add-hook 'after-revert-hook  (lambda ()
+;;                                 (beginning-of-buffer)
+;;                                 (buffer-disable-undo)
+;;                                 (flush-lines ".+PHP Strict Standards: +Non-static method .+ should not be called statically in.+")
+;;                                 ;;(flush-lines "^ referer: .+$")
+;;                                 (beginning-of-buffer)
+;;                                 (while (re-search-forward ", referer:" nil t)(replace-match ",\n referer:" nil nil))
+;;                                 (end-of-buffer)
+;;                                 (highlight-regexp ".*\\([fF]atal\\|PHP Parse\\).*" 'hi-red-b)
+;;                                 (highlight-regexp ".*\\([Ww]arning\\|[Nn]otice\\).*" 'hi-yellow)
+;;                                 (highlight-regexp ".*Note:.*" 'hi-green-b)
+;;                                 ))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

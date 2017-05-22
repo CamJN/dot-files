@@ -3,12 +3,11 @@
 if [ `uname` = "Darwin" ]; then
 
     # GPG
-    ~/Developer/Bash/dot-files/Library/LaunchAgents/startup-gpg-agent.sh
-    if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
-        . "${HOME}/.gnupg/.gpg-agent-info"
-        export GPG_AGENT_INFO
-    fi
-    export GPG_TTY=$(tty)
+    # if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
+    #     . "${HOME}/.gnupg/.gpg-agent-info"
+    #     export GPG_AGENT_INFO
+    # fi
+    # export GPG_TTY=$(tty)
 
     export HOMEBREW_INSTALL_BADGE=🍷
 

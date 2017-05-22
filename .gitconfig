@@ -46,6 +46,9 @@
 	smudge = git lfs smudge %f
 	required = true
 [gpg]
-	program = gpg2
+	program = gpg-git
+# script with: exec gpg2 --no-tty "$@"
 [commit]
 	gpgsign = true
+[url "git@gitlab.phusion.nl:"]
+	insteadOf = https://gitlab.phusion.nl/

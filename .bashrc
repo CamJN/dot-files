@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 if [[ $- =~ "i" ]]; then
     if [ -n $INSIDE_EMACS ]; then

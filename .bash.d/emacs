@@ -11,7 +11,7 @@ if shlock -p $$ -f ~/.bash.d/emacs.lock; then
 fi
 
 alias emacs="$EDITOR"
-export GIT_EDITOR="`which emacsclient` -t -s $EMACS_SERVER_FILE"
+export GIT_EDITOR="$EDITOR"
 alias emacs-save="emacsclient -e '(save-some-buffers t)' -s $EMACS_SERVER_FILE >/dev/null"
 alias emacs-kill="emacsclient -e '(kill-emacs)' -s $EMACS_SERVER_FILE >/dev/null"
 

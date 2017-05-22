@@ -1,4 +1,6 @@
 #!/usr/local/bin/bash
+
+#exit if non-interactive
 if [[  ! ( $- =~ "i" ) ]]; then
     return 0
 fi

@@ -118,6 +118,7 @@
 ;;(add-to-list 'auto-mode-alist '("\\.less\\'" . css-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -301,8 +302,6 @@
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 ;; rust
-(setq racer-rust-src-path "/usr/local/share/racer/rust_src/current")
-(unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
 (setq racer-cmd "/usr/local/bin/racer")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)

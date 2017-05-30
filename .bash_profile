@@ -6,8 +6,8 @@ if [[  ! ( $- =~ "i" ) ]]; then
 fi
 #environment variables
 export CATALINA_HOME=/Library/Tomcat/
-if /usr/libexec/java_home 2>/dev/null; then
-export JAVA_HOME=`/usr/libexec/java_home`
+if /usr/libexec/java_home 2>/dev/null >/dev/null; then
+    export JAVA_HOME=`/usr/libexec/java_home`
 fi
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color

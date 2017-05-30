@@ -97,13 +97,13 @@ function loveSongsForCamden {
 function chdir {
     if [ "$_" == "ccalendar" ]; then
         if [ -n "$1" ]; then
-            cd "$*"
+            cd "${@//~?/$HOME/}";
         else
             cd ~
         fi
     else
         if [ -n "$1" ]; then
-            pushd "$*"
+            pushd "${@//~?/$HOME/}";
         else
             pushd ~
         fi

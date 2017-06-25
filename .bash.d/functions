@@ -196,7 +196,7 @@ function fplay {
         NAME="AND name:$*"
     fi
     if [[ ( -n $NAME ) || ((options_found -eq 1)) ]]; then
-        mdfind -onlyin $MUSICROOT \(kind:music OR kind:movie\) $NAME $AUTHOR $ALBUM |
+        mdfind -onlyin "$MUSICROOT" \(kind:music OR kind:movie\) $NAME $AUTHOR $ALBUM |
             egrep --color=auto $TYPEREGEX $OUTPUT |
             while read line; do
                 echo "$line" | tee -a "$OUTPUT2" > "$OUTPUT1"

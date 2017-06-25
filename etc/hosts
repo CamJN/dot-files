@@ -1,0 +1,14 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+# testing
+127.0.0.1 passenger.test
+127.0.0.1 1.passenger.test 2.passenger.test 3.passenger.test
+127.0.0.1 4.passenger.test 5.passenger.test 6.passenger.test
+127.0.0.1 7.passenger.test 8.passenger.test 9.passenger.test

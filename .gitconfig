@@ -52,3 +52,5 @@
 	gpgsign = true
 [url "git@gitlab.phusion.nl:"]
 	insteadOf = https://gitlab.phusion.nl/
+[diff]
+	algorithm = patience

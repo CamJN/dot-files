@@ -122,7 +122,7 @@ function ccalendar {
 }
 
 function cssh {
-    ssh -t "$@" 'screen -dR'
+    ssh -t "$@" 'screen -dR -a -e^^^^ -h 10000 -l -U'
 }
 
 function getIp {

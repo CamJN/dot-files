@@ -1,4 +1,8 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+#context-media-eme-learnmore + menuseparator,
+#context-media-eme-learnmore + menuseparator ~ *,
+#extension_redux_devtools-page-action,
+#restore-button,
 notification[value="plugin-hidden"]
 {
     display: none !important;
@@ -6,7 +10,4 @@ notification[value="plugin-hidden"]
 #main-window[tabsintitlebar] #TabsToolbar {
     padding-left: 0px !important;
     padding-right: 0px !important;
-}
-#restore-button {
-    display:none !important;
 }

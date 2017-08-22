@@ -47,10 +47,10 @@
 	required = true
 [gpg]
 	program = gpg-git
-# script with: exec gpg2 --no-tty "$@"
+# script with: exec gpg --no-tty "$@"
 [commit]
 	gpgsign = true
 [url "git@gitlab.phusion.nl:"]
 	insteadOf = https://gitlab.phusion.nl/
 [diff]
-	algorithm = patience
+	algorithm = histogram

@@ -115,7 +115,7 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
-;;(add-to-list 'auto-mode-alist '("\\.less\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -127,6 +127,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 ;;----------Reverting Stuff-------------------------------------
 ;;(remove-hook 'after-revert-hook (car after-revert-hook))

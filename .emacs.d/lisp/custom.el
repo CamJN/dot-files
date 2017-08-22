@@ -112,7 +112,7 @@
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
  '(icomplete-mode t)
- '(ido-use-virtual-buffers t nil (recentf))
+ '(ido-use-virtual-buffers t)
  '(indent-tabs-mode nil)
  '(indicate-empty-lines t)
  '(inhibit-startup-echo-area-message t)

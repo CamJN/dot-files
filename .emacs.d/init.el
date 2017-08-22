@@ -21,8 +21,8 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/elpa/auctex-11.86/")
+(add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
+(add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa") (file-name-as-directory "auctex-11.86")))
 
 ;;(load "nxhtml/autostart.el")
 
@@ -56,7 +56,9 @@
 
 (editorconfig-mode 1)
 
-(setq custom-file "custom.el")
+(setq custom-file (concat user-emacs-directory
+                          (file-name-as-directory "lisp")
+                          "custom.el"))
 (load custom-file nil t t t)
 
 ;;some modified keybindings
@@ -292,7 +294,13 @@
                                           magic-mode-regexp-match-limit t)))
                . c++-mode))
 
-(when (file-exists-p "~/.emacs.d/lisp/cc-mode/") (add-to-list 'load-path "~/.emacs.d/lisp/cc-mode/"))
+(when
+    (file-exists-p (concat user-emacs-directory
+                           (file-name-as-directory "lisp")
+                           (file-name-as-directory "cc-mode")))
+  (add-to-list 'load-path (concat user-emacs-directory
+                                  (file-name-as-directory "lisp")
+                                  (file-name-as-directory "cc-mode"))))
 
 ;;(add-hook 'c-initialization-hook (lambda () (require 'cedet "cedet-config.el" t)))
 (add-hook 'c-mode-common-hook (lambda () (unless (eq major-mode 'nxhtml-mode)(load-library "programming"))))

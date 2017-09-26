@@ -12,11 +12,11 @@
 
 ;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
 
-(defadvice package-compute-transaction
-    (before package-compute-transaction-reverse (package-list requirements) activate compile)
-  "reverse the requirements"
-  (setq requirements (reverse requirements))
-  (print requirements))
+;; (defadvice package-compute-transaction
+;;     (before package-compute-transaction-reverse (package-list requirements) activate compile)
+;;   "reverse the requirements"
+;;   (setq requirements (reverse requirements))
+;;   (print requirements))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
@@ -259,7 +259,8 @@
 (put 'erase-buffer 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (fset 'yes-or-no-p 'y-or-n-p)
-
+(add-hook 'scss-hook #'rainbow-mode)
+(add-hook 'css-hook #'rainbow-mode)
 
 ;;----------Makefile Stuff------------------------------------
 (add-hook 'makefile-mode-hook

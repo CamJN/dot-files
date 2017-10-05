@@ -1,0 +1,42 @@
+#!/usr/local/bin/bash
+#/usr/local/bin/brew-junk
+
+brew leaves | fgrep -v \
+-e aircrack-ng \
+-e archey \
+-e aws-elasticbeanstalk \
+-e awscli \
+-e bash-completion@2 \
+-e bash-git-prompt \
+-e bdsup2sub \
+-e dnsmasq \
+-e elasticsearch \
+-e emacs \
+-e fd \
+-e foremost \
+-e git \
+-e gnupg \
+-e go \
+-e imagemagick \
+-e influxdb \
+-e john-jumbo \
+-e logstash \
+-e mkvtoolnix \
+-e mysql \
+-e nmap \
+-e node \
+-e passenger \
+-e passenger-enterprise \
+-e pigz \
+-e pinentry-mac \
+-e postgresql \
+-e racer \
+-e rbenv \
+-e ripgrep \
+-e speedtest-cli \
+-e svgcleaner \
+-e tree \
+-e unrar \
+-e vobsub2srt \
+-e wget \
+-e wireshark

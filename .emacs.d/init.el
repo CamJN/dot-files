@@ -313,6 +313,7 @@
 
 ;; rust
 (setq racer-cmd "/usr/local/bin/racer")
+(setq racer-rust-src-path "/usr/local/opt/racer/share/rust_src/src")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
 (setq company-tooltip-align-annotations t)

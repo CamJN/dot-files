@@ -10,6 +10,7 @@ if [ `uname` = "Darwin" ]; then
     # export GPG_TTY=$(tty)
 
     export HOMEBREW_INSTALL_BADGE=🍷
+    export HOMEBREW_AUTO_UPDATE_SECS=86400
 
     function project {
         if [ "$1" = 'size' ]; then
@@ -60,6 +61,5 @@ if [ `uname` = "Darwin" ]; then
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     export PATH=/Users/camdennarzt/.cargo/bin:$PATH
-    export RUST_SRC_PATH=/usr/local/share/rust/rust_src
 
 fi

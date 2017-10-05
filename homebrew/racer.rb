@@ -1,15 +1,15 @@
 class Racer < Formula
   desc "Rust Code Completion utility"
   homepage "https://github.com/phildawes/racer"
-  url "https://github.com/phildawes/racer/archive/v1.0.0.tar.gz"
-  sha256 "78895296ed688eeccbaf7745235f0fc503407bfa718f53583a4dcc9e1246b7f5"
-
+  url "https://github.com/racer-rust/racer/archive/2.0.12.tar.gz"
+  sha256 "1fa063d90030c200d74efb25b8501bb9a5add7c2e25cbd4976adf7a73bf715cc"
   depends_on "rust"
+  revision 1
 
   def install
     system "cargo", "build", "--release"
     bin.mkpath
-    bin.install "./target/release/racer"
+    (libexec/"bin").install "./target/release/racer"
     (share/"rust_src").mkpath
     resource("rust_source").stage do
       Dir.glob(["src/llvm/*", "src/test/*", "src/librustdoc/*", "src/etc/snapshot.pyc"]) do |f|
@@ -21,19 +21,15 @@ class Racer < Formula
       end
       (share/"rust_src").install "src"
     end
+    (bin/"racer").write_env_script(libexec/"bin/racer", :RUST_SRC_PATH => share/"rust_src/src")
   end
 
   resource "rust_source" do
-    url "https://static.rust-lang.org/dist/rustc-1.3.0-src.tar.gz"
-    sha256 "ea02d7bc9e7de5b8be3fe6b37ea9b2bd823f9a532c8e4c47d02f37f24ffa3126"
-  end
-
-  def caveats
-    "You must set RUST_SRC_PATH=#{HOMEBREW_PREFIX}/share/rust_src/src/ in your ENV."
+    url Formula['rust'].stable.url
+    sha256 Formula['rust'].stable.checksum.hexdigest
   end
 
   test do
-    ENV["RUST_SRC_PATH"] = (share/"rust_src/src")
     system "#{bin}/racer", "complete", "std::io::B"
   end
 end

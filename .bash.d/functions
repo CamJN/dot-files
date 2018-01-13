@@ -121,10 +121,6 @@ function ccalendar {
     fi
 }
 
-function cssh {
-    ssh -t "$@" 'screen -dR -a -e^^^^ -h 10000 -l -U'
-}
-
 function getIp {
     \curl -s http://icanhazip.com/s
 }

@@ -1,0 +1,28 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#PanelUI-button,
+#forward-button[disabled="true"],
+#back-button[disabled="true"],
+#context-media-eme-learnmore + menuseparator,
+#context-media-eme-learnmore + menuseparator ~ *,
+.titlebar-placeholder[type="pre-tabs"],
+.titlebar-placeholder[type="post-tabs"],
+notification[value="plugin-hidden"]
+{
+    display: none !important;
+}
+
+#page-action-buttons image {
+    filter: grayscale(100%);
+}
+#page-action-buttons image:hover {
+    background-color: rgba(204, 204, 204, 0.4);
+}
+
+#TabsToolbar {
+    -moz-appearance: -moz-mac-vibrancy-dark !important;
+}
+
+hbox.titlebar-placeholder[type="caption-buttons"] {
+    margin-right: 7px;
+}

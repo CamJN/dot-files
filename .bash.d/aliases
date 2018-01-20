@@ -2,16 +2,18 @@
 
 alias add='git add'
 alias back='popd'
+alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"
 alias bell='tput bel'
 alias blanks='\sed -Ee "/^$/d"'
 alias calendar='ccalendar'
 alias ccommand='command -V'
 alias cd='chdir'
 alias cdiff='diff -iby --suppress-common-lines -W $(( $(tput cols) - 2 ))'
-alias cdu='du -hcm | grep -v \./Music/ | awk -F "	" '\''$1 >1024 { printf "%6.2fGB %s\n", $1/1024, $2}'\'' | sort -rn | \less'
+alias cdu='du -I Music -I Volumes -hcm | awk -F "	" '\''$1 >1024 { printf "%6.2fGB %s\n", $1/1024, $2}'\'' | sort -rn | \less'
 alias clear='dirs -c; clear; ls'
 alias cname="uname -mrs | \sed -Ee 's/([^ ]+)/\1 Kernel Version/'"
 alias convert='afconvert'
+alias cp='cp -c'
 alias cpu='sysctl -n machdep.cpu.brand_string'
 #alias curl='curl -O'
 alias cycle='pushd +1'

@@ -10,3 +10,21 @@ fi
 source ~/.bash.d/launchctl-completion.bash
 
 complete -C aws_completer aws
+
+save_function() {
+    local ORIG_FUNC=$(declare -f $1)
+    local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
+    eval "$NEWNAME_FUNC"
+}
+
+save_function _filedir old_filedir
+
+_filedir() {
+    #initialization_code
+    if [[ $cur == \~\?* ]]; then
+        cur=$(echo "$cur" | command sed -Ee 's/^\~\?/~\//')
+    fi
+    old_filedir
+    #cleanup_code
+    echo -n ''
+}

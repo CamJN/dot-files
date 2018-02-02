@@ -14,6 +14,7 @@ export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
 export GREP_OPTIONS='--color=auto --line-buffered'
+export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
 export HISTFILE=~/.bash.d/history
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000

@@ -36,6 +36,7 @@
 (require 'flex-mode nil t)
 (require 'csv-mode nil t)
 (require 'guru-mode nil t)
+(require 'hide-lines nil t)
 (require 'ibuffer)
 (require 'jam-mode nil t)
 (require 'less-css-mode nil t)
@@ -117,7 +118,7 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -313,13 +314,13 @@
 
 ;; rust
 (setq racer-cmd "/usr/local/bin/racer")
-(setq racer-rust-src-path "/usr/local/opt/racer/share/rust_src/src")
+(setq racer-rust-src-path "/usr/local/share/rust/rust_src/")
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
 (setq company-tooltip-align-annotations t)
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 
-(add-hook 'racer-mode-hook #'eldoc-mode)
+;;;(add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (add-hook 'rust-mode-hook (lambda ()
                             (racer-mode)

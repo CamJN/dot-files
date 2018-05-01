@@ -130,7 +130,7 @@
  '(osx-clipboard-mode t)
  '(package-selected-packages
    (quote
-    (log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer pretty-lambdada osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode)))
+    (graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer pretty-lambdada osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode)))
  '(query-replace-highlight t)
  '(recentf-mode t)
  '(recentf-save-file (expand-file-name "~/.emacs.d/recentf"))
@@ -148,7 +148,7 @@
  '(show-trailing-whitespace t)
  '(tab-always-indent (quote complete))
  '(tool-bar-mode -1)
- '(tramp-default-method "ssh")
+ '(tramp-default-method "ssh" nil (tramp))
  '(transient-mark-mode t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "Camden Narzt")

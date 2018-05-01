@@ -26,3 +26,31 @@ notification[value="plugin-hidden"]
 hbox.titlebar-placeholder[type="caption-buttons"] {
     margin-right: 7px;
 }
+
+#statuspanel[type=overLink],
+#statuspanel[inactive][previoustype=overLink] {
+    margin: 0 !important;
+    position: fixed !important;
+    top: 22px !important;
+    right: 55px !important;
+    max-width:500px !important;
+    min-width: 120px !important;
+}
+
+#statuspanel[type=overLink] #statuspanel-label,
+#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
+    /* --chrome-color + .6 aplha */
+    --lwt-toolbar-field-color: #9f9fa1;
+    border: none !important;
+    color: var(--lwt-toolbar-field-color) !important;
+    font-size: 13.75px !important;
+    padding-left: 22px!important;
+    background-color: var(--lwt-toolbar-field-background-color)!important;
+    --left: calc(100% - 18.5px);
+    --width: 1px;
+    background-image:
+        linear-gradient(-45deg,  var(--lwt-toolbar-field-background-color) var(--left),       transparent var(--left)),
+        linear-gradient(-135deg, var(--lwt-toolbar-field-background-color) var(--left),       transparent var(--left)),
+        linear-gradient(-45deg,  white calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))),
+        linear-gradient(-135deg, white calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))) !important;
+}

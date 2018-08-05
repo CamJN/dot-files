@@ -4,8 +4,8 @@ class Awscli < Formula
   desc "Official Amazon AWS command-line interface"
   homepage "https://aws.amazon.com/cli/"
   # awscli should only be updated every 10 releases on multiples of 10
-  url "https://github.com/aws/aws-cli/archive/1.14.20.tar.gz"
-  sha256 "50689d2017eebb24d1fa66567422674b6bed211ddc20c269df5e1f69fa58a72d"
+  url "https://github.com/aws/aws-cli/archive/1.15.70.tar.gz"
+  sha256 "6eed92d90bdb952e68ee5aa752936569ed37a6fc3cb5f042d779fba05183db4d"
   head "https://github.com/aws/aws-cli.git", :branch => "develop"
 
 
@@ -37,7 +37,7 @@ class Awscli < Formula
   def caveats; <<~EOS
     The "examples" directory has been installed to:
       #{HOMEBREW_PREFIX}/share/awscli/examples
-    EOS
+  EOS
   end
 
   test do

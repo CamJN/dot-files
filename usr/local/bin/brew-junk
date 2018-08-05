@@ -30,7 +30,7 @@ brew leaves | fgrep -v \
 -e pigz \
 -e pinentry-mac \
 -e postgresql \
--e racer \
+-e rust \
 -e rbenv \
 -e ripgrep \
 -e speedtest-cli \
@@ -39,4 +39,5 @@ brew leaves | fgrep -v \
 -e unrar \
 -e vobsub2srt \
 -e wget \
--e wireshark
+-e wireshark \
+-e wrk

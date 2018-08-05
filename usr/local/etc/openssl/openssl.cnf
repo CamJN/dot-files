@@ -261,6 +261,8 @@ DNS.31 = *.slack-redir.net
 DNS.32 = early.hints.dev
 DNS.33 = shield.lock.dev
 DNS.34 = *.shield.lock.dev
+DNS.35 = grafana.dev
+DNS.36 = *.grafana.dev
 IP.1 = 127.0.0.1
 IP.2 = ::1
 

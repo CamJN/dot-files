@@ -6,7 +6,8 @@
     <string>com.arewesmallyet.update</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/camdennarzt/Developer/Ruby/script.sh</string>
+      <string>/Users/camdennarzt/.rbenv/shims/ruby</string>
+      <string>/Users/camdennarzt/Developer/Ruby/firefox.rb</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>

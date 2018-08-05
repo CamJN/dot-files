@@ -3,36 +3,39 @@
 	email = c.narzt@me.com
 	signingkey = E45D816B
 [core]
-        editor = emacs
+	editor = emacs
 	filemode = false
-        autocrlf = input
+	autocrlf = input
 	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
 [sendemail]
-        smtpencryption = tls
-        smtpserver = smtp.gmail.com
-        smtpuser =
-        smtppass =
-        smtpserverport = 587
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser =
+	smtppass =
+	smtpserverport = 587
 [color]
 	ui = auto
 [color "branch"]
-       current = yellow bold
-       local = green bold
-       remote = cyan bold
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
 [color "diff"]
-       meta = yellow bold
-       frag = magenta bold
-       old = red bold
-       new = green bold
-       whitespace = red reverse
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [color "status"]
-       added = green bold
-       changed = yellow bold
-       untracked = red bold
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
 [alias]
-       history = log --oneline --abbrev-commit --all --graph --decorate --color
-       lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	history = log --oneline --abbrev-commit --all --graph --decorate --color
+	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	git = !exec git
+	idiff = difftool -t idiff -y
+	dfw = diff --ignore-space-change
+        commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -56,3 +59,5 @@
 	insteadOf = https://gitlab.phusion.nl/
 [diff]
 	algorithm = histogram
+[difftool "idiff"]
+	cmd = diff -iwu $LOCAL $REMOTE | less

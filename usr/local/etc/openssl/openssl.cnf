@@ -253,6 +253,14 @@ DNS.24 = *.phusionpassenger.dev
 DNS.25 = *.redirectingat.com
 DNS.26 = *.viglink.com
 DNS.27 = *.compass.dev
+DNS.27 = ad.doubleclick.net
+DNS.28 = appminton.dev
+DNS.29 = *.appminton.dev
+DNS.30 = slack-redir.net
+DNS.31 = *.slack-redir.net
+DNS.32 = early.hints.dev
+DNS.33 = shield.lock.dev
+DNS.34 = *.shield.lock.dev
 IP.1 = 127.0.0.1
 IP.2 = ::1
 

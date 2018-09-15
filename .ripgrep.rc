@@ -1,0 +1,13 @@
+--dfa-size-limit
+100M
+--follow
+--glob
+!*vendor*
+--regex-size-limit
+100M
+--type-add
+ruby:*.erb
+--type-add
+web:include:ruby,coffeescript,css,html,json,less,ruby,sass,js,py
+--type-add
+cpp:include:c

@@ -27,6 +27,7 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
+export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 
 stty -ixon
 

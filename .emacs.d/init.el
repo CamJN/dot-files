@@ -46,7 +46,6 @@
 (require 'pretty-lambdada)
 (require 'rust-mode nil t)
 (require 'racer-mode nil t)
-(require 'rhtml-mode)
 (require 'sass-mode)
 (require 'server)
 (require 'sql)

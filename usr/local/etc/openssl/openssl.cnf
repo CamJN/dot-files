@@ -263,6 +263,10 @@ DNS.33 = shield.lock.dev
 DNS.34 = *.shield.lock.dev
 DNS.35 = grafana.dev
 DNS.36 = *.grafana.dev
+DNS.37 = *.oru.dev
+DNS.38 = oru.dev
+DNS.39 = ojrq.net
+DNS.40 = *.ojrq.net
 IP.1 = 127.0.0.1
 IP.2 = ::1
 

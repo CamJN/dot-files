@@ -186,9 +186,18 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
         ((fboundp 'subword-mode)(subword-mode 1))
         ((fboundp 'c-subword-mode)(c-subword-mode 1)))
   ;;(turn-on-auto-fill)
-  (pretty-lambda-for-modes)
+  ;;(pretty-lambda-for-modes)
   (guru-mode))
 
+(defun my-pretty-lambda ()
+  "make some word or string show as pretty Unicode symbols"
+  (setq prettify-symbols-alist
+        '(
+          ("lambda" . 955) ; λ
+          )))
+
+(add-hook 'emacs-lisp-mode-hook 'my-pretty-lambda)
+(global-prettify-symbols-mode 1)
 
 (defun between-p (lower-bound elem upper-bound)
   "Return t if LOWER-BOUND is less than or equal to ELEM which is in turn less than or equal to UPPER-BOUND."

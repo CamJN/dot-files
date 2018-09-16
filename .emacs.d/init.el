@@ -43,7 +43,7 @@
 (require 'linux nil t)
 (require 'lisp-mode)
 (require 'locate)
-(require 'pretty-lambdada)
+;;(require 'pretty-lambdada)
 (require 'rust-mode nil t)
 (require 'racer-mode nil t)
 (require 'sass-mode)

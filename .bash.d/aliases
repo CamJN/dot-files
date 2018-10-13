@@ -79,3 +79,4 @@ alias update='softwareupdate --install -a ; brew update && brew upgrade ; gem up
 alias using='lsof'
 alias version="sw_vers"
 alias wifi='airport -I'
+alias wget='wget -c'

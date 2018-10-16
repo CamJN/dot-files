@@ -3,6 +3,8 @@
 --follow
 --glob
 !*vendor*
+--glob
+!*node_modules*
 --regex-size-limit
 100M
 --type-add

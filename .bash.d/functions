@@ -257,3 +257,75 @@ NR == FNR {
 function unix {
     date -r "$1"
 }
+
+function install_op {
+    url='https://app-updates.agilebits.com/product_history/CLI'
+    while [ ! -f ~/Downloads/op*.zip ]; do
+        echo "please download op from $url first"
+        open $url
+        read -p "Press enter to continue"
+    done
+
+    unzip -d ~/Downloads/ ~/Downloads/op*.zip
+    rm ~/Downloads/op*.zip
+
+    if [ ! -x /usr/local/bin/op ]; then
+        echo 'running `brew install gpg`'
+        read -p "Press enter to continue"
+        /usr/local/bin/brew install gpg
+    fi
+
+    if ! /usr/local/bin/gpg --list-keys codesign@1password.com >/dev/null ; then
+        echo 'running `gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22`'
+        read -p "Press enter to continue"
+        /usr/local/bin/gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+    fi
+
+    echo 'running `gpg --verify op.sig op`'
+    read -p "Press enter to continue"
+    /usr/local/bin/gpg --verify ~/Downloads/op.sig ~/Downloads/op
+
+    echo 'running `mv ~/Downloads/op /usr/local/bin/`'
+    read -p "Press enter to continue"
+    mv ~/Downloads/op /usr/local/bin/
+
+    echo "You can now rerun your original command (op $@) with "'`!!`'
+}
+
+function getoplimit {
+    shopt -s nullglob;
+    for file in $TMPDIR/com.agilebits.op.`id -u`/.??*; do
+        jsq accessed < $file
+    done | \
+    sed -Ee 's/\.[0-9]{9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
+    while read date; do
+        date -jf "%FT%T%z" -v+30m "$date" "+%s"
+    done | \
+    max
+}
+
+function cop {
+    if [ ! -x /usr/local/bin/op ]; then
+        install_op
+    else
+        account=narzt
+        env_var="OP_SESSION_$account"
+        login_path="$(readlink ~/.op/login)"
+        limit="$(getoplimit)"
+        if [[ $limit -le $(date +s) ]]; then
+            unset login_path
+            unset "$env_var"
+        fi
+
+        if [ -z ${!env_var} ]; then
+            if [ ! -f "$login_path" ]; then
+                login_path=$(mktemp)
+                /usr/local/bin/op signin $account > $login_path
+                ln -sf $login_path ~/.op/login
+            fi
+            source ~/.op/login
+        fi
+
+        /usr/local/bin/op "$@"
+    fi
+}

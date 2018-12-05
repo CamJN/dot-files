@@ -8,6 +8,7 @@ MANPATH=/usr/local/share/man:$MANPATH
 MANPATH=/usr/share/man:$MANPATH
 MANPATH=/Applications/Emacs.app/Contents/Resources/man:$MANPATH
 
+PATH=/usr/local/bin:$PATH
 PATH=/usr/local/sbin:$PATH
 PATH=/usr/local/opt/qt5/bin:$PATH
 PATH=/usr/local/etc/openssl/misc:$PATH

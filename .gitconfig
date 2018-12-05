@@ -7,6 +7,7 @@
 	filemode = false
 	autocrlf = input
 	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
+	excludesfile = /Users/camdennarzt/.config/git/ignore
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
@@ -51,13 +52,20 @@
 	smudge = git lfs smudge %f
 	required = true
 [gpg]
-	program = gpg-git
+	program = /usr/local/bin/gpg-git
 # script with: exec gpg --no-tty "$@"
 [commit]
 	gpgsign = true
+	template = /Users/camdennarzt/.config/git/commitMsg
 [url "git@gitlab.phusion.nl:"]
 	insteadOf = https://gitlab.phusion.nl/
 [diff]
 	algorithm = histogram
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

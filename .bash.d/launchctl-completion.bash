@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 #
 # Bash completion support for launchctl
 __launchctl_list_sigs ()

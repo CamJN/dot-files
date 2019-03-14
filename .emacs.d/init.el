@@ -312,11 +312,18 @@
            (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
 
 ;; rust
-(setq racer-cmd "/usr/local/bin/racer")
-(setq racer-rust-src-path "/usr/local/share/rust/rust_src/")
+(setenv "PATH"
+  (concat
+   "/Users/camdennarzt/.cargo/bin/:"
+   (getenv "PATH")
+  )
+)
+(setq racer-rust-src-path (concat (replace-regexp-in-string "\n$" "" (shell-command-to-string "rustc --print sysroot")) "/lib/rustlib/src/rust/src"))
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
 (setq company-tooltip-align-annotations t)
+(setq company-racer-executable "/Users/camdennarzt/.cargo/bin/racer")
+;;;(unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 
 ;;;(add-hook 'racer-mode-hook #'eldoc-mode)
@@ -332,6 +339,7 @@
                              (kbd "M-.") #'racer-find-definition)
                             (local-set-key
                              (kbd "TAB") #'company-indent-or-complete-common)
+                            (setenv "RUST_SRC_PATH" racer-rust-src-path)
                             ))
 
 (provide 'init)

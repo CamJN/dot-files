@@ -7,7 +7,7 @@
 	filemode = false
 	autocrlf = input
 	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
-	excludesfile = /Users/camdennarzt/.config/git/ignore
+	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com

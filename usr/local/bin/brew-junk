@@ -44,4 +44,5 @@ brew leaves | fgrep -v \
 -e vobsub2srt \
 -e wget \
 -e wireshark \
--e wrk
+-e wrk \
+-e xz

@@ -4,8 +4,14 @@
 /.emacs.d/recentf
 /.bash.d/history
 /.bash.d/.bash-git-prompt
-.emacs.d/%backup%~
-.emacs.d/auto-save-files/*
-.atom
+/.emacs.d/%backup%~
+/.emacs.d/auto-save-files/*
 /.emacs.d/ido.last
 /.emacs.d/tramp
+.atom
+passenger.*.log
+passenger.*.pid.lock
+*.bak
+.DS_Store
+node_modules
+*~

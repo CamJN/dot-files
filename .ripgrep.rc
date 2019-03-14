@@ -2,9 +2,9 @@
 100M
 --follow
 --glob
-!*vendor*
+!vendor*
 --glob
-!*node_modules*
+!node_modules
 --regex-size-limit
 100M
 --type-add
@@ -13,3 +13,7 @@ ruby:*.erb
 web:include:ruby,coffeescript,css,html,json,less,ruby,sass,js,py
 --type-add
 cpp:include:c
+--type-add
+rs:include:rust
+--type-add
+rb:include:ruby

@@ -2,15 +2,12 @@
 
 if [ `uname` = "Darwin" ]; then
 
-    # GPG
-    # if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
-    #     . "${HOME}/.gnupg/.gpg-agent-info"
-    #     export GPG_AGENT_INFO
-    # fi
-    # export GPG_TTY=$(tty)
-
     export HOMEBREW_INSTALL_BADGE=🍷
     export HOMEBREW_AUTO_UPDATE_SECS=86400
+    export HOMEBREW_NO_GITHUB_API="Doesn't work anyway"
+    export HOMEBREW_NO_INSTALL_CLEANUP="Fuck off"
+    export HOMEBREW_NO_ANALYTICS="Fuck off, seriously"
+    # export HOMEBREW_BUILD_FROM_SOURCE="Fuck off, forever"
 
     function project {
         if [ "$1" = 'size' ]; then
@@ -21,45 +18,11 @@ if [ `uname` = "Darwin" ]; then
             xcodebuild -list
         fi
     }
-    MAC_DEV=1
-    if [ -n "${MAC_DEV:+x}" ]; then
-        DEV_PLATFORM=MacOSX
-        DEV_VERSION=`version -productVersion | \sed -Ee 's/([0-9]+\.[0-9]+)\.?[0-9]*/\1/g'`
-    else
-        DEV_PLATFORM=iPhoneOS
-        DEV_VERSION=6.1
-    fi
 
-    # if [ -n "`xcode-select --print-path 2>/dev/null`" ]; then
-    #     export DEVELOPER_DIR=`xcode-select -print-path`
-    #     export PLATFORM_ROOT=$DEVELOPER_DIR/Platforms/$DEV_PLATFORM.platform/Developer
-    #     export SDKROOT=$PLATFORM_ROOT/SDKs/$DEV_PLATFORM$DEV_VERSION.sdk
-    #     export TOOLCHAIN_DIR=$DEVELOPER_DIR/Toolchains/XcodeDefault.xctoolchain/usr
-
-    #     PATH=$PATH:$DEVELOPER_DIR/usr/bin:$PLATFORM_ROOT/usr/bin
-    #     #PATH=$PATH:$SDKROOT/Developer/usr/bin:$SDKROOT/usr/bin
-    #     export PATH=$PATH:$TOOLCHAIN_DIR/bin
-
-    #     OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$PLATFORM_ROOT/usr/include:$SDKROOT/usr/X11/include:$SDKROOT/usr/include
-    #     export OBJC_INCLUDE_PATH=$OBJC_INCLUDE_PATH:$TOOLCHAIN_DIR/include
-    # fi
-
-    #xcrun takes care of the above PATH modifications
-
-    # RunUnitTests
-    # codesign
-    # xcode-select
-    # xcodebuild
-    # xcrun
-    # agvtool
-    # opendiff
-    # instruments
-
-
-    export GOPATH=/Users/camdennarzt/Developer/Go
+    export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
-    export PATH=/Users/camdennarzt/.cargo/bin:$PATH
+    export PATH=~/.cargo/bin:$PATH
 
 fi

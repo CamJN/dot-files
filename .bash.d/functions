@@ -1,5 +1,16 @@
 #!/usr/local/bin/bash
 
+function direct_math {
+    echo "scale=4; $@" | \bc -l
+}
+
+function remac {
+    sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z
+    sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+    sudo networksetup -detectnewhardware
+    ifconfig en0 | grep ether
+}
+
 function forward {
     local=$1
     if [[ $2 =~ .*:[0-9]+ ]]
@@ -14,10 +25,10 @@ function forward {
 }
 
 function cscp {
-    # wkhtmltopdf.gz site-localhost.zip amazon2:
-    rsync -Lvz --progress --timeout=10 --rsh=ssh "$@"
+    # make sure to export RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
+    rsync -Lvz --progress --timeout=10 "$@"
     while [ $? -ne 0 ]; do
-        rsync -Lvz --append --partial --progress --timeout=10 --rsh=ssh "$@"
+        rsync -Lvz --append --partial --progress --timeout=10 "$@"
     done
 }
 
@@ -97,13 +108,13 @@ function loveSongsForCamden {
 function chdir {
     if [ "$_" == "ccalendar" ]; then
         if [ -n "$1" ]; then
-            cd "${@//~?/$HOME/}";
+            cd "${@//~\?/$HOME/}";
         else
             cd ~
         fi
     else
         if [ -n "$1" ]; then
-            pushd "${@//~?/$HOME/}";
+            pushd "${@//~\?/$HOME/}";
         else
             pushd ~
         fi
@@ -122,7 +133,26 @@ function ccalendar {
 }
 
 function getIp {
-    \curl -s http://icanhazip.com/s
+    if [ $# -gt 0 ]; then
+        if [ $1 = "-6" ]; then
+            getIpv6
+        elif [ $1 = "-4" ]; then
+            getIpv4
+        else
+            echo "Usage: getIp [-4] [-6]"
+        fi
+    else
+        getIpv4
+    fi
+}
+
+function getIpv4 {
+# dig +short myip.opendns.com @resolver1.opendns.com
+    \curl -4 -s http://icanhazip.com/s
+}
+
+function getIpv6 {
+    \curl -6 -s http://icanhazip.com/s
 }
 
 function mailIpTo {
@@ -297,7 +327,7 @@ function getoplimit {
     for file in $TMPDIR/com.agilebits.op.`id -u`/.??*; do
         jsq accessed < $file
     done | \
-    sed -Ee 's/\.[0-9]{9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
+    sed -Ee 's/\.[0-9]{8,9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
     while read date; do
         date -jf "%FT%T%z" -v+30m "$date" "+%s"
     done | \

@@ -1,10 +1,11 @@
 #!/usr/local/bin/bash
 
 alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"
+alias bc="direct_math"
 alias bell='tput bel'
 alias blanks='\sed -Ee "/^$/d"'
 alias calendar='ccalendar'
-alias cargo='cargo -Z config-profile'
+#alias cargo='cargo -Z config-profile'
 alias ccommand='command -V'
 alias cd='chdir'
 alias cdtemp="chdir $(mktemp -d)"
@@ -16,7 +17,7 @@ alias cp='cp -c'
 alias cpu='sysctl -n machdep.cpu.brand_string'
 alias disu='\caffeinate -disu'
 alias du='du -h'
-alias df='df -h'
+alias df='df -Ph'
 alias echo='echo -e'
 alias egrep='grep -E'
 alias emptycache='sudo killall -HUP mDNSResponder'
@@ -52,7 +53,9 @@ alias scan='airport -s'
 alias screen='screen -a'
 alias screensaver='ScreenSaverEngine 2>/dev/null'
 alias scp='scp -oRequestTTY=no -oRemoteCommand=none'
+#alias scp='cscp'
 alias sedstrip="\sed -Ee 's/:.*$//g'"
+alias serve='python -m SimpleHTTPServer'
 alias sqlite='sqlite3'
 alias stabilizeIp='for i in `seq 1 30`; do getIp ; done | sort -u'
 alias su='su -m'

@@ -5,11 +5,17 @@
 #back-button[disabled="true"],
 #context-media-eme-learnmore + menuseparator,
 #context-media-eme-learnmore + menuseparator ~ *,
+notification[value="plugin-hidden"],
 .titlebar-placeholder[type="pre-tabs"],
 .titlebar-placeholder[type="post-tabs"],
-notification[value="plugin-hidden"]
+.titlebar-spacer[type="pre-tabs"],
+.titlebar-spacer[type="post-tabs"]
 {
     display: none !important;
+}
+
+.titlebar-buttonbox {
+    margin-right: 12px;
 }
 
 #page-action-buttons image {

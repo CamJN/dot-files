@@ -150,6 +150,7 @@
  '(tab-always-indent (quote complete))
  '(tool-bar-mode -1)
  '(tramp-default-method "ssh" nil (tramp))
+ '(tramp-use-ssh-controlmaster-options "-o RemoteCommand=none")
  '(transient-mark-mode t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "Camden Narzt")

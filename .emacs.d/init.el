@@ -247,7 +247,6 @@
 (setq default-frame-alist initial-frame-alist)
 (setq window-system-default-frame-alist `((ns . ,initial-frame-alist)))
 (toggle-tool-bar-mode-from-frame -1)
-;;(set-scroll-bar-mode nil)
 (add-hook 'after-make-frame-functions 'on-frame-open)
 
 ;;----------Turn on useful functionality------------------------------------

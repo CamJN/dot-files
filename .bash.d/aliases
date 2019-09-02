@@ -26,6 +26,7 @@ alias find='cfind'
 alias gzip='pigz -9'
 alias ip="2>/dev/null ifconfig eth0 || ifconfig en0 || ifconfig en1 | \sed -Ee 's/ ((0x)?[0-9:a-f]{3,}|[0-9.]{7,})[ %]/[(01;(38;05;122))m \1 [0m/g'"
 alias jsay='say -v Kyoko'
+alias killline='kl'
 alias lastlogin="last -1 `whoami` | head -1 | \sed -Ee 's/`whoami` +([^ ]+) +([^:]*:[0-9]\.?[0-9]) +(.*)/Last Login: \2 on \1/g'"
 alias less='/usr/share/vim/vim*/macros/less.sh'
 alias locate='clocate'
@@ -52,7 +53,6 @@ alias reboot='launchctl reboot userspace'
 alias scan='airport -s'
 alias screen='screen -a'
 alias screensaver='ScreenSaverEngine 2>/dev/null'
-alias scp='scp -oRequestTTY=no -oRemoteCommand=none'
 #alias scp='cscp'
 alias sedstrip="\sed -Ee 's/:.*$//g'"
 alias serve='python -m SimpleHTTPServer'

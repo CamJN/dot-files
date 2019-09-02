@@ -1,48 +1,4 @@
 #!/usr/local/bin/bash
 #/usr/local/bin/brew-junk
 
-brew leaves | fgrep -v \
--e aircrack-ng \
--e archey \
--e aws-elasticbeanstalk \
--e awscli \
--e bash-completion@2 \
--e bash-git-prompt \
--e bdsup2sub \
--e dnsmasq \
--e elasticsearch \
--e emacs \
--e fd \
--e foremost \
--e geckodriver \
--e git \
--e gnupg \
--e go \
--e grafana \
--e imagemagick \
--e influxdb \
--e john-jumbo \
--e logstash \
--e mkvtoolnix \
--e mysql \
--e nginx \
--e nmap \
--e node \
--e passenger \
--e passenger-enterprise \
--e pigz \
--e pinentry-mac \
--e pngcrush \
--e postgresql \
--e rbenv \
--e ripgrep \
--e rust \
--e speedtest-cli \
--e svgcleaner \
--e tree \
--e unrar \
--e vobsub2srt \
--e wget \
--e wireshark \
--e wrk \
--e xz
+brew leaves | fgrep -vf <(cat ~/Developer/Bash/dot-files/homebrew/Brewfile | grep '^brew' | tr -d '",' | awk '{print $2}')

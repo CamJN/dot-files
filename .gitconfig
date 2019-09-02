@@ -1,7 +1,7 @@
 [user]
 	name = Camden Narzt
 	email = c.narzt@me.com
-	signingkey = E45D816B
+	signingkey = 45CDAC6F53A7A2EE3D294A79E349304DE45D816B
 [core]
 	editor = emacs
 	filemode = false
@@ -52,7 +52,7 @@
 	smudge = git lfs smudge %f
 	required = true
 [gpg]
-	program = /usr/local/bin/gpg-git
+	program = /usr/local/bin/gpg
 # script with: exec gpg --no-tty "$@"
 [commit]
 	gpgsign = true

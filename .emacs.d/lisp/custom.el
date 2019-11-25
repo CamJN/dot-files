@@ -149,8 +149,10 @@
  '(show-trailing-whitespace t)
  '(tab-always-indent (quote complete))
  '(tool-bar-mode -1)
- '(tramp-default-method "ssh" nil (tramp))
- '(tramp-use-ssh-controlmaster-options "-o RemoteCommand=none")
+ '(tramp-default-method "ssh")
+ '(tramp-ssh-controlmaster-options
+   "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no -o RemoteCommand=none" t)
+ '(tramp-use-ssh-controlmaster-options t)
  '(transient-mark-mode t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "Camden Narzt")

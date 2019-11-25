@@ -44,7 +44,7 @@
 (defadvice erase-buffer
     (after repopulate-scratch-buffer activate)
   "Reverts the *scratch* buffer to its initial state after erasing it."
-  (when (string-match-p "*scratch*" (buffer-name)) (insert initial-scratch-message)))
+  (when (string-match-p "*scratch*" (buffer-name)) (insert (substitute-command-keys initial-scratch-message))))
 
 ;;---------set things locally--------------------------
 (defun set-local-variable (variable value)

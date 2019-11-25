@@ -24,6 +24,25 @@ function forward {
     \ssh -NL $local:localhost:$remote $server
 }
 
+function cssh {
+    /usr/bin/ssh -oRemoteCommand=none "$@"
+}
+
+function csudo {
+    case "$*" in
+        *(* )su*( *) | *(* )-i*( *) | *(* )-*i*( *) )
+            read -p "Did you want sudo bash? [Yn] " yn
+            case $yn in
+                [Nn]* ) \sudo "$@";;
+                * ) \sudo bash;;
+            esac
+            ;;
+        *)
+            \sudo "$@"
+            ;;
+    esac
+}
+
 function cscp {
     local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
     rsync -Lvz --progress --timeout=10 "$@"
@@ -148,7 +167,7 @@ function getIp {
 }
 
 function getIpv4 {
-# dig +short myip.opendns.com @resolver1.opendns.com
+    # dig +short myip.opendns.com @resolver1.opendns.com
     \curl -4 -s http://icanhazip.com/s
 }
 
@@ -328,11 +347,11 @@ function getoplimit {
     for file in $TMPDIR/com.agilebits.op.`id -u`/.??*; do
         jsq accessed < $file
     done | \
-    sed -Ee 's/\.[0-9]{8,9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
-    while read date; do
-        date -jf "%FT%T%z" -v+30m "$date" "+%s"
-    done | \
-    max
+        sed -Ee 's/\.[0-9]{8,9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
+        while read date; do
+            date -jf "%FT%T%z" -v+30m "$date" "+%s"
+        done | \
+            max
 }
 
 function cop {
@@ -358,5 +377,22 @@ function cop {
         fi
 
         /usr/local/bin/op "$@"
+    fi
+}
+
+function ctar {
+    #　if [[ "$@" =~ '[[:<:]]-[a-z]*c[a-z]*[[:>:]]' ]]; then
+    if [[ "$@" == -*c* ]]; then
+        tar -z "${@: 1:2}" --options gzip:compression-level=9 --use-compress-program pigz "${@: 3:$#}"
+    else
+        tar "$@"
+    fi
+}
+
+function cpbcopy {
+    if [ $# -ge 1 ]; then
+        pbcopy < "$*"
+    else
+        pbcopy
     fi
 }

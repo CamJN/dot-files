@@ -3,36 +3,26 @@
 #check window size before printing prompt
 shopt -s checkwinsize
 
-function simple {
-    TERM_MOD=${INSIDE_EMACS}$TERM
-    case "$TERM_MOD" in
-        xterm-256color)
-            export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[(01;(38;05;22))m";  else echo -n "[(01;(38;05;196))m"; fi;)'
-            export COLOR2='$(if [[ $? = 0 ]]; then echo "[(01;(38;05;214))m"; else echo "[(01;(38;05;196))m"; fi;)'
-            #export PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
-            export PS1="\[$COLOR1\]\u@\h:\w\[[0m\]"
-            export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ \[[0m\]"
-            ;;
-        screen | xterm | dumb)
-            export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[01;32m"; else echo -n "[01;31m"; fi;)'
-            export COLOR2='$(if [[ $? = 0 ]]; then echo "[0;33m"; else echo "[01;31m"; fi;)'
-            export PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
-            export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ \[[0m\]"
-            ;;
-        *)
-            export COLOR1='$(echo -n $?)'
-            export COLOR2='$(echo -n $?)'
-            export PS1="\[$COLOR1\]\u@\h:\w \\$ "
-            export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ "
-            ;;
-    esac
-}
+TERM_MOD=${INSIDE_EMACS}$TERM
+case "$TERM_MOD" in
+    xterm-256color)
+        if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+            GIT_PROMPT_ONLY_IN_REPO=0
+            GIT_PROMPT_THEME=Custom
+            GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
+            source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+        fi
+        ;;
+    screen | xterm)
+        export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[01;32m"; else echo -n "[01;31m"; fi;)'
+        export COLOR2='$(if [[ $? = 0 ]]; then echo "[0;33m"; else echo "[01;31m"; fi;)'
+        export PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
+        export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ \[[0m\]"
+        ;;
+    dumb | * )
+        export PS1="> "
+        export SUDO_PS1="> "
+        ;;
+esac
 
-simple
 
-if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
-    GIT_PROMPT_START=$PS1
-    GIT_PROMPT_END="\[\033[37m\] \\$ \[\033[0m\]"
-    GIT_PROMPT_THEME=Default
-    source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
-fi

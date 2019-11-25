@@ -31,10 +31,13 @@ export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 
 stty -ixon
 
-#options
+#options (-s set, -u unset)
 shopt -s histappend
 shopt -s extglob
 shopt -s xpg_echo
+shopt -s globstar
+shopt -s nocaseglob
+shopt -s nocasematch
 
 #sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
 

@@ -1,5 +1,6 @@
 #!/usr/local/bin/bash
 
+alias baressh=cssh
 alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"
 alias bc="direct_math"
 alias bell='tput bel'
@@ -48,6 +49,7 @@ alias privacy='emptycache; sqlite ~/Library/Preferences/com.apple.LaunchServices
 alias processes='ps'
 alias ps='ps -U`whoami`'
 alias push='pushd'
+alias pbcopy='cpbcopy'
 alias ql='qlmanage -p 2>/dev/null'
 alias reboot='launchctl reboot userspace'
 alias scan='airport -s'
@@ -58,10 +60,10 @@ alias sedstrip="\sed -Ee 's/:.*$//g'"
 alias serve='python -m SimpleHTTPServer'
 alias sqlite='sqlite3'
 alias stabilizeIp='for i in `seq 1 30`; do getIp ; done | sort -u'
-alias su='su -m'
-alias sudo='sudo '
+alias sudo='csudo '
 alias swap='pushd +1'
 alias tail='tail -f'
+alias tar='ctar'
 alias top='top -U `whoami` -o cpu'
 alias trim="tr -d ' '"
 alias up='cd ../'

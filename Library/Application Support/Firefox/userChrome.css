@@ -1,4 +1,6 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+*|*:root {
+    background-color: transparent !important;
+}
 
 #PanelUI-button,
 #forward-button[disabled="true"],
@@ -25,8 +27,21 @@ notification[value="plugin-hidden"],
     background-color: rgba(204, 204, 204, 0.4);
 }
 
+#urlbar[breakout][breakout-extend] {
+  left: unset !important;
+  width: 100% !important;
+  /*height: var(--urlbar-height) !important;*/
+  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+}
+
 #TabsToolbar {
     -moz-appearance: -moz-mac-vibrancy-dark !important;
+    -moz-font-smoothing-background-color: -moz-mac-vibrancy-dark !important;
+    /*-moz-font-smoothing-background-color: -moz-mac-vibrant-titlebar-dark !important;*/
+}
+
+.theme-body {
+    background-color: transparent !important;
 }
 
 hbox.titlebar-placeholder[type="caption-buttons"] {
@@ -40,7 +55,7 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     top: 22px !important;
     right: 55px !important;
     max-width:500px !important;
-    min-width: 120px !important;
+    min-width: 140px !important;
 }
 
 #statuspanel[type=overLink] #statuspanel-label,

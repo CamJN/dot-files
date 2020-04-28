@@ -62,6 +62,9 @@
 	insteadOf = https://gitlab.phusion.nl/
 [diff]
 	algorithm = histogram
+	colorMoved = default
+	colorMovedWS = allow-indentation-change
+	# colorMovedWS = ignore-all-space
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "sourcetree"]

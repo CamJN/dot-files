@@ -19,9 +19,10 @@ override_git_prompt_colors() {
 
     # indicator if the last command returned with an exit code of 0
     GIT_PROMPT_COMMAND_OK="$(git_prompt_command_ok)"
-    GIT_PROMPT_COMMAND_FAIL="${StatusRed}"    # indicator if the last command returned with an exit code of other than 0
+    # indicator if the last command returned with an exit code of other than 0
+    GIT_PROMPT_COMMAND_FAIL="${StatusRed}"
 
-    LAST_COMMAND_INDICATOR='${LAST_COMMAND_INDICATOR}' # magic
+    LAST_COMMAND_INDICATOR='\[${LAST_COMMAND_INDICATOR}\]' # magic
     GIT_PROMPT_START_USER="${LAST_COMMAND_INDICATOR}\u@\h:${PathShort}${EndColor}"
     GIT_PROMPT_START_ROOT="${GIT_PROMPT_START_USER}"
     GIT_PROMPT_END_USER="${White} \\$ ${EndColor}"

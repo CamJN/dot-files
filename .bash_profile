@@ -5,7 +5,6 @@ if [[  ! ( $- =~ "i" ) ]]; then
     return 0
 fi
 #environment variables
-export CATALINA_HOME=/Library/Tomcat/
 if /usr/libexec/java_home &>/dev/null; then
     export JAVA_HOME=`/usr/libexec/java_home`
 fi
@@ -18,6 +17,7 @@ export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
 export HISTFILE=~/.bash.d/history
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
+export BAT_PAGER="less -R"
 export MORE='-R -i'
 export LESS="$MORE"
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -77,6 +77,7 @@ if [ -f ~/.bash.d/emacs ]; then
 fi
 
 if which rbenv > /dev/null; then
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl"
     eval "$(rbenv init -)";
 fi
 

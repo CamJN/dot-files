@@ -17,3 +17,5 @@ cpp:include:c
 rs:include:rust
 --type-add
 rb:include:ruby
+--type-add
+groovy:*.groovy,Jenkinsfile

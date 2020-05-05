@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>update.dnsmasq</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/local/bin/wget</string>
+      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt</string>
+      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>WorkingDirectory</key>
+    <string>/Users/camdennarzt/Developer/Bash/dot-files/usr/local/etc/dnsmasq.d</string>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/dnsmasq.update.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/dnsmasq.update.err.log</string>
+  </dict>
+</plist>

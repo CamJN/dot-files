@@ -396,3 +396,42 @@ function cpbcopy {
         pbcopy
     fi
 }
+
+function checkIsDistro {
+    docker pull $1:$2 &>/dev/null
+}
+
+function checkIsUbuntu {
+    checkIsDistro ubuntu $1
+}
+
+function checkIsDebian {
+    checkIsDistro debian $1
+}
+
+function checkIsCentOS {
+    checkIsDistro centos $1
+}
+
+function checkIsFedora {
+    checkIsDistro fedora $1
+}
+
+function cdocker {
+    if [[ "$1" == *:* ]]; then
+        IMAGE="$1"
+    elif checkIsUbuntu "$1"; then
+        IMAGE="ubuntu:$1"
+    elif checkIsDebian "$1"; then
+        IMAGE="debian:$1"
+    elif checkIsCentOS "$1"; then
+        IMAGE="centos:$1"
+    elif checkIsFedora "$1"; then
+        IMAGE="fedora:$1"
+    else
+        echo "Couldn't find proper distro for $1"
+        return -1
+    fi
+
+    docker run -it $IMAGE bash
+}

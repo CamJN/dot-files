@@ -117,7 +117,7 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
-(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -257,6 +257,7 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+(put 'scroll-left 'disabled nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'scss-hook #'rainbow-mode)
 (add-hook 'css-hook #'rainbow-mode)
@@ -312,11 +313,11 @@
 
 ;; rust
 (setenv "PATH"
-  (concat
-   "/Users/camdennarzt/.cargo/bin/:"
-   (getenv "PATH")
-  )
-)
+        (concat
+         "/Users/camdennarzt/.cargo/bin/:"
+         (getenv "PATH")
+         )
+        )
 (setq racer-rust-src-path (concat (replace-regexp-in-string "\n$" "" (shell-command-to-string "rustc --print sysroot")) "/lib/rustlib/src/rust/src"))
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)

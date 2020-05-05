@@ -1,38 +1,52 @@
+tap "homebrew/bundle"
 tap "homebrew/core"
 tap "phusion/passenger"
-
-mas "Pixelmator", id: 407963104
-mas "1Blocker", id: 1107421413
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Keynote", id: 409183694
-mas "Reeder", id: 1449412482
-mas "1Password", id: 443987910
-
-cask "tower"
-cask "firefox-developer-edition"
-cask "docker"
-cask "sketch"
-
+brew "adns"
 brew "archey", args: ["HEAD"]
+brew "autoconf"
+brew "bash"
 brew "bash-completion@2"
 brew "bash-git-prompt"
 brew "dnsmasq"
+brew "gmp"
+brew "gettext"
+brew "openssl"
+brew "libffi"
+brew "libunistring"
+brew "libidn2"
+brew "libtasn1"
+brew "nettle"
+brew "p11-kit"
+brew "gnutls"
 brew "emacs"
 brew "fd"
 brew "geckodriver"
+brew "pcre2"
 brew "git"
+brew "libgpg-error"
+brew "libassuan"
+brew "libgcrypt"
+brew "libksba"
+brew "libusb"
+brew "npth"
+brew "pinentry"
 brew "gnupg"
 brew "go"
 brew "google-authenticator-libpam"
+brew "icu4c"
+brew "mas"
+brew "pcre"
 brew "nmap"
 brew "node"
 brew "passenger", link: false
-brew "phusion/passenger/passenger-enterprise"
 brew "pigz"
 brew "pinentry-mac"
+brew "pkg-config"
 brew "pngcrush"
+brew "readline"
 brew "postgresql"
+brew "ruby-build"
+brew "rbenv"
 brew "rbenv-default-gems"
 brew "redis"
 brew "ripgrep"
@@ -44,3 +58,11 @@ brew "web100clt"
 brew "wget"
 brew "xz"
 brew "yarn"
+brew "phusion/passenger/passenger-enterprise"
+mas "1Blocker", id: 1107421413
+mas "GarageBand", id: 682658836
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Pixelmator", id: 407963104
+mas "Reeder", id: 1449412482

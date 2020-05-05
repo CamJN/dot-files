@@ -1,0 +1,3 @@
+#!/usr/local/bin/bash
+
+rbenv install -l | tr -d ' ' | rg '^[0-9\.]+$'

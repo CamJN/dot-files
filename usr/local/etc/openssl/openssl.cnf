@@ -152,7 +152,7 @@ organizationalUnitName_default	= Certificate Services
 
 commonName			= Common Name (e.g. server FQDN or YOUR name)
 commonName_max			= 64
-commonName_default              = silversshadows.com
+commonName_default              = Camden Narzt
 
 emailAddress			= Email Address
 emailAddress_max		= 64

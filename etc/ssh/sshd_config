@@ -55,7 +55,6 @@ AuthorizedKeysFile	.ssh/authorized_keys
 
 # To disable tunneled clear text passwords, change to no here!
 PasswordAuthentication yes
-PubkeyAuthentication yes
 PermitEmptyPasswords no
 AuthenticationMethods publickey,keyboard-interactive:pam
 #AuthenticationMethods publickey,keyboard-interactive:pam password,keyboard-interactive:pam
@@ -121,6 +120,6 @@ Subsystem	sftp	/usr/libexec/sftp-server
 #	PermitTTY no
 #	ForceCommand cvs server
 
-Match Address 10.0.1.0/24
+Match Address fc00::/7,10.0.1.0/24
  	PasswordAuthentication no
  	AuthenticationMethods publickey

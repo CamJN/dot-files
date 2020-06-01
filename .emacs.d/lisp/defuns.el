@@ -141,7 +141,7 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
       (when (eobp) (open-line 1))
       (forward-line 1)
       (beginning-of-line)
-      (dotimes (i n) (insert (concat line "\n"))))))
+      (dotimes (i n) (insert line)))))
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")
 (defun toggle-fullscreen ()

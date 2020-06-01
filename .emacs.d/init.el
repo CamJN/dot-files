@@ -8,9 +8,6 @@
 ;;; Code: elisp
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
-(setq tramp-verbose 10)
-
-;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
 
 ;; (defadvice package-compute-transaction
 ;;     (before package-compute-transaction-reverse (package-list requirements) activate compile)
@@ -28,31 +25,38 @@
 
 (require 'defuns)
 (require 'dockerfile-mode nil t)
+(require 'markdown-mode nil t)
+(require 'emojify nil t)
 (require 'accutex nil t)
 (require 'apache nil t)
-(require 'bison-mode nil t)
+(require 'nginx-mode nil t)
+(require 'rpm-spec-mode nil t)
 (require 'darwin nil t)
+(require 'developer nil t)
 (require 'dirtrack)
 (require 'flex-mode nil t)
 (require 'csv-mode nil t)
 (require 'guru-mode nil t)
 (require 'hide-lines nil t)
 (require 'ibuffer)
-(require 'jam-mode nil t)
-(require 'less-css-mode nil t)
+(require 'gitconfig-mode nil t)
+(require 'gitignore-mode nil t)
+(require 'go-mode nil t)
 (require 'linux nil t)
 (require 'lisp-mode)
 (require 'locate)
-;;(require 'pretty-lambdada)
 (require 'rust-mode nil t)
 (require 'racer-mode nil t)
 (require 'sass-mode)
 (require 'server)
+(require 'ssh-config-mode nil t)
 (require 'sql)
 (require 'shell)
+(require 'tramphelp nil t)
 (require 'vc-git)
 (require 'web-mode nil t)
 (require 'editorconfig nil t)
+(require 'yaml-mode nil t)
 
 (editorconfig-mode 1)
 
@@ -119,7 +123,8 @@
 (add-to-list 'completion-ignored-extensions ".elc")
 (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
-
+(add-to-list 'auto-mode-alist '("/etc/(httpd|apache2?)/" . apache-mode))
+(add-to-list 'auto-mode-alist '("/etc/nginx/" . nginx-mode))
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
@@ -129,7 +134,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
-(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+;;(setq web-mode-content-types-alist '(("[tj]sx" . "\\.[tj]s[x]?\\'"))) ;; should be fixed: https://github.com/fxbois/web-mode/issues/585
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 ;;----------Reverting Stuff-------------------------------------
 ;;(remove-hook 'after-revert-hook (car after-revert-hook))
@@ -222,8 +227,7 @@
 
 ;;----------buffer switching-------------------------------------
 
-
-(defvar ido-dont-ignore-buffer-names '("*scratch*"))
+(defvar ido-dont-ignore-buffer-names '("*scratch*" "*Occur*"))
 
 (defun ido-ignore-most-star-buffers (name)
   (and
@@ -261,86 +265,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'scss-hook #'rainbow-mode)
 (add-hook 'css-hook #'rainbow-mode)
-
-;;----------Makefile Stuff------------------------------------
-(add-hook 'makefile-mode-hook
-          (lambda ()
-            (setq indent-line-function
-                  (lambda ()
-                    (let*
-                        ((p (thing-at-point 'paragraph))
-                         (lines (split-string p "\n" t)))
-                      (when (and
-                             (string-match-p "^[^[:space:]]+:" (car lines))
-                             (not (string-match-p "^[^[:space:]]+:" (line-at-point))))
-                        (save-excursion
-                          (indent-line-to 8)
-                          (mark-paragraph)
-                          (tabify (region-beginning) (region-end)))))))))
-
-;;----------CC Mode stuff------------------------------------
-;; change file extension meanings
-(add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
-(add-to-list 'auto-mode-alist '("\\.pch\\'" . objc-mode))
-(add-to-list 'magic-mode-alist
-             `(,(lambda ()
-                  (and (string= (file-name-extension buffer-file-name) "h")
-                       (re-search-forward "@\\<interface\\>"
-                                          magic-mode-regexp-match-limit t)))
-               . objc-mode))
-(add-to-list 'magic-mode-alist
-             `(,(lambda ()
-                  (and (string= (file-name-extension buffer-file-name) "h")
-                       (re-search-forward "^\\(class\\|namespace\\).*\\(\n{\\|;\\)"
-                                          magic-mode-regexp-match-limit t)))
-               . c++-mode))
-
-(when
-    (file-exists-p (concat user-emacs-directory
-                           (file-name-as-directory "lisp")
-                           (file-name-as-directory "cc-mode")))
-  (add-to-list 'load-path (concat user-emacs-directory
-                                  (file-name-as-directory "lisp")
-                                  (file-name-as-directory "cc-mode"))))
-
-;;(add-hook 'c-initialization-hook (lambda () (require 'cedet "cedet-config.el" t)))
-(add-hook 'c-mode-common-hook (lambda () (unless (eq major-mode 'nxhtml-mode)(load-library "programming"))))
-
-(when (string< "24.1" (format "%d.%d" emacs-major-version emacs-minor-version))
-  (eval-after-load "mumamo"
-    '(setq mumamo-per-buffer-local-vars
-           (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
-
-;; rust
-(setenv "PATH"
-        (concat
-         "/Users/camdennarzt/.cargo/bin/:"
-         (getenv "PATH")
-         )
-        )
-(setq racer-rust-src-path (concat (replace-regexp-in-string "\n$" "" (shell-command-to-string "rustc --print sysroot")) "/lib/rustlib/src/rust/src"))
-(setq company-idle-delay 0.2)
-(setq company-minimum-prefix-length 1)
-(setq company-tooltip-align-annotations t)
-(setq company-racer-executable "/Users/camdennarzt/.cargo/bin/racer")
-;;;(unless (getenv "RUST_SRC_PATH") (setenv "RUST_SRC_PATH" racer-rust-src-path))
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-;;;(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(add-hook 'rust-mode-hook (lambda ()
-                            (racer-mode)
-                            (setq compile-command "cargo build")
-                            (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-                            (set (make-local-variable
-                                  'company-backends)
-                                 '(company-racer))
-                            (local-set-key
-                             (kbd "M-.") #'racer-find-definition)
-                            (local-set-key
-                             (kbd "TAB") #'company-indent-or-complete-common)
-                            (setenv "RUST_SRC_PATH" racer-rust-src-path)
-                            ))
 
 (provide 'init)
 

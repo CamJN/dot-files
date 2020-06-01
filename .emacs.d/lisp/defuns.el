@@ -7,6 +7,8 @@
 
 (require 'guru-mode)
 
+;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
+
 (defalias 'rebuilder 're-builder)
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")

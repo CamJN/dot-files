@@ -22,7 +22,7 @@
  '(browse-url-browser-function (quote browse-url-default-macosx-browser))
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
- '(completion-styles (quote (substring partial-completion initials)))
+ '(completion-styles (quote (substring partial-completion emacs22)))
  '(confirm-nonexistent-file-or-buffer nil)
  '(custom-enabled-themes (quote (dusk)))
  '(custom-safe-themes
@@ -34,6 +34,8 @@
  '(delete-selection-mode t)
  '(dired-listing-switches "-alh")
  '(display-time-mode t)
+ '(docker-tramp-docker-executable "/usr/local/bin/docker")
+ '(docker-tramp-use-names t)
  '(dynamic-completion-mode t)
  '(ediff-diff-options "-w -d")
  '(ediff-highlight-all-diffs nil)
@@ -132,7 +134,7 @@
  '(osx-clipboard-mode t)
  '(package-selected-packages
    (quote
-    (rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode)))
+    (docker-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode)))
  '(query-replace-highlight t)
  '(recentf-mode t)
  '(recentf-save-file (expand-file-name "~/.emacs.d/recentf"))

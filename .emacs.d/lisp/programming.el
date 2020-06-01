@@ -15,6 +15,39 @@
 (require 'gud)
 (require 'semantic)
 
+;;----------CC Mode stuff------------------------------------
+;; change file extension meanings
+(add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.pch\\'" . objc-mode))
+(add-to-list 'magic-mode-alist
+             `(,(lambda ()
+                  (and (string= (file-name-extension buffer-file-name) "h")
+                       (re-search-forward "@\\<interface\\>"
+                                          magic-mode-regexp-match-limit t)))
+               . objc-mode))
+(add-to-list 'magic-mode-alist
+             `(,(lambda ()
+                  (and (string= (file-name-extension buffer-file-name) "h")
+                       (re-search-forward "^\\(class\\|namespace\\).*\\(\n{\\|;\\)"
+                                          magic-mode-regexp-match-limit t)))
+               . c++-mode))
+
+(when
+    (file-exists-p (concat user-emacs-directory
+                           (file-name-as-directory "lisp")
+                           (file-name-as-directory "cc-mode")))
+  (add-to-list 'load-path (concat user-emacs-directory
+                                  (file-name-as-directory "lisp")
+                                  (file-name-as-directory "cc-mode"))))
+
+;;(add-hook 'c-initialization-hook (lambda () (require 'cedet "cedet-config.el" t)))
+(add-hook 'c-mode-common-hook (lambda () (unless (eq major-mode 'nxhtml-mode)(load-library "programming"))))
+
+(when (string< "24.1" (format "%d.%d" emacs-major-version emacs-minor-version))
+  (eval-after-load "mumamo"
+    '(setq mumamo-per-buffer-local-vars
+           (delq 'buffer-file-name mumamo-per-buffer-local-vars))))
+
 ;; define functions
 
 ;; sort includes and the like

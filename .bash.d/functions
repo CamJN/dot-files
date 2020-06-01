@@ -12,7 +12,10 @@ function remac {
 }
 
 function forward {
-    local=$1
+    local local=$1
+    local server
+    local remote
+
     if [[ $2 =~ .*:[0-9]+ ]]
     then
         server=$(echo $2 | cut -f1 -d:)
@@ -29,30 +32,48 @@ function cssh {
 }
 
 function csudo {
-    case "$*" in
-        *(* )su*( *) | *(* )-i*( *) | *(* )-*i*( *) )
-            read -p "Did you want sudo bash? [Yn] " yn
-            case $yn in
-                [Nn]* ) \sudo "$@";;
-                * ) \sudo bash;;
-            esac
-            ;;
-        *)
-            \sudo "$@"
-            ;;
-    esac
+    local login
+
+    while getopts 'Aa:BbC:c:D:Eeg:Hh::iKklnPp:r:SsT:t:U:u:Vv' opt
+    do
+        case $opt in
+            i) login=true ;;
+        esac
+    done
+
+    if [[ ${login:-false} == "true" || ${@: $OPTIND:1} == su ]]; then
+        read -p "Did you want sudo bash? [Yn] " yn
+        case $yn in
+            [Nn]* ) \sudo "$@";;
+            * ) \sudo bash;;
+        esac
+    elif [[ ${@: $OPTIND:1} == echo ]]; then
+        echo "You probably want echo | sudo tee" >&2
+        builtin echo "${@: (($OPTIND+1))}"
+    else
+        \sudo "$@"
+    fi
 }
 
 function cscp {
-    local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
-    rsync -Lvz --progress --timeout=10 "$@"
-    while [ $? -ne 0 ]; do
-        rsync -Lvz --append --partial --progress --timeout=10 "$@"
-    done
+    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | sed -Ee 's|.* -- ||' | { read -r c; eval ARR=($c); for index in "${!ARR[@]}" ; do [[ ${ARR[index]} != *:* ]] && unset -v 'ARR[$index]' ; done; [ ${#ARR[@]} -eq 2 ]; }; then
+        # 2 remotes, must not use rsync
+        \scp -3 "$@"
+    else
+        local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
+        rsync -Lvz --progress --timeout=10 "$@"
+        while [ $? -ne 0 ]; do
+            rsync -Lvz --append --partial --progress --timeout=10 "$@"
+        done
+    fi
 }
 
 function cps {
-    ps -A | grep -i $*
+    if [ $# == 1 ]; then
+        ps -A | grep -i "$1"
+    else
+        ps "$@"
+    fi
 }
 
 function cfind {
@@ -101,7 +122,7 @@ function colors {
 
 function loveSongsForCamden {
     options_found=0
-    while getopts :vn:N: OPT; do
+    while getopts ':vn:N:' OPT; do
         options_found=1
         case $OPT in
             v|+v)
@@ -198,7 +219,7 @@ function fplay {
     PLAY=1
     INFO=0
     options_found=0
-    while getopts “:sd:hgia:A:o:v” OPTION
+    while getopts ":sd:hgia:A:o:v" OPTION
     do
         options_found=1
         case $OPTION in
@@ -304,88 +325,123 @@ NR == FNR {
 } ' /tmp/FileWithDates -
 }
 
+function password {
+    cop create item login title="$*" --generate-password
+}
+
 function unix {
     date -r "$1"
 }
 
 function install_op {
-    url='https://app-updates.agilebits.com/product_history/CLI'
-    while [ ! -f ~/Downloads/op*.zip ]; do
+    OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
+    OP_PLATFORM=$(uname | tr [A-Z] [a-z])
+    OP_ARCH="amd64"
+
+    op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}")
+
+    if [ $? -eq 0 ]; then
+        op_url=$(echo "${op_release_notes}" | xmllint --html --xpath "string(//article[not(@class='beta')][1]/div[@class='cli-archs']/p[@class='system ${OP_PLATFORM}']/a[text()='${OP_ARCH}']/@href)" - 2>/dev/null)
+        if [ -z "${op_url}" ]; then
+            # If $op_url is empty (e.g. if the page layout has changed)
+            echo "1Password CLI tool release notes were not in an expected format at: ${OP_RELEASE_NOTES_URL}" >&2
+            echo "Please update script at $BASH_SOURCE" >&2
+        else
+            # $op_url should be the URL for the latest download
+            wget "${op_url}" -P ~/Downloads/
+        fi
+    else
+        # If the curl command failed (e.g. the page was not found)
+        echo "1Password CLI tool release notes were not found at: ${OP_RELEASE_NOTES_URL}" >&2
+        echo "Please update script at $BASH_SOURCE" >&2
+    fi
+
+    while [ ! -f ~/Downloads/op_darwin_amd64_v*.pkg ]; do
         echo "please download op from $url first"
         open $url
         read -p "Press enter to continue"
     done
 
-    unzip -d ~/Downloads/ ~/Downloads/op*.zip
-    rm ~/Downloads/op*.zip
-
-    if [ ! -x /usr/local/bin/gpg ]; then
-        echo 'running `brew install gpg`'
-        read -p "Press enter to continue"
-        /usr/local/bin/brew install gpg
-    fi
-
-    if ! /usr/local/bin/gpg --list-keys codesign@1password.com >/dev/null ; then
-        echo 'running `gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22`'
-        read -p "Press enter to continue"
-        /usr/local/bin/gpg --receive-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
-    fi
-
-    echo 'running `gpg --verify op.sig op`'
-    read -p "Press enter to continue"
-    /usr/local/bin/gpg --verify ~/Downloads/op.sig ~/Downloads/op
-
-    echo 'running `mv ~/Downloads/op /usr/local/bin/`'
-    read -p "Press enter to continue"
-    mv ~/Downloads/op /usr/local/bin/
-
-    echo "You can now rerun your original command (op $@) with "'`!!`'
+    installer -pkg ~/Downloads/op_darwin_amd64_v*.pkg -target /
+    rm ~/Downloads/op_darwin_amd64_v*.pkg
 }
 
 function getoplimit {
     shopt -s nullglob;
     for file in $TMPDIR/com.agilebits.op.`id -u`/.??*; do
-        jsq accessed < $file
-    done | \
-        sed -Ee 's/\.[0-9]{8,9}//g' -e 's/"//g' -e 's/([-+][0-9]{2}):([0-9]{2})/\1\2/g' | \
-        while read date; do
-            date -jf "%FT%T%z" -v+30m "$date" "+%s"
-        done | \
-            max
+        # SB for file created time
+        stat -t '%s' -f '%Sm' "$file"
+    done | while read date; do
+        date -jf "%s" -v+30M "$date" "+%s"
+    done | max 2>/dev/null
+}
+
+function getPasswordFor {
+    cop get item "$1" --fields password
+}
+
+function getUsernameFor {
+    cop get item "$1" --fields username
 }
 
 function cop {
     if [ ! -x /usr/local/bin/op ]; then
         install_op
     else
-        account=narzt
-        env_var="OP_SESSION_$account"
-        login_path="$(readlink ~/.op/login)"
-        limit="$(getoplimit)"
-        if [[ $limit -le $(date +s) ]]; then
-            unset login_path
-            unset "$env_var"
-        fi
+        /usr/local/bin/op update &>/dev/null || /usr/local/bin/op update
+    fi
 
-        if [ -z ${!env_var} ]; then
-            if [ ! -f "$login_path" ]; then
-                login_path=$(mktemp)
-                /usr/local/bin/op signin $account > $login_path
-                ln -sf $login_path ~/.op/login
-            fi
-            source ~/.op/login
-        fi
+    if [[ "$1" == "update" || "$1" == "help" ]]; then
+        /usr/local/bin/op "$@"
+        return;
+    fi
 
+    account=narzt
+    env_var="OP_SESSION_$account"
+    login_path="$(readlink ~/.op/login)"
+    limit="$(getoplimit)"
+    if [[ $limit -le $(date "+%s") ]]; then
+        unset login_path
+        unset "$env_var"
+    fi
+
+    if [ -z ${!env_var} ]; then
+        if [ ! -f "$login_path" ]; then
+            login_path=$(mktemp)
+            /usr/local/bin/op signin $account > $login_path
+            ln -sf $login_path ~/.op/login
+        fi
+        source ~/.op/login
+    fi
+
+    if [[ "$1" == "find" || "$1" == "search" ]]; then
+        shift
+        /usr/local/bin/op list items | \
+            ruby -rjson -e "puts JSON.parse(STDIN.read).select{|e| e['overview']['title'].downcase.include? '$*'}.flat_map{|e| [e['overview']['title'] , ' '+e['uuid'], '']}.join(\"\n\")"
+    else
         /usr/local/bin/op "$@"
     fi
 }
 
 function ctar {
-    #　if [[ "$@" =~ '[[:<:]]-[a-z]*c[a-z]*[[:>:]]' ]]; then
-    if [[ "$@" == -*c* ]]; then
-        tar -z "${@: 1:2}" --options gzip:compression-level=9 --use-compress-program pigz "${@: 3:$#}"
-    else
+    local CREATE
+    local FILE
+
+    while getopts 'aBb:C:cf:HhI:JjkLlmnOoPpqrSs:T:tUuvW:wX:xyZz' opt
+    do
+        case $opt in
+            c) CREATE=true ;;
+            f) FILE=$OPTARG ;;
+        esac
+    done
+
+    if ! [[ ${CREATE:-false} == "true" ]]; then
         tar "$@"
+    else
+        if ! [[ "${FILE:-x}" =~ .*\.t?gz ]]; then
+            set -- ${*/.tar/.tgz}
+        fi
+        tar "${@: 1:$(($OPTIND -1))}" --use-compress-program pigz "${@: $OPTIND}"
     fi
 }
 
@@ -417,7 +473,13 @@ function checkIsFedora {
     checkIsDistro fedora $1
 }
 
+function checkIsRHEL {
+    checkIsDistro "registry.access.redhat.com/$1/${1%%[0-9]*[0-9]}" latest || checkIsDistro "registry.access.redhat.com/${1/rhel/ubi}/ubi" latest
+}
+
 function cdocker {
+    local IMAGE
+    local args=('-l')
     if [[ "$1" == *:* ]]; then
         IMAGE="$1"
     elif checkIsUbuntu "$1"; then
@@ -426,12 +488,27 @@ function cdocker {
         IMAGE="debian:$1"
     elif checkIsCentOS "$1"; then
         IMAGE="centos:$1"
+    elif checkIsCentOS "${1/el/centos}"; then
+        IMAGE="centos:${1/el/centos}"
     elif checkIsFedora "$1"; then
         IMAGE="fedora:$1"
+    elif checkIsRHEL "$1"; then
+        local RHEL_USERNAME=$(getUsernameFor nkxqcwvnljffnae3ewas2s3afq)
+        local RHEL_PASSWORD=$(getPasswordFor nkxqcwvnljffnae3ewas2s3afq)
+        local version=${1##[a-z]*[a-z]}
+        if [[ ${version:-8} -ge 8 ]]; then
+            IMAGE="registry.access.redhat.com/ubi${version}/ubi"
+        else
+            IMAGE="registry.access.redhat.com/rhel${version}/rhel"
+        fi
+        c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
+        c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
+        c3="yum-config-manager --enable epel"
+        #args=('--init-file' '<(echo '"$c1;$c2;$c3"'| cat $HOME/.bashrc - )')
     else
         echo "Couldn't find proper distro for $1"
         return -1
     fi
 
-    docker run -it $IMAGE bash
+    docker run -it $IMAGE bash "${args[*]}"
 }

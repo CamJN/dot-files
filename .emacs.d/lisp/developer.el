@@ -16,11 +16,15 @@
                           (mark-paragraph)
                           (tabify (region-beginning) (region-end)))))))))
 
+(setenv "GOPATH" "/Users/camdenarzt/Developer/Go")
+(setenv "GOROOT" "/usr/local/opt/go/libexec")
 
 ;; rust
 (setenv "PATH"
         (concat
-         "/Users/camdennarzt/.cargo/bin/:"
+         "/Users/camdennarzt/.cargo/bin/" ":"
+         (getenv "GOPATH")"/bin" ":"
+         (getenv "GOROOT")"/bin" ":"
          (getenv "PATH")
          )
         )

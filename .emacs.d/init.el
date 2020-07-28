@@ -9,6 +9,19 @@
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
 
+(setenv "PATH"
+  (concat
+   "/usr/local/bin" ":"
+   "/usr/local/sbin" ":"
+   "/usr/local/opt/qt5/bin" ":"
+   "/usr/local/etc/openssl/misc" ":"
+   "/usr/local/opt/openssl/bin" ":"
+   "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
+   "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
+   (getenv "PATH")
+  )
+)
+
 ;; (defadvice package-compute-transaction
 ;;     (before package-compute-transaction-reverse (package-list requirements) activate compile)
 ;;   "reverse the requirements"

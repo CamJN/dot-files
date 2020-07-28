@@ -7,8 +7,7 @@
     <key>ProgramArguments</key>
     <array>
       <string>/usr/local/bin/wget</string>
-      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt</string>
-      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt</string>
+      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnsmasq/dnsmasq.blacklist.txt</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

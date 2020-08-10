@@ -70,6 +70,7 @@ alias trim="tr -d ' '"
 alias up='cd ../'
 alias update='sudo softwareupdate --install -a ; brew update && brew upgrade ; gem update ; npm update -g'
 alias version="sw_vers"
+alias wait='sleep'
 alias wifi='airport -I'
 alias wget='wget -c'
 

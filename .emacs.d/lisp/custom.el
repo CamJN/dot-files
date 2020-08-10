@@ -23,6 +23,7 @@
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
  '(completion-styles (quote (substring partial-completion emacs22)))
+ '(confirm-kill-processes nil)
  '(confirm-nonexistent-file-or-buffer nil)
  '(custom-enabled-themes (quote (dusk)))
  '(custom-safe-themes

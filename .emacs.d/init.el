@@ -28,7 +28,7 @@
 ;;   (setq requirements (reverse requirements))
 ;;   (print requirements))
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))

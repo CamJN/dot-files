@@ -72,3 +72,5 @@ alias update='sudo softwareupdate --install -a ; brew update && brew upgrade ; g
 alias version="sw_vers"
 alias wifi='airport -I'
 alias wget='wget -c'
+
+alias m4b='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/data kmlucy/docker-m4b-tool'

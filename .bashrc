@@ -9,5 +9,9 @@ if [[ $- =~ "i" ]]; then
         if [ -f ~/.bash_profile ]; then
             . ~/.bash_profile
         fi
+        if [ -z "$SSH_AUTH_SOCK" ]; then
+            echo export SSH_AUTH_SOCK=/tmp/com.apple.launchd.*/Listeners
+            # export SSH_AUTH_SOCK=$(launchctl getenv SSH_AUTH_SOCK)
+        fi
     fi
 fi

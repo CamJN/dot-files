@@ -6,8 +6,10 @@
     <string>update.dnsmasq</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/wget</string>
+      <string>/usr/bin/curl</string>
       <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnsmasq/dnsmasq.blacklist.txt</string>
+      <string>-o</string>
+      <string>./dnsmasq.blacklist.txt</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

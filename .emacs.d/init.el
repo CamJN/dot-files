@@ -29,7 +29,8 @@
 ;;   (print requirements))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa") (file-name-as-directory "auctex-11.86")))

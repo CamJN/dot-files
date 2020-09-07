@@ -3,7 +3,8 @@
 # Bash completion support for launchctl
 __launchctl_list_sigs ()
 {
-    echo {,SIG}{HUP,INT,QUIT,ILL,TRAP,ABRT,EMT,FPE,KILL,BUS,SEGV,SYS,PIPE,ALRM,TERM,URG,STOP,TSTP,CONT,CHLD,TTIN,TTOU,IO,XCPU,XFSZ,VTALRM,PROF,WINCH,INFO,USR1,USR2} `seq 1 31 | tr '\n' ' '`
+    # shellcheck disable=SC2046
+    echo {,SIG}{HUP,INT,QUIT,ILL,TRAP,ABRT,EMT,FPE,KILL,BUS,SEGV,SYS,PIPE,ALRM,TERM,URG,STOP,TSTP,CONT,CHLD,TTIN,TTOU,IO,XCPU,XFSZ,VTALRM,PROF,WINCH,INFO,USR1,USR2} $(seq 1 31)
 }
 
 __launchctl_list_pids ()
@@ -18,7 +19,7 @@ __launchctl_list_uids ()
 
 join_list ()
 {
-    tr -d ' ' | tr '\n' ',' | sed -e 's/.$//'
+    tr -d ' ' | tr '\n' ',' | sed -e 's/,$//'
 }
 
 __launchctl_list_domains ()
@@ -28,17 +29,15 @@ __launchctl_list_domains ()
 
 __launchctl_list_subdomains ()
 {
-    pids=$(echo echo pid/{`__launchctl_list_pids | join_list`})
-    pids=`eval $pids | tr ' ' ','`
-    uids=$(echo echo {user,gui}/{`__launchctl_list_uids | join_list`})
-    uids=`eval $uids | tr ' ' ','`
+    pids=$(__launchctl_list_pids | sed -Ee 's@^ *(.*)@pid/\1/@g'       | tr '\n' ' ')
+    uids=$(__launchctl_list_uids | sed -Ee 's@(.*)@user/\1/ gui/\1/@g' | tr '\n' ' ')
     #asids=  {login,session}/{asids...}
-    eval $(echo echo {"system,${uids},${pids}"}/)
+    echo "system/ ${uids} ${pids}"
 }
 
 __launchctl_list_service_targets ()
 {
-    eval $(echo echo {`__launchctl_list_subdomains | tr ' ' ',' `}{`__launchctl_list_labels | join_list| tr ' ' ',' `})
+    join -j 99 -t '' <(__launchctl_list_subdomains | tr ' ' '\n')  <(__launchctl_list_labels) | tr '\n' ' '
 }
 
 __launchctl_list_labels ()
@@ -66,86 +65,86 @@ _launchctl ()
     # Subcommand list
     local subcommands="bootstrap bootout enable disable uncache kickstart attach debug kill blame print print-cache print-disabledplist procinfo hostinfo resolveport limit runstats examine config dumpstate reboot bootshell load unload remove list start stop setenv unsetenv getenv bsexec asuser submit managerpid manageruid managername error variant version help"
     [[ ${COMP_CWORD} -eq 1 ]] && {
-        COMPREPLY=( $(compgen -W "${subcommands}" -- ${cur}) )
+        mapfile -t COMPREPLY < <(compgen -W "${subcommands}" -- "${cur}")
         return
     }
     if [[ ${COMP_CWORD} -eq 2 ]]; then
         case "$prev" in
             print|enable|disable|blame|runstats|bootstrap|bootout|debug)
                 compopt -o nospace
-                if [[ ${cur} == */*/* ]]; then
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_service_targets)" -- ${cur}) )
-                elif [[ ${cur} == */* ]]; then
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_subdomains)" -- ${cur}) )
+                if [[ "${cur}" == */*/* ]]; then
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_service_targets)" -- "${cur}")
+                elif [[ "${cur}" == */* ]]; then
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_subdomains)" -- "${cur}")
                 else
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_domains)" -- ${cur}) )
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_domains)" -- "${cur}")
                 fi
                 return
                 ;;
             submit)
-                COMPREPLY=( $(compgen -W "-l" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "-l" -- "${cur}")
                 return
                 ;;
             help)
-                COMPREPLY=( $(compgen -W "$subcommands" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$subcommands" -- "${cur}")
                 return
                 ;;
             kickstart)
-                COMPREPLY=( $(compgen -W "-k -p -s" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "-k -p -s" -- "${cur}")
                 return
                 ;;
             reboot)
-                COMPREPLY=( $(compgen -W "-s system halt userspace reroot logout apps" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "-s system halt userspace reroot logout apps" -- "${cur}")
                 return
                 ;;
             attach)
-                COMPREPLY=( $(compgen -W "-k -s -x" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "-k -s -x" -- "${cur}")
                 return
                 ;;
             bootshell)
-                COMPREPLY=( $(compgen -W "continue" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "continue" -- "${cur}")
                 return
                 ;;
             procinfo|resolveport)
-                COMPREPLY=( $(compgen -W '$(__launchctl_list_pids)' -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_pids)" -- "${cur}")
                 return
                 ;;
             error)
-                COMPREPLY=( $(compgen -W "posix mach bootstrap" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "posix mach bootstrap" -- "${cur}")
                 return
                 ;;
             remove|list|uncache)
-                COMPREPLY=( $(compgen -W "$(__launchctl_list_labels)" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_labels)" -- "${cur}")
                 return
                 ;;
             start)
-                COMPREPLY=( $(compgen -W "$(__launchctl_list_stopped)" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_stopped)" -- "${cur}")
                 return
                 ;;
             stop)
-                COMPREPLY=( $(compgen -W "$(__launchctl_list_started)" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_started)" -- "${cur}")
                 return
                 ;;
             kill)
-                COMPREPLY=( $(compgen -W "$(__launchctl_list_sigs)" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_sigs)" -- "${cur}")
                 return
                 ;;
             bsexec)
-                COMPREPLY=( $(compgen -W '$(__launchctl_list_pids)' -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_pids)" -- "${cur}")
                 return
                 ;;
             asuser)
-                COMPREPLY=( $(compgen -W '$(__launchctl_list_uids)' -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_uids)" -- "${cur}")
                 return
                 ;;
             config)
-                COMPREPLY=( $(compgen -W 'system user' -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W 'system user' -- "${cur}")
                 return
                 ;;
             load|unload)
                 compopt -o filenames
                 compopt -o nospace
-                COMPREPLY=( $(compgen -f -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -f -- "${cur}")
                 return
                 ;;
         esac
@@ -153,32 +152,32 @@ _launchctl ()
     if [[ ${COMP_CWORD} -eq 3 ]]; then
         case "$two_prev" in
             config)
-                COMPREPLY=( $(compgen -W "umask path" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "umask path" -- "${cur}")
                 return
                 ;;
             reboot)
-                COMPREPLY=( $(compgen -W "system halt userspace reroot logout apps" -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -W "system halt userspace reroot logout apps" -- "${cur}")
                 return
                 ;;
             kill|attach|kickstart)
                 compopt -o nospace
-                if [[ ${cur} == */*/* ]]; then
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_service_targets)" -- ${cur}) )
-                elif [[ ${cur} == */* ]]; then
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_subdomains)" -- ${cur}) )
+                if [[ "${cur}" == */*/* ]]; then
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_service_targets)" -- "${cur}")
+                elif [[ "${cur}" == */* ]]; then
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_subdomains)" -- "${cur}")
                 else
-                    COMPREPLY=( $(compgen -W "$(__launchctl_list_domains)" -- ${cur}) )
+                    mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_domains)" -- "${cur}")
                 fi
                 return
                 ;;
             bootstrap|bootout)
                 compopt -o filenames
                 compopt -o nospace
-                COMPREPLY=( $(compgen -f -- ${cur}) )
+                mapfile -t COMPREPLY < <(compgen -f -- "${cur}")
                 return
                 ;;
             # resolveport)
-            #     COMPREPLY=( $(compgen -W "$(__launchctl_list_ports)" -- ${cur}) )
+            #     mapfile -t COMPREPLY < <(compgen -W "$(__launchctl_list_ports)" -- "${cur}")
             #     return
             #     ;;
         esac

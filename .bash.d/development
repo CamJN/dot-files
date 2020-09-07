@@ -1,6 +1,6 @@
 #!/usr/local/bin/bash
 
-if [ `uname` = "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then
 
     export HOMEBREW_INSTALL_BADGE=🍷
     export HOMEBREW_AUTO_UPDATE_SECS=86400

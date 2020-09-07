@@ -1,12 +1,12 @@
 #!/usr/local/bin/bash
 
 function direct_math {
-    echo "scale=4; $@" | \bc -l
+    echo "scale=4; $*" | \bc -l
 }
 
 function remac {
     sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z
-    sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+    sudo ifconfig en0 ether "$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
     sudo networksetup -detectnewhardware
     ifconfig en0 | grep ether
 }
@@ -18,13 +18,13 @@ function forward {
 
     if [[ $2 =~ .*:[0-9]+ ]]
     then
-        server=$(echo $2 | cut -f1 -d:)
-        remote=$(echo $2 | cut -f2 -d:)
+        server=$(echo "$2" | cut -f1 -d:)
+        remote=$(echo "$2" | cut -f2 -d:)
     else
         server=$2
         remote=$3
     fi
-    \ssh -NL $local:localhost:$remote $server
+    \ssh -NL "$local:localhost:$remote" "$server"
 }
 
 function cssh {
@@ -36,13 +36,15 @@ function csudo {
 
     while getopts 'Aa:BbC:c:D:Eeg:Hh::iKklnPp:r:SsT:t:U:u:Vv' opt
     do
+        # shellcheck disable=SC2220,SC2213
         case $opt in
             i) login=true ;;
         esac
     done
 
+    # shellcheck disable=SC2199
     if [[ ${login:-false} == "true" || ${@: $OPTIND:1} == su ]]; then
-        read -p "Did you want sudo bash? [Yn] " yn
+        read -rp "Did you want sudo bash? [Yn] " yn
         case $yn in
             [Nn]* ) \sudo "$@";;
             * ) \sudo bash;;
@@ -56,34 +58,32 @@ function csudo {
 }
 
 function cscp {
-    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | sed -Ee 's|.* -- ||' | { read -r c; eval ARR=($c); for index in "${!ARR[@]}" ; do [[ ${ARR[index]} != *:* ]] && unset -v 'ARR[$index]' ; done; [ ${#ARR[@]} -eq 2 ]; }; then
+    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | sed -Ee 's|.* -- ||' | { read -r c; eval "ARR=($c)"; for index in "${!ARR[@]}" ; do [[ ${ARR[index]} != *:* ]] && unset -v 'ARR[$index]'; done; [ ${#ARR[@]} -eq 2 ]; }; then
         # 2 remotes, must not use rsync
         \scp -3 "$@"
     else
+        # shellcheck disable=SC2034
         local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
-        rsync -Lvz --progress --timeout=10 "$@"
-        while [ $? -ne 0 ]; do
-            rsync -Lvz --append --partial --progress --timeout=10 "$@"
-        done
+        until rsync -aLvz --append-verify --partial --progress --timeout=10 "$@"; do sleep 1; echo retrying; done
     fi
 }
 
 function cps {
     if [ $# == 1 ]; then
-        ps -A | grep -i "$1"
+        pgrep -fil "$1"
     else
         ps "$@"
     fi
 }
 
 function cfind {
-    if [ `uname` = "Darwin" ]; then
+    if [ "$(uname)" = "Darwin" ]; then
         find -x "$@"
     else
         #handle multiple search locations
-        PLACE=$1
+        PLACE="$1"
         shift 1
-        find $PLACE -xdev $*
+        find "$PLACE" -xdev "$@"
     fi
 }
 
@@ -97,19 +97,19 @@ function cdiff {
 
 function ramdrive {
     # diskutil erasevolume HFS+ 'ramdisk' $(hdiutil attach -nomount ram://$(echo '4 * 1024 ^ 3 / 512' | bc)) 2>/dev/null
-    diskutil partitionDisk $(hdiutil attach -nomount ram://$(echo '4 * 1024 ^ 3 / 512' | bc)) 1 GPTFormat APFS 'ramdisk' '100%'
+    diskutil partitionDisk "$(hdiutil attach -nomount "ram://$(echo '4 * 1024 ^ 3 / 512' | bc)")" 1 GPTFormat APFS 'ramdisk' '100%'
 }
 
 function clocate {
-    if [ `uname` = "Darwin" ]; then
-        mdfind name:"$*"
+    if [ "$(uname)" = "Darwin" ]; then
+        mdfind "name:$*"
     else
         cdllocate "$*"
     fi
 }
 
 function csed {
-    if [ `uname` = "Darwin" ]; then
+    if [ "$(uname)" = "Darwin" ]; then
         sed -E "$@"
     else
         sed -r "$*"
@@ -117,24 +117,31 @@ function csed {
 }
 
 function colors {
-    for i in {0..31} ; do echo "[7;(38;05;$i)mColor $i [0m	[7;(38;05;$(($i + 32)))mColor $(($i+32)) [0m	[7;(38;05;$(($i+64)))mColor $(($i+64)) [0m	[7;(38;05;$(($i + 96)))mColor $(($i+96)) [0m	[7;(38;05;$(($i+128)))mColor $(($i+128)) [0m	[7;(38;05;$(($i + 160)))mColor $(($i+160)) [0m	[7;(38;05;$(($i+192)))mColor $(($i+192)) [0m	[7;(38;05;$(($i + 224)))mColor $(($i+224))"; done; echo -n "[0m"
+    for i in {0..31} ; do
+    for j in {0..7} ; do
+        printf "[7;(38;05;%d)mColor %-3d[0m\t" $((i + j * 32)) $((i + j * 32))
+    done;
+    echo ''
+    done;
+    echo -n "[0m"
 }
 
 function loveSongsForCamden {
     options_found=0
     while getopts ':vn:N:' OPT; do
         options_found=1
+        # shellcheck disable=SC2214
         case $OPT in
             v|+v)
-                mdfind kind:music album:camden | sort -nt / -k+11 | while read line; do echo "\n $line"; afplay "$line"; done &
+                mdfind kind:music album:camden | sort -nt / -k+11 | while read -r line; do printf "\n %s" "$line"; afplay "$line"; done &
                 ;;
             n|+n)
-                mdfind kind:music album:camden | sort -nt / -k+11 | egrep --color='never' "/$OPTARG-.*$" | while read line; do afplay "$line"; done &
+                mdfind kind:music album:camden | sort -nt / -k+11 | grep -E --color='never' "/$OPTARG-.*$" | while read -r line; do afplay "$line"; done &
                 ;;
             N|+N)
                 shift $(( OPTIND - 1 ))
                 OPTIND=1
-                mdfind kind:music album:camden | sort -nt / -k+11 | egrep --color='never' -i "[^/]*$*[^/]*/[^/]*$" | while read line; do afplay "$line"; done &
+                mdfind kind:music album:camden | sort -nt / -k+11 | grep -E --color='never' -i "[^/]*$*[^/]*/[^/]*$" | while read -r line; do afplay "$line"; done &
                 ;;
             *)
                 echo "usage: ${0##*/} [+-vn album-number] +-N album name"
@@ -142,10 +149,11 @@ function loveSongsForCamden {
         esac
     done
     if ((!options_found));then
-        mdfind kind:music album:camden | sort -nt / -k+11 | while read line; do afplay "$line"; done &
+        mdfind kind:music album:camden | sort -nt / -k+11 | while read -r line; do afplay "$line"; done &
     fi
 }
 
+# shellcheck disable=SC2164
 function chdir {
     if [ "$_" == "ccalendar" ]; then
         if [ -n "$1" ]; then
@@ -163,21 +171,19 @@ function chdir {
 }
 
 function ccalendar {
-    echo -e '\nToday in history:'
+    echo 'Today in history:'
     if [ "$TERM" != 'dumb' ]; then
-        calendar 2>/dev/null | perl -pe 's/[^[:space:][:print:]]//g' | tr "\n" "|" | sed -E -e 's/\|$//' -e 's/\|[	]{1,2}/ /g' -e 's/[\|]/\
-/g' | sed -E -e "s/^([^	]*)(.*)$/\1[0;38;5;122m\2[0m/g"
+        calendar 2>/dev/null | awk '{printf "%s %s",$1,$2; $1=$2=""; print "\t[0;38;5;122m"$0"[0m"}'
     else
-        calendar 2>/dev/null | perl -pe 's/[^[:space:][:print:]]//g' | tr "\n" "|" | sed -E -e 's/\|$//' -e 's/\|[	]{1,2}/ /g' -e 's/[\|]/\
-/g' | sed -E -e "s/^([^	]*)(.*)$/\1[0;36m\2[0m/g"
+        calendar 2>/dev/null | awk '{printf "%s %s",$1,$2; $1=$2=""; print "\t[0;36m"$0"[0m"}'
     fi
 }
 
 function getIp {
     if [ $# -gt 0 ]; then
-        if [ $1 = "-6" ]; then
+        if [ "$1" = "-6" ]; then
             getIpv6
-        elif [ $1 = "-4" ]; then
+        elif [ "$1" = "-4" ]; then
             getIpv4
         else
             echo "Usage: getIp [-4] [-6]"
@@ -197,12 +203,12 @@ function getIpv6 {
 }
 
 function mailIpTo {
-    getIp | mail -s "`whoami`'s IP update" -F camden.narzt@gmail.com
+    getIp -4 | mail -s "$(whoami)'s IP update" -F camden.narzt@gmail.com
 }
 
 function zipup {
-    zip -r $1 $1
-    mv $1.zip ../
+    zip -r "$1" "$1"
+    mv "$1.zip" ../
 }
 
 function fplay {
@@ -222,6 +228,7 @@ function fplay {
     while getopts ":sd:hgia:A:o:v" OPTION
     do
         options_found=1
+        # shellcheck disable=SC2214
         case $OPTION in
             d|+d)
                 MUSICROOT="$OPTARG"
@@ -263,20 +270,23 @@ function fplay {
         NAME="AND name:$*"
     fi
     if [[ ( -n $NAME ) || ((options_found -eq 1)) ]]; then
-        mdfind -onlyin "$MUSICROOT" \(kind:music OR kind:movie\) $NAME $AUTHOR $ALBUM |
-            egrep --color=auto $TYPEREGEX $OUTPUT |
-            while read line; do
+        mdfind -onlyin "$MUSICROOT" '(kind:music OR kind:movie)' "$NAME" "$AUTHOR" "$ALBUM" |
+            grep -E --color=auto "$TYPEREGEX" |
+            while read -r line; do
                 echo "$line" | tee -a "$OUTPUT2" > "$OUTPUT1"
                 if ((INFO)); then
                     afinfo "$line"
                 fi
                 if ((DOAPPLESCRIPT)); then
-                    open -a QuickTime\ Player "$line"
+                    open -a 'QuickTime Player' "$line"
                     if ((PLAY)); then
                         osascript -e "$APPLESCRIPTPART1"
                         osascript -e "$APPLESCRIPTPART2"
                     fi
                 elif ((PLAY)); then
+                    # to get fplay to print the song names neatly, have it spawn a process that uses bash "wait" to wait for everything else to finish before echoing.
+
+                    # not sure how to avoid it waiting for it's parent.
                     afplay "$line"
                 fi
             done
@@ -335,17 +345,15 @@ function unix {
 
 function install_op {
     OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
-    OP_PLATFORM=$(uname | tr [A-Z] [a-z])
+    OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
     OP_ARCH="amd64"
 
-    op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}")
-
-    if [ $? -eq 0 ]; then
+    if op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}"); then
         op_url=$(echo "${op_release_notes}" | xmllint --html --xpath "string(//article[not(@class='beta')][1]/div[@class='cli-archs']/p[@class='system ${OP_PLATFORM}']/a[text()='${OP_ARCH}']/@href)" - 2>/dev/null)
         if [ -z "${op_url}" ]; then
             # If $op_url is empty (e.g. if the page layout has changed)
             echo "1Password CLI tool release notes were not in an expected format at: ${OP_RELEASE_NOTES_URL}" >&2
-            echo "Please update script at $BASH_SOURCE" >&2
+            echo "Please update script at ${BASH_SOURCE[*]}" >&2
         else
             # $op_url should be the URL for the latest download
             wget "${op_url}" -P ~/Downloads/
@@ -353,25 +361,25 @@ function install_op {
     else
         # If the curl command failed (e.g. the page was not found)
         echo "1Password CLI tool release notes were not found at: ${OP_RELEASE_NOTES_URL}" >&2
-        echo "Please update script at $BASH_SOURCE" >&2
+        echo "Please update script at ${BASH_SOURCE[*]}" >&2
     fi
 
-    while [ ! -f ~/Downloads/op_darwin_amd64_v*.pkg ]; do
-        echo "please download op from $url first"
-        open $url
-        read -p "Press enter to continue"
+    until ls ~/Downloads/op_darwin_amd64_v*.pkg &>/dev/null; do
+        echo "please download op from $OP_RELEASE_NOTES_URL first"
+        open "$OP_RELEASE_NOTES_URL"
+        read -rp "Press enter to continue"
     done
 
-    installer -pkg ~/Downloads/op_darwin_amd64_v*.pkg -target /
+    sudo installer -pkg ~/Downloads/op_darwin_amd64_v*.pkg -target /
     rm ~/Downloads/op_darwin_amd64_v*.pkg
 }
 
 function getoplimit {
     shopt -s nullglob;
-    for file in $TMPDIR/com.agilebits.op.`id -u`/.??*; do
+    for file in "$TMPDIR/com.agilebits.op.$(id -u)"/.??*; do
         # SB for file created time
         stat -t '%s' -f '%Sm' "$file"
-    done | while read date; do
+    done | while read -r date; do
         date -jf "%s" -v+30M "$date" "+%s"
     done | max 2>/dev/null
 }
@@ -408,8 +416,8 @@ function cop {
     if [ -z ${!env_var} ]; then
         if [ ! -f "$login_path" ]; then
             login_path=$(mktemp)
-            /usr/local/bin/op signin $account > $login_path
-            ln -sf $login_path ~/.op/login
+            /usr/local/bin/op signin $account > "$login_path"
+            ln -sf "$login_path" ~/.op/login
         fi
         source ~/.op/login
     fi
@@ -429,6 +437,7 @@ function ctar {
 
     while getopts 'aBb:C:cf:HhI:JjkLlmnOoPpqrSs:T:tUuvW:wX:xyZz' opt
     do
+        # shellcheck disable=SC2220,SC2213
         case $opt in
             c) CREATE=true ;;
             f) FILE=$OPTARG ;;
@@ -439,9 +448,9 @@ function ctar {
         tar "$@"
     else
         if ! [[ "${FILE:-x}" =~ .*\.t?gz ]]; then
-            set -- ${*/.tar/.tgz}
+            set -- "${*/.tar/.tgz}"
         fi
-        tar "${@: 1:$(($OPTIND -1))}" --use-compress-program pigz "${@: $OPTIND}"
+        tar "${@: 1:$((OPTIND -1))}" --use-compress-program pigz "${@: $OPTIND}"
     fi
 }
 
@@ -454,23 +463,23 @@ function cpbcopy {
 }
 
 function checkIsDistro {
-    docker pull $1:$2 &>/dev/null
+    docker pull "$1:$2" &>/dev/null
 }
 
 function checkIsUbuntu {
-    checkIsDistro ubuntu $1
+    checkIsDistro ubuntu "$1"
 }
 
 function checkIsDebian {
-    checkIsDistro debian $1
+    checkIsDistro debian "$1"
 }
 
 function checkIsCentOS {
-    checkIsDistro centos $1
+    checkIsDistro centos "$1"
 }
 
 function checkIsFedora {
-    checkIsDistro fedora $1
+    checkIsDistro fedora "$1"
 }
 
 function checkIsRHEL {
@@ -493,22 +502,25 @@ function cdocker {
     elif checkIsFedora "$1"; then
         IMAGE="fedora:$1"
     elif checkIsRHEL "$1"; then
-        local RHEL_USERNAME=$(getUsernameFor nkxqcwvnljffnae3ewas2s3afq)
-        local RHEL_PASSWORD=$(getPasswordFor nkxqcwvnljffnae3ewas2s3afq)
+        local RHEL_ID=nkxqcwvnljffnae3ewas2s3afq
+        # shellcheck disable=SC2155
+        local RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
+        # shellcheck disable=SC2155
+        local RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
         local version=${1##[a-z]*[a-z]}
         if [[ ${version:-8} -ge 8 ]]; then
             IMAGE="registry.access.redhat.com/ubi${version}/ubi"
         else
             IMAGE="registry.access.redhat.com/rhel${version}/rhel"
         fi
-        c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
-        c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
-        c3="yum-config-manager --enable epel"
-        #args=('--init-file' '<(echo '"$c1;$c2;$c3"'| cat $HOME/.bashrc - )')
+        local c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
+        local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
+        local c3="yum-config-manager --enable epel"
+        args=('-c' "$c1 && $c2 && $c3 && exec bash -l" )
     else
         echo "Couldn't find proper distro for $1"
-        return -1
+        return 1
     fi
 
-    docker run -it $IMAGE bash "${args[*]}"
+    docker run -it "$IMAGE" bash "${args[*]}"
 }

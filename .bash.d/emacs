@@ -1,6 +1,8 @@
 #!/usr/local/bin/bash
+# shellcheck disable=SC2139
 
-export EMACS_SERVER_FILE=${TMPDIR}emacs`id -u`/server
+# shellcheck disable=SC2155
+export EMACS_SERVER_FILE="${TMPDIR}emacs$(id -u)/server"
 export EDITOR="/usr/local/bin/emacsclient -t -s $EMACS_SERVER_FILE"
 alias emacs="$EDITOR"
 export GIT_EDITOR="$EDITOR"
@@ -8,6 +10,6 @@ alias emacs-save="emacsclient -e '(save-some-buffers t)' -s $EMACS_SERVER_FILE >
 alias emacs-kill="emacsclient -e '(kill-emacs)' -s $EMACS_SERVER_FILE >/dev/null"
 
 function emacsgive {
-    emacsclient -e "(kill-new \"$*\")" -s $EMACS_SERVER_FILE >/dev/null
+    emacsclient -e "(kill-new \"$*\")" -s "$EMACS_SERVER_FILE" >/dev/null
 }
 alias emacs-give='emacsgive';

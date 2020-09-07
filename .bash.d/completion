@@ -13,7 +13,8 @@ complete -C aws_completer aws
 set completion-ignore-case on
 
 save_function() {
-    local ORIG_FUNC=$(declare -f $1)
+    # shellcheck disable=SC2155
+    local ORIG_FUNC=$(declare -f "$1")
     local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
     eval "$NEWNAME_FUNC"
 }

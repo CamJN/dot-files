@@ -5,8 +5,9 @@ if [[  ! ( $- =~ "i" ) ]]; then
     return 0
 fi
 #environment variables
-if /usr/libexec/java_home &>/dev/null; then
-    export JAVA_HOME=`/usr/libexec/java_home`
+
+if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
+    export JAVA_HOME
 fi
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color
@@ -85,7 +86,7 @@ if which rbenv > /dev/null; then
     eval "$(rbenv init -)";
 fi
 
-if [ "Darwin" = `uname` ]; then
+if [ "Darwin" = "$(uname)" ]; then
     archey -c -p -o -l
     calendar
 fi

@@ -7,14 +7,17 @@ TERM_MOD=${INSIDE_EMACS}$TERM
 case "$TERM_MOD" in
     xterm-256color)
         if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
-            GIT_PROMPT_ONLY_IN_REPO=0
-            GIT_PROMPT_THEME=Custom
-            GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
+            export GIT_PROMPT_ONLY_IN_REPO=0
+            export GIT_PROMPT_THEME=Custom
+            export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
+            # shellcheck disable=SC1090
             source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
         fi
         ;;
     screen | xterm)
+        # shellcheck disable=SC2016
         export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[01;32m"; else echo -n "[01;31m"; fi;)'
+        # shellcheck disable=SC2016
         export COLOR2='$(if [[ $? = 0 ]]; then echo "[0;33m"; else echo "[01;31m"; fi;)'
         export PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
         export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ \[[0m\]"

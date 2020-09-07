@@ -257,6 +257,7 @@ DNS.24 = cdn.braze.eu
 DNS.25 = *.cdn.braze.eu
 DNS.26 = static.cdn.responsys.net
 DNS.27 = media.whatcounts.com
+DNS.28 = shinies.dev
 IP.1 = 127.0.0.1
 IP.2 = ::1
 

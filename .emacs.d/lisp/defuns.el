@@ -186,7 +186,9 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
   "Turn on modes I want on in every file and which only toggle locally."
   (cond ((fboundp 'global-subword-mode)(global-subword-mode 1))
         ((fboundp 'subword-mode)(subword-mode 1))
-        ((fboundp 'c-subword-mode)(c-subword-mode 1)))
+        ((fboundp 'c-subword-mode)(c-subword-mode 1))
+        ((fboundp 'global-diff-hl-mode)(global-diff-hl-mode))
+        )
   ;;(turn-on-auto-fill)
   ;;(pretty-lambda-for-modes)
   (guru-mode))

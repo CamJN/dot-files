@@ -38,6 +38,7 @@
 ;;(load "nxhtml/autostart.el")
 
 (require 'defuns)
+(require 'diff-hl nil t)
 (require 'dockerfile-mode nil t)
 (require 'markdown-mode nil t)
 (require 'emojify nil t)
@@ -137,7 +138,8 @@
 (add-to-list 'completion-ignored-extensions ".elc")
 (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
-(add-to-list 'auto-mode-alist '("/etc/(httpd|apache2?)/" . apache-mode))
+(add-to-list 'auto-mode-alist '("/etc/\\(httpd\\|apache2?\\)/" . apache-mode))
+(add-to-list 'auto-mode-alist '("/.ssh/" . ssh-config-mode))
 (add-to-list 'auto-mode-alist '("/etc/nginx/" . nginx-mode))
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))

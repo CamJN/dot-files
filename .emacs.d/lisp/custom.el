@@ -19,18 +19,17 @@
     (cons ".*"
           (expand-file-name "~/.emacs.d/backup-files/"))))
  '(bell-volume 0)
- '(browse-url-browser-function (quote browse-url-default-macosx-browser))
+ '(browse-url-browser-function 'browse-url-default-macosx-browser)
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
- '(completion-styles (quote (substring partial-completion emacs22)))
+ '(completion-styles '(substring partial-completion emacs22))
  '(confirm-kill-processes nil)
  '(confirm-nonexistent-file-or-buffer nil)
- '(custom-enabled-themes (quote (dusk)))
+ '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   (quote
-    ("0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e" "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default)))
+   '("0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e" "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default))
  '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
- '(delete-active-region (quote kill))
+ '(delete-active-region 'kill)
  '(delete-old-versions 0)
  '(delete-selection-mode t)
  '(dired-listing-switches "-alh")
@@ -40,27 +39,24 @@
  '(dynamic-completion-mode t)
  '(ediff-diff-options "-w -d")
  '(ediff-highlight-all-diffs nil)
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(ediff-split-window-function 'split-window-horizontally)
+ '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(file-name-shadow-mode t)
  '(fill-column 120)
  '(font-lock-maximum-decoration t)
  '(global-font-lock-mode t)
  '(global-linum-mode t)
  '(hippie-expand-try-functions-list
-   (quote
-    (try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-expand-dabbrev-visible try-expand-line-all-buffers try-expand-list-all-buffers try-expand-whole-kill try-complete-file-name-partially try-complete-file-name try-complete-lisp-symbol-partially try-complete-lisp-symbol)))
+   '(try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-expand-dabbrev-visible try-expand-line-all-buffers try-expand-list-all-buffers try-expand-whole-kill try-complete-file-name-partially try-complete-file-name try-complete-lisp-symbol-partially try-complete-lisp-symbol))
  '(holiday-other-holidays
-   (quote
-    ((holiday-fixed 4 25 "Jenn's Birthday")
+   '((holiday-fixed 4 25 "Jenn's Birthday")
      (holiday-fixed 10 31 "My Birthday")
-     (holiday-fixed 2 2 "Our Wedding Anniversary"))))
+     (holiday-fixed 2 2 "Our Wedding Anniversary")))
  '(hscroll-step 1)
  '(ibuffer-auto-mode t t)
  '(ibuffer-expert t)
  '(ibuffer-saved-filter-groups
-   (quote
-    (("personal"
+   '(("personal"
       ("elisp"
        (mode . emacs-lisp-mode))
       ("bash-config"
@@ -112,7 +108,7 @@
       ("Tags"
        (filename . "TAGS"))
       ("other"
-       (name . ".*"))))))
+       (name . ".*")))))
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
  '(icomplete-mode t)
@@ -121,38 +117,31 @@
  '(indicate-empty-lines t)
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
- '(kill-buffer-query-functions
-   (cons
-    (quote dont-kill-scratch)
-    kill-buffer-query-functions) t)
+ '(kill-buffer-query-functions (cons 'dont-kill-scratch kill-buffer-query-functions) t)
  '(kill-read-only-ok 1)
  '(large-file-warning-threshold nil)
- '(list-colors-sort (quote hsv))
+ '(list-colors-sort 'hsv)
  '(mark-holidays-in-calendar t)
  '(markdown-command "/Users/camdennarzt/.rbenv/shims/kramdown")
  '(menu-bar-mode nil)
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   (quote
-    (ibuffer-tramp docker-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode)))
+   '(diff-hl ibuffer-tramp docker-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket slack yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode racer osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode company-racer coffee-mode apache-mode))
  '(query-replace-highlight t)
- '(recentf-exclude (quote ("/docker:.*")))
+ '(recentf-exclude '("/docker:.*"))
  '(recentf-mode t)
  '(recentf-save-file (expand-file-name "~/.emacs.d/recentf"))
  '(redisplay-dont-pause t t)
  '(replace-character-fold t)
  '(require-final-newline t)
- '(safe-local-variable-values
-   (quote
-    ((eval highlight-regexp "^	* ")
-     (web-mode-use-tabs))))
- '(search-default-mode (quote character-fold-to-regexp))
+ '(safe-local-variable-values '((eval highlight-regexp "^	* ") (web-mode-use-tabs)))
+ '(search-default-mode 'character-fold-to-regexp)
  '(search-highlight t)
- '(send-mail-function (quote sendmail-send-it))
+ '(send-mail-function 'sendmail-send-it)
  '(show-paren-mode 1)
  '(show-trailing-whitespace t)
- '(tab-always-indent (quote complete))
+ '(tab-always-indent 'complete)
  '(tool-bar-mode -1)
  '(tramp-default-method "ssh")
  '(tramp-ssh-controlmaster-options
@@ -170,8 +159,7 @@
 \\)+\\)")
  '(whitespace-line-column 120)
  '(whitespace-style
-   (quote
-    (face tabs trailing empty indentation space-before-tab space-after-tab tab-mark))))
+   '(face tabs trailing empty indentation space-before-tab space-after-tab tab-mark)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

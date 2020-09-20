@@ -58,8 +58,8 @@ function csudo {
 }
 
 function cscp {
-    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | sed -Ee 's|.* -- ||' | { read -r c; eval "ARR=($c)"; for index in "${!ARR[@]}" ; do [[ ${ARR[index]} != *:* ]] && unset -v 'ARR[$index]'; done; [ ${#ARR[@]} -eq 2 ]; }; then
-        # 2 remotes, must not use rsync
+    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | { read -r c; [[ "${c}" =~ --\ .*:.*\ .*:.* ]]; }; then
+        # 2 remotes, cannot use rsync, try: https://unix.stackexchange.com/questions/183504/how-to-rsync-files-between-two-remotes
         \scp -3 "$@"
     else
         # shellcheck disable=SC2034
@@ -194,12 +194,16 @@ function getIp {
 }
 
 function getIpv4 {
-    # dig +short myip.opendns.com @resolver1.opendns.com
-    \curl -4 -s http://icanhazip.com/s
+    getIpv 4
 }
 
 function getIpv6 {
-    \curl -6 -s http://icanhazip.com/s
+    getIpv 6
+}
+
+function getIpv {
+    # dig +short myip.opendns.com @resolver1.opendns.com
+    \curl "-$1" -s http://icanhazip.com/s
 }
 
 function mailIpTo {
@@ -514,6 +518,7 @@ function cdocker {
             IMAGE="registry.access.redhat.com/rhel${version}/rhel"
         fi
         local c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
+        # shellcheck disable=SC2016
         local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
         local c3="yum-config-manager --enable epel"
         args=('-c' "$c1 && $c2 && $c3 && exec bash -l" )
@@ -523,4 +528,32 @@ function cdocker {
     fi
 
     docker run -it "$IMAGE" bash "${args[*]}"
+}
+
+function editDiskAccess {
+    shopt -s nocasematch
+    local DB="$HOME/Library/Application Support/com.apple.TCC/TCC.db"
+    mapfile -t clients < <( echo "SELECT DISTINCT client FROM access WHERE client NOT LIKE '%.apple.%' ORDER BY client;" | sqlite3 -noheader -list -batch "$DB" )
+
+    local service_width=$(echo -n kTCCServiceSystemPolicyDownloadsFolder | wc -m)
+    local client_width=$(printf '%s\n' "${clients[@]}" | awk '{print length}' | max)
+
+    echo "Programs with access rights:"
+    echo
+    paste <(printf "%s)\n" "${!clients[@]}") <(printf "%s\n" "${clients[@]}")
+    echo
+    local choice="LONG STRING THAT WILL HOPEFULLY NEVER MATCH"
+    while [[ ! "${clients[@]}" =~ "${choice:-emacs}" ]] && [[ ! " ${!clients[@]} " =~ " ${choice} " ]]; do
+        read -rei emacs -p "Enter your choice: " choice
+    done
+    if [[ " ${!clients[@]} " =~ " ${choice} " ]]; then choice="${clients[$choice]}"; fi
+    echo
+    echo "Access rights for ${choice:-emacs}:"
+    echo
+    printf "SELECT service as '%-*s', client as '%-*s' FROM access WHERE client LIKE '%%%s%%' ORDER BY client;" ${service_width} service ${client_width} client ${choice:-emacs} | sqlite3 -column -header "$DB"
+    read -rp "Remove access? [yN]: " goahead
+    case "${goahead:-N}" in
+        "Y" ) echo "delete from access where client LIKE '%${choice:-emacs}%';" | sqlite3 "$DB";;
+        *) echo "aborting";;
+    esac
 }

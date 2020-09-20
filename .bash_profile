@@ -18,6 +18,7 @@ export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
 export HISTFILE=~/.bash.d/history
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
+export PAGER="less -R"
 export BAT_PAGER="less -R"
 export MORE='-R -i'
 export LESS="$MORE"

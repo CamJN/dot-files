@@ -2,12 +2,26 @@
 	name = Camden Narzt
 	email = c.narzt@me.com
 	signingkey = 45CDAC6F53A7A2EE3D294A79E349304DE45D816B
+[blame]
+	coloring = highlightRecent
 [core]
 	editor = emacs
 	filemode = false
 	autocrlf = input
 	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
 	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
+	sshCommand = 'ssh -o RemoteCommand=none '
+	pager = delta --dark
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = side-by-side line-numbers decorations navigate
+	hyperlinks = false
+	whitespace-error-style = 22 reverse
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
@@ -16,6 +30,7 @@
 	smtpserverport = 587
 [color]
 	ui = auto
+	blame = highlightRecent
 [color "branch"]
 	current = yellow bold
 	local = green bold
@@ -61,10 +76,17 @@
 [url "git@gitlab.phusion.nl:"]
 	insteadOf = https://gitlab.phusion.nl/
 [diff]
+	compactionHeuristic = true
 	algorithm = histogram
 	colorMoved = default
-	colorMovedWS = allow-indentation-change
-	# colorMovedWS = ignore-all-space
+	#colorMovedWS = allow-indentation-change
+	colorMovedWS = ignore-all-space
+[difftool "vim"]
+	cmd = vimdiff $LOCAL $REMOTE
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+	ff = false
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "sourcetree"]

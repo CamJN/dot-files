@@ -10,7 +10,7 @@
 	autocrlf = input
 	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
 	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
-	sshCommand = 'ssh -o RemoteCommand=none '
+	sshCommand = ssh -o RemoteCommand=none
 	pager = delta --dark
 [interactive]
 	diffFilter = delta --color-only

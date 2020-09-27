@@ -151,6 +151,7 @@
  '(truncate-partial-width-windows nil)
  '(user-full-name "Camden Narzt")
  '(user-mail-address "<camden.narzt@hotmail.com>")
+ '(vc-git-program "/usr/local/bin/git")
  '(version-control t)
  '(visible-bell t)
  '(which-func-mode t t)

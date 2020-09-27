@@ -17,16 +17,11 @@
    "/usr/local/etc/openssl/misc" ":"
    "/usr/local/opt/openssl/bin" ":"
    "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
+   "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
    "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
    (getenv "PATH")
   )
 )
-
-;; (defadvice package-compute-transaction
-;;     (before package-compute-transaction-reverse (package-list requirements) activate compile)
-;;   "reverse the requirements"
-;;   (setq requirements (reverse requirements))
-;;   (print requirements))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "https://melpa.org/packages/")))
 (when (< emacs-major-version 27)
@@ -34,8 +29,6 @@
 
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa") (file-name-as-directory "auctex-11.86")))
-
-;;(load "nxhtml/autostart.el")
 
 (require 'defuns)
 (require 'diff-hl nil t)
@@ -150,22 +143,7 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
-;;(setq web-mode-content-types-alist '(("[tj]sx" . "\\.[tj]s[x]?\\'"))) ;; should be fixed: https://github.com/fxbois/web-mode/issues/585
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
-;;----------Reverting Stuff-------------------------------------
-;;(remove-hook 'after-revert-hook (car after-revert-hook))
-;; (add-hook 'after-revert-hook  (lambda ()
-;;                                 (beginning-of-buffer)
-;;                                 (buffer-disable-undo)
-;;                                 (flush-lines ".+PHP Strict Standards: +Non-static method .+ should not be called statically in.+")
-;;                                 ;;(flush-lines "^ referer: .+$")
-;;                                 (beginning-of-buffer)
-;;                                 (while (re-search-forward ", referer:" nil t)(replace-match ",\n referer:" nil nil))
-;;                                 (end-of-buffer)
-;;                                 (highlight-regexp ".*\\([fF]atal\\|PHP Parse\\).*" 'hi-red-b)
-;;                                 (highlight-regexp ".*\\([Ww]arning\\|[Nn]otice\\).*" 'hi-yellow)
-;;                                 (highlight-regexp ".*Note:.*" 'hi-green-b)
-;;                                 ))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()
@@ -213,10 +191,6 @@
                                                    (let
                                                        ((comint-buffer-maximum-size 0))
                                                      (comint-truncate-buffer))))
-
-;;----------Server stuff------------------------------------
-;; (when (fboundp 'server-running-p)(unless (server-running-p) (server-start)))
-
 
 ;;----------iBuffer Mode stuff------------------------------------
 (define-ibuffer-column size-h

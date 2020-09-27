@@ -88,6 +88,6 @@ if which rbenv > /dev/null; then
 fi
 
 if [ "Darwin" = "$(uname)" ]; then
-    archey -c -p -o -l
+    neofetch
     calendar
 fi

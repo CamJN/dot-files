@@ -1,0 +1,19 @@
+[target.x86_64-apple-darwin.openssl-sys]
+rustc-link-search = [ "/usr/local/opt/openssl/lib" ]
+rustc-link-lib = [ "ssl", "crypto" ]
+include = "/usr/local/opt/openssl/include"
+
+[profile.release]
+panic = 'abort'
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+incremental = false
+#strip = 'symbols'
+
+[build]
+rustflags = ["-C", "target-cpu=native", "-F", "unsafe_code"]
+

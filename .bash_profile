@@ -89,5 +89,4 @@ fi
 
 if [ "Darwin" = "$(uname)" ]; then
     neofetch
-    calendar
 fi

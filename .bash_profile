@@ -87,6 +87,6 @@ if which rbenv > /dev/null; then
     eval "$(rbenv init -)";
 fi
 
-if [ "Darwin" = "$(uname)" ]; then
+if [ "Darwin" = "$(uname)" ] && [ -x "$(command -v neofetch)" ]; then
     neofetch
 fi

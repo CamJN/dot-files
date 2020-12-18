@@ -23,7 +23,7 @@ alias df='df -Ph'
 alias echo='echo -e'
 alias enter='cdocker'
 alias egrep='grep -E'
-alias emptycache='sudo killall -HUP mDNSResponder'
+alias emptycache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder;'
 alias fgrep='fgrep -I --color=always --exclude=*.xhprof'
 alias find='cfind'
 alias gzip='pigz -9'
@@ -71,7 +71,7 @@ alias trim="tr -d ' '"
 alias up='cd ../'
 alias update='sudo softwareupdate --install -a ; brew update && brew upgrade ; gem update ; npm update -g'
 alias version="sw_vers"
-alias wait='sleep'
+#alias wait='sleep' # wait is for waiting for processes to end
 alias wifi='airport -I'
 alias wget='wget -c'
 

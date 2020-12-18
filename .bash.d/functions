@@ -118,10 +118,10 @@ function csed {
 
 function colors {
     for i in {0..31} ; do
-    for j in {0..7} ; do
-        printf "[7;(38;05;%d)mColor %-3d[0m\t" $((i + j * 32)) $((i + j * 32))
-    done;
-    echo ''
+        for j in {0..7} ; do
+            printf "[7;(38;05;%d)mColor %-3d[0m\t" $((i + j * 32)) $((i + j * 32))
+        done;
+        echo ''
     done;
     echo -n "[0m"
 }
@@ -220,7 +220,7 @@ function fplay {
     DOAPPLESCRIPT=0
     APPLESCRIPTPART1='tell application "QuickTime Player" to delay 1'
     APPLESCRIPTPART2='tell application "QuickTime Player" to play the first document'
-    MUSICROOT=~/Music/iTunes
+    MUSICROOT=~/Music/
     OUTPUT1="/dev/null"
     OUTPUT2="/dev/null"
     AUTHOR=""
@@ -527,7 +527,7 @@ function cdocker {
         return 1
     fi
 
-    docker run -it "$IMAGE" bash "${args[*]}"
+    docker run -it  --security-opt seccomp=unconfined "$IMAGE" bash "${args[*]}"
 }
 
 function editDiskAccess {
@@ -556,4 +556,11 @@ function editDiskAccess {
         "Y" ) echo "delete from access where client LIKE '%${choice:-emacs}%';" | sqlite3 "$DB";;
         *) echo "aborting";;
     esac
+}
+
+function csoftwareupdate {
+    softwareupdate -l |\
+        fgrep Label |\
+        awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
+        xargs -0 -I {} softwareupdate -d '{}'
 }

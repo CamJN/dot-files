@@ -8,14 +8,18 @@
 	editor = emacs
 	filemode = false
 	autocrlf = input
-	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
+#	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks # breaks local hooks
 	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
 	sshCommand = ssh -o RemoteCommand=none
 	pager = delta --dark
+	compression = 9
+	looseCompression = 9
+[pack]
+	compression = 9
 [interactive]
 	diffFilter = delta --color-only
 [delta]
-	features = side-by-side line-numbers decorations navigate
+	features = side-by-side line-numbers decorations #navigate
 	hyperlinks = false
 	whitespace-error-style = 22 reverse
 [delta "decorations"]
@@ -25,8 +29,8 @@
 [sendemail]
 	smtpencryption = tls
 	smtpserver = smtp.gmail.com
-	smtpuser =
-	smtppass =
+	smtpuser = camden.narzt@gmail.com
+	# smtppass = leave this out to use gitcredential
 	smtpserverport = 587
 [color]
 	ui = auto
@@ -64,8 +68,8 @@
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
 [gpg]
 	program = /usr/local/bin/gpg
@@ -75,6 +79,8 @@
 	template = /Users/camdennarzt/.config/git/commitMsg
 [url "git@gitlab.phusion.nl:"]
 	insteadOf = https://gitlab.phusion.nl/
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [diff]
 	compactionHeuristic = true
 	algorithm = histogram
@@ -97,3 +103,6 @@
 	trustExitCode = true
 [init]
 	defaultBranch = main
+# [credential]
+# 	helper = op
+#       helper = osxkeychain

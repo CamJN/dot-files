@@ -25,6 +25,7 @@
  '(completion-styles '(substring partial-completion emacs22))
  '(confirm-kill-processes nil)
  '(confirm-nonexistent-file-or-buffer nil)
+ '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
    '("0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e" "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default))

@@ -1,0 +1,5 @@
+#!/usr/local/bin/bash
+
+for ver in $(comm -13 <(rbenv versions --bare) <(rbenv install -l 2>/dev/null | tr -d ' ' | rg '^[0-9\.]+$')); do
+    rbenv install $ver;
+done

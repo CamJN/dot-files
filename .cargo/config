@@ -1,3 +1,13 @@
+[cargo-new]
+name = "Camden Narzt"
+email = "rust@narzt.cam"
+vcs = "git"
+
+[target.arm64-apple-macos.openssl-sys]
+rustc-link-search = [ "/opt/homebrew/opt/openssl/lib" ]
+rustc-link-lib = [ "ssl", "crypto" ]
+include = "/opt/homebrew/opt/openssl/include"
+
 [target.x86_64-apple-darwin.openssl-sys]
 rustc-link-search = [ "/usr/local/opt/openssl/lib" ]
 rustc-link-lib = [ "ssl", "crypto" ]
@@ -12,8 +22,8 @@ lto = true
 debug-assertions = false
 codegen-units = 1
 incremental = false
-#strip = 'symbols'
+#strip = 'symbols' #nightly only
 
 [build]
-rustflags = ["-C", "target-cpu=native", "-F", "unsafe_code"]
-
+rustflags = ["-C", "target-cpu=native"]
+#rustflags = ["-C", "target-cpu=native", "-F", "unsafe_code"] # blocks bindgen for get_args

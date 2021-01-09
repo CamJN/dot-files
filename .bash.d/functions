@@ -155,7 +155,7 @@ function loveSongsForCamden {
 
 # shellcheck disable=SC2164
 function chdir {
-    if [ "$_" == "ccalendar" ]; then
+    if [ "$_" == "neofetch" ]; then
         if [ -n "$1" ]; then
             cd "${@//~\?/$HOME/}";
         else
@@ -368,14 +368,14 @@ function install_op {
         echo "Please update script at ${BASH_SOURCE[*]}" >&2
     fi
 
-    until ls ~/Downloads/op_darwin_amd64_v*.pkg &>/dev/null; do
+    until ls ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg &>/dev/null; do
         echo "please download op from $OP_RELEASE_NOTES_URL first"
         open "$OP_RELEASE_NOTES_URL"
         read -rp "Press enter to continue"
     done
 
-    sudo installer -pkg ~/Downloads/op_darwin_amd64_v*.pkg -target /
-    rm ~/Downloads/op_darwin_amd64_v*.pkg
+    sudo installer -pkg ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg -target /
+    rm ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg
 }
 
 function getoplimit {
@@ -400,11 +400,14 @@ function cop {
     if [ ! -x /usr/local/bin/op ]; then
         install_op
     else
-        /usr/local/bin/op update &>/dev/null || /usr/local/bin/op update
+        local output=$(/usr/local/bin/op update)
+        if [[ "$output" =~ "is now available" ]]; then
+            install_op
+        fi
     fi
 
-    if [[ "$1" == "update" || "$1" == "help" ]]; then
-        /usr/local/bin/op "$@"
+    if [[ "$1" == "update" || "$1" == "help" || "$1" == "--update" || "$1" == "--help" ]]; then
+        /usr/local/bin/op "${@#--}"
         return;
     fi
 

@@ -1,0 +1,35 @@
+#!/usr/local/bin/bash
+
+declare -i last_called=0
+declare -i throttle_by=1
+declare -i parallel=1
+declare script=/usr/local/etc/netwatchrc
+
+while getopts "h?c:p" opt; do
+    case "$opt" in
+    h|\?)
+        echo "Use: $0 [-h][-?] [-p] [-c /path/to/script]"
+        exit 0
+        ;;
+    c)  script="$OPTARG"
+        ;;
+    p)  parallel=0
+        throttle_by=0
+        ;;
+    esac
+done
+
+@throttle() {
+    local -i now=$(date +%s)
+    if ((now - last_called >= throttle_by))
+    then
+        last_called=$now
+        "$@"
+    fi
+}
+
+mkfifo P
+exec 3>P # open file descriptor 3 writing to the pipe
+scutil < P | grep -F notification | xargs -L 1 -P $parallel @throttle "$script"
+echo -e "n.add State:/Network/Global/IPv[46]\nn.watch" > P
+#echo -e "n.add State:/Network/Global/IPv4\nn.watch" > P

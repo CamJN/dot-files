@@ -1,0 +1,9 @@
+#!/usr/local/bin/bash
+
+interface=$(route -n get default | grep -F interface | awk "{print \$2}")
+nameserver=$(ipconfig getoption "$interface" domain_name_server)
+
+grep -F  "nameserver ${nameserver:-1.1.1.1}"   /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf || \
+    echo "nameserver ${nameserver:-1.1.1.1}" > /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
+
+[ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

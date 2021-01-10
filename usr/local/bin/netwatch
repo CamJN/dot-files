@@ -36,12 +36,9 @@ mkfifo netwatch_pipe
 
 exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
 
-# regex doesn't work, need some kind of key/pattern syntax i don't yet understand
-#echo -e "n.add State:/Network/Global IPv.\nn.watch" > netwatch_pipe
-
-echo -e "n.add State:/Network/Global/IPv4\nn.watch" > netwatch_pipe
-#echo "n.add State:/Network/Global/IPv4" > netwatch_pipe
-#echo "n.watch" > netwatch_pipe
+#echo -e "n.add State:/Network/Global/IPv4\nn.watch" > netwatch_pipe
+echo 'n.add State:/Network/Global/IPv. "IPv."' > netwatch_pipe
+echo "n.watch" > netwatch_pipe
 
 trap "rm netwatch_pipe" INT TERM EXIT
 

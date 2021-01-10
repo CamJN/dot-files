@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>update.resolv.conf</string>
+    <string>local.secur-t.netwatch</string>
     <key>ProgramArguments</key>
     <array>
       <string>/usr/local/bin/netwatch</string>
@@ -13,10 +13,10 @@
     <key>KeepAlive</key>
     <true/>
     <key>WorkingDirectory</key>
-    <string>/usr/local/etc/dnsmasq.d</string>
+    <string>/usr/local/var/run/netwatch</string>
     <key>StandardOutPath</key>
-    <string>/usr/local/var/log/resolvconf.log</string>
+    <string>/usr/local/var/log/netwatch.log</string>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/resolvconf.err.log</string>
+    <string>/usr/local/var/log/netwatch.err.log</string>
   </dict>
 </plist>

@@ -7,15 +7,15 @@ declare script=/usr/local/etc/netwatchrc
 
 while getopts "h?c:p" opt; do
     case "$opt" in
-    h|\?)
-        echo "Use: $0 [-h][-?] [-p] [-c /path/to/script]"
-        exit 0
-        ;;
-    c)  script="$OPTARG"
-        ;;
-    p)  parallel=0
-        throttle_by=0
-        ;;
+        h|\?)
+            echo "Use: $0 [-h][-?] [-p] [-c /path/to/script]"
+            exit 0
+            ;;
+        c)  script="$OPTARG"
+            ;;
+        p)  parallel=0
+            throttle_by=0
+            ;;
     esac
 done
 
@@ -28,8 +28,21 @@ done
     fi
 }
 
-mkfifo P
-exec 3>P # open file descriptor 3 writing to the pipe
-scutil < P | grep -F notification | xargs -L 1 -P $parallel @throttle "$script"
-echo -e "n.add State:/Network/Global/IPv[46]\nn.watch" > P
-#echo -e "n.add State:/Network/Global/IPv4\nn.watch" > P
+[ -p netwatch_pipe ] && rm netwatch_pipe
+mkfifo netwatch_pipe
+
+#xargs cannot use throttle...
+( scutil < netwatch_pipe | grep -F notification | xargs -L 1 -P $parallel "$script" ) &
+
+exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
+
+# regex doesn't work, need some kind of key/pattern syntax i don't yet understand
+#echo -e "n.add State:/Network/Global IPv.\nn.watch" > netwatch_pipe
+
+echo -e "n.add State:/Network/Global/IPv4\nn.watch" > netwatch_pipe
+#echo "n.add State:/Network/Global/IPv4" > netwatch_pipe
+#echo "n.watch" > netwatch_pipe
+
+trap "rm netwatch_pipe" INT TERM EXIT
+
+wait

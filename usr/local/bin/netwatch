@@ -19,20 +19,20 @@ while getopts "h?c:p" opt; do
     esac
 done
 
-@throttle() {
-    local -i now=$(date +%s)
-    if ((now - last_called >= throttle_by))
-    then
-        last_called=$now
-        "$@"
-    fi
+function throttle () {
+    while read -r line; do
+        current_time=$(date +%s)
+        if (( current_time > last_called )); then
+            echo -e "${line}"
+            last_called=$((current_time + throttle_by))
+        fi
+    done
 }
 
 [ -p netwatch_pipe ] && rm netwatch_pipe
 mkfifo netwatch_pipe
 
-#xargs cannot use throttle...
-( scutil < netwatch_pipe | grep -F notification | xargs -L 1 -P $parallel "$script" ) &
+( scutil < netwatch_pipe | grep -F notification | throttle | xargs -L 1 -P $parallel "$script" ) &
 
 exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
 

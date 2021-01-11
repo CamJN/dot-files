@@ -40,6 +40,6 @@ exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
 echo 'n.add State:/Network/Global/IPv. "IPv."' > netwatch_pipe
 echo "n.watch" > netwatch_pipe
 
-trap "rm netwatch_pipe" INT TERM EXIT
+trap "rm netwatch_pipe" TERM
 
 wait

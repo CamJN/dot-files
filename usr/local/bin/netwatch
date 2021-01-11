@@ -32,7 +32,7 @@ function throttle () {
 [ -p netwatch_pipe ] && rm netwatch_pipe
 mkfifo netwatch_pipe
 
-( scutil < netwatch_pipe | grep -F notification | throttle | xargs -L 1 -P $parallel "$script" ) &
+( scutil < netwatch_pipe | grep -Fe notification --line-buffered | throttle | xargs -L 1 -P $parallel "$script" ) &
 
 exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
 

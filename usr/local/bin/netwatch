@@ -36,7 +36,6 @@ mkfifo netwatch_pipe
 
 exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
 
-#echo -e "n.add State:/Network/Global/IPv4\nn.watch" > netwatch_pipe
 echo 'n.add State:/Network/Global/IPv. "IPv."' > netwatch_pipe
 echo "n.watch" > netwatch_pipe
 

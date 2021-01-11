@@ -5,6 +5,7 @@ declare -i throttle_by=1
 declare -i parallel=1
 declare script=/usr/local/etc/netwatchrc
 
+# parse options
 while getopts "h?c:p" opt; do
     case "$opt" in
         h|\?)
@@ -19,6 +20,7 @@ while getopts "h?c:p" opt; do
     esac
 done
 
+# only print lines every $throttle_by seconds
 function throttle () {
     while read -r line; do
         current_time=$(date +%s)
@@ -29,16 +31,25 @@ function throttle () {
     done
 }
 
+# cleanup in case of bad exit
 [ -p netwatch_pipe ] && rm netwatch_pipe
+# create clean pipe
 mkfifo netwatch_pipe
 
+# background this job so we can continue the script, it waits on the pipe.
+# --line-buffered grep is needed because this runs in launchd with no tty
 ( scutil < netwatch_pipe | grep -Fe notification --line-buffered | throttle | xargs -L 1 -P $parallel "$script" ) &
 
-exec 3>netwatch_pipe # open file descriptor 3 writing to the pipe
+# open file descriptor 3 writing to the pipe, so that the pipe stays open forever
+exec 3>netwatch_pipe
 
+# scutil script
 echo 'n.add State:/Network/Global/IPv. "IPv."' > netwatch_pipe
 echo "n.watch" > netwatch_pipe
 
+# cleanup pipe when asked to quit
 trap "rm netwatch_pipe" TERM
 
+# make this script wait for backgrounded job, which waits on pipe, which waits on this script
+# ergo: wait until the trap above gets hit
 wait

@@ -57,7 +57,6 @@ AuthorizedKeysFile	.ssh/authorized_keys
 PasswordAuthentication no
 PermitEmptyPasswords no
 AuthenticationMethods publickey,keyboard-interactive:pam
-#AuthenticationMethods publickey,keyboard-interactive:pam password,keyboard-interactive:pam
 
 # Change to no to disable s/key passwords
 ChallengeResponseAuthentication yes
@@ -123,3 +122,4 @@ Subsystem	sftp	/usr/libexec/sftp-server
 Match Address fc00::/7,10.0.1.0/24
  	PasswordAuthentication no
  	AuthenticationMethods publickey
+#AuthenticationMethods publickey,keyboard-interactive:pam password,keyboard-interactive:pam

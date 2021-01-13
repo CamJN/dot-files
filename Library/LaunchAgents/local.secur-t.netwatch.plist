@@ -4,6 +4,8 @@
   <dict>
     <key>Label</key>
     <string>local.secur-t.netwatch</string>
+    <key>UserName</key>
+    <string>camdennarzt</string>
     <key>ProgramArguments</key>
     <array>
       <string>/usr/local/bin/netwatch</string>

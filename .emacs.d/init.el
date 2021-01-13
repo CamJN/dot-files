@@ -9,26 +9,28 @@
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
 
+(setenv "LANG" "en_CA.UTF-8")
+(setenv "__CF_USER_TEXT_ENCODING" "0x1F5:0x8000100:0x52")
 (setenv "PATH"
-  (concat
-   "/usr/local/bin" ":"
-   "/usr/local/sbin" ":"
-   "/usr/local/opt/qt5/bin" ":"
-   "/usr/local/etc/openssl/misc" ":"
-   "/usr/local/opt/openssl/bin" ":"
-   "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
-   "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
-   "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
-   (getenv "PATH")
-  )
-)
+        (concat
+         "/usr/local/bin" ":"
+         "/usr/local/sbin" ":"
+         "/usr/local/opt/qt5/bin" ":"
+         "/usr/local/etc/openssl/misc" ":"
+         "/usr/local/opt/openssl/bin" ":"
+         "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
+         "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
+         "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
+         (getenv "PATH")
+         )
+        )
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "https://melpa.org/packages/")))
 (when (< emacs-major-version 27)
   (package-initialize))
 
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
-(add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa") (file-name-as-directory "auctex-11.86")))
+(add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa")))
 
 (require 'defuns)
 (require 'diff-hl nil t)

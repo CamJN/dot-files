@@ -11,6 +11,7 @@ if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
 fi
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export TERM=xterm-256color
+export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
 export GREP_OPTIONS='--color=auto --line-buffered'

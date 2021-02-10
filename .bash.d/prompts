@@ -5,7 +5,7 @@ shopt -s checkwinsize
 
 TERM_MOD=${INSIDE_EMACS}$TERM
 case "$TERM_MOD" in
-    xterm-256color)
+    screen-256color | xterm-256color)
         if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
             export GIT_PROMPT_ONLY_IN_REPO=0
             export GIT_PROMPT_THEME=Custom

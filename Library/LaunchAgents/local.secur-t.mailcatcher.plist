@@ -6,12 +6,25 @@
     <string>me.mailcatcher</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/camdennarzt/.rbenv/shims/mailcatcher</string>
-      <string>--foreground</string>
+      <string>/usr/local/bin/MailHog</string>
+      <string>-api-bind-addr</string>
+      <string>127.0.0.1:8025</string>
+      <string>-ui-bind-addr</string>
+      <string>127.0.0.1:8025</string>
+      <string>-smtp-bind-addr</string>
+      <string>127.0.0.1:1025</string>
+      <string>-api-host</string>
+      <string>https://mailcatcher.dev</string>
+      <string>-hostname</string>
+      <string>https://mailcatcher.dev</string>
     </array>
     <key>KeepAlive</key>
     <true/>
     <key>RunAtLoad</key>
     <true/>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/mailcatcher.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/mailcatcher.err</string>
   </dict>
 </plist>

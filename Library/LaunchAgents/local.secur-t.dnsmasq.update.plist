@@ -6,10 +6,7 @@
     <string>update.dnsmasq</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/bin/curl</string>
-      <string>https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnsmasq/dnsmasq.blacklist.txt</string>
-      <string>-o</string>
-      <string>./dnsmasq.blacklist.txt</string>
+      <string>/Users/camdennarzt/Developer/Bash/dot-files/usr/local/bin/dnsmasq.update.sh</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

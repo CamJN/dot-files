@@ -20,6 +20,8 @@
   <true/>
   <key>WorkingDirectory</key>
   <string>/usr/local</string>
+  <key>StandardOutPath</key>
+  <string>/usr/local/var/log/postgres.log</string>
   <key>StandardErrorPath</key>
   <string>/usr/local/var/log/postgres.log</string>
 </dict>

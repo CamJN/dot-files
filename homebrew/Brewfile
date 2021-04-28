@@ -1,11 +1,14 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
 tap "phusion/passenger"
+tap "snaipe/soft"
 
 brew "bash"
 brew "bash-completion@2"
 brew "bash-git-prompt"
+brew "cmake"
 brew "coturn"
+brew "snaipe/soft/criterion"
 brew "dnsmasq"
 brew "openssl"
 brew "emacs"
@@ -16,7 +19,10 @@ brew "git-delta"
 brew "gnupg"
 brew "go"
 brew "google-authenticator-libpam"
-brew "llvm"
+brew "hyperfine"
+brew "jq"
+brew "llvm", dependencies: ignore
+brew "mailhog"
 brew "neofetch"
 brew "nmap"
 brew "node"
@@ -40,9 +46,14 @@ brew "wget"
 brew "xz"
 
 mas "1Blocker", id: 1107421413
-mas "GarageBand", id: 682658836
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
 mas "Reeder", id: 1449412482
+
+non-mas "Docker For Mac", "https://docs.docker.com/docker-for-mac/install/"
+non-mas "Sketch", "https://www.sketch.com/downloads/mac/"
+non-mas "1Password", "https://1password.com/downloads/mac/", "https://support.1password.com/cs/1password-classic-extension/"
+non-mas "Tower", "https://www.git-tower.com/download/mac"
+non-mas "Firefox Developer Edition", "https://www.mozilla.org/en-US/firefox/all/?q=English%20(Canadian)#product-desktop-developer"

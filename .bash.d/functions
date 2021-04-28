@@ -529,13 +529,13 @@ function cdocker {
         # shellcheck disable=SC2016
         local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
         local c3="yum-config-manager --enable epel"
-        args=('-c' "$c1 && $c2 && $c3 && exec bash -l" )
+        args=("$c1" '&&' "$c2" '&&' "$c3")
     else
         echo "Couldn't find proper distro for $1"
         return 1
     fi
 
-    docker run -it  --security-opt seccomp=unconfined "$IMAGE" bash "${args[*]}"
+    docker run -it  --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
 }
 
 function editDiskAccess {

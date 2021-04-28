@@ -146,6 +146,7 @@
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
+(add-to-list 'auto-mode-alist '("\\.svgz?\\'" . xml-mode))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

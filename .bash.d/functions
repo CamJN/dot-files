@@ -347,10 +347,10 @@ function unix {
     date -r "$1"
 }
 
-function install_op {
-    OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
-    OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
-    OP_ARCH="amd64"
+function get_op {
+    local OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
+    local OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
+    local OP_ARCH="amd64"
 
     if op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}"); then
         op_url=$(echo "${op_release_notes}" | xmllint --html --xpath "string(//article[not(@class='beta')][1]/div[@class='cli-archs']/p[@class='system ${OP_PLATFORM}']/a[text()='${OP_ARCH}']/@href)" - 2>/dev/null)
@@ -373,7 +373,11 @@ function install_op {
         open "$OP_RELEASE_NOTES_URL"
         read -rp "Press enter to continue"
     done
+}
 
+function install_op {
+    local OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
+    local OP_ARCH="amd64"
     sudo installer -pkg ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg -target /
     rm ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg
 }
@@ -398,6 +402,7 @@ function getUsernameFor {
 
 function cop {
     if [ ! -x /usr/local/bin/op ]; then
+        get_op
         install_op
     else
         local output=$(/usr/local/bin/op update)

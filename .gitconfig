@@ -17,9 +17,9 @@
 [pack]
 	compression = 9
 [interactive]
-	diffFilter = delta --color-only
+#	diffFilter = delta --color-only
 [delta]
-	features = side-by-side line-numbers decorations #navigate
+	features = side-by-side line-numbers decorations navigate
 	hyperlinks = false
 	whitespace-error-style = 22 reverse
 [delta "decorations"]
@@ -49,6 +49,8 @@
 	added = green bold
 	changed = yellow bold
 	untracked = red bold
+[apply]
+	whitespace = fix
 [alias]
 	history = log --oneline --abbrev-commit --all --graph --decorate --color
 	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -56,7 +58,7 @@
 	submodules = submodule
 	idiff = difftool -t idiff -y
 	dfw = diff --ignore-space-change
-        commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
+	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -83,6 +85,8 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 [diff]
+	renames = copies
+	indentHeuristic = true
 	compactionHeuristic = true
 	algorithm = histogram
 	colorMoved = default
@@ -98,12 +102,12 @@
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [init]
 	defaultBranch = main
-# [credential]
-# 	helper = op
-#       helper = osxkeychain
+[credential]
+	helper = osxkeychain
+#	helper = op

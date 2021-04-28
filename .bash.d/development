@@ -24,7 +24,6 @@ if [ "$(uname)" = "Darwin" ]; then
     export GOROOT=/usr/local/opt/go/libexec
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
-    export PATH=~/.cargo/bin:$PATH
     if [ -f ~/.cargo/env ]; then
         source ~/.cargo/env
     fi

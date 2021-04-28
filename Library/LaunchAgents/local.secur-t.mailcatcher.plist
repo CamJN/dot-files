@@ -14,9 +14,9 @@
       <string>-smtp-bind-addr</string>
       <string>127.0.0.1:1025</string>
       <string>-api-host</string>
-      <string>https://mailcatcher.dev</string>
+      <string>https://mailcatcher.test</string>
       <string>-hostname</string>
-      <string>https://mailcatcher.dev</string>
+      <string>https://mailcatcher.test</string>
     </array>
     <key>KeepAlive</key>
     <true/>

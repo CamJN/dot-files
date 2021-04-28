@@ -27,7 +27,7 @@ alias emptycache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder;
 alias fgrep='fgrep -I --color=always --exclude=*.xhprof'
 alias find='cfind'
 alias gzip='pigz -9'
-alias ip="2>/dev/null ifconfig eth0 || ifconfig en0 || ifconfig en1 | \sed -Ee 's/ ((0x)?[0-9:a-f]{3,}|[0-9.]{7,})[ %]/[(01;(38;05;122))m \1 [0m/g'"
+alias ip="echo 'eth0\nen0\nen1' | xargs -n1 ipconfig getifaddr"
 alias jsay='say -v Kyoko'
 alias killline='kl'
 alias lastlogin="last -1 \$(whoami) | head -1 | \sed -Ee 's/\$(whoami) +([^ ]+) +([^:]*:[0-9]\.?[0-9]) +(.*)/Last Login: \2 on \1/g'"
@@ -67,6 +67,7 @@ alias swap='pushd +1'
 alias tail='tail -f'
 alias tar='ctar'
 alias top='top -U `whoami` -o cpu'
+alias tree="tree -aC -I '.git|node_modules'"
 alias trim="tr -d ' '"
 alias up='cd ../'
 alias update='sudo softwareupdate --install -a ; brew update && brew upgrade ; gem update ; npm update -g'

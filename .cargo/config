@@ -22,8 +22,15 @@ lto = true
 debug-assertions = false
 codegen-units = 1
 incremental = false
-#strip = 'symbols' #nightly only
+overflow-checks = false
+# strip = 'symbols' # nightly only
+
+[profile.dev]
+split-debuginfo = "unpacked"
 
 [build]
-rustflags = ["-C", "target-cpu=native"]
-#rustflags = ["-C", "target-cpu=native", "-F", "unsafe_code"] # blocks bindgen for get_args
+rustflags = ["-C", "target-cpu=native","--remap-path-prefix"]
+#rustflags = ["-C", "target-cpu=native","--remap-path-prefix", "-F", "unsafe_code"] # unsafe in get_args project :(
+
+[install]
+root = "/usr/local/bin"

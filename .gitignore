@@ -26,3 +26,4 @@ Thumbs.db
 *.pyc
 *.out
 .sass-cache
+/usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt

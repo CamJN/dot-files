@@ -25,7 +25,11 @@
          )
         )
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/") ("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(
+                         ("gnu" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ))
 (when (< emacs-major-version 27)
   (package-initialize))
 

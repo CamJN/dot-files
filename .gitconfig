@@ -59,6 +59,8 @@
 	idiff = difftool -t idiff -y
 	dfw = diff --ignore-space-change
 	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
+	upto = "! git push origin \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\" | sed -e 's@.*/@@') #"
+	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -111,3 +113,5 @@
 [credential]
 	helper = osxkeychain
 #	helper = op
+[pull]
+	rebase = true

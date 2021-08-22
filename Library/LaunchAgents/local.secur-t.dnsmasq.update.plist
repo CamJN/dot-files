@@ -20,8 +20,8 @@
     <key>WorkingDirectory</key>
     <string>/Users/camdennarzt/Developer/Bash/dot-files/usr/local/etc/dnsmasq.d</string>
     <key>StandardOutPath</key>
-    <string>/usr/local/var/log/dnsmasq.update.log</string>
+    <string>/usr/local/var/log/dnsmasq/dnsmasq.update.log</string>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/dnsmasq.update.err.log</string>
+    <string>/usr/local/var/log/dnsmasq/dnsmasq.update.err.log</string>
   </dict>
 </plist>

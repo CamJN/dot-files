@@ -1,5 +1,5 @@
 *|*:root {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 #PanelUI-button,
@@ -60,18 +60,26 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     right: 95px !important;
     padding: 2px;
     max-width:500px !important;
-    min-width: 140px !important;
+    min-width: 160px !important;
+    /*align: right;*/
 }
 
 #statuspanel[type=overLink] #statuspanel-label,
 #statuspanel[inactive][previoustype=overLink] #statuspanel-label {
     /* --chrome-color + .6 aplha */
     --lwt-toolbar-field-color: #9f9fa1;
+    --lwt-toolbar-field-background-color: var(--toolbar-field-background-color);
     --lwt-toolbar-field-background: var(--lwt-toolbar-field-background-color);
-    /*--lwt-toolbar-field-background: var(--lwt-toolbar-field-focus); // when toolbar focused */
+    /*--lwt-toolbar-field-background: var(--lwt-toolbar-field-focus); /* when toolbar focused */
+
+    /* --urlbar-box-bgcolor */
+    /* --toolbar-field-focus-background-color */
+    /* --urlbar-box-hover-bgcolor */
+
     border: none !important;
+    /* color: var(--toolbar-field-color) !important; */
     color: var(--lwt-toolbar-field-color) !important;
-    font-size: 13.75px !important;
+    font-size: 1.25em !important;
     padding-left: 22px!important;
     background-color: var(--lwt-toolbar-field-background)!important;
     --left: calc(100% - 18.5px);
@@ -79,8 +87,8 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     background-image:
         linear-gradient(-45deg,  var(--lwt-toolbar-field-background) var(--left),       transparent var(--left)),
         linear-gradient(-135deg, var(--lwt-toolbar-field-background) var(--left),       transparent var(--left)),
-        linear-gradient(-45deg,  white calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))),
-        linear-gradient(-135deg, white calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))) !important;
+        linear-gradient(-45deg,  var(--toolbar-field-color) calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))),
+        linear-gradient(-135deg, var(--toolbar-field-color) calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))) !important;
 }
 
 #statuspanel #statuspanel-label {
@@ -90,4 +98,10 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[multiselected="true"]:-moz-lwtheme,
 #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[selected="true"]:-moz-lwtheme {
 --lwt-selected-tab-background-color: rgba(255, 255, 255, .2);
+}
+
+#commonDialogWindow,
+#window-modal-dialog {
+    --in-content-page-background: rgb(28,27,34);
+    background-color: var(--in-content-page-background);
 }

@@ -215,6 +215,13 @@ function zipup {
     mv "$1.zip" ../
 }
 
+function cnotify {
+    osascript -e 'on run argv
+      set AppleScript'\''s text item delimiters to " "
+      display notification (argv as string) with title "Terminal"
+    end run' "$@"
+}
+
 function fplay {
     TYPEREGEX='.*\.(3g[2|p]|a(ac|c3|dts|if[c|f]?|mr|nd|u)|caf|m4[a|r]|mp([1-4|a]|eg[0,9]?)|sd2|wav)'
     DOAPPLESCRIPT=0

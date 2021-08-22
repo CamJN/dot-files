@@ -14,6 +14,7 @@ fi
 if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
     export JAVA_HOME
 fi
+export DO_NOT_TRACK=1
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
 export CLICOLOR=1
@@ -28,10 +29,10 @@ export PAGER="less -R"
 export BAT_PAGER="less -R"
 export MORE='-R -i'
 export LESS="$MORE"
-export PIGZ="-9"
 export GZIP="-9"
-export GZIP_OPT="-9"
-export XZ_OPT="-9"
+export PIGZ="$GZIP"
+export GZIP_OPT="$GZIP"
+export XZ_OPT="$GZIP"
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;37m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -51,6 +52,7 @@ shopt -s xpg_echo
 shopt -s globstar
 shopt -s nocaseglob
 shopt -s nocasematch
+shopt -s direxpand
 
 #sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
 

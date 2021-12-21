@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# 1   │ ppp0
+# 2   │
+# 3   │ 0
+# 4   │ 10.0.2.3
+# 5   │ 10.255.255.0
+# 6   │ 10.0.1.1
+
+if [ ${1:-empty} = 'ppp0' ]; then
+    for ip in 201 204; do
+        route add -host 10.0.1.$ip -interface $1
+    done
+fi

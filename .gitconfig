@@ -61,6 +61,7 @@
 	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
 	upto = "! git push origin \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\" | sed -e 's@.*/@@') #"
 	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
+	tar = "git archive --format=tar --output=archive.tar HEAD"
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -103,10 +104,10 @@
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/git_local/libexec/git-core/mergetools/opendiff \"$LOCAL\" \"$REMOTE\"
 	path =
 [mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/git_local/libexec/git-core/mergetools/opendiff \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [init]
 	defaultBranch = main
@@ -115,3 +116,7 @@
 #	helper = op
 [pull]
 	rebase = true
+
+# [includeIf "gitdir:~/Developer/"]
+# path = ~/Developer/.gitconfig
+# core.sshCommand = "ssh -i key"

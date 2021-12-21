@@ -1,16 +1,18 @@
 #!/usr/local/bin/bash
 
 MANPATH=/Library/Developer/CommandLineTools/usr/share/man
-MANPATH=/Library/Frameworks/R.framework/Versions/3.1/Resources:$MANPATH
-MANPATH=/opt/X11/share/man:$MANPATH
+MANPATH=/usr/share/man:$MANPATH
 MANPATH=/usr/local/man:$MANPATH
 MANPATH=/usr/local/share/man:$MANPATH
-MANPATH=/usr/share/man:$MANPATH
-MANPATH=/Applications/Emacs.app/Contents/Resources/man:$MANPATH
-MANPATH=/usr/local/opt/erlang/lib/erlang/man:$MANPATH
+MANPATH=/usr/local/Homebrew/Library/Homebrew/manpages:$MANPATH
+MANPATH=/usr/local/lib/node_modules/npm/man:$MANPATH
+# MANPATH=/Library/Frameworks/R.framework/Versions/*/Resources:$MANPATH
+# MANPATH=/opt/X11/share/man:$MANPATH
+# MANPATH=/usr/local/opt/erlang/lib/erlang/man:$MANPATH
 
 PATH=/usr/local/sbin:$PATH
 PATH=$PATH:/Library/Developer/CommandLineTools/usr/bin
+PATH=$PATH:/Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources
 PATH=$PATH:/usr/libexec
 PATH=/usr/local/etc/openssl/misc:$PATH
 PATH=/usr/local/opt/openssl/bin:$PATH

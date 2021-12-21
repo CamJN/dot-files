@@ -91,11 +91,11 @@ if [ -f ~/.bash.d/emacs ]; then
     . ~/.bash.d/emacs
 fi
 
-if which rbenv > /dev/null; then
+if command -v rbenv > /dev/null; then
     export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl"
     eval "$(rbenv init -)";
 fi
 
-if [ "Darwin" = "$(uname)" ] && [ -x "$(command -v neofetch)" ]; then
+if [ "Darwin" = "$(uname)" ] && command -v neofetch >/dev/null; then
     neofetch
 fi

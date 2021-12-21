@@ -155,19 +155,26 @@ function loveSongsForCamden {
 
 # shellcheck disable=SC2164
 function chdir {
-    if [ "$_" == "neofetch" ]; then
-        if [ -n "$1" ]; then
-            cd "${@//~\?/$HOME/}";
-        else
-            cd ~
-        fi
-    else
-        if [ -n "$1" ]; then
+    # if [ "$_" == "neofetch" ]; then
+    #     if [ -n "$1" ]; then
+    #         cd "${@//~\?/$HOME/}";
+    #     else
+    #         cd ~
+    #     fi
+    #     $_=cd
+    # else
+        if [ $# -eq 2 ]; then
+            if [ $1 = '-b' ]; then
+                pushd $(sed -e "s|$HOME|~|" <<< $PWD | cut -d / -f "1-$2" | sed -e "s|~|$HOME|" )
+            else
+                pushd $(sed -e "s|$HOME|~|" <<< $PWD | cut -d / -f "1-$(bc "($(sed -e "s|$HOME|~|" <<< $PWD | tr -dc '/' | wc -c) + 1) - $2" )" | sed -e "s|~|$HOME|" )
+            fi
+        elif [ -n "$1" ]; then
             pushd "${@//~\?/$HOME/}";
         else
             pushd ~
         fi
-    fi
+    #fi
 }
 
 function ccalendar {

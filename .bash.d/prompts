@@ -6,12 +6,13 @@ shopt -s checkwinsize
 TERM_MOD=${INSIDE_EMACS}$TERM
 case "$TERM_MOD" in
     screen-256color | xterm-256color)
-        if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+        GIT_PROMPT_PATH="$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+        if [ -f "$GIT_PROMPT_PATH" ]; then
             export GIT_PROMPT_ONLY_IN_REPO=0
             export GIT_PROMPT_THEME=Custom
             export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
             # shellcheck disable=SC1090
-            source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+            source "$GIT_PROMPT_PATH"
         fi
         ;;
     screen | xterm)
@@ -27,5 +28,3 @@ case "$TERM_MOD" in
         export SUDO_PS1="> "
         ;;
 esac
-
-

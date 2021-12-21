@@ -9,7 +9,10 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS="Fuck off, seriously"
     export HOMEBREW_UPDATE_TO_TAG="Homebrew devs suck"
     # export HOMEBREW_BUILD_FROM_SOURCE="Fuck off, forever"
+    export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
+    export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK="fuck you"
+    export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK="rebuilding llvm for no reason? fuck you"
     export HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies $HOMEBREW_BUNDLE_FILE | awk '{print $2}' | tr -d '",')"
 
     function project {
@@ -24,6 +27,7 @@ if [ "$(uname)" = "Darwin" ]; then
 
     export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
+    export PATH="$PATH:$(paste -s -d ':' - <<< $HOME/Library/Python/*/bin)"
     export PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     if [ -f ~/.cargo/env ]; then

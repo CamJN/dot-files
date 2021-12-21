@@ -24,7 +24,7 @@ save_function _filedir old_filedir
 _filedir() {
     #initialization_code
     if [[ $cur == \~\?* ]]; then
-        cur=$(echo "$cur" | command sed -Ee 's/^\~\?/~\//')
+        cur=$(command sed -Ee 's/^\~\?/~\//' <<< "$cur")
     fi
     old_filedir
     #cleanup_code

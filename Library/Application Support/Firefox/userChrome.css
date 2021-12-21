@@ -17,12 +17,12 @@ notification[value="plugin-hidden"]
     display: none !important;
 }
 
-#page-action-buttons image {
-    filter: grayscale(100%);
+#page-action-buttons .urlbar-addon-page-action image {
+    filter: grayscale(100%) invert() contrast(33%) sepia(100%) saturate(200%) !important;
 }
-#page-action-buttons image:hover {
-    background-color: rgba(204, 204, 204, 0.4);
-}
+/* #page-action-buttons image:hover {
+ *     background-color: rgba(204, 204, 204, 0.4);
+ * } */
 
 #urlbar[breakout][breakout-extend] {
   left: unset !important;
@@ -57,7 +57,7 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     margin: 0 !important;
     position: fixed !important;
     top: 30px !important;
-    right: 95px !important;
+    right: 60px !important;
     padding: 2px;
     max-width:500px !important;
     min-width: 160px !important;
@@ -67,7 +67,7 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 #statuspanel[type=overLink] #statuspanel-label,
 #statuspanel[inactive][previoustype=overLink] #statuspanel-label {
     /* --chrome-color + .6 aplha */
-    --lwt-toolbar-field-color: #9f9fa1;
+    --lwt-toolbar-field-color: var(--toolbar-field-color);
     --lwt-toolbar-field-background-color: var(--toolbar-field-background-color);
     --lwt-toolbar-field-background: var(--lwt-toolbar-field-background-color);
     /*--lwt-toolbar-field-background: var(--lwt-toolbar-field-focus); /* when toolbar focused */

@@ -29,7 +29,7 @@ overflow-checks = false
 split-debuginfo = "unpacked"
 
 [build]
-rustflags = ["-C", "target-cpu=native","--remap-path-prefix"]
+rustflags = ["-C", "target-cpu=native"]
 #rustflags = ["-C", "target-cpu=native","--remap-path-prefix", "-F", "unsafe_code"] # unsafe in get_args project :(
 
 [install]

@@ -21,9 +21,12 @@
          "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
          "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
          "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
+         "/Users/camdennarzt/.rbenv/shims" ":"
          (getenv "PATH")
          )
         )
+; set exec-path based on PATH
+(setq exec-path (eval (car (get 'exec-path 'standard-value))))
 
 (setq package-archives '(
                          ("gnu" . "https://elpa.gnu.org/packages/")

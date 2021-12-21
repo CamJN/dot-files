@@ -18,9 +18,9 @@
       (set-face-background 'default "unspecified-bg" frame)))
 
 ;;----------Use text cleanly---------------------------
-(defadvice thing-at-point (after strip-text-properties (thing) activate)
-  "Don't include text properties with `thing-at-point' results."
-  (set-text-properties 0 (length ad-return-value) nil ad-return-value))
+;; (defadvice thing-at-point (after strip-text-properties (thing) activate)
+;;   "Don't include text properties with `thing-at-point' results."
+;;   (set-text-properties 0 (length ad-return-value) nil ad-return-value))
 
 
 ;;----------Scratch buffer-----------------------------
@@ -129,13 +129,13 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
 (defun line-at-point ()
   "Return the line that point is on."
   (interactive)
-  (thing-at-point 'line))
+  (thing-at-point 'line t))
 
 
 (defun function-at-point ()
   "Return the declaration part of a c-style function."
   (interactive)
-  (replace-regexp-in-string "\\({[^}]+}\\)?\n$" "" (thing-at-point 'defun)))
+  (replace-regexp-in-string "\\({[^}]+}\\)?\n$" "" (thing-at-point 'defun t)))
 
 
 (defun duplicate-lines (n)
@@ -304,6 +304,32 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
                  (replace-string (car (cdr e)) (car e)))
           )))))
 
+(defun query-multi-replace-regexp (&rest pairs)
+  "Query replace for each regexp and replacement string in PAIRS."
+  (interactive
+   (let (pairs regexp replacement)
+     (while (and (setq regexp (read-regexp "Query replace regexp"))
+                 (not (string= regexp "")))
+       (push regexp pairs)
+       (push (read-string (format "Query replace regexp %s with: " regexp))
+             pairs))
+     (nreverse pairs)))
+  (let ((pos pairs)
+        patterns)
+    (while pos
+      (push (pop pos) patterns)
+      (pop pos))
+    (perform-replace
+     (concat "\\(?:" (mapconcat 'identity patterns "\\|") "\\)")
+     (cons (lambda (pairs count)
+             (catch 'replacement
+               (while pairs
+                 (let ((regexp (pop pairs))
+                       (string (pop pairs)))
+                   (when (string-match-p regexp (match-string 0))
+                     (throw 'replacement string))))))
+           pairs)
+     :query :regexp nil)))
 
 (provide 'defuns)
 

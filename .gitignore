@@ -27,3 +27,4 @@ Thumbs.db
 *.out
 .sass-cache
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
+/.emacs.d/.lsp-session-v1

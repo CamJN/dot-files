@@ -119,7 +119,7 @@ Subsystem	sftp	/usr/libexec/sftp-server
 #	PermitTTY no
 #	ForceCommand cvs server
 
-Match Address fc00::/7,10.0.1.0/24
+Match Address 10.9.8.0/24,10.9.9.0/24
  	PasswordAuthentication no
  	AuthenticationMethods publickey
 #AuthenticationMethods publickey,keyboard-interactive:pam password,keyboard-interactive:pam

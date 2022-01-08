@@ -9,6 +9,7 @@
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
 
+(setq default-directory (getenv "HOME"))
 (setenv "LANG" "en_CA.UTF-8")
 (setenv "__CF_USER_TEXT_ENCODING" "0x1F5:0x8000100:0x52")
 (setenv "PATH"

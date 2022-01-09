@@ -1,0 +1,12 @@
+*.el diff
+*.xml diff
+*.txt diff
+*.sh diff
+*.rb diff
+*.js diff
+*.ini diff
+*.cf diff
+*.cnf diff
+*.conf diff
+*.css diff
+*.dict diff

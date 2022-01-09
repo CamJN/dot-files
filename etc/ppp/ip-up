@@ -1,14 +1,31 @@
 #!/bin/bash
 
-# 1   │ ppp0
-# 2   │
-# 3   │ 0
-# 4   │ 10.0.2.3
-# 5   │ 10.255.255.0
-# 6   │ 10.0.1.1
+# man pppd
+
+# exec > /tmp/ip-up.log
+# exec 2>&1
+
+# Arg |       name        | example value
+# 1   │ interface-name    | ppp0
+# 2   │ tty-device        |
+# 3   │ speed             | 0
+# 4   │ local-IP-address  | 10.0.2.3
+# 5   │ remote-IP-address | 10.255.255.0
+# 6   │ ipparam           | 10.0.1.1
+
+# DEVICE     The name of the serial tty device being used.
+# IFNAME     The name of the network interface being used.
+# IPLOCAL    The IP address for the local end of the link.  This is only set when IPCP has come up.
+# IPREMOTE   The IP address for the remote end of the link.  This is only set when IPCP has come up.
+# PEERNAME   The authenticated name of the peer.  This is only set if the peer authenticates itself.
+# SPEED      The baud rate of the tty device.
+# ORIG_UID   The real user-id of the user who invoked pppd.
+# PPPLOGNAME The username of the real user-id that invoked pppd. This is always set.
 
 if [ ${1:-empty} = 'ppp0' ]; then
     for ip in 201 204; do
-        route add -host 10.0.1.$ip -interface $1
+        /sbin/route add -host 10.9.8.$ip -interface $1
     done
+    #/sbin/route add -net 10.9.8.0/24 -interface $1
 fi
+

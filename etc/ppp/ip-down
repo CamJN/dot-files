@@ -4,6 +4,7 @@
 
 # exec > /tmp/ip-down.log
 # exec 2>&1
+# /usr/bin/env
 
 # Arg |       name        | example value
 # 1   │ interface-name    | ppp0
@@ -30,8 +31,8 @@
 
 
 if [ ${1:-empty} = 'ppp0' ]; then
-    for ip in 201 204; do
-        /sbin/route delete -host 10.9.8.$ip -interface $1
-    done
-    #/sbin/route delete -net 10.9.8.0/24 -interface $1
+    # for ip in 201 204; do
+    #     /sbin/route delete -host 10.9.8.$ip -interface $1
+    # done
+    /sbin/route delete -net 10.9.8.0/24 -interface $1
 fi

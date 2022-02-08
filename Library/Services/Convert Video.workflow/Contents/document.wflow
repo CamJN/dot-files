@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>488</string>
+	<string>509</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -43,8 +43,6 @@
 					</dict>
 					<key>encoderIndicator</key>
 					<dict/>
-					<key>encodingStrategyIndicator</key>
-					<dict/>
 					<key>preserveTransparencyIndicator</key>
 					<dict/>
 					<key>useSameFolderAsSource</key>
@@ -72,9 +70,7 @@
 					<key>destinationFolder</key>
 					<string>~</string>
 					<key>encoderIndicator</key>
-					<integer>6</integer>
-					<key>encodingStrategyIndicator</key>
-					<integer>1</integer>
+					<integer>2</integer>
 					<key>preserveTransparencyIndicator</key>
 					<false/>
 					<key>useSameFolderAsSource</key>
@@ -95,13 +91,15 @@
 				<key>Class Name</key>
 				<string>Encode_Media</string>
 				<key>InputUUID</key>
-				<string>0F503242-A6E9-49AE-BA8E-70ECF005FB75</string>
+				<string>7EC59B5E-0B20-4200-8294-4D5C484F1C5B</string>
 				<key>Keywords</key>
 				<array/>
 				<key>OutputUUID</key>
-				<string>D27E151C-5E80-4833-8821-B91E4A236851</string>
+				<string>E99398C8-CCA4-498B-B351-8F30798F4962</string>
+				<key>ShowWhenRun</key>
+				<true/>
 				<key>UUID</key>
-				<string>43A97CAA-8967-45F3-AF5C-969273BF7540</string>
+				<string>642BA9A7-A0A2-45EF-B99A-699174FFBBC6</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>QuickTime Player</string>
@@ -174,15 +172,17 @@
 						<string>4</string>
 					</dict>
 				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
 				<key>isViewVisible</key>
-				<true/>
+				<integer>1</integer>
 				<key>location</key>
-				<string>347.000000:364.000000</string>
+				<string>347.000000:544.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Encode Media.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
-			<true/>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>connectors</key>

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>346</string>
+	<string>488</string>
 	<key>AMApplicationVersion</key>
-	<string>2.3</string>
+	<string>2.10</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -123,9 +123,9 @@ Chars: \3/g'</string>
 					<key>1</key>
 					<dict>
 						<key>default value</key>
-						<string></string>
+						<false/>
 						<key>name</key>
-						<string>source</string>
+						<string>CheckedForUserDefaultShell</string>
 						<key>required</key>
 						<string>0</string>
 						<key>type</key>
@@ -136,9 +136,9 @@ Chars: \3/g'</string>
 					<key>2</key>
 					<dict>
 						<key>default value</key>
-						<false/>
+						<string></string>
 						<key>name</key>
-						<string>CheckedForUserDefaultShell</string>
+						<string>source</string>
 						<key>required</key>
 						<string>0</string>
 						<key>type</key>
@@ -173,14 +173,12 @@ Chars: \3/g'</string>
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<false/>
 				<key>location</key>
-				<string>309.500000:576.000000</string>
+				<string>309.000000:164.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<false/>
@@ -226,8 +224,7 @@ Chars: \3/g'</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>to joinList(aList, delimiter)	set retVal to ""	set prevDelimiter to AppleScript's text item delimiters	set AppleScript's text item delimiters to delimiter	set retVal to aList as string	set AppleScript's text item delimiters to prevDelimiter	return retValend joinListon run {input, parameters}	set output to joinList(input, "
-")			(display dialog (output as text))		return inputend run</string>
+					<string>to joinList(aList, delimiter)	set retVal to ""	set prevDelimiter to AppleScript's text item delimiters	set AppleScript's text item delimiters to delimiter	set retVal to aList as string	set AppleScript's text item delimiters to prevDelimiter	return retValend joinListon run {input, parameters}	set output to joinList(input, "")			(display dialog (output as text))		return inputend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -278,14 +275,12 @@ end run</string>
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<false/>
 				<key>location</key>
-				<string>309.500000:534.000000</string>
+				<string>309.000000:205.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<false/>
@@ -293,7 +288,7 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>EEA1869D-887A-4A31-B7BD-0756F36885F3</key>
+		<key>51C0A30E-651C-4E7B-B6E0-A87FBF3F3B30</key>
 		<dict>
 			<key>from</key>
 			<string>52DC1BB2-39D7-484F-BBB4-337F28BCA302 - 52DC1BB2-39D7-484F-BBB4-337F28BCA302</string>
@@ -314,11 +309,27 @@ end run</string>
 	</array>
 	<key>workflowMetaData</key>
 	<dict>
+		<key>applicationBundleIDsByPath</key>
+		<dict/>
+		<key>applicationPaths</key>
+		<array/>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>11</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
 		<key>serviceInputTypeIdentifier</key>
 		<string>com.apple.Automator.text</string>
 		<key>serviceOutputTypeIdentifier</key>
 		<string>com.apple.Automator.nothing</string>
 		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
 		<integer>0</integer>
 		<key>workflowTypeIdentifier</key>
 		<string>com.apple.Automator.servicesMenu</string>

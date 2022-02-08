@@ -8,22 +8,17 @@
 			<key>NSBackgroundColorName</key>
 			<string>background</string>
 			<key>NSIconName</key>
-			<string>NSActionTemplate</string>
+			<string>NSTouchBarControlStripScreenshot</string>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Convert to Audio</string>
+				<string>Resize Images</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
-			<key>NSRequiredContext</key>
-			<dict>
-				<key>NSApplicationIdentifier</key>
-				<string>com.apple.finder</string>
-			</dict>
 			<key>NSSendFileTypes</key>
 			<array>
-				<string>public.movie</string>
+				<string>public.image</string>
 			</array>
 		</dict>
 	</array>

@@ -1,8 +1,18 @@
 {
-"^ "        = "setMark:";
-"^w"        = "deleteToMark:";
-"^g"        = "cancelOperation:";
-"^x" = {
+    "^ "        = "setMark:";
+    "^w"        = "deleteToMark:";
+    "~w"        = "copy:";
+    "^g"        = "cancelOperation:";
+    "~d"      = "deleteWordForward:";            /* M-d */
+    "^a"      = "moveToBeginningOfLine:";        /* C-a */
+    "^e"      = "moveToEndOfLine:";              /* C-e */
+    "~f"      = "moveWordForward:";              /* M-f */
+    "~b"      = "moveWordBackward:";             /* M-b */
+    "~<"      = "moveToBeginningOfDocument:";    /* M-< */
+    "~>"      = "moveToEndOfDocument:";          /* M-> */
+    "~v"      = "pageUp:";                       /* M-v */
+    "^v"      = "pageDown:";                     /* C-v */
+    "^x" = {
         "^u"    = "uppercaseWord:";
         "^l"    = "lowecaseWord:";
         "u"     = "undo:";                          /* C-x u        Undo */
@@ -10,21 +20,24 @@
         "^f"    = "openDocument:";                  /* C-x C-f      Open (find file) */
         "^x"    = "swapWithMark:";                  /* C-x C-x      Swap with mark */
         "^m"    = "selectToMark:";                  /* C-x C-m      Select to mark*/
-        "^s"    = "saveDocument:";                  /* C-x C-s      Save */
-        "^w"    = "saveDocumentAs:";                /* C-x C-w      Save as */
+
+        /*"^s"    = "saveDocument:";                  /* C-x C-s      Save */
+        "^s"    = "save:";                         /* C-x C-s */
+        /*"^w"    = "saveDocumentAs:";                /* C-x C-w      Save as */
+        "^w"    = "saveAs:";                       /* C-x C-w */
     };
 
-"^/" = ("undo:", "insertText:", "\UF743");
+    "^/" = ("undo:", "insertText:", "\UF743");
 
-"^\177" = ("insertText:", "\UF744");
-"^\010" = ("insertText:", "\UF744");
-"~^\177" = ("insertText:", "\033\UF744");
-"~^\010" = ("insertText:", "\033\UF744");
+    "^\177" = ("insertText:", "\UF744");
+    "^\010" = ("insertText:", "\UF744");
+    "~^\177" = ("insertText:", "\033\UF744");
+    "~^\010" = ("insertText:", "\033\UF744");
 
-/*
-"^\U0008" = ("insertText:", "\UF744");
-"^\UF728" = ("insertText:", "\UF744");
-"~^\U0008" = ("insertText:", "\UF744");
-"~^\UF728" = ("insertText:", "\UF744");
-*/
+    /*
+    "^\U0008" = ("insertText:", "\UF744");
+    "^\UF728" = ("insertText:", "\UF744");
+    "~^\U0008" = ("insertText:", "\UF744");
+    "~^\UF728" = ("insertText:", "\UF744");
+    */
 }

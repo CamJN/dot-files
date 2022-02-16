@@ -363,8 +363,8 @@ function unix {
 
 function get_op {
     local OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
-    local OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
-    local OP_ARCH="amd64"
+    local OP_PLATFORM=apple
+    local OP_ARCH="universal"
 
     if op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}"); then
         op_url=$(echo "${op_release_notes}" | xmllint --html --xpath "string(//article[not(@class='beta')][1]/div[@class='cli-archs']/p[@class='system ${OP_PLATFORM}']/a[text()='${OP_ARCH}']/@href)" - 2>/dev/null)
@@ -390,8 +390,8 @@ function get_op {
 }
 
 function install_op {
-    local OP_PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
-    local OP_ARCH="amd64"
+    local OP_PLATFORM=apple
+    local OP_ARCH="universal"
     sudo installer -pkg ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg -target /
     rm ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg
 }
@@ -512,6 +512,20 @@ function checkIsRHEL {
     checkIsDistro "registry.access.redhat.com/$1/${1%%[0-9]*[0-9]}" latest || checkIsDistro "registry.access.redhat.com/${1/rhel/ubi}/ubi" latest
 }
 
+function makeRHELArgs {
+    local RHEL_ID=nkxqcwvnljffnae3ewas2s3afq
+    # shellcheck disable=SC2155
+    local RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
+    # shellcheck disable=SC2155
+    local RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
+    local c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
+    # shellcheck disable=SC2016
+    local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
+    local c3="yum-config-manager --enable epel"
+    local -n largs=$1
+    largs=("$c1" '&&' "$c2" '&&' "$c3")
+}
+
 function cdocker {
     local IMAGE
     local args=('-l')
@@ -528,22 +542,14 @@ function cdocker {
     elif checkIsFedora "$1"; then
         IMAGE="fedora:$1"
     elif checkIsRHEL "$1"; then
-        local RHEL_ID=nkxqcwvnljffnae3ewas2s3afq
-        # shellcheck disable=SC2155
-        local RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
-        # shellcheck disable=SC2155
-        local RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
         local version=${1##[a-z]*[a-z]}
         if [[ ${version:-8} -ge 8 ]]; then
             IMAGE="registry.access.redhat.com/ubi${version}/ubi"
         else
             IMAGE="registry.access.redhat.com/rhel${version}/rhel"
         fi
-        local c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
-        # shellcheck disable=SC2016
-        local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
-        local c3="yum-config-manager --enable epel"
-        args=("$c1" '&&' "$c2" '&&' "$c3")
+
+        makeRHELArgs args
     else
         echo "Couldn't find proper distro for $1"
         return 1

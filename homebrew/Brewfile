@@ -1,59 +1,103 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
+tap "mranno/tap"
 tap "phusion/passenger"
-tap "snaipe/soft"
+# tap "snaipe/soft"
 
+# untap "homebrew/cask"
+# untap "homebrew/services"
+
+brew "bandwhich"
 brew "bash"
 brew "bash-completion@2"
 brew "bash-git-prompt"
-brew "cmake"
+brew "bat"
+brew "bear"
 brew "coturn"
-brew "snaipe/soft/criterion"
 brew "dnsmasq"
-brew "openssl"
+brew "dust"
 brew "emacs"
+brew "exa"
 brew "fd"
 brew "geckodriver"
-brew "git"
 brew "git-delta"
 brew "gnupg"
 brew "go"
 brew "google-authenticator-libpam"
+brew "htmlq"
 brew "hyperfine"
 brew "jq"
-brew "llvm", dependencies: ignore
 brew "mailhog"
 brew "neofetch"
+brew "nginx"
 brew "nmap"
 brew "node"
+brew "openssl@3"
 brew "passenger", link: false
-brew "phusion/passenger/passenger-enterprise"
 brew "pigz"
 brew "pinentry-mac"
 brew "pngcrush"
 brew "postgresql"
-brew "ruby-build"
 brew "rbenv"
 brew "rbenv-default-gems"
 brew "redis"
 brew "ripgrep"
+brew "rust-analyzer"
 brew "rustup-init"
 brew "shellcheck"
-brew "svgcleaner"
 brew "tree"
-brew "unrar"
 brew "wget"
 brew "xz"
+brew "mranno/tap/criterion"
+brew "phusion/passenger/passenger-enterprise"
 
-mas "1Blocker", id: 1107421413
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Pixelmator Pro", id: 1289583905
-mas "Reeder", id: 1449412482
+# mas "1Blocker", id: 1107421413
+# mas "Keynote", id: 409183694
+# mas "Numbers", id: 409203825
+# mas "Pages", id: 409201541
+# mas "Pixelmator Pro", id: 1289583905
+# mas "Reeder", id: 1449412482
 
-non-mas "Docker For Mac", "https://docs.docker.com/docker-for-mac/install/"
-non-mas "Sketch", "https://www.sketch.com/downloads/mac/"
-non-mas "1Password", "https://1password.com/downloads/mac/", "https://support.1password.com/cs/1password-classic-extension/"
-non-mas "Tower", "https://www.git-tower.com/download/mac"
-non-mas "Firefox Developer Edition", "https://www.mozilla.org/en-US/firefox/all/?q=English%20(Canadian)#product-desktop-developer"
+# cask_args appdir: '/Applications'
+# cask 'docker'
+# non-mas "Docker For Mac", "https://docs.docker.com/docker-for-mac/install/"
+# cask 'sketch'
+# non-mas "Sketch", "https://www.sketch.com/downloads/mac/"
+# cask '1password'
+# cask '1password-cli'
+# non-mas "1Password", "https://1password.com/downloads/mac/", "https://support.1password.com/cs/1password-classic-extension/", "https://app-updates.agilebits.com/product_history/CLI"
+# cask 'tower'
+# non-mas "Tower", "https://www.git-tower.com/download/mac"
+# cask 'homebrew/cask-versions/firefox-developer-edition'
+# non-mas "Firefox Developer Edition", "https://www.mozilla.org/en-US/firefox/all/?q=English%20(Canadian)#product-desktop-developer"
+
+# Dolphin https://dolphin-emu.org/download/
+# Blender https://www.blender.org/download/
+# HandBrake https://handbrake.fr/downloads.php
+# Inkscape https://inkscape.org/release/
+# MakeMKV https://www.makemkv.com/download/
+# Signal https://signal.org/download/
+# Skype https://www.skype.com/en/get-skype/
+# Transmission https://transmissionbt.com/download/
+# VLC https://www.videolan.org/vlc/
+# Wireshark https://www.wireshark.org/#download
+# calibre https://calibre-ebook.com/download_osx
+
+# Fork https://git-fork.com/
+# GitHub Desktop https://desktop.github.com/
+# GitKraken https://www.gitkraken.com/download
+# Sourcetree https://www.sourcetreeapp.com/
+# Sublime Merge https://www.sublimemerge.com/download
+
+# VMware Fusion https://customerconnect.vmware.com/web/vmware/evalcenter?p=fusion-player-personal
+# VirtualBox https://www.virtualbox.org/wiki/Downloads
+# Parallels Desktop https://www.parallels.com/products/desktop/trial/
+
+# Xcode
+# Apple Configurator 2
+# XQuartz
+
+# Firefox https://www.mozilla.org/en-CA/firefox/new/
+# Google Chrome https://www.google.com/intl/en_ca/chrome/canary/
+# Google Chrome Canary https://www.google.com/intl/en_ca/chrome/canary/
+# Safari Technology Preview https://developer.apple.com/safari/download/

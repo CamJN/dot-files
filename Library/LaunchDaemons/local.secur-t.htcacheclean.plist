@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>KeepAlive</key>
+    <false/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartInterval</key>
+    <integer>3600</integer>
+    <key>Label</key>
+    <string>local.secur-t.htcacheclean</string>
+    <key>UserName</key>
+    <string>_www</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/sbin/htcacheclean</string>
+      <string>-n</string>
+      <string>-p/var/run/apache2/mod_cache_disk/routing</string>
+      <string>-l1G</string>
+      <string>-R4096</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/var/run/apache2</string>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/htcacheclean.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/htcacheclean_err.log</string>
+  </dict>
+</plist>

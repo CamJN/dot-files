@@ -15,7 +15,7 @@
 # those that follow.  The defaults only apply to options that have not been
 # explicitly set.  Options that appear multiple times keep the first value set,
 # unless they are a multivalue option such as HostKey.
-Include /etc/ssh/sshd_config.d/*
+#Include /etc/ssh/sshd_config.d/*
 
 #Port 22
 #AddressFamily any

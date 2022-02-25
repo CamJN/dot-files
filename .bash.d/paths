@@ -18,6 +18,7 @@ PATH=/usr/local/etc/openssl/misc:$PATH
 PATH=/usr/local/opt/openssl/bin:$PATH
 PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
 PATH=$PATH:/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers
+PATH=$PATH:"/Applications/VMware Fusion.app/Contents/Public"
 export PATH=$PATH:/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS
 
 #function command_not_found_handle(){}

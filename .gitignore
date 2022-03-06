@@ -30,3 +30,4 @@ Thumbs.db
 /.emacs.d/.lsp-session-v1
 /.emacs.d/lsp-logs
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
+/.emacs.d/.cache

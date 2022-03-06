@@ -5,6 +5,7 @@
 (require 'find-file)
 (require 'find-lisp)
 (require 'lsp-mode)
+(define-key lsp-mode-map (kbd "M-n") lsp-command-map)
 (require 'company)
 (require 'yasnippet)
 
@@ -139,6 +140,7 @@
   (add-hook 'c-mode-hook #'c-like-lsp-startup)
   (add-hook 'c++-mode-hook #'c-like-lsp-startup)
   (add-hook 'web-mode-hook #'lsp-deferred)
+  (add-hook 'shell-script-mode-hook #'lsp-deferred)
   (add-hook 'ruby-mode-hook (lambda ()
                               (setq lsp-solargraph-use-bundler t)
                               (lsp-deferred)))

@@ -4,7 +4,13 @@
 # shellcheck disable=SC2155
 export EMACS_SERVER_FILE="${TMPDIR}emacs$(id -u)/server"
 export EDITOR="/usr/local/bin/emacsclient -t -s $EMACS_SERVER_FILE"
-alias emacs="$EDITOR"
+function settitle {
+    printf '\e]1;%s\a' "$1"
+}
+function emacs {
+    settitle 'emacsclient'
+    $EDITOR "$@" && settitle ''
+}
 export GIT_EDITOR="$EDITOR"
 alias emacs-save="emacsclient -e '(save-some-buffers t)' -s $EMACS_SERVER_FILE >/dev/null"
 alias emacs-kill="emacsclient -e '(kill-emacs)' -s $EMACS_SERVER_FILE >/dev/null"

@@ -29,3 +29,4 @@ Thumbs.db
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
 /.emacs.d/.lsp-session-v1
 /.emacs.d/lsp-logs
+/usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf

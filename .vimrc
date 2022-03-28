@@ -11,3 +11,4 @@ set ignorecase  " do case insensitive search
 set incsearch   " show incremental search results as you type
 set number      " display line number
 set noswapfile  " disable swapfile
+set viminfo+=n${HOME}/.history/vim

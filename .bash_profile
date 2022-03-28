@@ -22,7 +22,8 @@ export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
 export GREP_OPTIONS='--color=auto --line-buffered'
 export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
 export SHELL_SESSION_HISTORY=1
-export HISTFILE=~/.bash.d/history
+export HISTFILE="$HOME/.history/bash"
+export LESSHISTFILE="$HOME/.history/less"
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
 export PAGER="less -R"

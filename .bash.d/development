@@ -1,5 +1,8 @@
 #!/usr/local/bin/bash
 
+export NODE_REPL_HISTORY="$HOME/.history/node"
+export SQLITE_HISTORY="$HOME/.history/sqlite"
+
 if [ "$(uname)" = "Darwin" ]; then
 
     export HOMEBREW_INSTALL_BADGE=🍷

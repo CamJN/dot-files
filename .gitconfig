@@ -52,12 +52,14 @@
 [apply]
 	whitespace = fix
 [alias]
+	amend = commit --amend
+	ammend = commit --amend
 	history = log --oneline --abbrev-commit --all --graph --decorate --color
 	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	git = !exec git
 	submodules = submodule
 	idiff = difftool -t idiff -y
-	dfw = diff --ignore-space-change
+	diffw = diff --ignore-space-change
 	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
 	upto = "! git push origin \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\" | sed -e 's@.*/@@') #"
 	zip = "git archive --format=zip --output=archive.zip -9 HEAD"

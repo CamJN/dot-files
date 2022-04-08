@@ -1,8 +1,6 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
-tap "mranno/tap"
 tap "phusion/passenger"
-# tap "snaipe/soft"
 
 # untap "homebrew/cask"
 # untap "homebrew/services"
@@ -48,7 +46,7 @@ brew "shellcheck"
 brew "tree"
 brew "wget"
 brew "xz"
-brew "mranno/tap/criterion"
+brew "criterion"
 brew "phusion/passenger/passenger-enterprise"
 
 # mas "1Blocker", id: 1107421413

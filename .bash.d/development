@@ -2,6 +2,7 @@
 
 export NODE_REPL_HISTORY="$HOME/.history/node"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
+export GIT_CEILING_DIRECTORIES=/Users
 
 if [ "$(uname)" = "Darwin" ]; then
 

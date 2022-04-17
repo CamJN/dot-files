@@ -14,6 +14,7 @@
 	pager = delta --dark
 	compression = 9
 	looseCompression = 9
+	whitespace = trailing-space,space-before-tab
 [pack]
 	compression = 9
 [interactive]
@@ -116,7 +117,6 @@
 	defaultBranch = main
 [credential]
 	helper = osxkeychain
-#	helper = op
 [pull]
 	rebase = true
 

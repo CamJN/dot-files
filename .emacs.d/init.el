@@ -140,6 +140,7 @@
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
 (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 (add-to-list 'auto-mode-alist '("/etc/\\(httpd\\|apache2?\\)/" . apache-mode))
 (add-to-list 'auto-mode-alist '("/.ssh/" . ssh-config-mode))

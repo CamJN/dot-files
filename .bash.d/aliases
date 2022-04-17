@@ -54,6 +54,7 @@ alias processes='ps'
 alias ps='ps -U`whoami`'
 alias push='pushd'
 alias pbcopy='cpbcopy'
+alias python=python3
 alias ql='qlmanage -p 2>/dev/null'
 alias reboot='launchctl reboot userspace'
 alias scan='airport -s'
@@ -78,5 +79,5 @@ alias version="sw_vers"
 #alias wait='sleep' # wait is for waiting for processes to end
 alias wifi='airport -I'
 alias wget='wget -c'
-
+alias xxd='xxd -e'
 alias m4b='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/data kmlucy/docker-m4b-tool'

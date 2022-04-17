@@ -10,6 +10,13 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
+# This Include directive is not part of the default sshd_config shipped with
+# OpenSSH. Options set in the included configuration files generally override
+# those that follow.  The defaults only apply to options that have not been
+# explicitly set.  Options that appear multiple times keep the first value set,
+# unless they are a multivalue option such as HostKey.
+Include /etc/ssh/sshd_config.d/*
+
 #Port 22
 #AddressFamily any
 #ListenAddress 0.0.0.0
@@ -103,14 +110,11 @@ UsePAM yes
 #ChrootDirectory none
 #VersionAddendum none
 
-# pass locale information
-AcceptEnv LANG LC_*
-
 # no default banner path
 #Banner none
 
 # override default of no subsystems
-Subsystem	sftp	/usr/libexec/sftp-server
+#Subsystem	sftp	/usr/libexec/sftp-server
 
 # Example of overriding settings on a per-user basis
 #Match User anoncvs

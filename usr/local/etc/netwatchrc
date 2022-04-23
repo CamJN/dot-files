@@ -1,13 +1,15 @@
 #!/usr/local/bin/bash
 
-interface=$(route -n get default 2>/dev/null | grep -F interface | awk '{print $2}')
+interface=$(route -n get default 2>&- | fgrep interface | tr -d ' ' | cut -d: -f2)
 nameserver=$(ipconfig getoption "$interface" domain_name_server)
 
-if [ -z "$nameserver"] ; then
-    nameserver=$(nslookup <<< server | awk -F: '/Default/{gsub(/ /,""); print $2}')
+if [ -z "$nameserver" ]; then
+    nameserver=$(nslookup <<< server | fgrep Default | sed 's/Default server:/nameserver/g')
+else
+    nameserver="nameserver $nameserver"
 fi
 
-grep -F  "nameserver ${nameserver:-1.1.1.1}"   /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf >/dev/null || \
-    echo "nameserver ${nameserver:-1.1.1.1}" > /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
+grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf || \
+    echo "${nameserver:-nameserver 1.1.1.1}" > /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

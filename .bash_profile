@@ -93,7 +93,7 @@ if [ -f ~/.bash.d/emacs ]; then
 fi
 
 if command -v rbenv > /dev/null; then
-    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl"
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl@1.1"
     eval "$(rbenv init -)";
 fi
 

@@ -1,4 +1,4 @@
 #!/usr/local/bin/bash
 #/usr/local/bin/brew-junk
 
-brew leaves | fgrep -vf <(cat ~/Developer/Bash/dot-files/homebrew/Brewfile | grep '^brew' | tr -d '",' | awk '{print $2}')
+brew leaves | fgrep -vf <(cat ~/Developer/Bash/dot-files/homebrew/Brewfile | grep '^brew' | tr -d '",' | cut -w -f2)

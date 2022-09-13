@@ -19,7 +19,7 @@ export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
-export GREP_OPTIONS='--color=auto --line-buffered'
+export GREP_OPTIONS='--binary-file=without-match --color=auto --line-buffered --exclude=*.xhprof'
 export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
 export SHELL_SESSION_HISTORY=1
 export HISTFILE="$HOME/.history/bash"

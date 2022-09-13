@@ -3,6 +3,7 @@
 export NODE_REPL_HISTORY="$HOME/.history/node"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
 export GIT_CEILING_DIRECTORIES=/Users
+export DOCKER_SCAN_SUGGEST=false
 
 if [ "$(uname)" = "Darwin" ]; then
 
@@ -13,11 +14,11 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS="Fuck off, seriously"
     export HOMEBREW_UPDATE_TO_TAG="Homebrew devs suck"
     # export HOMEBREW_BUILD_FROM_SOURCE="Fuck off, forever"
-    export HOMEBREW_UPDATE_REPORT_ONLY_INSTALLED=1
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
     export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK="fuck you"
     export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK="rebuilding llvm for no reason? fuck you"
     export HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies $HOMEBREW_BUNDLE_FILE | awk '{print $2}' | tr -d '",')"
+    export HOMEBREW_EVAL_ALL="lazy, cheap, fucking, asswipes"
 
     function project {
         if [ "$1" = 'size' ]; then

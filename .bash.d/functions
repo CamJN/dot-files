@@ -44,13 +44,14 @@ function csudo {
 
     # shellcheck disable=SC2199
     if [[ ${login:-false} == "true" || ${@: $OPTIND:1} == su ]]; then
-        read -rp "Did you want sudo bash? [Yn] " yn
+        read -rp "Did you want sudo -s? [Yn] " yn
         case $yn in
             [Nn]* ) \sudo "$@";;
-            * ) \sudo bash;;
+            * ) \sudo -s ;;
         esac
     elif [[ ${@: $OPTIND:1} == echo ]]; then
         echo "You probably want echo | sudo tee" >&2
+        \sudo -v
         builtin echo "${@: (($OPTIND+1))}"
     else
         \sudo "$@"

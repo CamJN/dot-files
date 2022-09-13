@@ -1,0 +1,12 @@
+LogLevel VERBOSE
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+PermitEmptyPasswords no
+AuthenticationMethods publickey,keyboard-interactive:pam
+ChallengeResponseAuthentication yes
+UsePAM yes
+Match Address fe80::/10,fc00::/7,10.9.8.0/24,10.9.9.0/24
+ 	PasswordAuthentication no
+ 	AuthenticationMethods publickey
+#AuthenticationMethods publickey,keyboard-interactive:pam password,keyboard-interactive:pam

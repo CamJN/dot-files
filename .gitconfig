@@ -15,6 +15,7 @@
 	compression = 9
 	looseCompression = 9
 	whitespace = trailing-space,space-before-tab
+	fsmonitor = true
 [pack]
 	compression = 9
 [interactive]
@@ -119,6 +120,8 @@
 	helper = osxkeychain
 [pull]
 	rebase = true
+[submodule]
+	recurse = true
 
 # [includeIf "gitdir:~/Developer/"]
 # path = ~/Developer/.gitconfig

@@ -9,6 +9,12 @@
 (require 'company)
 (require 'yasnippet)
 
+
+;; -- Manpage Stuff ---
+(add-hook 'nroff-mode-hook
+          (lambda () (add-hook 'after-save-hook 'nroff-view nil 'local)))
+
+
 ;;----------Makefile Stuff------------------------------------
 (add-hook 'makefile-mode-hook
           (lambda ()

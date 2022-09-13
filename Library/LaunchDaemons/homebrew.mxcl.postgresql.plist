@@ -2,27 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>KeepAlive</key>
-  <true/>
-  <key>Label</key>
-  <string>homebrew.mxcl.postgresql</string>
-  <key>UserName</key>
-  <string>camdennarzt</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/usr/local/opt/postgresql/bin/postgres</string>
-    <string>-D</string>
-    <string>/usr/local/var/postgres</string>
-    <string>-r</string>
-    <string>/usr/local/var/log/postgres.log</string>
-  </array>
-  <key>RunAtLoad</key>
-  <true/>
-  <key>WorkingDirectory</key>
-  <string>/usr/local</string>
-  <key>StandardOutPath</key>
-  <string>/usr/local/var/log/postgres.log</string>
-  <key>StandardErrorPath</key>
-  <string>/usr/local/var/log/postgres.log</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>homebrew.mxcl.postgresql@14</string>
+	<key>UserName</key>
+	<string>camdennarzt</string>
+	<key>LimitLoadToSessionType</key>
+	<array>
+		<string>Aqua</string>
+		<string>Background</string>
+		<string>LoginWindow</string>
+		<string>StandardIO</string>
+		<string>System</string>
+	</array>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/opt/postgresql@14/bin/postgres</string>
+		<string>-D</string>
+		<string>/usr/local/var/postgres@14</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/usr/local/var/log/postgresql@14.log</string>
+	<key>StandardOutPath</key>
+	<string>/usr/local/var/log/postgresql@14.log</string>
+	<key>WorkingDirectory</key>
+	<string>/usr/local</string>
 </dict>
 </plist>

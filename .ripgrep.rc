@@ -19,3 +19,7 @@ rs:include:rust
 rb:include:ruby
 --type-add
 groovy:*.groovy,Jenkinsfile
+--type-add
+el:*.el,*.elc
+--type-add
+elisp:include:el

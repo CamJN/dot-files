@@ -52,13 +52,16 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     margin-right: 7px;
 }
 
-#statuspanel[type=overLink],
-#statuspanel[inactive][previoustype=overLink] {
+/*#statuspanel:not([hidden]):-moz-locale-dir(ltr),*/
+#statuspanel[type=overLink]:-moz-locale-dir(ltr),
+#statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
     margin: 0 !important;
     position: fixed !important;
-    top: 30px !important;
-    right: 60px !important;
-    padding: 2px;
+    top: 44px !important;
+    right: 95px !important;
+    left: unset !important;
+    bottom: unset !important;
+    padding: 2px !important;
     max-width:500px !important;
     min-width: 160px !important;
     /*align: right;*/

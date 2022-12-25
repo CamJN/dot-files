@@ -5,6 +5,9 @@ export SQLITE_HISTORY="$HOME/.history/sqlite"
 export GIT_CEILING_DIRECTORIES=/Users
 export DOCKER_SCAN_SUGGEST=false
 
+#SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
+#MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
+
 if [ "$(uname)" = "Darwin" ]; then
 
     export HOMEBREW_INSTALL_BADGE=🍷

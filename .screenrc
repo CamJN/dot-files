@@ -6,3 +6,5 @@ screen
 termcapinfo xterm* ti@:te@
 msgminwait 0
 fit
+defutf8 on
+defscrollback 32000

@@ -8,6 +8,7 @@ case "$TERM_MOD" in
     screen-256color | xterm-256color)
         GIT_PROMPT_PATH="$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
         if [ -f "$GIT_PROMPT_PATH" ]; then
+            __GIT_PROMPT_DIR="$(brew --prefix bash-git-prompt)/share"
             export GIT_PROMPT_ONLY_IN_REPO=0
             export GIT_PROMPT_THEME=Custom
             export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh

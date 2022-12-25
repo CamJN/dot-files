@@ -19,6 +19,7 @@ node_modules
 *~
 *.swp
 .#*
+.\#*
 ._*
 Thumbs.db
 .Spotlight-V100
@@ -31,3 +32,10 @@ Thumbs.db
 /.emacs.d/lsp-logs
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
 /.emacs.d/.cache
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent

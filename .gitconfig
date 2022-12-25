@@ -5,21 +5,23 @@
 [blame]
 	coloring = highlightRecent
 [core]
-	editor = emacs
-	filemode = false
-	autocrlf = input
+  	autocrlf = input
+ 	compression = 9
+  	editor = emacs
+  	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
+ 	fsyncMethod = writeout-only
+ 	looseCompression = 9
+ 	pager = delta --dark
+  	whitespace = trailing-space,space-before-tab
+#  	fsmonitor = true # really slow, wtf?
+#	fsync = none
+# 	filemode = false
 #	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks # breaks local hooks
-	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
-	sshCommand = ssh -o RemoteCommand=none
-	pager = delta --dark
-	compression = 9
-	looseCompression = 9
-	whitespace = trailing-space,space-before-tab
-	fsmonitor = true
+#	sshCommand = ssh -vvvv
 [pack]
 	compression = 9
 [interactive]
-#	diffFilter = delta --color-only
+	diffFilter = delta --color-only
 [delta]
 	features = side-by-side line-numbers decorations navigate
 	hyperlinks = false
@@ -28,12 +30,11 @@
 	commit-decoration-style = bold yellow box ul
 	file-style = bold yellow ul
 	file-decoration-style = none
-[sendemail]
-	smtpencryption = tls
-	smtpserver = smtp.gmail.com
-	smtpuser = camden.narzt@gmail.com
-	# smtppass = leave this out to use gitcredential
-	smtpserverport = 587
+# [sendemail]
+# 	smtpencryption = tls
+# 	smtpserver = smtp.gmail.com
+# 	smtpuser = camden.narzt@gmail.com
+# 	smtpserverport = 587
 [color]
 	ui = auto
 	blame = highlightRecent
@@ -59,6 +60,7 @@
 	history = log --oneline --abbrev-commit --all --graph --decorate --color
 	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	git = !exec git
+	ignore = "!git status | grep \"$@\" | tr -d '[:space:]' >> .gitignore  #"
 	submodules = submodule
 	idiff = difftool -t idiff -y
 	diffw = diff --ignore-space-change
@@ -67,21 +69,22 @@
 	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
 	tar = "git archive --format=tar --output=archive.tar HEAD"
 	sbi = submodule update --init --recursive
-[filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+	files = diff-tree --no-commit-id --name-only -r
 [push]
 	default = simple
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
+# [filter "media"]
+# 	required = true
+# 	clean = git media clean %f
+# 	smudge = git media smudge %f
+# [filter "hawser"]
+# 	clean = git hawser clean %f
+# 	smudge = git hawser smudge %f
+# 	required = true
+# [filter "lfs"]
+# 	clean = git-lfs clean -- %f
+# 	smudge = git-lfs smudge -- %f
+# 	required = true
+# 	process = git-lfs filter-process
 [gpg]
 	program = /usr/local/bin/gpg
 # script with: exec gpg --no-tty "$@"
@@ -98,22 +101,15 @@
 	compactionHeuristic = true
 	algorithm = histogram
 	colorMoved = default
-	#colorMovedWS = allow-indentation-change
 	colorMovedWS = ignore-all-space
-[difftool "vim"]
-	cmd = vimdiff $LOCAL $REMOTE
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
 	ff = false
+[difftool "vim"]
+	cmd = vimdiff $LOCAL $REMOTE
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
-[difftool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/git_local/libexec/git-core/mergetools/opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/git_local/libexec/git-core/mergetools/opendiff \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [init]
 	defaultBranch = main
 [credential]
@@ -122,7 +118,7 @@
 	rebase = true
 [submodule]
 	recurse = true
-
-# [includeIf "gitdir:~/Developer/"]
-# path = ~/Developer/.gitconfig
-# core.sshCommand = "ssh -i key"
+# [trace2]
+# 	perfTarget = /Users/camdennarzt/Desktop/gitlog.perf
+# 	normalTarget = /Users/camdennarzt/Desktop/gitlog.normal
+# 	eventTarget = /Users/camdennarzt/Desktop/gitlog.event

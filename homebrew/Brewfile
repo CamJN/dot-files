@@ -38,7 +38,10 @@ brew "pngcrush"
 brew "postgresql"
 brew "rbenv"
 brew "rbenv-default-gems"
-brew "redis"
+brew "difftastic"
+brew "llvm"
+brew "starship"
+brew "transmission-cli"
 brew "ripgrep"
 brew "rust-analyzer"
 brew "rustup-init"
@@ -61,9 +64,6 @@ brew "phusion/passenger/passenger-enterprise"
 # non-mas "Docker For Mac", "https://docs.docker.com/docker-for-mac/install/"
 # cask 'sketch'
 # non-mas "Sketch", "https://www.sketch.com/downloads/mac/"
-# cask '1password'
-# cask '1password-cli'
-# non-mas "1Password", "https://1password.com/downloads/mac/", "https://support.1password.com/cs/1password-classic-extension/", "https://app-updates.agilebits.com/product_history/CLI"
 # cask 'tower'
 # non-mas "Tower", "https://www.git-tower.com/download/mac"
 # cask 'homebrew/cask-versions/firefox-developer-edition'

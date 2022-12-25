@@ -3,7 +3,7 @@ name = "Camden Narzt"
 email = "rust@narzt.cam"
 vcs = "git"
 
-[target.arm64-apple-macos.openssl-sys]
+[target.aarch64-apple-darwin.openssl-sys]
 rustc-link-search = [ "/opt/homebrew/opt/openssl/lib" ]
 rustc-link-lib = [ "ssl", "crypto" ]
 include = "/opt/homebrew/opt/openssl/include"

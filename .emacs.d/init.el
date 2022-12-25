@@ -70,6 +70,7 @@
 (require 'ssh-config-mode nil t)
 (require 'sql)
 (require 'shell)
+(require 'term-title nil t)
 (require 'tramphelp nil t)
 (require 'vc-git)
 (require 'web-mode nil t)
@@ -77,6 +78,7 @@
 (require 'yaml-mode nil t)
 
 (editorconfig-mode 1)
+(term-title-mode 1)
 
 (setq custom-file (concat user-emacs-directory
                           (file-name-as-directory "lisp")
@@ -157,6 +159,8 @@
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
 (add-to-list 'auto-mode-alist '("\\.svgz?\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("Makefile-" . makefile-mode))
+
+;(remove-hook 'hook-variable-name (car hook-variable-name))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

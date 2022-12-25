@@ -3,8 +3,11 @@
 if [ -n "$1" ]; then
 export ALL_BOTTLES="on"
 fi
+
+export VERSION=ventura
+
 brew info --json=v1 --installed | ruby -r json -r active_support -r 'active_support/core_ext/hash' -W0 -e 'puts JSON.load(STDIN.read).reject{|e|e["installed"].all? {|x| x["poured_from_bottle"]} }.reject{|h| h["bottle"].keys.empty?}.map{|e| [e["versions"]["bottle"], (e["name"] + " " + e["installed"][0]["used_options"].join(" ")).strip] }.select{|e|e.shift || ENV["ALL_BOTTLES"]}' | column -t
 
-#$ brew unbottled --dependents --tag monterey $(brew list) | fgrep -ve 'already bottled'
+#$ brew unbottled --dependents --tag $VERSION $(brew list) | fgrep -ve 'already bottled'
 
-#$ brew info --installed --json | jq 'map({name, monterey: .bottle.stable.files|has("monterey")|not, bottle: .|has("bottle")}) | .[] |select( .monterey and .bottle ) | .name'
+#$ brew info --installed --json | jq 'map({name, '"$VERSION"': .bottle.stable.files|has("'"$VERSION"'")|not, bottle: .|has("bottle")}) | .[] |select( .'"$VERSION"' and .bottle ) | .name'

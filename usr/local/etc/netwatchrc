@@ -1,6 +1,8 @@
 #!/usr/local/bin/bash
 
+while [ -z "$interface" ]; do
 interface=$(route -n get default 2>&- | fgrep interface | tr -d ' ' | cut -d: -f2)
+done
 nameserver=$(ipconfig getoption "$interface" domain_name_server)
 
 if [ -z "$nameserver" ]; then

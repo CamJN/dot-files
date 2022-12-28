@@ -57,6 +57,8 @@ for file in $(ls -d ~/Developer/Bash/dot-files/usr/local/etc/*); do
     fi
 done
 
+sudo -v
+
 for file in $(find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' ); do
     sudo find /private/etc \
          -type f \
@@ -83,7 +85,6 @@ mkdir -p "$HOME/Pictures/Screenshots/"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
-defaults write com.apple.finder QLEnableTextSelection -bool true
 defaults write com.apple.Safari IncludeDevelopMenu -bool true
 defaults write com.apple.terminal SecureKeyboardEntry -bool true
 defaults write com.apple.terminal StringEncodings -array 4
@@ -91,13 +92,19 @@ defaults write com.apple.ActivityMonitor IconType -int 5
 defaults write com.apple.ActivityMonitor ShowCategory -int 0
 defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
 defaults write com.apple.ActivityMonitor SortDirection -int 0
+defaults write com.apple.finder QLEnableTextSelection -bool true
 defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 defaults write com.apple.TextEdit RichText -int 0
 defaults write com.apple.TextEdit PlainTextEncoding -int 4
 defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 defaults write NSGlobalDomain AppleAccentColor -int 2
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 chflags nohidden ~/Library
 

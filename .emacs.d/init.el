@@ -141,6 +141,7 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
+(add-to-list 'auto-mode-alist '("\\.mjs?\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")

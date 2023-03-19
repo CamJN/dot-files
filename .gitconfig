@@ -65,11 +65,11 @@
 	idiff = difftool -t idiff -y
 	diffw = diff --ignore-space-change
 	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
-	upto = "! git push origin \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\" | sed -e 's@.*/@@') #"
+	upto = "! git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
 	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
 	tar = "git archive --format=tar --output=archive.tar HEAD"
 	sbi = submodule update --init --recursive
-	files = diff-tree --no-commit-id --name-only -r
+	files-in-commit = diff-tree --no-commit-id --name-only -r
 [push]
 	default = simple
 # [filter "media"]

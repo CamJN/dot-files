@@ -1,12 +1,14 @@
 #!/usr/local/bin/bash
 
 # move to /private/etc/manpaths.d/
-MANPATH=/Library/Developer/CommandLineTools/usr/share/man
+MANPATH=/Library/Developer/CommandLineTools/usr/share/man:$MANPATH
+MANPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:$MANPATH
 MANPATH=/usr/share/man:$MANPATH
-MANPATH=/usr/local/man:$MANPATH
 MANPATH=/usr/local/share/man:$MANPATH
+MANPATH=/usr/local/share/man/man:$MANPATH
 MANPATH=/usr/local/Homebrew/Library/Homebrew/manpages:$MANPATH
 MANPATH=/usr/local/lib/node_modules/npm/man:$MANPATH
+export MANPATH=$JAVA_HOME/man:$MANPATH
 # MANPATH=/Library/Frameworks/R.framework/Versions/*/Resources:$MANPATH
 # MANPATH=/opt/X11/share/man:$MANPATH
 # MANPATH=/usr/local/opt/erlang/lib/erlang/man:$MANPATH

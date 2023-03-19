@@ -13,7 +13,7 @@ class TinyPhp < Formula
   end
 
   head do
-    url "https://github.com/php/php-src.git"
+    url "https://github.com/php/php-src.git", branch: "master"
 
     depends_on "bison" => :build # bison >= 3.0.0 required to generate parsers
     depends_on "re2c" => :build # required to generate PHP lexers
@@ -54,7 +54,7 @@ class TinyPhp < Formula
 
   on_macos do
     # PHP build system incorrectly links system libraries
-    # see https://github.com/php/php-src/pull/3472
+    # see https://github.com/php/php-src/issues/10680
     patch :DATA
   end
 
@@ -106,6 +106,10 @@ class TinyPhp < Formula
     # sdk path or it won't find the headers
     headers_path = "=#{MacOS.sdk_path_if_needed}/usr" if OS.mac?
 
+    # `_www` only exists on macOS.
+    fpm_user = OS.mac? ? "_www" : "www-data"
+    fpm_group = OS.mac? ? "_www" : "www-data"
+
     args = %W[
       --prefix=#{prefix}
       --localstatedir=#{var}
@@ -137,8 +141,8 @@ class TinyPhp < Formula
       --with-curl
       --with-external-pcre
       --with-ffi
-      --with-fpm-user=_www
-      --with-fpm-group=_www
+      --with-fpm-user=#{fpm_user}
+      --with-fpm-group=#{fpm_group}
       --with-gettext=#{Formula["gettext"].opt_prefix}
       --with-gmp=#{Formula["gmp"].opt_prefix}
       --with-iconv#{headers_path}
@@ -173,6 +177,7 @@ class TinyPhp < Formula
       args << "--enable-gd"
       args << "--with-external-gd"
     end
+
     if OS.mac?
       args << "--enable-dtrace"
       args << "--with-ldap-sasl" if build.with? "openldap"
@@ -291,7 +296,7 @@ class TinyPhp < Formula
   end
 
   def caveats
-    identity = `security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit'`.lines.last || ""
+    identity = `security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit'`.lines.last.strip || ""
     identity = "code signing authority here" if identity.empty?
     <<~EOS
       To enable PHP in Apache:
@@ -315,7 +320,6 @@ class TinyPhp < Formula
     EOS
   end
 
-  plist_options manual: "php-fpm"
   service do
     run [opt_sbin/"php-fpm", "--nodaemonize"]
     run_type :immediate
@@ -369,7 +373,7 @@ class TinyPhp < Formula
       (testpath/"httpd.conf").write <<~EOS
         #{main_config}
         LoadModule mpm_prefork_module libexec/apache2/mod_mpm_prefork.so
-        LoadModule php_module #{lib}/httpd/modules/mod_php.so "#{`security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit' -e ' CA'`}"
+        LoadModule php_module #{lib}/httpd/modules/mod_php.so "#{`security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit' -e ' CA'`.strip}"
         <FilesMatch \\.(php|phar)$>
           SetHandler application/x-httpd-php
         </FilesMatch>

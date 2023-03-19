@@ -3,21 +3,23 @@ class Fakeapxs < Formula
   homepage "https://github.com/CamJN/fakeapxs"
   license "Apache-2.0"
   #head "https://github.com/CamJN/fakeapxs.git", branch: "main"
-  head "file:///Users/camdennarzt/Developer/Bash/fakeapxs/", using: :git, tag: '0.1'
-  sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  #sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  head "file:///Users/camdennarzt/Developer/Bash/fakeapxs/", using: :git, tag: 'v0.2'
 
   uses_from_macos "apache2"
 
   def install
-    inreplace "fakeapxs", "config_vars.mk >", (pkgshare/"config_vars.mk").to_s+" >"
+    inreplace "fakeapxs", "config_vars.mk >", "#{pkgshare}/config_vars.mk >"
 
-    ["apr-config","fakeapxs"].each do |file|
+    ["apr-config","apu-config","fakeapxs"].each do |file|
       FileUtils.chmod "ugo+x", buildpath/file
       bin.install file
     end
+    libexec.mkpath
+    libexec.install buildpath/"libtool"
+    FileUtils.chmod "ugo+x", libexec/"libtool"
 
     pkgshare.install "config_vars.mk"
-    bin.install_symlink bin/"apr-config" => bin/"apu-config"
   end
 
   test do

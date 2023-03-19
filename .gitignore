@@ -39,3 +39,6 @@ Thumbs.db
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+/.emacs.d/eclipse.jdt.ls
+/.emacs.d/workspace
+/.emacs.d/.dap-breakpoints

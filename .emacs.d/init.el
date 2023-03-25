@@ -26,7 +26,7 @@
          (getenv "PATH")
          )
         )
-; set exec-path based on PATH
+;;set exec-path based on PATH
 (setq exec-path (eval (car (get 'exec-path 'standard-value))))
 
 (setq package-archives '(
@@ -161,7 +161,7 @@
 (add-to-list 'auto-mode-alist '("\\.svgz?\\'" . xml-mode))
 (add-to-list 'auto-mode-alist '("Makefile-" . makefile-mode))
 
-;(remove-hook 'hook-variable-name (car hook-variable-name))
+                                        ;(remove-hook 'hook-variable-name (car hook-variable-name))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

@@ -50,9 +50,11 @@ normally, the original title is not restored."
   :init-value nil
   (if term-title-mode
       (progn
+        (add-hook 'server-visit-hook 'term-title--update)
         (add-hook 'post-command-hook 'term-title--update)
         (add-hook 'window-state-change-hook 'term-title--update)
         (add-hook 'tty-setup-hook 'term-title--update))
+    (remove-hook 'server-visit-hook 'term-title--update)
     (remove-hook 'post-command-hook 'term-title--update)
     (remove-hook 'window-state-change-hook 'term-title--update)
     (remove-hook 'tty-setup-hook 'term-title--update)))
@@ -84,13 +86,14 @@ normally, the original title is not restored."
 
 (defun term-title--set (title)
   "Unconditionally set the current TTY terminal's title."
-  (let (
-        (file (s-replace " " "%20" (or (buffer-file-name) "")))
-        (hostname (or (file-remote-p default-directory 'host) (system-name)))
-        )
+  (let* (
+         (file (s-replace " " "%20" (or (buffer-file-name (window-buffer (selected-window))) "")))
+         (hostname (or (file-remote-p default-directory 'host) (system-name)))
+         (dir (or (file-name-directory file) default-directory))
+         )
     (send-string-to-terminal (format "\e]1;%s\a" title))
     (send-string-to-terminal (format "\e]6;file://%s%s\a" hostname file))
-    (send-string-to-terminal (format "\e]7;file://%s%s\a" hostname default-directory))
+    (send-string-to-terminal (format "\e]7;file://%s%s\a" hostname dir))
     )
   )
 

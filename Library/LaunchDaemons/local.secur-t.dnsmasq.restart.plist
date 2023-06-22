@@ -7,8 +7,9 @@
     <key>ProgramArguments</key>
     <array>
       <string>/bin/launchctl</string>
-      <string>stop</string>
-      <string>homebrew.mxcl.dnsmasq</string>
+      <string>kill</string>
+      <string>SIGHUP</string>
+      <string>system/homebrew.mxcl.dnsmasq</string>
     </array>
     <key>WatchPaths</key>
     <array>

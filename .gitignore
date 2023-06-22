@@ -42,3 +42,4 @@ Thumbs.db
 /.emacs.d/eclipse.jdt.ls
 /.emacs.d/workspace
 /.emacs.d/.dap-breakpoints
+/usr/local/etc/dnsmasq.d/filtering.resolv

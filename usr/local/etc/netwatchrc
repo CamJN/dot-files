@@ -11,7 +11,7 @@ else
     nameserver="nameserver $nameserver"
 fi
 
-grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf || \
-    echo "${nameserver:-nameserver 1.1.1.1}" > /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
+grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   /usr/local/etc/dnsmasq.d/filtering.resolv || \
+    echo "${nameserver:-nameserver 1.1.1.1}" > /usr/local/etc/dnsmasq.d/filtering.resolv
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

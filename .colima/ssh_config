@@ -1,0 +1,19 @@
+Host colima
+  IdentityFile "/Users/camdennarzt/.lima/_config/user"
+  IdentityFile "/Users/camdennarzt/.ssh/id_rsa"
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  NoHostAuthenticationForLocalhost yes
+  GSSAPIAuthentication no
+  PreferredAuthentications publickey
+  Compression no
+  BatchMode yes
+  IdentitiesOnly yes
+  Ciphers "^aes128-gcm@openssh.com,aes256-gcm@openssh.com"
+  User camdennarzt
+  ControlMaster auto
+  ControlPath "/Users/camdennarzt/.lima/colima/ssh.sock"
+  ControlPersist 5m
+  Hostname 127.0.0.1
+  Port 62747
+

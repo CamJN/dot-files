@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+function shutdown() {
+    colima stop
+    exit 0
+}
+
+trap shutdown SIGTERM
+trap shutdown SIGKILL
+trap shutdown SIGINT
+
+echo checking
+if ! colima status &>/dev/null; then
+echo starting
+# reason for dns: https://github.com/lima-vm/lima/issues/1333
+    #colima start --mount-type virtiofs --vm-type vz --memory 4 --dns 127.0.0.1 --ssh-config=false
+    colima start --mount-type virtiofs --vm-type vz --memory 4 --dns $(cut -d' ' -f2 /usr/local/etc/dnsmasq.d/filtering.resolv) --ssh-config=false
+fi
+echo waiting 1
+# wait until colima is running
+until colima status &>/dev/null; do
+    sleep 5
+done
+
+tail -f ~/.lima/colima/*.log &
+wait $!

@@ -7,7 +7,11 @@
 (require 'company)
 (require 'yasnippet)
 (require 'eglot)
+(require 'treesit-auto)
 
+(global-tree-sitter-mode)
+(global-treesit-auto-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 
 ;; -- Manpage Stuff ---
 (add-hook 'nroff-mode-hook
@@ -150,18 +154,18 @@
 
   (defalias 'lsp-rename 'eglot-rename)
   (add-hook 'eglot-managed-mode-hook #'setup-eglot)
-  (add-hook 'c-mode-hook #'c-like-lsp-startup)
-  (add-hook 'c++-mode-hook #'c-like-lsp-startup)
-  (add-hook 'js-mode-hook #'eglot-ensure)
+  (add-hook 'c-ts-mode-hook #'c-like-lsp-startup)
+  (add-hook 'c++-ts-mode-hook #'c-like-lsp-startup)
+  (add-hook 'js-ts-mode-hook #'eglot-ensure)
   (add-hook 'typescript-ts-hook #'eglot-ensure)
-  (add-hook 'tsx-mode-hook #'eglot-ensure)
-  (add-hook 'bash-mode-hook #'eglot-ensure)
-  (add-hook 'ruby-mode-hook #'eglot-ensure)
-  (add-hook 'csharp-mode-hook #'eglot-ensure)
-  (add-hook 'swift-mode-hook #'eglot-ensure)
-  (add-hook 'python-mode-hook #'eglot-ensure)
-  (add-hook 'java-mode-hook #'eglot-ensure)
-  (add-hook 'rust-mode-hook (lambda ()
+  (add-hook 'tsx-ts-mode-hook #'eglot-ensure)
+  (add-hook 'bash-ts-mode-hook #'eglot-ensure)
+  (add-hook 'ruby-ts-mode-hook #'eglot-ensure)
+  (add-hook 'csharp-ts-mode-hook #'eglot-ensure)
+  (add-hook 'swift-ts-mode-hook #'eglot-ensure)
+  (add-hook 'python-ts-mode-hook #'eglot-ensure)
+  (add-hook 'java-ts-mode-hook #'eglot-ensure)
+  (add-hook 'rust-ts-mode-hook (lambda ()
                                  (setq compile-command "cargo build")
                                  (eglot-ensure)))
 

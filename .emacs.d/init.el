@@ -239,7 +239,9 @@
 (put 'scroll-left 'disabled nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'scss-hook #'rainbow-mode)
+(add-hook 'scss-ts-hook #'rainbow-mode)
 (add-hook 'css-hook #'rainbow-mode)
+(add-hook 'css-ts-hook #'rainbow-mode)
 
 (provide 'init)
 

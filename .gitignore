@@ -43,3 +43,4 @@ Thumbs.db
 /.emacs.d/workspace
 /.emacs.d/.dap-breakpoints
 /usr/local/etc/dnsmasq.d/filtering.resolv
+.emacs.d/tree-sitter/libtree-sitter-*.dylib

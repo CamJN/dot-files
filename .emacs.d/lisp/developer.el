@@ -7,11 +7,14 @@
 (require 'company)
 (require 'yasnippet)
 (require 'eglot)
-(require 'treesit-auto)
 
-(global-tree-sitter-mode)
-(global-treesit-auto-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+(if nil
+    (progn
+      (require 'treesit-auto)
+      (global-tree-sitter-mode)
+      (global-treesit-auto-mode)
+      (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+      ))
 
 ;; -- Manpage Stuff ---
 (add-hook 'nroff-mode-hook
@@ -34,13 +37,13 @@
                           (tabify (region-beginning) (region-end)))))))))
 
 ;; ------------- Go stuff ---------------------------------
-(setenv "GOPATH" "/Users/camdenarzt/Developer/Go")
-(setenv "GOROOT" "/usr/local/opt/go/libexec")
+(setenv "GOPATH" (expand-file-name "~/Developer/Go"))
+(setenv "GOROOT" (concat (car (process-lines "brew" "--prefix" "go")) "/libexec"))
 
 ;; ------------- rust stuff -------------------------------
 (setenv "PATH"
         (concat
-         "/Users/camdennarzt/.cargo/bin/" ":"
+         (expand-file-name "~/.cargo/bin/") ":"
          (getenv "GOPATH")"/bin" ":"
          (getenv "GOROOT")"/bin" ":"
          (getenv "PATH")
@@ -94,10 +97,11 @@
 ;; file switching
 (delete '("\\.h\\'" (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".c++" ".m")) cc-other-file-alist)
 (mapc (lambda (list) (add-to-list 'cc-other-file-alist list))
-      '(("\\.m$" (".h"))
-        ("\\.mm$" (".h"))
+      '(("\\.m\\'" (".h"))
+        ("\\.mm\\'" (".h"))
         ("\\.h\\'"  (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".c++" ".m" ".mm"))
         ))
+
 (cond
  ((cc-mode-p) (add-to-list 'cc-search-directories "/Library/Developer/CommandLineTools/usr/include/"))
  ((c++-mode-p) (add-to-list 'cc-search-directories "/Library/Developer/CommandLineTools/usr/include/c++/*"))
@@ -114,14 +118,15 @@
 
 (defun c-like-eglot-startup ()
   "setup eglot on c-likes"
-  (setq comment-style 'multi-line
-        comment-start "/* "
-        comment-end " */"
-        c-tab-always-indent t
-        company-idle-delay 0.0
-        )
-  (eglot-ensure)
-  )
+  (progn
+    (setq comment-style 'multi-line
+          comment-start "/* "
+          comment-end " */"
+          c-tab-always-indent t
+          company-idle-delay 0.0
+          )
+    (eglot-ensure)
+    ))
 
 (defun setup-eglot ()
   "setup eglot mode with functionality"
@@ -132,6 +137,10 @@
     (flymake-mode)
     (eglot-inlay-hints-mode nil);; force enable
     ))
+
+(defun rust-lsp-startup ()
+  (progn (setq compile-command "cargo build")
+         (eglot-ensure)))
 
 (with-eval-after-load 'eglot
 
@@ -154,21 +163,30 @@
 
   (defalias 'lsp-rename 'eglot-rename)
   (add-hook 'eglot-managed-mode-hook #'setup-eglot)
-  (add-hook 'c-ts-mode-hook #'c-like-lsp-startup)
-  (add-hook 'c++-ts-mode-hook #'c-like-lsp-startup)
-  (add-hook 'js-ts-mode-hook #'eglot-ensure)
-  (add-hook 'typescript-ts-hook #'eglot-ensure)
-  (add-hook 'tsx-ts-mode-hook #'eglot-ensure)
-  (add-hook 'bash-ts-mode-hook #'eglot-ensure)
-  (add-hook 'ruby-ts-mode-hook #'eglot-ensure)
-  (add-hook 'csharp-ts-mode-hook #'eglot-ensure)
-  (add-hook 'swift-ts-mode-hook #'eglot-ensure)
-  (add-hook 'python-ts-mode-hook #'eglot-ensure)
-  (add-hook 'java-ts-mode-hook #'eglot-ensure)
-  (add-hook 'rust-ts-mode-hook (lambda ()
-                                 (setq compile-command "cargo build")
-                                 (eglot-ensure)))
-
+  ;;(add-hook 'c-ts-mode-hook #'c-like-lsp-startup)
+  (add-hook 'c-mode-hook #'c-like-lsp-startup)
+  ;;(add-hook 'c++-ts-mode-hook #'c-like-lsp-startup)
+  (add-hook 'c++-mode-hook #'c-like-lsp-startup)
+  ;;(add-hook 'js-ts-mode-hook #'eglot-ensure)
+  (add-hook 'js-mode-hook #'eglot-ensure)
+  ;;(add-hook 'typescript-ts-hook #'eglot-ensure)
+  (add-hook 'typescript-hook #'eglot-ensure)
+  ;;(add-hook 'tsx-ts-mode-hook #'eglot-ensure)
+  (add-hook 'tsx-mode-hook #'eglot-ensure)
+  ;;(add-hook 'bash-ts-mode-hook #'eglot-ensure)
+  (add-hook 'bash-mode-hook #'eglot-ensure)
+  ;;(add-hook 'ruby-ts-mode-hook #'eglot-ensure)
+  (add-hook 'ruby-mode-hook #'eglot-ensure)
+  ;;(add-hook 'csharp-ts-mode-hook #'eglot-ensure)
+  (add-hook 'csharp-mode-hook #'eglot-ensure)
+  ;;(add-hook 'swift-ts-mode-hook #'eglot-ensure)
+  (add-hook 'swift-mode-hook #'eglot-ensure)
+  ;;(add-hook 'python-ts-mode-hook #'eglot-ensure)
+  (add-hook 'python-mode-hook #'eglot-ensure)
+  ;;(add-hook 'java-ts-mode-hook #'eglot-ensure)
+  (add-hook 'java-mode-hook #'eglot-ensure)
+  ;;(add-hook 'rust-ts-mode-hook #'rust-lsp-startup)
+  (add-hook 'rust-mode-hook #'rust-lsp-startup)
   )
 
 (provide 'developer)

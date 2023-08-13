@@ -4,18 +4,14 @@
 (require 'defuns)
 (require 'find-file)
 (require 'find-lisp)
-(require 'lsp-mode)
-(require 'lsp-sourcekit)
-(require 'lsp-pyright)
-(define-key lsp-mode-map (kbd "M-n") lsp-command-map)
 (require 'company)
 (require 'yasnippet)
+(require 'eglot)
 
 
 ;; -- Manpage Stuff ---
 (add-hook 'nroff-mode-hook
           (lambda () (add-hook 'after-save-hook 'nroff-view nil 'local)))
-
 
 ;;----------Makefile Stuff------------------------------------
 (add-hook 'makefile-mode-hook
@@ -33,10 +29,11 @@
                           (mark-paragraph)
                           (tabify (region-beginning) (region-end)))))))))
 
+;; ------------- Go stuff ---------------------------------
 (setenv "GOPATH" "/Users/camdenarzt/Developer/Go")
 (setenv "GOROOT" "/usr/local/opt/go/libexec")
 
-;; rust
+;; ------------- rust stuff -------------------------------
 (setenv "PATH"
         (concat
          "/Users/camdennarzt/.cargo/bin/" ":"
@@ -51,21 +48,8 @@
 (setq company-minimum-prefix-length 1)
 (setq company-tooltip-align-annotations t)
 
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-(add-hook 'rust-mode-hook (lambda ()
-                            (setq
-                             compile-command "cargo build"
-                             lsp-rust-analyzer-cargo-watch-command "clippy"
-                             lsp-eldoc-render-all t
-                             lsp-idle-delay 0.6
-                             lsp-rust-analyzer-server-display-inlay-hints t
-                             )
-                            (lsp-deferred)))
-
 ;;----------CC Mode stuff------------------------------------
 ;; change file extension meanings
-(add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
-(add-to-list 'auto-mode-alist '("\\.pch\\'" . objc-mode))
 (add-to-list 'magic-mode-alist
              `(,(lambda ()
                   (and (string= (file-name-extension buffer-file-name) "h")
@@ -80,7 +64,7 @@
                . c++-mode))
 
 (defun objc-mode-p ()
-  "Return t if current buffer's major mode is c++-mode."
+  "Return t if current buffer's major mode is objc-mode."
   (c-major-mode-is 'objc-mode))
 
 (defun c++-mode-p ()
@@ -97,10 +81,6 @@
 (setq compilation-read-command nil)
 (setq compilation-scroll-output t)
 (when (boundp 'compile-auto-highlight) (setq compile-auto-highlight t))
-
-;;declare/define method/function
-(local-unset-key (kbd "C-c d"))
-(local-set-key (kbd "C-c d") 'lsp-find-definition)
 
 ;; change paragraph start and separate
 (let ((separators "\\|#\\(end\\)?ifn?\\(def\\)?"))
@@ -123,38 +103,68 @@
 (define-key c++-mode-map (kbd "C-c v") 'ff-get-other-file)
 (define-key objc-mode-map (kbd "C-c v") 'ff-find-other-file)
 
-;; lsp
+;; eglot
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
       )
 
-(defun c-like-lsp-startup ()
-  "setup lsp-mode on c-likes"
+(defun c-like-eglot-startup ()
+  "setup eglot on c-likes"
   (setq comment-style 'multi-line
         comment-start "/* "
         comment-end " */"
         c-tab-always-indent t
         company-idle-delay 0.0
-        lsp-idle-delay 0.1
         )
-  (lsp-deferred)
+  (eglot-ensure)
   )
 
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'company-mode)
-  (add-hook 'lsp-mode-hook #'yas-minor-mode)
-  ;;(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-  ;;(require 'dap-cpptools)
+(defun setup-eglot ()
+  "setup eglot mode with functionality"
+  (progn
+    (add-hook 'before-save-hook #'eglot-format-buffer nil 'local)
+    (company-mode)
+    (yas-minor-mode)
+    (flymake-mode)
+    (eglot-inlay-hints-mode nil);; force enable
+    ))
+
+(with-eval-after-load 'eglot
+
+  (add-to-list 'eglot-server-programs
+               `((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
+                 .
+                 ("typescript-language-server" "--stdio"
+                  :initializationOptions
+                  (:preferences
+                   (
+                    :includeInlayParameterNameHints "all"
+                    :includeInlayParameterNameHintsWhenArgumentMatchesName t
+                    :includeInlayFunctionParameterTypeHints t
+                    :includeInlayVariableTypeHints t
+                    :includeInlayVariableTypeHintsWhenTypeMatchesName t
+                    :includeInlayPropertyDeclarationTypeHints t
+                    :includeInlayFunctionLikeReturnTypeHints t
+                    :includeInlayEnumMemberValueHints t
+                    )))))
+
+  (defalias 'lsp-rename 'eglot-rename)
+  (add-hook 'eglot-managed-mode-hook #'setup-eglot)
   (add-hook 'c-mode-hook #'c-like-lsp-startup)
   (add-hook 'c++-mode-hook #'c-like-lsp-startup)
-  (add-hook 'web-mode-hook #'lsp-deferred)
-  (add-hook 'shell-script-mode-hook #'lsp-deferred)
-  (add-hook 'ruby-mode-hook #'lsp-deferred)
-  (add-hook 'swift-mode-hook #'lsp-deferred)
-  (add-hook 'python-mode-hook #'lsp-deferred)
-  (add-hook 'java-mode-hook #'lsp-deferred)
-  )
+  (add-hook 'js-mode-hook #'eglot-ensure)
+  (add-hook 'typescript-ts-hook #'eglot-ensure)
+  (add-hook 'tsx-mode-hook #'eglot-ensure)
+  (add-hook 'bash-mode-hook #'eglot-ensure)
+  (add-hook 'ruby-mode-hook #'eglot-ensure)
+  (add-hook 'csharp-mode-hook #'eglot-ensure)
+  (add-hook 'swift-mode-hook #'eglot-ensure)
+  (add-hook 'python-mode-hook #'eglot-ensure)
+  (add-hook 'java-mode-hook #'eglot-ensure)
+  (add-hook 'rust-mode-hook (lambda ()
+                                 (setq compile-command "cargo build")
+                                 (eglot-ensure)))
 
-;; web-mode (setq lsp-idle-delay 0.500)
+  )
 
 (provide 'developer)

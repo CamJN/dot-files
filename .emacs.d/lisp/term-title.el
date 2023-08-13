@@ -27,6 +27,8 @@
 
 ;;; Code:
 
+(require 's)
+
 (defcustom term-title-format nil
   "Window title string to use for terminal windows.
 

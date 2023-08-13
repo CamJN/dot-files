@@ -121,10 +121,10 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
   (eq (preceding-char) (string-to-char char-as-string)))
 
 (defun reverse-lines-in-region (beg end)
- "Reverse characters between BEG and END."
- (interactive "r")
- (insert (nreverse (delete-and-extract-region beg end)))
-)
+  "Reverse characters between BEG and END."
+  (interactive "r")
+  (insert (nreverse (delete-and-extract-region beg end)))
+  )
 
 (defun line-at-point ()
   "Return the line that point is on."
@@ -291,6 +291,10 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
     (compile (concat "make " extension))
     (cd back)
     ))
+
+(defun remove-from-list (list pred)
+  (set list (delete (assoc pred (symbol-value list)) (symbol-value list)))
+  )
 
 ;;--------------------------------------------------------------------------------
 (defun unhtml (start end)

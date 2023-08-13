@@ -10,19 +10,19 @@
 (setq debug-on-error t)
 
 (setq default-directory (getenv "HOME"))
+(setq homebrew-prefix (car (process-lines "/usr/local/bin/brew" "--prefix")))
 (setenv "LANG" "en_CA.UTF-8")
 (setenv "__CF_USER_TEXT_ENCODING" "0x1F5:0x8000100:0x52")
 (setenv "PATH"
         (concat
-         "/usr/local/bin" ":"
-         "/usr/local/sbin" ":"
-         "/usr/local/opt/qt5/bin" ":"
-         "/usr/local/etc/openssl/misc" ":"
-         "/usr/local/opt/openssl/bin" ":"
+         (concat homebrew-prefix "/bin") ":"
+         (concat homebrew-prefix "/sbin")":"
+         (concat homebrew-prefix "/etc/openssl/misc") ":"
+         (concat (car (process-lines "brew" "--prefix" "openssl@1.1")) "/bin") ":"
          "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
          "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
          "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
-         "/Users/camdennarzt/.rbenv/shims" ":"
+         (expand-file-name "~/.rbenv/shims") ":"
          (getenv "PATH")
          )
         )
@@ -40,50 +40,29 @@
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa")))
 
-(require 'defuns)
-(require 'diff-hl nil t)
-(require 'dockerfile-mode nil t)
-(require 'markdown-mode nil t)
-(require 'emojify nil t)
-(require 'accutex nil t)
-(require 'apache nil t)
-(require 'nginx-mode nil t)
-(require 'rpm-spec-mode nil t)
-(require 'darwin nil t)
-(require 'developer nil t)
-(require 'dirtrack)
-(require 'flex-mode nil t)
-(require 'csv-mode nil t)
-(require 'guru-mode nil t)
-(require 'hide-lines nil t)
-(require 'ibuffer)
-(require 'gitconfig-mode nil t)
-(require 'gitignore-mode nil t)
-(require 'go-mode nil t)
-(require 'linux nil t)
-(require 'lisp-mode)
-(require 'locate)
-(require 'rust-mode nil t)
-(require 'racer-mode nil t)
-(require 'sass-mode)
-(require 'server)
-(require 'ssh-config-mode nil t)
-(require 'sql)
-(require 'shell)
-(require 'term-title nil t)
-(require 'tramphelp nil t)
-(require 'vc-git)
-(require 'web-mode nil t)
-(require 'editorconfig nil t)
-(require 'yaml-mode nil t)
-
-(editorconfig-mode 1)
-(term-title-mode 1)
-
 (setq custom-file (concat user-emacs-directory
                           (file-name-as-directory "lisp")
                           "custom.el"))
 (load custom-file nil t t t)
+
+(require 'dirtrack)
+(require 'ibuffer)
+(require 'lisp-mode)
+(require 'locate)
+(require 'server)
+(require 'sql)
+(require 'shell)
+(require 'vc-git)
+
+(editorconfig-mode 1)
+
+(require 'defuns)
+(require 'darwin nil t)
+(require 'developer nil t)
+(require 'tramphelp nil t)
+(require 'term-title nil t)
+
+(term-title-mode 1)
 
 ;;some modified keybindings
 (unless (display-graphic-p) (let ((input-map (cond
@@ -99,6 +78,8 @@
 (define-key isearch-mode-map    (kbd "C-o")             'isearch-occur)
 (define-key read-expression-map (kbd "<tab>")           'lisp-complete-symbol)
 (define-key occur-mode-map      (kbd "C-x C-q")         'occur-edit-mode)
+(define-key lisp-interaction-mode-map (kbd "C-c C-b") nil t)
+(define-key lisp-interaction-mode-map (kbd "C-c C-c") 'elisp-byte-compile-buffer)
 (global-set-key                 (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key                 (kbd "C-M-h")           'mark-defun)
 (global-set-key                 (kbd "C-x c")           'quick-save)
@@ -141,27 +122,19 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
-(add-to-list 'auto-mode-alist '("\\.mjs?\\'" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'completion-ignored-extensions ".DS_Store")
-(add-to-list 'auto-mode-alist '("/etc/\\(httpd\\|apache2?\\)/" . apache-mode))
-(add-to-list 'auto-mode-alist '("/.ssh/" . ssh-config-mode))
-(add-to-list 'auto-mode-alist '("/etc/nginx/" . nginx-mode))
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(setq web-mode-engines-alist '(("php" . "\\.php\\'") ("blade" . "\\.blade\\.")) )
-(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
-(add-to-list 'auto-mode-alist '("\\.svgz?\\'" . xml-mode))
-(add-to-list 'auto-mode-alist '("Makefile-" . makefile-mode))
 
-                                        ;(remove-hook 'hook-variable-name (car hook-variable-name))
+(add-to-list 'auto-mode-alist '("\\.mm\\'" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.pch\\'" . objc-mode))
+(add-to-list 'auto-mode-alist '("\\.[jt]sx\\'" . tsx-mode))
+(add-to-list 'auto-mode-alist '("\\.mjs?\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.e?rb\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("[Mm]akefile" . makefile-mode))
+(unless (display-images-p)
+  (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))
+  )
+
+;;(remove-hook 'hook-variable-name (car hook-variable-name))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()
@@ -235,7 +208,7 @@
 
 ;;----------buffer switching-------------------------------------
 
-(defvar ido-dont-ignore-buffer-names '("*scratch*" "*Occur*"))
+(defvar ido-dont-ignore-buffer-names '("*scratch*" "*Occur*" "*Help*"))
 
 (defun ido-ignore-most-star-buffers (name)
   (and
@@ -251,13 +224,7 @@
 (add-to-list 'ido-ignore-buffers 'ido-ignore-most-star-buffers)
 (icomplete-mode 1)
 
-;;----------Gui Emacs----------------------------------------
-(setq initial-frame-alist '(
-                            (font . "-*-monaco-*-*-*-*-11-*-*-*-*-*-*")
-                            (tool-bar-lines . 0)
-                            (vertical-scroll-bars . 0)))
-(setq default-frame-alist initial-frame-alist)
-(setq window-system-default-frame-alist `((ns . ,initial-frame-alist)))
+;;----------Look of Emacs in Terminal---------------------------------------
 (toggle-tool-bar-mode-from-frame -1)
 (add-hook 'after-make-frame-functions 'on-frame-open)
 

@@ -63,7 +63,7 @@
 then
 	exit -1;
 fi
-procs=`lsof "$@" | awk '{print $1,$2}' | sort -u | fgrep -vie 'COMMAND PID' `
+procs=`lsof "$@" | cut -w -f1-2 | sort -u | fgrep -vie 'COMMAND PID' `
 if [ $? -ne 0 ]
 then
 	exit 0;
@@ -636,7 +636,7 @@ $(9462ABD1-DCE6-4974-B96A-D4CD45D9D1DE)</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>awk '{print $2}' | xargs kill</string>
+					<string>cut -w -f2 | xargs kill</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>

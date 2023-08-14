@@ -18,7 +18,7 @@ echo starting
     #colima start --mount-type virtiofs --vm-type vz --memory 4 --dns 127.0.0.1 --ssh-config=false
     colima start --mount-type virtiofs --vm-type vz --memory 4 --dns $(cut -d' ' -f2 /usr/local/etc/dnsmasq.d/filtering.resolv) --ssh-config=false
 fi
-echo waiting 1
+echo waiting
 # wait until colima is running
 until colima status &>/dev/null; do
     sleep 5

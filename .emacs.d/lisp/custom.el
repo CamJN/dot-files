@@ -132,7 +132,7 @@
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   '(treesit-auto tree-sitter-langs transmission tree-sitter csharp-mode rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
+   '(eglot transmission rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
  '(query-replace-highlight t)
  '(recentf-exclude '("/docker:.*"))
  '(recentf-mode t)
@@ -176,7 +176,6 @@
  ;; If there is more than one, they won't work right.
  '(eglot-diagnostic-tag-unnecessary-face ((t (:inherit shadow :foreground "color-203" :strike-through t))))
  '(eglot-inlay-hint-face ((t (:inherit shadow :foreground "color-75" :height 0.8))))
- '(font-lock-variable-name-face ((t (:foreground "color-208"))))
  '(line-number ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
  '(linum ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
  '(shadow ((t (:foreground "color-237"))))

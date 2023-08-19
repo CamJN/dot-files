@@ -27,4 +27,6 @@ PATH=$PATH:/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helper
 PATH=$PATH:"/Applications/VMware Fusion.app/Contents/Public"
 export PATH=$PATH:/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS
 
+export INFOPATH="/usr/local/share/info:${INFOPATH:-}";
+
 #function command_not_found_handle(){}

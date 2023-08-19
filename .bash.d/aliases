@@ -76,7 +76,7 @@ alias tail='tail -f'
 alias tar='ctar'
 alias top='top -u -stats pid,command,cpu,time,mem,state,uid,user'
 alias transmission='transmission-remote'
-alias tree="tree -aC -I '.git|node_modules|.DS_Store'"
+alias tree="tree -aC -I '.git|node_modules|.DS_Store|target'"
 alias trim="tr -d ' '"
 # the below is augmented by cd being aliased to my chdir fn which allows upping n at a time
 alias up='cd ../'
@@ -87,3 +87,4 @@ alias wifi='airport -I'
 alias wget='wget -c'
 alias xxd='xxd -e'
 alias m4b='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/data kmlucy/docker-m4b-tool'
+alias tone='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/data sandreas/tone:v0.1.4'

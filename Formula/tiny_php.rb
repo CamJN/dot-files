@@ -35,7 +35,7 @@ class TinyPhp < Formula
   depends_on "libzip"
   depends_on "oniguruma"
   depends_on "openldap" => :optional
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pcre2"
   depends_on "unixodbc"
   depends_on "fakeapxs"
@@ -203,7 +203,7 @@ class TinyPhp < Formula
     end
 
     # Use OpenSSL cert bundle
-    openssl = Formula["openssl@1.1"]
+    openssl = Formula["openssl@3"]
     %w[development production].each do |mode|
       inreplace "php.ini-#{mode}", /; ?openssl\.cafile=/,
         "openssl.cafile = \"#{openssl.pkgetc}/cert.pem\""
@@ -302,11 +302,11 @@ class TinyPhp < Formula
       To enable PHP in Apache:
         Codesign the php apache extension:
 
-          codesign -s "#{identity}" --keychain ~/Library/Keychains/login.keychain-db #{opt_lib}/httpd/modules/mod_php.so
+          codesign -s "#{identity}" --keychain ~/Library/Keychains/login.keychain-db #{opt_lib}/httpd/modules/libphp.so
 
         Add the following to httpd.conf and restart Apache:
 
-          LoadModule php_module #{opt_lib}/httpd/modules/mod_php.so "#{identity}"
+          LoadModule php_module #{opt_lib}/httpd/modules/libphp.so "#{identity}"
 
           <FilesMatch \\.php$>
               SetHandler application/x-httpd-php
@@ -329,14 +329,12 @@ class TinyPhp < Formula
   end
 
   test do
-    assert_match(/^ *(with )?Zend OPcache/, shell_output("#{bin}/php -d zend_extension=#{Dir[opt_lib/"php/*/opcache.so"].first} -i"),
+    assert_match(/^Zend OPcache$/, shell_output("#{bin}/php -d zend_extension=#{Dir[opt_lib/"php/*/opcache.so"].first} -i"),
       "Zend OPCache extension not loaded")
     # Test related to libxml2 and
     # https://github.com/Homebrew/homebrew-core/issues/28398
-    if OS.mac?
-      assert_includes MachO::Tools.dylibs("#{bin}/php"),
-              "#{Formula["libpq"].opt_lib}/libpq.5.dylib"
-    end
+    assert_includes (bin/"php").dynamically_linked_libraries,
+                    (Formula["libpq"].opt_lib/shared_library("libpq", 5)).to_s
 
     system "#{sbin}/php-fpm", "-t"
     system "#{bin}/phpdbg", "-V"
@@ -373,7 +371,7 @@ class TinyPhp < Formula
       (testpath/"httpd.conf").write <<~EOS
         #{main_config}
         LoadModule mpm_prefork_module libexec/apache2/mod_mpm_prefork.so
-        LoadModule php_module #{lib}/httpd/modules/mod_php.so "#{`security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit' -e ' CA'`.strip}"
+        LoadModule php_module #{lib}/httpd/modules/libphp.so "#{`security find-identity -v -p codesigning | cut -d'"' -f2 | grep -Fve ' valid identit' -e ' CA'`.strip}"
         <FilesMatch \\.(php|phar)$>
           SetHandler application/x-httpd-php
         </FilesMatch>

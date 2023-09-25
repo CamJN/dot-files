@@ -37,6 +37,7 @@
         (make "https://github.com/alemuller/tree-sitter-make")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         ))
 
 ;;(mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
@@ -141,7 +142,7 @@
       read-process-output-max (* 1024 1024)
       )
 
-(defun c-like-eglot-startup ()
+(defun c-like-lsp-startup ()
   "setup eglot on c-likes"
   (progn
     (setq comment-style 'multi-line
@@ -162,6 +163,8 @@
     (flymake-mode)
     (eglot-inlay-hints-mode nil);; force enable
     ))
+
+(add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
 
 (defun rust-lsp-startup ()
   (progn (setq compile-command "cargo build")

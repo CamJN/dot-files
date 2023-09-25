@@ -65,7 +65,8 @@
       ("bash-config"
        (or
         (name . "^\\.bash(rc|_.*)$")
-        (mode . shell-script-mode)))
+        (mode . shell-script-mode)
+        (mode . bash-ts-mode)))
       ("shell-script"
        (or
         (mode . awk-mode)
@@ -76,34 +77,56 @@
       ("c-ish code"
        (or
         (mode . c-mode)
+        (mode . c-ts-mode)
         (mode . objc-mode)
-        (mode . java-mode)
-        (mode . c++-mode)))
+        (mode . objc-ts-mode)
+        (mode . c++-mode)
+        (mode . c++-ts-mode)))
       ("rust code"
        (or
         (mode . rust-mode)
-        (mode . toml-mode)))
+        (mode . rust-ts-mode)))
       ("other code"
        (or
         (mode . lisp-mode)
         (mode . scheme-mode)
         (mode . python-mode)
+        (mode . python-ts-mode)
+        (mode . java-mode)
+        (mode . java-ts-mode)
         (mode . sql-mode)))
+      ("config"
+       (or
+        (mode . json-ts-mode)
+        (mode . json-mode)
+        (mode . yaml-mode)
+        (mode . yaml-ts-mode)
+        (mode . toml-mode)
+        (mode . toml-ts-mode)
+        (mode . conf-mode)
+        ))
       ("web code"
        (or
         (mode . html-mode)
+        (mode . html-ts-mode)
         (mode . css-mode)
+        (mode . css-ts-mode)
         (mode . scss-mode)
         (mode . ruby-mode)
+        (mode . ruby-ts-mode)
         (mode . web-mode)
         (mode . javascript-mode)
+        (mode . typescript-ts-mode)
+        (mode . tsx-ts-mode)
+        (mode . js-ts-mode)
         (mode . js-mode)
         (mode . less-css-mode)
-        (mode . php-mode)))
+        (mode . php-mode)
+        (mode . php-ts-mode)))
       ("git"
        (name . "^\\.git.*$"))
       ("help"
-       (name . "^\\*\\(Help\\|Apropos\\|info\\)\\*$"))
+       (name . "^\\*\\(Help\\|Apropos\\|info\\|eldoc\\)\\*$"))
       ("keep around"
        (name . "^\\*\\(shell\\|scratch\\)\\*$"))
       ("built-in"

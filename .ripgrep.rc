@@ -2,7 +2,7 @@
 100M
 --follow
 --glob
-!vendor*
+!/vendor/*
 --glob
 !node_modules
 --regex-size-limit

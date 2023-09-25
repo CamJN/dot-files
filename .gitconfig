@@ -5,17 +5,18 @@
 [blame]
 	coloring = highlightRecent
 [core]
-  	autocrlf = input
- 	compression = 9
-  	editor = emacs
-  	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
- 	fsyncMethod = writeout-only
- 	looseCompression = 9
- 	pager = delta --dark
-  	whitespace = trailing-space,space-before-tab
-#  	fsmonitor = true # really slow, wtf?
+	autocrlf = input
+	compression = 9
+	editor = emacs
+# excludesfile default is: ~/.config/git/ignore
+	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
+	fsyncMethod = writeout-only
+	looseCompression = 9
+	pager = delta --dark
+	whitespace = trailing-space,space-before-tab
+#	fsmonitor = true # really slow, wtf?
 #	fsync = none
-# 	filemode = false
+#	filemode = false
 #	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks # breaks local hooks
 #	sshCommand = ssh -vvvv
 [pack]
@@ -119,6 +120,6 @@
 [submodule]
 	recurse = true
 # [trace2]
-# 	perfTarget = /Users/camdennarzt/Desktop/gitlog.perf
-# 	normalTarget = /Users/camdennarzt/Desktop/gitlog.normal
-# 	eventTarget = /Users/camdennarzt/Desktop/gitlog.event
+#	perfTarget = /Users/camdennarzt/Desktop/gitlog.perf
+#	normalTarget = /Users/camdennarzt/Desktop/gitlog.normal
+#	eventTarget = /Users/camdennarzt/Desktop/gitlog.event

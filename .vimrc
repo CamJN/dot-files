@@ -12,3 +12,8 @@ set incsearch   " show incremental search results as you type
 set number      " display line number
 set noswapfile  " disable swapfile
 set viminfo+=n${HOME}/.history/vim
+
+filetype on
+autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+autocmd BufRead,BufNewFile *.ts set filetype=typescript
+

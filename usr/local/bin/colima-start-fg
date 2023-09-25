@@ -15,8 +15,8 @@ echo checking
 if ! colima status &>/dev/null; then
 echo starting
 # reason for dns: https://github.com/lima-vm/lima/issues/1333
-    #colima start --mount-type virtiofs --vm-type vz --memory 4 --dns 127.0.0.1 --ssh-config=false
-    colima start --mount-type virtiofs --vm-type vz --memory 4 --dns $(cut -d' ' -f2 /usr/local/etc/dnsmasq.d/filtering.resolv) --ssh-config=false
+# this might also work: --dns 192.168.5.3 per: https://github.com/lima-vm/lima/blob/master/docs/network.md#dns-19216853
+    colima start --mount-type virtiofs --vm-type vz --memory 4 --dns 1.1.1.1 --ssh-config=false
 fi
 echo waiting
 # wait until colima is running
@@ -25,4 +25,4 @@ until colima status &>/dev/null; do
 done
 
 tail -f ~/.lima/colima/*.log &
-wait $!
+wait -n $! $(cat ~/.lima/colima/vz.pid)

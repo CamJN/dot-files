@@ -46,6 +46,7 @@
  '(eglot-events-buffer-size 0)
  '(file-name-shadow-mode t)
  '(fill-column 120)
+ '(flymake-show-diagnostics-at-end-of-line t)
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)
@@ -103,8 +104,7 @@
         (mode . yaml-ts-mode)
         (mode . toml-mode)
         (mode . toml-ts-mode)
-        (mode . conf-mode)
-        ))
+        (mode . conf-mode)))
       ("web code"
        (or
         (mode . html-mode)
@@ -199,6 +199,7 @@
  ;; If there is more than one, they won't work right.
  '(eglot-diagnostic-tag-unnecessary-face ((t (:inherit shadow :foreground "color-203" :strike-through t))))
  '(eglot-inlay-hint-face ((t (:inherit shadow :foreground "color-75" :height 0.8))))
+ '(ibuffer-locked-buffer ((t (:foreground "color-135"))))
  '(line-number ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
  '(linum ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
  '(shadow ((t (:foreground "color-237"))))

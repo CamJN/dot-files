@@ -17,36 +17,20 @@
   (if (not (display-graphic-p frame))
       (set-face-background 'default "unspecified-bg" frame)))
 
-;;----------Use text cleanly---------------------------
-;; (defadvice thing-at-point (after strip-text-properties (thing) activate)
-;;   "Don't include text properties with `thing-at-point' results."
-;;   (set-text-properties 0 (length ad-return-value) nil ad-return-value))
-
-
 ;;----------Scratch buffer-----------------------------
-(defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "Never kill *scratch* buffer, just move it out of the way."
-  (let ((the-arg (ad-get-arg 0)))
-    (if (and (not (null the-arg)) (string= (buffer-name (get-buffer the-arg)) "*scratch*"))
-        (progn (when (minibufferp) (ido-next-match))
-               (replace-buffer-in-windows "*scratch*"))
-      ad-do-it)))
+(with-current-buffer "*scratch*"
+	  (emacs-lock-mode 'kill))
 
 (defun dont-kill-scratch ()
   "Don't let scratch be killed."
   (unless (string= (buffer-name) "*scratch*") t))
 
-;;----------Edit sexps--------------------------------
-;; (defadvice mark-defun (around mark-defun-or-backward-kill-sexp activate)
-;;   "To work around Terminal.app's lack of a separate C-M-<backspace> input, try to infer the correct action."
-;;   (if window-system ad-do-it (if (or (previous-char-p "]") (previous-char-p "}") (previous-char-p ")") ) (backward-kill-sexp) ad-do-it)))
-
-
 ;;----------Cleaning up--------------------------------
-(defadvice erase-buffer
-    (after repopulate-scratch-buffer activate)
+(defun erase-buffer--repopulate-scratch-buffer ()
   "Reverts the *scratch* buffer to its initial state after erasing it."
   (when (string-match-p "*scratch*" (buffer-name)) (insert (substitute-command-keys initial-scratch-message))))
+
+(advice-add 'erase-buffer :after #'erase-buffer--repopulate-scratch-buffer)
 
 ;;---------set things locally--------------------------
 (defun set-local-variable (variable value)

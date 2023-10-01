@@ -14,9 +14,9 @@ if [ ! -e /Library/Developer/CommandLineTools ]; then
     #LABEL=$(softwareupdate -l | grep -B 1 -E "Command Line (Developer|Tools)" | awk -F"*" '/^ +\\*/ {print $2}' | sed 's/^ *//' | head -n1 | tr -d '\n')
     softwareupdate --no-scan -i "$LABEL" --verbose
     rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    # alternatively
+    #open -a '/System/Library/CoreServices/Install Command Line Developer Tools.app'
 fi
-# alternatively
-#open -a '/System/Library/CoreServices/Install Command Line Developer Tools.app'
 
 if [ ! -e ~/Developer/Bash ]; then
     mkdir -p ~/Developer/Bash
@@ -32,21 +32,44 @@ HOMEBREW_PREFIX=$(brew --prefix)
 export HOMEBREW_PREFIX
 export HOMEBREW_BUNDLE_NO_LOCK=1
 export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
-HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies "$HOMEBREW_BUNDLE_FILE" | cut -w -f2 | tr -d '",')"
+HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies "$HOMEBREW_BUNDLE_FILE" | cut -w -f2 | tr -d '",')" || true
 export HOMEBREW_BUNDLE_BREW_SKIP
 
-brew tap | grep -Ff <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs brew untap
+comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
 (brew bundle check || brew bundle install --verbose) && brew list | grep -e emacs -e postgresql -e dnsmasq -e libpq -e llvm -e transmission-cli -e gnupg | xargs brew pin
 
 brew doctor --list-checks | grep -Fve cask -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
 
-for file in ~/Developer/Bash/dot-files/.[!.]*; do
-    if [ "${file##*/}" = ".git" ]; then
-        continue
-    fi
-    ln -shFf "$file" "$HOME/${file##*/}"
-done
+function link_dotfiles {
+    local path="$1"
+    shift
+    local arr=("$@")
+    for file in "${arr[@]}"; do
+        local file_l1="$(basename $file)"
+        if [ "$file_l1" = ".git" ]; then
+            continue
+        fi
+        if [ -h "$HOME/$path/$file_l1" ]; then
+            # already linked
+            continue
+        fi
+        if [ -d "$HOME/$path/$file_l1" ]; then
+            # deal with dirs
+            if [ "$path" -eq "." ]; then
+                link_dotfiles "$file_l1" "${file}"/*
+            else
+                link_dotfiles "$path/$file_l1" "${file}"/*
+            fi
+            continue
+        fi
+        ln -shFf "$file" "$HOME/$path/$file_l1"
+    done
+}
+link_dotfiles . ~/Developer/Bash/dot-files/.[!.]*
+
+mkdir -p ~/.docker/cli-plugins
+ln -shfF $(brew --prefix docker-buildx)/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
 
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
     if [ "${file##*/}" = "openssl" ]; then
@@ -58,7 +81,7 @@ done
 
 sudo -v
 find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' -print0 | while IFS= read -r -d '' file; do
-  sudo find /private/etc \
+    sudo find /private/etc \
          -type f \
          -path "*/${file#"$HOME"/Developer/Bash/dot-files/etc/}" \
          -print0

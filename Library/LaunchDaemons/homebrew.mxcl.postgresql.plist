@@ -2,10 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>LC_ALL</key>
+		<string>en_CA.UTF-8</string>
+	</dict>
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.postgresql@14</string>
+	<string>homebrew.mxcl.postgresql@16</string>
 	<key>UserName</key>
 	<string>camdennarzt</string>
 	<key>LimitLoadToSessionType</key>
@@ -18,16 +23,16 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/postgresql@14/bin/postgres</string>
+		<string>/usr/local/opt/postgresql@16/bin/postgres</string>
 		<string>-D</string>
-		<string>/usr/local/var/postgresql@14</string>
+		<string>/usr/local/var/postgresql@16</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
-	<string>/usr/local/var/log/postgresql@14.log</string>
+	<string>/usr/local/var/log/postgresql@16.log</string>
 	<key>StandardOutPath</key>
-	<string>/usr/local/var/log/postgresql@14.log</string>
+	<string>/usr/local/var/log/postgresql@16.log</string>
 	<key>WorkingDirectory</key>
 	<string>/usr/local</string>
 </dict>

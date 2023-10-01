@@ -47,7 +47,7 @@ brew "passenger", link: false
 brew "pigz"
 brew "pinentry-mac"
 brew "pngcrush"
-brew "postgresql"
+brew "postgresql@16"
 brew "pyright"
 brew "rbenv"
 brew "rbenv-default-gems"

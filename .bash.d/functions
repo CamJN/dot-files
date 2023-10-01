@@ -527,11 +527,11 @@ function csoftwareupdate {
 }
 
 function postgresql-upgrade-database {
-    if [ $# -lt 2 ]; then
-        echo "Usage: brew postgresql-upgrade-database 14 16" 1>&2
-        return
+    if [ $# -lt 2 ] || [ $1 -eq $2 ]; then
+        echo "Usage: brew postgresql-upgrade-database 14 16" >&2
+        return -1
     fi
-    if [ $1 -gt $2 ]; then
+    if [ $1 -lt $2 ]; then
         local V1=postgresql@$1
         local V2=postgresql@$2
     else

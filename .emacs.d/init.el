@@ -47,6 +47,7 @@
 
 (require 'dirtrack)
 (require 'ibuffer)
+(require 'flyspell)
 (require 'lisp-mode)
 (require 'locate)
 (require 'server)
@@ -80,6 +81,9 @@
 (define-key occur-mode-map      (kbd "C-x C-q")         'occur-edit-mode)
 (define-key lisp-interaction-mode-map (kbd "C-c C-b") nil t)
 (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'elisp-byte-compile-buffer)
+(define-key flyspell-mode-map (kbd "C-x s b") 'flyspell-buffer)
+(define-key flyspell-mode-map (kbd "C-x s n") 'flyspell-goto-next-error)
+(define-key flyspell-mode-map (kbd "C-x s c") 'flyspell-correct-word)
 (global-set-key                 (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key                 (kbd "C-M-h")           'mark-defun)
 (global-set-key                 (kbd "C-x c")           'quick-save)
@@ -144,7 +148,7 @@
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.java\\'" . java-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(?:b\\(?:\\(?:abel\\|ower\\)rc\\)\\|json\\(?:ld\\)?\\)\\'" . json-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-ts-mode))
+(when (functionp 'markdown-ts-mode) (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . markdown-ts-mode)))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.py[iw]?\\'" . python-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
@@ -154,7 +158,7 @@
 (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.e?rb\\'" . ruby-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(?:\\.\\(?:rbw?\\|ru\\|rake\\|thor\\|jbuilder\\|rabl\\|gemspec\\|podspec\\)\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Puppet\\|Berks\\|Brew\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . ruby-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . html-ts-mode))
+(when (functionp 'html-ts-mode) (add-to-list 'auto-mode-alist '("\\.html?\\'" . html-ts-mode)))
 (add-to-list 'auto-mode-alist '("\\.\\(ba\\)?sh\\(rc\\)?\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.bash\\.d/\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.\\(bash_\\(profile\\|history\\|log\\(in\\|out\\)\\)\\|log\\(in\\|out\\)\\)\\'" . bash-ts-mode))
@@ -166,6 +170,17 @@
   )
 
 ;;(remove-hook 'hook-variable-name (car hook-variable-name))
+
+;; ------ Spelling ---------------------------------------
+
+(defun spell-gud()
+  (flyspell-mode 1)
+  )
+(add-hook 'markdown-ts-mode-hook #'spell-gud)
+(add-hook 'markdown-mode-hook #'spell-gud)
+(add-hook 'html-ts-mode-hook #'spell-gud)
+(add-hook 'html-mode-hook #'spell-gud)
+(add-hook 'text-mode-hook #'spell-gud)
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

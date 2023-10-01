@@ -9,7 +9,13 @@
 (require 'eglot)
 (require 'treesit)
 
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+(add-hook 'tree-sitter-after-on-hook (lambda()
+                                       (tree-sitter-hl-mode)
+                                       (keymap-set (current-local-map) (kbd "C-M-a") #'treesit-beginning-of-defun)
+                                       (keymap-set (current-local-map) (kbd "C-M-e") #'treesit-end-of-defun)
+                                       (keymap-set (current-local-map) (kbd "C-M-f") #'treesit-forward-sexp)
+                                       (keymap-set (current-local-map) (kbd "C-M-b") #'treesit-backward-sexp)
+                                       ))
 (setq treesit-load-name-override-list '((c-sharp "libtree-sitter-csharp" "tree_sitter_c_sharp")))
 (setq treesit-language-source-alist
       '(
@@ -162,6 +168,7 @@
     (yas-minor-mode)
     (flymake-mode)
     (eglot-inlay-hints-mode nil);; force enable
+    (flyspell-prog-mode)
     ))
 
 (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)

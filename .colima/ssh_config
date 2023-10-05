@@ -1,6 +1,8 @@
+# This SSH config file can be passed to 'ssh -F'.
+# This file is created by Lima, but not used by Lima itself currently.
+# Modifications to this file will be lost on restarting the Lima instance.
 Host colima
   IdentityFile "/Users/camdennarzt/.lima/_config/user"
-  IdentityFile "/Users/camdennarzt/.ssh/id_rsa"
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
   NoHostAuthenticationForLocalhost yes
@@ -15,5 +17,5 @@ Host colima
   ControlPath "/Users/camdennarzt/.lima/colima/ssh.sock"
   ControlPersist 5m
   Hostname 127.0.0.1
-  Port 49479
+  Port 62193
 

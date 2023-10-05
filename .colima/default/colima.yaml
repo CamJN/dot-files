@@ -55,7 +55,7 @@ network:
   #
   # Default: []
   dns:
-    - 10.9.8.204
+    - 1.1.1.1
   
   # DNS hostnames to resolve to custom targets using the internal resolver.
   # This setting has no effect if a custom DNS resolver list is supplied above.
@@ -145,12 +145,12 @@ layer: false
 # Custom provision scripts for the virtual machine.
 # Provisioning scripts are executed on startup and therefore needs to be idempotent.
 #
-# EXAMPLE - script exected as root
+# EXAMPLE - script executed as root
 # provision:
 #   - mode: system
 #     script: apk add htop vim
 #
-# EXAMPLE - script exected as user
+# EXAMPLE - script executed as user
 # provision:
 #   - mode: user
 #     script: |
@@ -190,3 +190,8 @@ mounts: []
 #
 # Default: {}
 env: {}
+
+# Enable cgroups v2 as a temporary workaround for https://github.com/abiosoft/colima/issues/764.
+# NOTE: this is incompatible with Kubernetes and Ubuntu Layer.
+# NOTE: this config will be removed in future versions.
+cgroupsV2: false

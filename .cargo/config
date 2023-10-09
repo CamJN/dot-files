@@ -29,8 +29,4 @@ overflow-checks = false
 split-debuginfo = "unpacked"
 
 [build]
-rustflags = ["-C", "target-cpu=native"]
-#rustflags = ["-C", "target-cpu=native","--remap-path-prefix", "-F", "unsafe_code"] # unsafe in get_args project :(
-
-[install]
-root = "/usr/local/bin"
+rustflags = ["-C", "target-cpu=native", "--remap-path-prefix=$CARGO_MANIFEST_DIR=/"]

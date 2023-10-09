@@ -59,41 +59,49 @@ shopt -s direxpand
 
 #paths
 if [ -f ~/.bash.d/paths ]; then
+# shellcheck source=./.bash.d/paths
     . ~/.bash.d/paths
 fi
 
 #prompts
 if [ -f ~/.bash.d/prompts ]; then
+# shellcheck source=./.bash.d/prompts
     . ~/.bash.d/prompts
 fi
 
 #functions
 if [ -f ~/.bash.d/functions ]; then
+# shellcheck source=./.bash.d/functions
     . ~/.bash.d/functions
 fi
 
 #aliases
 if [ -f ~/.bash.d/aliases ]; then
+# shellcheck source=./.bash.d/aliases
     . ~/.bash.d/aliases
 fi
 
 #completion
 if [ -f ~/.bash.d/completion ]; then
+# shellcheck source=./.bash.d/completion
     . ~/.bash.d/completion
 fi
 
 #development
 if [ -f ~/.bash.d/development ]; then
+# shellcheck source=./.bash.d/development
     . ~/.bash.d/development
 fi
 
 #emacs
 if [ -f ~/.bash.d/emacs ]; then
+# shellcheck source=./.bash.d/emacs
     . ~/.bash.d/emacs
 fi
 
 if command -v rbenv > /dev/null; then
-    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/opt/openssl@1.1 --enable-yjit"
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1) --enable-yjit"
+    export RUBY_CONFIGURE_OPTS
     export RUBY_YJIT_ENABLE=1
     eval "$(rbenv init -)";
 fi

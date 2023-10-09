@@ -156,26 +156,16 @@ function loveSongsForCamden {
 
 # shellcheck disable=SC2164
 function chdir {
-    # if [ "$_" == "neofetch" ]; then
-    #     if [ -n "$1" ]; then
-    #         cd "${@//~\?/$HOME/}";
-    #     else
-    #         cd ~
-    #     fi
-    #     $_=cd
-    # else
-        if [ $# -eq 2 ]; then
-            if [ $1 = '-b' ]; then
-                pushd $(sed -e "s|$HOME|~|" <<< $PWD | cut -d / -f "1-$2" | sed -e "s|~|$HOME|" )
-            else
-                pushd $(sed -e "s|$HOME|~|" <<< $PWD | cut -d / -f "1-$(bc "($(sed -e "s|$HOME|~|" <<< $PWD | tr -dc '/' | wc -c) + 1) - $2" )" | sed -e "s|~|$HOME|" )
-            fi
-        elif [ -n "$1" ]; then
-            pushd "${@//~\?/$HOME/}";
-        else
-            pushd ~
+    if [ $# -eq 2 ]; then
+        if [ "$1" != '-b' ]; then
+            set -- "$1" "$(bc "($(tr -dc '/' <<< "${PWD//$HOME/\~}" | wc -c) + 1) - $2" )"
         fi
-    #fi
+        pushd "$(cut -d / -f "1-$2" <<< "${PWD//$HOME/\~}" | sed -e "s|\~|$HOME|" )"
+    elif [ -n "$1" ]; then
+        pushd "${@//\~\?/$HOME/}";
+    else
+        pushd ~
+    fi
 }
 
 function ccalendar {
@@ -415,49 +405,6 @@ function getUsernameFor {
     cop get item "$1" --fields username
 }
 
-function cop {
-    if [ ! -x /usr/local/bin/op ]; then
-        get_op
-        install_op
-    else
-        local output=$(/usr/local/bin/op update)
-        if [[ "$output" =~ "is now available" ]]; then
-            install_op
-        fi
-    fi
-
-    if [[ "$1" == "update" || "$1" == "help" || "$1" == "--update" || "$1" == "--help" ]]; then
-        /usr/local/bin/op "${@#--}"
-        return;
-    fi
-
-    account=narzt
-    env_var="OP_SESSION_$account"
-    login_path="$(readlink ~/.op/login)"
-    limit="$(getoplimit)"
-    if [[ $limit -le $(date "+%s") ]]; then
-        unset login_path
-        unset "$env_var"
-    fi
-
-    if [ -z ${!env_var} ]; then
-        if [ ! -f "$login_path" ]; then
-            login_path=$(mktemp)
-            /usr/local/bin/op signin $account > "$login_path"
-            ln -sf "$login_path" ~/.op/login
-        fi
-        source ~/.op/login
-    fi
-
-    if [[ "$1" == "find" || "$1" == "search" ]]; then
-        shift
-        /usr/local/bin/op list items | \
-            ruby -rjson -e "puts JSON.parse(STDIN.read).select{|e| e['overview']['title'].downcase.include? '$*'}.flat_map{|e| [e['overview']['title'] , ' '+e['uuid'], '']}.join(\"\n\")"
-    else
-        /usr/local/bin/op "$@"
-    fi
-}
-
 function ctar {
     local CREATE
     local FILE
@@ -559,37 +506,9 @@ function cdocker {
     docker run -it  --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
 }
 
-function editDiskAccess {
-    shopt -s nocasematch
-    local DB="$HOME/Library/Application Support/com.apple.TCC/TCC.db"
-    mapfile -t clients < <( echo "SELECT DISTINCT client FROM access WHERE client NOT LIKE '%.apple.%' ORDER BY client;" | sqlite3 -noheader -list -batch "$DB" )
-
-    local service_width=$(echo -n kTCCServiceSystemPolicyDownloadsFolder | wc -m)
-    local client_width=$(printf '%s\n' "${clients[@]}" | awk '{print length}' | max)
-
-    echo "Programs with access rights:"
-    echo
-    paste <(printf "%s)\n" "${!clients[@]}") <(printf "%s\n" "${clients[@]}")
-    echo
-    local choice="LONG STRING THAT WILL HOPEFULLY NEVER MATCH"
-    while [[ ! "${clients[@]}" =~ "${choice:-emacs}" ]] && [[ ! " ${!clients[@]} " =~ " ${choice} " ]]; do
-        read -rei emacs -p "Enter your choice: " choice
-    done
-    if [[ " ${!clients[@]} " =~ " ${choice} " ]]; then choice="${clients[$choice]}"; fi
-    echo
-    echo "Access rights for ${choice:-emacs}:"
-    echo
-    printf "SELECT service as '%-*s', client as '%-*s' FROM access WHERE client LIKE '%%%s%%' ORDER BY client;" ${service_width} service ${client_width} client ${choice:-emacs} | sqlite3 -column -header "$DB"
-    read -rp "Remove access? [yN]: " goahead
-    case "${goahead:-N}" in
-        "Y" ) echo "delete from access where client LIKE '%${choice:-emacs}%';" | sqlite3 "$DB";;
-        *) echo "aborting";;
-    esac
-}
-
 function csoftwareupdate {
     softwareupdate -l |\
-        fgrep Label |\
+        grep -F Label |\
         awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
         xargs -0 -I {} softwareupdate -d '{}'
 }

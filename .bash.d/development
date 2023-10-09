@@ -13,6 +13,7 @@ export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 
 if [ "$(uname)" = "Darwin" ]; then
 
+    eval $(brew shellenv)
     export HOMEBREW_INSTALL_BADGE=🍷
     export HOMEBREW_AUTO_UPDATE_SECS=86400
     export HOMEBREW_NO_GITHUB_API="Doesn't work anyway"
@@ -25,7 +26,8 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
     export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK="fuck you"
     export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK="rebuilding llvm for no reason? fuck you"
-    export HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies $HOMEBREW_BUNDLE_FILE | awk '{print $2}' | tr -d '",')"
+    HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies "$HOMEBREW_BUNDLE_FILE" | awk '{print $2}' | tr -d '",')"
+    export HOMEBREW_BUNDLE_BREW_SKIP
     export HOMEBREW_EVAL_ALL="lazy, cheap, fucking, asswipes"
     export $(gpg --quiet --decrypt ~/.bash.d/secrets.gpg | grep -v '^#' | xargs)
 
@@ -41,8 +43,8 @@ if [ "$(uname)" = "Darwin" ]; then
 
     export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
-    export PATH="$PATH:$(paste -s -d ':' - <<< $HOME/Library/Python/*/bin)"
-    export PATH=$PATH:$GOPATH/bin
+    PATH="$PATH:$(paste -s -d ':' - <<< "$HOME"/Library/Python/*/bin)"
+    PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     if [ -f ~/.cargo/env ]; then
         source ~/.cargo/env

@@ -177,6 +177,10 @@
   (progn (setq compile-command "cargo build")
          (eglot-ensure)))
 
+(defun python-lsp-startup ()
+  (progn (setq python-shell-virtualenv-root (vc-find-root default-directory ".git"))
+         (eglot-ensure)))
+
 (with-eval-after-load 'eglot
 
   (add-to-list 'eglot-server-programs
@@ -194,7 +198,8 @@
                     :includeInlayPropertyDeclarationTypeHints t
                     :includeInlayFunctionLikeReturnTypeHints t
                     :includeInlayEnumMemberValueHints t
-                    )))))
+                    ))))
+               )
 
   (defalias 'lsp-rename 'eglot-rename)
   (add-hook 'eglot-managed-mode-hook #'setup-eglot)
@@ -216,8 +221,8 @@
   (add-hook 'csharp-mode-hook #'eglot-ensure)
   (add-hook 'swift-ts-mode-hook #'eglot-ensure)
   (add-hook 'swift-mode-hook #'eglot-ensure)
-  (add-hook 'python-ts-mode-hook #'eglot-ensure)
-  (add-hook 'python-mode-hook #'eglot-ensure)
+  (add-hook 'python-ts-mode-hook #'python-lsp-startup)
+  (add-hook 'python-mode-hook #'python-lsp-startup)
   (add-hook 'java-ts-mode-hook #'eglot-ensure)
   (add-hook 'java-mode-hook #'eglot-ensure)
   (add-hook 'rust-ts-mode-hook #'rust-lsp-startup)

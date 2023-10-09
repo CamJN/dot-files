@@ -18,7 +18,7 @@
          (concat homebrew-prefix "/bin") ":"
          (concat homebrew-prefix "/sbin")":"
          (concat homebrew-prefix "/etc/openssl/misc") ":"
-         (concat (car (process-lines "/usr/local/bin/brew" "--prefix" "openssl@1.1")) "/bin") ":"
+         (concat (car (process-lines "/usr/local/bin/brew" "--prefix" "openssl@3")) "/bin") ":"
          "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
          "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
          "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"

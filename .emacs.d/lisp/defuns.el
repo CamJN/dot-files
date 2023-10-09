@@ -100,6 +100,12 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
   (force-mode-line-update))
 
 ;;----------New Functions------------------------------
+(defun read-file-contents (filename)
+  "Return the contents of FILENAME."
+  (with-temp-buffer
+    (insert-file-contents (expand-file-name filename))
+    (buffer-string)))
+
 (defun previous-char-p (char-as-string)
   "Does the char preceeding point eq CHAR-AS-STRING"
   (eq (preceding-char) (string-to-char char-as-string)))

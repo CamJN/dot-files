@@ -23,3 +23,5 @@ groovy:*.groovy,Jenkinsfile
 el:*.el,*.elc
 --type-add
 elisp:include:el
+--type-add
+plist:*.plist

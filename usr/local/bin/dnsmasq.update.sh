@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
 
 BLACKLIST=https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnsmasq/dnsmasq.blacklist.txt
 

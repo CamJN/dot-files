@@ -1,17 +1,23 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
 
 while [ -z "$interface" ]; do
-interface=$(route -n get default 2>&- | fgrep interface | tr -d ' ' | cut -d: -f2)
+interface=$(route -n get default 2>&- | grep -F interface | tr -d ' ' | cut -d: -f2)
 done
 nameserver=$(ipconfig getoption "$interface" domain_name_server)
 
 if [ -z "$nameserver" ]; then
-    nameserver=$(nslookup <<< server | fgrep Default | sed 's/Default server:/nameserver/g')
+    nameserver=$(nslookup <<< server | grep -F Default | sed 's/Default server:/nameserver/g')
 else
     nameserver="nameserver $nameserver"
 fi
 
-grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   /usr/local/etc/dnsmasq.d/filtering.resolv || \
-    echo "${nameserver:-nameserver 1.1.1.1}" > /usr/local/etc/dnsmasq.d/filtering.resolv
+if [ -d /usr/local/etc ]; then
+    PREFIX=/usr/local
+else
+    PREFIX=/opt/homebrew
+fi
+
+grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   $PREFIX/etc/dnsmasq.d/filtering.resolv || \
+    echo "${nameserver:-nameserver 1.1.1.1}" > $PREFIX/local/etc/dnsmasq.d/filtering.resolv
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

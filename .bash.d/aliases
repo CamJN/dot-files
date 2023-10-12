@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+# no shebang
 
 alias baressh=cssh
 alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"

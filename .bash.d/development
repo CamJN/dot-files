@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+# no shebang
 
 export NODE_REPL_HISTORY="$HOME/.history/node"
 export SQLITE_HISTORY="$HOME/.history/sqlite"

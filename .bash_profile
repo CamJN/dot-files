@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+# no shebang
 
 #exit if non-interactive
 if [[  ! ( $- =~ "i" ) ]]; then
@@ -42,6 +42,7 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
+export SUDO_EDITOR=mg
 # export GPG_TTY=$(tty) # for if the Curses based Pinentry does not work
 
 stty -ixon
@@ -100,7 +101,7 @@ if [ -f ~/.bash.d/emacs ]; then
 fi
 
 if command -v rbenv > /dev/null; then
-    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1) --enable-yjit"
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
     export RUBY_CONFIGURE_OPTS
     export RUBY_YJIT_ENABLE=1
     eval "$(rbenv init -)";

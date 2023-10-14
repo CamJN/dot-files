@@ -1,5 +1,6 @@
 # sshd: auth account password session
-auth       requisite        /usr/local/opt/google-authenticator-libpam/lib/security/pam_google_authenticator.so
+#auth       requisite      /opt/homebrew/lib/security/pam_google_authenticator.so
+auth       requisite      /usr/local/lib/security/pam_google_authenticator.so
 account    required       pam_nologin.so
 account    required       pam_sacl.so sacl_service=ssh
 account    required       pam_opendirectory.so

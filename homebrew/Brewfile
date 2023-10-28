@@ -1,8 +1,8 @@
 tap "homebrew/bundle"
-tap "homebrew/core"
 tap "phusion/passenger"
 tap "getargv/tap"
 
+# untap "homebrew/core"
 # untap "homebrew/cask"
 # untap "homebrew/services"
 

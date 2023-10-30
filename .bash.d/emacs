@@ -14,7 +14,7 @@ function emacs {
     if [ $# -eq 0 ]; then
         $EDITOR
     else
-        local files=$(tr "'" '"' <<< "${@@Q}")
+        local files=$(sed -Ee "s/(^'|'$)/\"/g" <<< "${@@Q}")
         $EDITOR -e "(mapc #'(lambda (file) (find-file-noselect file t)) '($files))" -e "(find-file \"$1\")"
     fi
 }

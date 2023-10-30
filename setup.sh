@@ -46,7 +46,8 @@ function link_dotfiles {
     shift
     local arr=("$@")
     for file in "${arr[@]}"; do
-        local file_l1="$(basename $file)"
+        local file_l1
+        file_l1="$(basename "$file")"
         if [ "$file_l1" = ".git" ]; then
             continue
         fi
@@ -69,7 +70,7 @@ function link_dotfiles {
 link_dotfiles . ~/Developer/Bash/dot-files/.[!.]*
 
 mkdir -p ~/.docker/cli-plugins
-ln -shfF $(brew --prefix docker-buildx)/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
+ln -shfF "$(brew --prefix docker-buildx)/bin/docker-buildx" ~/.docker/cli-plugins/docker-buildx
 
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
     if [ "${file##*/}" = "openssl" ]; then
@@ -78,6 +79,12 @@ for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
         ln -shFf "$file" "$HOMEBREW_PREFIX/etc/${file##*/}"
     fi
 done
+
+for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
+    ln -shFf "$file" "$HOMEBREW_PREFIX/bin/${file##*/}"
+done
+
+ln -shFf usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
 
 sudo -v
 find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' -print0 | while IFS= read -r -d '' file; do

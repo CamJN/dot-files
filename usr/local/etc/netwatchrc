@@ -2,6 +2,7 @@
 
 while [ -z "$interface" ]; do
 interface=$(route -n get default 2>&- | grep -F interface | tr -d ' ' | cut -d: -f2)
+sleep 0.1
 done
 nameserver=$(ipconfig getoption "$interface" domain_name_server)
 
@@ -18,6 +19,6 @@ else
 fi
 
 grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   $PREFIX/etc/dnsmasq.d/filtering.resolv || \
-    echo "${nameserver:-nameserver 1.1.1.1}" > $PREFIX/local/etc/dnsmasq.d/filtering.resolv
+    echo "${nameserver:-nameserver 1.1.1.1}" > $PREFIX/etc/dnsmasq.d/filtering.resolv
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

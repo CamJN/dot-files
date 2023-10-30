@@ -93,8 +93,13 @@
         (mode . scheme-mode)
         (mode . python-mode)
         (mode . python-ts-mode)
+        (mode . swift-mode)
+        (mode . swift-ts-mode)
         (mode . java-mode)
         (mode . java-ts-mode)
+        (mode . go-mode)
+        (mode . go-ts-mode)
+        (mode . csharp-ts-mode)
         (mode . sql-mode)))
       ("config"
        (or

@@ -6,12 +6,11 @@ class PamDuress < Formula
   head "https://github.com/nuvious/pam-duress.git", branch: "main"
 
   depends_on "pkg-config" => :build
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   def install
     inreplace "Makefile" do |s|
       s.gsub! '/usr/local', prefix
-      s.sub! 'shell echo $', 'shell echo $$'
     end
 
     system "make", "CC=clang", "PAM_DIR=pam"

@@ -204,6 +204,7 @@
  ;; If there is more than one, they won't work right.
  '(eglot-diagnostic-tag-unnecessary-face ((t (:inherit shadow :foreground "color-203" :strike-through t))))
  '(eglot-inlay-hint-face ((t (:inherit shadow :foreground "color-75" :height 0.8))))
+ '(flyspell-incorrect ((t (:foreground "color-196" :underline "#ef2929"))))
  '(ibuffer-locked-buffer ((t (:foreground "color-135"))))
  '(line-number ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
  '(linum ((t (:inherit (shadow default) :foreground "#3a3a3a"))))

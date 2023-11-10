@@ -100,13 +100,20 @@ find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' -print0 | while
          -print0
 done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "mv '{}' '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
 
-if which rbenv > /dev/null; then
+if ! which -s rbenv; then
+    echo "rbenv wasn't installed; is homebrew broken?" >&2
+    exit 1
+else
     RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
     export RUBY_CONFIGURE_OPTS
     eval "$(rbenv init -)";
+    rbenv list | xargs -n1 rbenv install -s
 fi
 
-rbenv list | xargs -n1 rbenv install -s
+rustup update
+# maybe migrate wasm-pack to homebrew?
+cargo install wasm-pack
+rustup target add wasm32-unknown-unknown
 
 if ! ( networksetup -listlocations | grep -Fqe 'Local DNS' ); then
     POPULATE=populate

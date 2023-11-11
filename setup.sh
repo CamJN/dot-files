@@ -90,7 +90,7 @@ for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
     ln -shFf "$file" "$HOMEBREW_PREFIX/bin/${file##*/}"
 done
 
-ln -shFf usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
+ln -shFf ~/Developer/Bash/dot-files/usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
 
 sudo -v
 find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' -print0 | while IFS= read -r -d '' file; do

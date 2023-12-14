@@ -501,3 +501,7 @@ function postgresql-upgrade-database {
     fi
     $(brew --prefix $V2)/bin/pg_upgrade -b $(brew --prefix $V1)/bin -d $(brew --prefix)/var/$V1 -D $(brew --prefix )/var/$V2
 }
+
+function vergte() {
+    echo -e "$1\n$2" | sort -rCV
+}

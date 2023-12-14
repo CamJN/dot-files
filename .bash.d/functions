@@ -361,41 +361,6 @@ function unix {
     date -r "$1"
 }
 
-function get_op {
-    local OP_RELEASE_NOTES_URL="https://app-updates.agilebits.com/product_history/CLI"
-    local OP_PLATFORM=apple
-    local OP_ARCH="universal"
-
-    if op_release_notes=$(curl -sfL "${OP_RELEASE_NOTES_URL}"); then
-        op_url=$(echo "${op_release_notes}" | xmllint --html --xpath "string(//article[not(@class='beta')][1]/div[@class='cli-archs']/p[@class='system ${OP_PLATFORM}']/a[text()='${OP_ARCH}']/@href)" - 2>/dev/null)
-        if [ -z "${op_url}" ]; then
-            # If $op_url is empty (e.g. if the page layout has changed)
-            echo "1Password CLI tool release notes were not in an expected format at: ${OP_RELEASE_NOTES_URL}" >&2
-            echo "Please update script at ${BASH_SOURCE[*]}" >&2
-        else
-            # $op_url should be the URL for the latest download
-            wget "${op_url}" -P ~/Downloads/
-        fi
-    else
-        # If the curl command failed (e.g. the page was not found)
-        echo "1Password CLI tool release notes were not found at: ${OP_RELEASE_NOTES_URL}" >&2
-        echo "Please update script at ${BASH_SOURCE[*]}" >&2
-    fi
-
-    until ls ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg &>/dev/null; do
-        echo "please download op from $OP_RELEASE_NOTES_URL first"
-        open "$OP_RELEASE_NOTES_URL"
-        read -rp "Press enter to continue"
-    done
-}
-
-function install_op {
-    local OP_PLATFORM=apple
-    local OP_ARCH="universal"
-    sudo installer -pkg ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg -target /
-    rm ~/Downloads/op_${OP_PLATFORM}_${OP_ARCH}_v*.pkg
-}
-
 function getoplimit {
     shopt -s nullglob;
     for file in "$TMPDIR/com.agilebits.op.$(id -u)"/.??*; do
@@ -407,11 +372,11 @@ function getoplimit {
 }
 
 function getPasswordFor {
-    cop get item "$1" --fields password
+    cop get item "$*" --fields password
 }
 
 function getUsernameFor {
-    cop get item "$1" --fields username
+    cop get item "$*" --fields username
 }
 
 function ctar {

@@ -26,6 +26,7 @@ if [ ! -e ~/Developer/Bash/dot-files ]; then
 else
     pushd ~/Developer/Bash/dot-files
     git diff --exit-code || git commit -am 'tmp'
+    git pull -r
     popd
 fi
 

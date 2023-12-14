@@ -27,10 +27,6 @@ function forward {
     \ssh -NL "$local:localhost:$remote" "$server"
 }
 
-function cssh {
-    /usr/bin/ssh -oRemoteCommand=none "$@"
-}
-
 function csudo {
     local login
 

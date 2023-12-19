@@ -353,30 +353,20 @@ NR == FNR {
 } ' /tmp/FileWithDates -
 }
 
-function password {
-    cop create item login title="$*" --generate-password
-}
-
 function unix {
     date -r "$1"
 }
 
-function getoplimit {
-    shopt -s nullglob;
-    for file in "$TMPDIR/com.agilebits.op.$(id -u)"/.??*; do
-        # SB for file created time
-        stat -t '%s' -f '%Sm' "$file"
-    done | while read -r date; do
-        date -jf "%s" -v+30M "$date" "+%s"
-    done | max 2>/dev/null
+function password {
+    op create item login title="$*" --generate-password
 }
 
 function getPasswordFor {
-    cop get item "$*" --fields password
+    op get item "$*" --fields password
 }
 
 function getUsernameFor {
-    cop get item "$*" --fields username
+    op get item "$*" --fields username
 }
 
 function ctar {

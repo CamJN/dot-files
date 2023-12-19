@@ -1,5 +1,5 @@
 *|*:root {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 #PanelUI-button,

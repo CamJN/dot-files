@@ -50,6 +50,7 @@
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)
+ '(global-prettify-symbols-mode t)
  '(hippie-expand-try-functions-list
    '(try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-expand-dabbrev-visible try-expand-line-all-buffers try-expand-list-all-buffers try-expand-whole-kill try-complete-file-name-partially try-complete-file-name try-complete-lisp-symbol-partially try-complete-lisp-symbol))
  '(holiday-other-holidays
@@ -161,6 +162,7 @@
  '(osx-clipboard-mode t)
  '(package-selected-packages
    '(eglot transmission rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode log4e gntp ht emojify alert circe oauth2 request websocket yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
+ '(prettify-symbols-unprettify-at-point 'right-edge)
  '(query-replace-highlight t)
  '(recentf-exclude '("/docker:.*"))
  '(recentf-mode t)

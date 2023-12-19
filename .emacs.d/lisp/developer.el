@@ -8,6 +8,24 @@
 (require 'yasnippet)
 (require 'eglot)
 (require 'treesit)
+(defun prettify-set ()
+  (setq prettify-symbols-alist
+        '(
+         ("lambda" . "λ")
+         ("|>" . "▷")
+         ("<|" . "◁")
+         ("->>" . "↠")
+         ("->" . "→")
+         ("<-" . "←")
+         ("=>" . "⇒")
+         ("<=" . "≤")
+         (">=" . "≥")
+         ("..." . "…")
+         ("::" . "∷")
+         ("ffi" . "ﬃ")
+         )))
+(add-hook 'prog-mode-hook 'prettify-set)
+
 
 (add-hook 'tree-sitter-after-on-hook (lambda()
                                        (tree-sitter-hl-mode)

@@ -1,10 +1,10 @@
+tap "getargv/tap", "git@github.com:getargv/homebrew-tap.git"
 tap "homebrew/bundle"
 tap "homebrew/cask-versions"
 tap "phusion/passenger"
-tap "getargv/tap"
+tap "teamookla/speedtest"
 
 # untap "homebrew/core"
-# untap "homebrew/cask"
 # untap "homebrew/services"
 
 brew "bash"
@@ -19,12 +19,14 @@ brew "difftastic"
 brew "dnsmasq"
 brew "docker"
 brew "docker-buildx"
+brew "docker-completion"
 brew "docker-credential-helper"
 brew "dotnet"
 brew "doxygen"
 brew "dust"
 brew "emacs"
 brew "eza"
+brew "fakeapxs", args: ["HEAD"]
 brew "fd"
 brew "geckodriver"
 brew "getargv/tap/getargv"
@@ -35,6 +37,7 @@ brew "go"
 brew "google-authenticator-libpam"
 brew "htmlq"
 brew "hyperfine"
+brew "jless"
 brew "jq"
 brew "llvm"
 brew "mailhog"
@@ -44,14 +47,16 @@ brew "neofetch"
 brew "nginx"
 brew "node"
 brew "node@18"
+brew "openjdk"
 brew "openssl@3"
-brew "pam-duress"
+brew "pam-duress", args: ["HEAD"]
 brew "passenger", link: false
 brew "phusion/passenger/passenger-enterprise"
 brew "pigz"
 brew "pinentry-mac"
+brew "pkg-config"
 brew "pngcrush"
-brew "postgresql@16"
+brew "postgresql@16", link: true
 brew "pyright"
 brew "rbenv"
 brew "rbenv-default-gems"
@@ -59,11 +64,13 @@ brew "ripgrep"
 brew "rust-analyzer"
 brew "rustup-init"
 brew "shellcheck"
+brew "swift-format"
 brew "tiny_php"
 brew "transmission-cli"
 brew "tree"
 brew "wget"
 brew "xz"
+brew "yaml-language-server"
 
 mas "1Blocker", id: 1365531024
 mas "Keynote", id: 409183694
@@ -78,10 +85,10 @@ cask_args appdir: '/Applications', require_sha: true, language: 'en-CA'
 
 # cask 'sketch' # cannot use latest version with my license... https://download.sketch.com/sketch-75-129697.zip
 cask "1password-cli"
-cask 'tower'
-cask 'homebrew/cask-versions/firefox-developer-edition', args: {require_sha: false}
-cask 'homebrew/cask-versions/1password7'
-cask 'vmware-fusion'
+cask "tower"
+cask "homebrew/cask-versions/firefox-developer-edition", args: { require_sha: false }
+cask "homebrew/cask-versions/1password7"
+cask "vmware-fusion"
 # cask 'dolphin'
 # cask 'wireshark'
 # cask 'sublime-merge'

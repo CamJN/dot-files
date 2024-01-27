@@ -20,6 +20,8 @@ function emacs {
         files=("${files[@]/%/&\"}") # trailing quote
         files=("${files[@]/#/&\"}") # leading quote
         $EDITOR --eval "(mapc #'(lambda (file) (find-file-noselect file t)) '(${files[*]}))" -e "(find-file ${files[0]})"
+        # when emacs >= 30 use the following instead:
+        #$EDITOR --eval "(let ((file (car server-eval-args-left)))(mapc #'find-file-noselect server-eval-args-left)(setq server-eval-args-left nil)(find-file file))" -- "$@"
     fi
 }
 
@@ -29,4 +31,6 @@ function emacs-give {
     files=("${files[@]/%/&\"}") # trailing quote
     files=("${files[@]/#/&\"}") # leading quote
     emacsclient --eval "(mapc #'(lambda (file) (find-file-noselect file t)) '(${files[*]}))" >/dev/null
+    # when emacs >= 30 use the following instead:
+    # emacsclient --eval "(mapc #'find-file-noselect server-eval-args-left)" --eval "(setq server-eval-args-left nil)" -- "$@" >/dev/null
 }

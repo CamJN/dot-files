@@ -71,7 +71,7 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 #statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
     margin: 0 !important;
     position: fixed !important;
-    top: 44px !important;
+    top: 42px !important;
     right: 95px !important;
     left: unset !important;
     bottom: unset !important;
@@ -81,20 +81,27 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
     /*align: right;*/
 }
 
+/* focused
 #statuspanel[type=overLink] #statuspanel-label,
 #statuspanel[inactive][previoustype=overLink] #statuspanel-label {
-    /* --chrome-color + .6 aplha */
+--lwt-toolbar-field-background-color: var(—-toolbar-field-focus-background-color);
+--lwt-toolbar-field-background:  var(—-toolbar-field-focus-background-color);
+} */
+
+/* not-focused
+#statuspanel[type=overLink] #statuspanel-label,
+#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
+    --lwt-toolbar-field-background-color: var(--toolbar-field-background-color);
+    --lwt-toolbar-field-background: var(--lwt-toolbar-field-background-color);
+} */
+
+#statuspanel[type=overLink] #statuspanel-label,
+#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
     --lwt-toolbar-field-color: var(--toolbar-field-color);
     --lwt-toolbar-field-background-color: var(--toolbar-field-background-color);
     --lwt-toolbar-field-background: var(--lwt-toolbar-field-background-color);
-    /*--lwt-toolbar-field-background: var(--lwt-toolbar-field-focus); /* when toolbar focused */
-
-    /* --urlbar-box-bgcolor */
-    /* --toolbar-field-focus-background-color */
-    /* --urlbar-box-hover-bgcolor */
 
     border: none !important;
-    /* color: var(--toolbar-field-color) !important; */
     color: var(--lwt-toolbar-field-color) !important;
     font-size: 1.25em !important;
     padding-left: 22px!important;

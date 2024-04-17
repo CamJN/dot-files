@@ -1,37 +1,37 @@
 /* translucency/vibrancy */
-:root #TabsToolbar,
-:root #titlebar,
-:root #tabbrowser-tabs,
-:root #PersonalToolbar,
-:root #nav-bar,
-/*:root #navigator-toolbox,*/
-:root #browser {
-    -moz-default-appearance: menupopup !important;
-    appearance: auto !important;
-    background-color: transparent !important;
-}
-:root#main-window {
-    background-color: transparent !important;
-}
+/* :root #TabsToolbar, */
+/* :root #titlebar, */
+/* :root #tabbrowser-tabs, */
+/* :root #PersonalToolbar, */
+/* :root #nav-bar, */
+/* /\*:root #navigator-toolbox,*\/ */
+/* :root #browser { */
+/*     -moz-default-appearance: menupopup !important; */
+/*     appearance: auto !important; */
+/*     background-color: transparent !important; */
+/* } */
+/* :root#main-window { */
+/*     background-color: transparent !important; */
+/* } */
 
-:root:not(:-moz-window-inactive) #navigator-toolbox:not([inFullscreen]) {
-    background-color: transparent !important;
-}
+/* :root:not(:-moz-window-inactive) #navigator-toolbox:not([inFullscreen]) { */
+/*     background-color: transparent !important; */
+/* } */
 
-#navigator-toolbox[inFullscreen="true"] {
-    background-color: var(--lwt-accent-color);
-}
+/* #navigator-toolbox[inFullscreen="true"] { */
+/*     background-color: var(--lwt-accent-color); */
+/* } */
 
-#tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[multiselected="true"]:-moz-lwtheme,
-#tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[selected="true"]:-moz-lwtheme {
-    --lwt-selected-tab-background-color: rgba(255, 255, 255, .2);
-}
+/* #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[multiselected="true"]:-moz-lwtheme, */
+/* #tabbrowser-tabs:not([movingtab]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab > .tab-stack > .tab-background[selected="true"]:-moz-lwtheme { */
+/*     --lwt-selected-tab-background-color: rgba(255, 255, 255, .2); */
+/* } */
 
-#commonDialogWindow,
-#window-modal-dialog {
-    --in-content-page-background: rgb(28,27,34);
-    background-color: var(--in-content-page-background);
-}
+/* #commonDialogWindow, */
+/* #window-modal-dialog { */
+/*     --in-content-page-background: rgb(28,27,34); */
+/*     background-color: var(--in-content-page-background); */
+/* } */
 
 /* hide stupid shit */
 #PanelUI-button,
@@ -58,8 +58,6 @@ notification[value="plugin-hidden"]
 #urlbar[breakout][breakout-extend] {
     left: unset !important;
     width: 100% !important;
-    /*height: var(--urlbar-height) !important;*/
-    top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
 }
 
 hbox.titlebar-placeholder[type="caption-buttons"] {

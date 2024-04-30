@@ -38,14 +38,13 @@ function csudo {
         esac
     done
 
-    # shellcheck disable=SC2199
-    if [[ ${login:-false} == "true" || ${@: $OPTIND:1} == su ]]; then
+    if [[ ${login:-false} == "true" || ${*: $OPTIND:1} == su ]]; then
         read -rp "Did you want sudo -s? [Yn] " yn
         case $yn in
             [Nn]* ) \sudo "$@";;
             * ) \sudo -s ;;
         esac
-    elif [[ ${@: $OPTIND:1} == echo ]]; then
+    elif [[ ${*: $OPTIND:1} == echo ]]; then
         echo "You probably want echo | sudo tee" >&2
         \sudo -v
         builtin echo "${@: (($OPTIND+1))}"
@@ -150,11 +149,23 @@ function loveSongsForCamden {
     fi
 }
 
-function regex_quote() {
-    sed 's/[][\.|$(){}?+*^]/\\&/g' <<< "$*"
+function dedup_dirs(){
+    declare -a new=() copy=("${DIRSTACK[@]:1}")
+    declare -A seen
+    local v i
+    seen[$PWD]=1
+    for v in "${copy[@]}"; do
+        if [ -z "${seen[$v]}" ]; then
+            new+=("$v")
+            seen[$v]=1
+       fi
+    done
+    dirs -c
+    for ((i=${#new[@]}-1; i>=0; i--)); do
+      builtin pushd -n "${new[i]}" >/dev/null
+    done
 }
 
-# shellcheck disable=SC2164
 function chdir {
     if [ $# -eq 2 ]; then
         # use -b to go up the stack
@@ -163,18 +174,18 @@ function chdir {
             # The number to go up to is calculated from left of path: ~/a = 1, ~/a/b = 2
             set -- "$1" "$(bc "($(tr -dc '/' <<< "${PWD//$HOME/\~}" | wc -c) + 1) - $2")"
         fi
-        pushd "$(cut -d / -f "1-$2" <<< "${PWD//$HOME/\~}" | sed -e "s|\~|$HOME|" )"
+        pushd "$(cut -d / -f "1-$2" <<< "${PWD//$HOME/\~}" | sed -e "s|\~|$HOME|")" || return
     elif [ -n "$1" ]; then
-        # check $DIRSTACK if new dir is in there, if so change to it instead
-        local CHANGETO="$(dirs -l -p -v | grep -Ex -m 1 -e "\s*[0-9]+\s+$(regex_quote ${1//\~/$HOME})" | cut -w -f 2)"
-        if [[ -n "$CHANGETO" ]]; then
-            pushd "+$CHANGETO"
-        else
-            pushd "${@//\~\?/$HOME/}";
-        fi
+        pushd "${@//\~\?/$HOME/}" || return
     else
-        pushd ~
+        pushd ~ || return
     fi
+}
+
+function pushd() {
+    builtin pushd "$@" >/dev/null || return
+    dedup_dirs
+    dirs
 }
 
 function ccalendar {
@@ -424,6 +435,7 @@ function checkIsRHEL {
     checkIsDistro "registry.access.redhat.com/$1/${1%%[0-9]*[0-9]}" latest || checkIsDistro "registry.access.redhat.com/${1/rhel/ubi}/ubi" latest
 }
 
+# shellcheck disable=SC2034
 function makeRHELArgs {
     local RHEL_ID=nkxqcwvnljffnae3ewas2s3afq
     # shellcheck disable=SC2155
@@ -478,18 +490,18 @@ function csoftwareupdate {
 }
 
 function postgresql-upgrade-database {
-    if [ $# -lt 2 ] || [ $1 -eq $2 ]; then
+    if [ $# -lt 2 ] || [ "$1" -eq "$2" ]; then
         echo "Usage: brew postgresql-upgrade-database 14 16" >&2
-        return -1
+        return 255
     fi
-    if [ $1 -lt $2 ]; then
+    if [ "$1" -lt "$2" ]; then
         local V1=postgresql@$1
         local V2=postgresql@$2
     else
         local V1=postgresql@$2
         local V2=postgresql@$1
     fi
-    $(brew --prefix $V2)/bin/pg_upgrade -b $(brew --prefix $V1)/bin -d $(brew --prefix)/var/$V1 -D $(brew --prefix )/var/$V2
+    "$(brew --prefix "$V2")/bin/pg_upgrade" -b "$(brew --prefix "$V1")/bin" -d "$(brew --prefix)/var/$V1" -D "$(brew --prefix )/var/$V2"
 }
 
 function vergte() {

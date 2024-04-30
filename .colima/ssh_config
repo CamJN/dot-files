@@ -17,5 +17,5 @@ Host colima
   ControlPath "/Users/camdennarzt/.colima/_lima/colima/ssh.sock"
   ControlPersist yes
   Hostname 127.0.0.1
-  Port 49264
+  Port 49684
 

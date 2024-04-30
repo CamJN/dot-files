@@ -13,11 +13,16 @@ memory: 4
 
 # Architecture of the virtual machine (x86_64, aarch64, host).
 # Default: host
-arch: x86_64
+arch: host
 
 # Container runtime to be used (docker, containerd).
 # Default: docker
 runtime: docker
+
+# Set custom hostname for the virtual machine.
+# Default: colima
+#          colima-profile_name for other profiles
+hostname: colima
 
 # Kubernetes configuration for the virtual machine.
 kubernetes:
@@ -66,12 +71,6 @@ network:
   # dnsHosts:
   #   example.com: 1.2.3.4
   dnsHosts: {}
-  
-  # Network driver to use (slirp, gvproxy), (requires vmType `qemu`)
-  #   - slirp is the default user mode networking provided by Qemu
-  #   - gvproxy is an alternative to VPNKit based on gVisor https://github.com/containers/gvisor-tap-vsock
-  # Default: gvproxy
-  driver: gvproxy
 
 # ===================================================================== #
 # ADVANCED CONFIGURATION
@@ -134,21 +133,13 @@ mountInotify: false
 # Default: host
 cpuType: ""
 
-# For a more general purpose virtual machine, Ubuntu container is optionally provided
-# as a layer on the virtual machine.
-# The underlying virtual machine is still accessible via `colima ssh --layer=false` or running `colima` in
-# the Ubuntu session.
-#
-# Default: false
-layer: false
-
 # Custom provision scripts for the virtual machine.
 # Provisioning scripts are executed on startup and therefore needs to be idempotent.
 #
 # EXAMPLE - script executed as root
 # provision:
 #   - mode: system
-#     script: apk add htop vim
+#     script: apt-get install htop vim
 #
 # EXAMPLE - script executed as user
 # provision:
@@ -190,8 +181,3 @@ mounts: []
 #
 # Default: {}
 env: {}
-
-# Enable cgroups v2 as a temporary workaround for https://github.com/abiosoft/colima/issues/764.
-# NOTE: this is incompatible with Kubernetes and Ubuntu Layer.
-# NOTE: this config will be removed in future versions.
-cgroupsV2: false

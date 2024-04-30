@@ -1,0 +1,13 @@
+#!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
+#/usr/local/bin/brew-clean
+
+td=$(mktemp -d -t brew-clean.XXXXXXXXXXX)
+cd "$td"
+mkfifo f1
+uptime=$(sysctl -n kern.boottime | grep -oe '{.*}' | tr , '\n' | tr -d '{ }' | grep -Fve 'usec' | cut -d= -f 2)
+
+grep -Ff <(brew list --pinned) < f1 | cut -d/ -f5 | uniq | xargs brew info --json --formulae | jq --raw-output 'map({name:.name, installed:.installed | max_by(.time).time})[] | select(.installed > '"$uptime"') | .name' | xargs echo "pinned formulae found:" & p1_pid=$!
+
+brew cleanup -n | grep -Fve "$HOME/Library/Caches" -e "$HOME/Library/Logs/Homebrew" | tee f1
+
+wait $p1_pid

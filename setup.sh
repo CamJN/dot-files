@@ -77,7 +77,7 @@ function link_dotfiles {
 link_dotfiles . ~/Developer/Bash/dot-files/.[!.]*
 
 mkdir -p ~/.docker/cli-plugins
-ln -shfF "$(brew --prefix docker-buildx)/bin/docker-buildx" ~/.docker/cli-plugins/docker-buildx
+brew list --formulae -1 | grep -Fe docker- | xargs brew --prefix | xargs -J {} ln -shfF {} ~/.docker/cli-plugins/
 
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
     if [ "${file##*/}" = "openssl" ]; then
@@ -92,15 +92,20 @@ for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
 done
 
 ln -shFf ~/Developer/Bash/dot-files/usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
+ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
+ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 sudo -v
-find ~/Developer/Bash/dot-files/etc -type f \! -name '.DS_Store' -print0 | while IFS= read -r -d '' file; do
+
+sudo ln -shFf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
+find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do
     sudo find /private/etc \
          -type f \
          -path "*/${file#"$HOME"/Developer/Bash/dot-files/etc/}" \
          -print0
 done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "mv '{}' '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
-
+sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
+sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
 if ! which -s rbenv; then
     echo "rbenv wasn't installed; is homebrew broken?" >&2
     exit 1
@@ -112,9 +117,7 @@ else
 fi
 
 rustup update
-# maybe migrate wasm-pack to homebrew?
-cargo install wasm-pack
-rustup target add wasm32-unknown-unknown
+rustup target list | rg darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
 
 if ! ( networksetup -listlocations | grep -Fqe 'Local DNS' ); then
     POPULATE=populate

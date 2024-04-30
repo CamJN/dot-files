@@ -12,17 +12,17 @@
 	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
 	fsyncMethod = writeout-only
 	looseCompression = 9
-	pager = delta --dark
+#       pager = delta --dark
 	whitespace = trailing-space,space-before-tab
 #	fsmonitor = true # really slow, wtf?
 #	fsync = none
 #	filemode = false
-#	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks # breaks local hooks
+	hooksPath = /Users/camdennarzt/Developer/Bash/dot-files/.git/hooks
 #	sshCommand = ssh -vvvv
 [pack]
 	compression = 9
 [interactive]
-	diffFilter = delta --color-only
+# 	diffFilter = delta --color-only
 [delta]
 	features = side-by-side line-numbers decorations navigate
 	hyperlinks = false
@@ -31,7 +31,7 @@
 	commit-decoration-style = bold yellow box ul
 	file-style = bold yellow ul
 	file-decoration-style = none
-# [sendemail]
+[sendemail]
 # 	smtpencryption = tls
 # 	smtpserver = smtp.gmail.com
 # 	smtpuser = camden.narzt@gmail.com
@@ -56,6 +56,7 @@
 [apply]
 	whitespace = fix
 [alias]
+	root = rev-parse --show-toplevel
 	amend = commit --amend
 	ammend = commit --amend
 	history = log --oneline --abbrev-commit --all --graph --decorate --color
@@ -73,22 +74,14 @@
 	files-in-commit = diff-tree --no-commit-id --name-only -r
 [push]
 	default = simple
-# [filter "media"]
-# 	required = true
-# 	clean = git media clean %f
-# 	smudge = git media smudge %f
-# [filter "hawser"]
-# 	clean = git hawser clean %f
-# 	smudge = git hawser smudge %f
-# 	required = true
-# [filter "lfs"]
+[filter "lfs"]
 # 	clean = git-lfs clean -- %f
 # 	smudge = git-lfs smudge -- %f
 # 	required = true
 # 	process = git-lfs filter-process
 [gpg]
 	program = /usr/local/bin/gpg
-# script with: exec gpg --no-tty "$@"
+# if broken try to replace with script containing: exec gpg --no-tty "$@"
 [commit]
 	gpgsign = true
 	template = /Users/camdennarzt/.config/git/commitMsg
@@ -103,14 +96,20 @@
 	algorithm = histogram
 	colorMoved = default
 	colorMovedWS = ignore-all-space
+        tool = difftastic
+	external = difft
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
 	ff = false
+[difftool]
+        prompt = false
 [difftool "vim"]
 	cmd = vimdiff $LOCAL $REMOTE
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
+[difftool "difftastic"]
+        cmd = difft "$LOCAL" "$REMOTE"
 [init]
 	defaultBranch = main
 [credential]
@@ -119,7 +118,9 @@
 	rebase = true
 [submodule]
 	recurse = true
-# [trace2]
+[trace2]
 #	perfTarget = /Users/camdennarzt/Desktop/gitlog.perf
 #	normalTarget = /Users/camdennarzt/Desktop/gitlog.normal
 #	eventTarget = /Users/camdennarzt/Desktop/gitlog.event
+[pager]
+        difftool = true

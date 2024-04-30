@@ -21,14 +21,17 @@ _pip_completion() {
 complete -o default -F _pip_completion python3 -m pip
 # pip bash completion end
 
-save_function() {
-    # shellcheck disable=SC2155
-    local ORIG_FUNC=$(declare -f "$1")
-    local NEWNAME_FUNC="$2${ORIG_FUNC#$1}"
-    eval "$NEWNAME_FUNC"
+function copy_function() {
+  test -n "$(declare -f "$1")" || return
+  eval "${_/$1/$2}"
 }
 
-save_function _filedir old_filedir
+function rename_function() {
+  copy_function "$@" || return
+  unset -f "$1"
+}
+
+rename_function _filedir old_filedir
 
 _filedir() {
     #initialization_code

@@ -89,8 +89,8 @@ cask_args appdir: '/Applications', require_sha: true, language: 'en-CA'
 # cask 'sketch' # cannot use latest version with my license... https://download.sketch.com/sketch-75-129697.zip
 cask "1password-cli"
 cask "tower"
-cask "homebrew/cask-versions/firefox-developer-edition", args: { require_sha: false }
-cask "homebrew/cask-versions/1password7"
+cask "firefox@developer-edition", args: { require_sha: false }
+cask "1password@7"
 cask "vmware-fusion"
 # cask 'dolphin'
 # cask 'wireshark'

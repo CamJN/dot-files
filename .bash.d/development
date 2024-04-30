@@ -6,11 +6,16 @@ export GIT_CEILING_DIRECTORIES=/Users
 export DOCKER_SCAN_SUGGEST=false
 export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 
-# if [on apple silicon] ; then CPATH=/opt/homebrew/blahblah; fi
 if [ "$(uname)" = "Darwin" ]; then
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
     export SDKROOT
     #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
+    if [[ $(uname -m) == 'arm64' ]]; then
+        # https://andreasfertig.blog/2021/02/clang-and-gcc-on-macos-catalina-finding-the-include-paths/
+        export CPATH=/opt/homebrew/include
+        export LIBRARY_PATH=/opt/homebrew/lib
+        export LD_LIBRARY_PATH=$LIBRARY_PATH
+    fi
 
     eval "$(brew shellenv)"
     export HOMEBREW_INSTALL_BADGE=🍷

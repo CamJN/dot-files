@@ -100,13 +100,6 @@ if [ -f ~/.bash.d/emacs ]; then
     . ~/.bash.d/emacs
 fi
 
-if command -v rbenv > /dev/null; then
-    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
-    export RUBY_CONFIGURE_OPTS
-    export RUBY_YJIT_ENABLE=1
-    eval "$(rbenv init -)";
-fi
-
 if [ "Darwin" = "$(uname)" ] && command -v neofetch >/dev/null; then
     neofetch
 fi

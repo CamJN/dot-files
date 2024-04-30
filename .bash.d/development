@@ -28,6 +28,12 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_BUNDLE_BREW_SKIP
     export HOMEBREW_EVAL_ALL="lazy, cheap, fucking, asswipes"
     export $(gpg --quiet --decrypt ~/.bash.d/secrets.gpg | grep -v '^#' | xargs)
+    if command -v rbenv > /dev/null; then
+        RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
+        export RUBY_CONFIGURE_OPTS
+        export RUBY_YJIT_ENABLE=1
+        eval "$(rbenv init -)";
+    fi
 
     function project {
         if [ "$1" = 'size' ]; then

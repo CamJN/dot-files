@@ -50,6 +50,7 @@ brew "node"
 brew "node@18"
 brew "openjdk"
 brew "openssl@3"
+brew "openssl@1.1" # for ruby 3.1
 brew "pam-duress", args: ["HEAD"]
 brew "passenger", link: false
 brew "phusion/passenger/passenger-enterprise"
@@ -69,6 +70,7 @@ brew "swift-format"
 brew "tiny_php"
 brew "transmission-cli"
 brew "tree"
+brew "wasm-pack"
 brew "wget"
 brew "xz"
 brew "yaml-language-server"

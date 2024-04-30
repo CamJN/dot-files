@@ -1,0 +1,10 @@
+/usr/libexec
+/opt/homebrew/sbin
+/usr/local/sbin
+/opt/homebrew/etc/openssl/misc
+/usr/local/etc/openssl/misc
+/Library/Developer/CommandLineTools/usr/bin
+/Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
+/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers
+/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS

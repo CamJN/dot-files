@@ -1,32 +1,9 @@
 #!/usr/local/bin/bash
 
-# move to /private/etc/manpaths.d/
-MANPATH=/Library/Developer/CommandLineTools/usr/share/man:$MANPATH
-MANPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:$MANPATH
-MANPATH=/usr/share/man:$MANPATH
-MANPATH=/usr/local/share/man:$MANPATH
-MANPATH=/usr/local/share/man/man:$MANPATH
-MANPATH=/usr/local/Homebrew/Library/Homebrew/manpages:$MANPATH
-MANPATH=/usr/local/lib/node_modules/npm/man:$MANPATH
-export MANPATH=$JAVA_HOME/man:$MANPATH
-# MANPATH=/Library/Frameworks/R.framework/Versions/*/Resources:$MANPATH
-# MANPATH=/opt/X11/share/man:$MANPATH
-# MANPATH=/usr/local/opt/erlang/lib/erlang/man:$MANPATH
-
 export MANSECT=0:1:2:3:4:5:6:7:8:9
 
-# move to /private/etc/paths.d/
-PATH=/usr/local/sbin:$PATH
-PATH=$PATH:/Library/Developer/CommandLineTools/usr/bin
-PATH=$PATH:/Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources
-PATH=$PATH:/usr/libexec
-PATH=/usr/local/etc/openssl/misc:$PATH
-PATH=/usr/local/opt/openssl/bin:$PATH
-PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
-PATH=$PATH:/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers
-PATH=$PATH:"/Applications/VMware Fusion.app/Contents/Public"
-export PATH=$PATH:/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS
+export INFOPATH="/usr/local/share/info:/opt/homebrew/share/info:${INFOPATH:-}";
 
-export INFOPATH="/usr/local/share/info:${INFOPATH:-}";
+export MANPATH="$JAVA_HOME/man:$MANPATH"
 
 #function command_not_found_handle(){}

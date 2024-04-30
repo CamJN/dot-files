@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -xeuo pipefail
-
 # To run:
 # curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh | /bin/bash
 
+function main() {
+set -xeuo pipefail
 # ensure PATH includes likely dirs
 PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
@@ -160,3 +160,6 @@ networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN'
 
 # # Last, causes restart
 # sudo softwareupdate -i -a --restart --agree-to-license
+}
+
+main

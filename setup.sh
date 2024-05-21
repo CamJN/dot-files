@@ -8,6 +8,8 @@ set -xeuo pipefail
 # ensure PATH includes likely dirs
 PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
+tmutil localsnapshot
+
 if [ ! -e /Library/Developer/CommandLineTools ]; then
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
     LABEL=$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')
@@ -25,7 +27,7 @@ if [ ! -e ~/Developer/Bash/dot-files ]; then
     git clone git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
 else
     pushd ~/Developer/Bash/dot-files
-    git diff --exit-code || git commit -am 'tmp'
+    git diff --exit-code 2>/dev/null || git commit -am 'tmp'
     git pull -r
     popd
 fi
@@ -42,7 +44,7 @@ export HOMEBREW_BUNDLE_BREW_SKIP
 
 comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
-(brew bundle check || brew bundle install --verbose) && brew list | grep -e emacs -e postgresql -e dnsmasq -e libpq -e llvm -e transmission-cli -e gnupg -e mailpit | xargs brew pin
+(brew bundle check || brew bundle install --verbose) && brew list | grep -e emacs -e postgresql -e dnsmasq -e tree-sitter -e llvm -e transmission-cli -e gnupg -e mailpit | xargs brew pin
 
 if [ -z "${SKIP_DOCTOR-}" ]; then
 brew doctor --list-checks | grep -Fve cask -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
@@ -93,6 +95,7 @@ done
 
 ln -shFf ~/Developer/Bash/dot-files/usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
 ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
+mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 sudo -v

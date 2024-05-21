@@ -158,11 +158,11 @@ function dedup_dirs(){
         if [ -z "${seen[$v]}" ]; then
             new+=("$v")
             seen[$v]=1
-       fi
+        fi
     done
     dirs -c
     for ((i=${#new[@]}-1; i>=0; i--)); do
-      builtin pushd -n "${new[i]}" >/dev/null
+        builtin pushd -n "${new[i]}" >/dev/null
     done
 }
 
@@ -479,7 +479,7 @@ function cdocker {
         return 1
     fi
 
-    docker run -it  --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
+    docker run -it -v $PWD:/pwd --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
 }
 
 function csoftwareupdate {
@@ -506,4 +506,19 @@ function postgresql-upgrade-database {
 
 function vergte() {
     echo -e "$1\n$2" | sort -rCV
+}
+
+function update() {
+    sudo softwareupdate --install -a
+    brew update
+    brew upgrade
+    rbenv list | grep -Fvf <(rbenv versions --bare ) | xargs -n1 rbenv install
+    gem update
+    npm update -g
+    rustup update
+    cargo install $(cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}')
+}
+
+function xcode-clean() {
+    xcrun simctl shutdown all && xcrun simctl erase all
 }

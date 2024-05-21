@@ -100,6 +100,6 @@ if [ -f ~/.bash.d/emacs ]; then
     . ~/.bash.d/emacs
 fi
 
-if [ "Darwin" = "$(uname)" ] && command -v neofetch >/dev/null; then
-    neofetch
+if [ "Darwin" = "$(uname)" ] && command -v neowofetch >/dev/null; then
+    neowofetch
 fi

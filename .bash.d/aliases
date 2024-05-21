@@ -1,6 +1,5 @@
 # no shebang
 
-alias baressh="ssh -oRemoteCommand=none -t"
 alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"
 alias bc="direct_math"
 alias bell='tput bel'
@@ -27,7 +26,6 @@ alias egrep='grep -E'
 alias emptycache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder;'
 alias fgrep='grep -F --color=always'
 alias find='cfind'
-alias hangup='ssh -O stop'
 alias gzip='pigz -9'
 alias ip="echo 'eth0\nen0\nen1' | xargs -n1 ipconfig getifaddr"
 alias jsay='say -v Kyoko'
@@ -69,6 +67,9 @@ alias screensaver='ScreenSaverEngine 2>/dev/null'
 alias sedstrip='cut -d : -f 1'
 alias serve='python -m SimpleHTTPServer 0'
 alias serve3='python3 -m http.server 0'
+alias ssh-bare="ssh -oRemoteCommand=none -t"
+alias ssh-hangup='ssh -O stop'
+alias ssh-retry='ssh -oConnectionAttempts=120'
 alias sqlite='sqlite3'
 alias stabilizeIp='for i in `seq 1 30`; do getIp ; done | sort -u'
 alias sudo='csudo '

@@ -1,6 +1,5 @@
 tap "getargv/tap", "git@github.com:getargv/homebrew-tap.git"
 tap "homebrew/bundle"
-tap "homebrew/cask-versions"
 tap "phusion/passenger"
 tap "teamookla/speedtest"
 
@@ -47,7 +46,7 @@ brew "maven"
 brew "hyfetch"
 brew "nginx"
 brew "node"
-brew "node@18"
+brew "node@20"
 brew "openjdk"
 brew "openssl@3"
 brew "openssl@1.1" # for ruby 3.1
@@ -90,6 +89,7 @@ cask_args appdir: '/Applications', require_sha: true, language: 'en-CA'
 cask "1password-cli"
 cask "tower"
 cask "firefox@developer-edition", args: { require_sha: false }
+# 1password 8 is electron crap
 cask "1password@7"
 cask "vmware-fusion"
 # cask 'dolphin'

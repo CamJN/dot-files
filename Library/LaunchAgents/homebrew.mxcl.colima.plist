@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
     <key>EnvironmentVariables</key>
     <dict>
       <key>PATH</key>
-      <string>/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin</string>
+      <string>/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin</string>
     </dict>
     <key>KeepAlive</key>
-    <true/>
+    <dict>
+      <key>SuccessfulExit</key>
+      <true/>
+    </dict>
     <key>Label</key>
-    <string>local.colima</string>
+    <string>homebrew.mxcl.colima</string>
+    <key>LimitLoadToSessionType</key>
+    <array>
+      <string>Aqua</string>
+      <string>Background</string>
+      <string>LoginWindow</string>
+      <string>StandardIO</string>
+      <string>System</string>
+    </array>
     <!-- reason for dns: https://github.com/lima-vm/lima/issues/1333 -->
     <!-- this might also work: --dns 192.168.5.3 per: https://github.com/lima-vm/lima/blob/master/docs/network.md#dns-19216853 -->
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/bin/colima</string>
+      <string>/usr/local/opt/colima/bin/colima</string>
       <string>start</string>
       <string>-f</string>
       <string>--mount-type</string>
@@ -31,8 +42,10 @@
     <key>RunAtLoad</key>
     <true/>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/colima.stderr.log</string>
+    <string>/usr/local/var/log/colima.log</string>
     <key>StandardOutPath</key>
-    <string>/usr/local/var/log/colima.stdout.log</string>
+    <string>/usr/local/var/log/colima.log</string>
+    <key>WorkingDirectory</key>
+    <string>/Users/camdennarzt</string>
   </dict>
 </plist>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # To run:
-# curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh | /bin/bash
+# bash -c "$(curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh)"
 
 function main() {
 set -xeuo pipefail
@@ -83,6 +83,7 @@ brew list --formulae -1 | grep -Fe docker- | xargs brew --prefix | xargs -J {} l
 
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
     if [ "${file##*/}" = "openssl" ]; then
+        ln -shFf "openssl@3" "$HOMEBREW_PREFIX/etc/openssl"
         ln -shFf "$file/openssl.cnf" "$HOMEBREW_PREFIX/etc/openssl/openssl.cnf"
     else
         ln -shFf "$file" "$HOMEBREW_PREFIX/etc/${file##*/}"
@@ -133,8 +134,6 @@ fi
 
 networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN' | cut -f 2- -d ' ' | xargs -I{} networksetup -setdnsservers "{}" 127.0.0.1
 
-#google-authenticator -t -d
-#.google_authenticator  .passenger-enterprise-download-token
 # mkdir -p "$HOME/Pictures/Screenshots/"
 # defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 # defaults write com.apple.screensaver askForPassword -int 1

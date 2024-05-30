@@ -1,5 +1,6 @@
 ;;; term-title.el --- Synchronize Emacs frame title with terminal title
 
+;; Copyright (C) 2023, 2024 Camden Narzt
 ;; Copyright (C) 2021, 2022 Vladimir Panteleev
 ;; Copyright (C) 2004 Noah S. Friedman
 

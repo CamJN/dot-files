@@ -1,4 +1,5 @@
 ;;; developer.el --- Various functions and settings useful for programming.
+(require 'sql)
 (require 'cc-mode)
 (require 'compile)
 (require 'defuns)
@@ -8,24 +9,28 @@
 (require 'yasnippet)
 (require 'eglot)
 (require 'treesit)
+(require 'treemacs)
+
 (defun prettify-set ()
   (setq prettify-symbols-alist
         '(
-         ("lambda" . "λ")
-         ("|>" . "▷")
-         ("<|" . "◁")
-         ("->>" . "↠")
-         ("->" . "→")
-         ("<-" . "←")
-         ("=>" . "⇒")
-         ("<=" . "≤")
-         (">=" . "≥")
-         ("..." . "…")
-         ("::" . "∷")
-         ("ffi" . "ﬃ")
-         )))
+          ("lambda" . "λ")
+          ("|>" . "▷")
+          ("<|" . "◁")
+          ("->>" . "↠")
+          ("->" . "→")
+          ("<-" . "←")
+          ("=>" . "⇒")
+          ("<=" . "≤")
+          (">=" . "≥")
+          ("..." . "…")
+          ("::" . "∷")
+          ("ffi" . "ﬃ")
+          )))
 (add-hook 'prog-mode-hook 'prettify-set)
 
+(treemacs-hide-gitignored-files-mode t)
+(treemacs-project-follow-mode t)
 
 (add-hook 'tree-sitter-after-on-hook (lambda()
                                        (tree-sitter-hl-mode)
@@ -40,6 +45,7 @@
         (bash "https://github.com/tree-sitter/tree-sitter-bash")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
         (html "https://github.com/tree-sitter/tree-sitter-html")
         (json "https://github.com/tree-sitter/tree-sitter-json")
         (python "https://github.com/tree-sitter/tree-sitter-python")
@@ -48,7 +54,7 @@
         (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
         (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
         (java "https://github.com/tree-sitter/tree-sitter-java")
-        (php "https://github.com/tree-sitter/tree-sitter-php")
+        (php "https://github.com/tree-sitter/tree-sitter-php");;Warning (treesit): Error encountered when installing language grammar: (file-missing Setting current directory No such file or directory /var/folders/p7/03_g5t611499lmjqhwc5tljr0000gn/T/treesit-workdir1rXjsb/repo/src)
         (c "https://github.com/tree-sitter/tree-sitter-c")
         (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 
@@ -181,12 +187,15 @@
 (defun setup-eglot ()
   "setup eglot mode with functionality"
   (progn
-    (add-hook 'before-save-hook #'eglot-format-buffer nil t);; t makes this local-only and calls global too
+    (when (eglot--server-capable :documentFormattingProvider)
+      (add-hook 'before-save-hook #'eglot-format-buffer nil t));; t makes this local-only and calls global too
     (company-mode)
     (yas-minor-mode)
     (flymake-mode)
     (eglot-inlay-hints-mode nil);; force enable
     (flyspell-prog-mode)
+    (when (functionp 'completion-preview-mode) (completion-preview-mode)) ;; Options in the completion-preview customization group control when this preview is displayed
+    ;;(treemacs t)
     ))
 
 (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
@@ -196,11 +205,22 @@
          (eglot-ensure)))
 
 (defun python-lsp-startup ()
-  (progn (setq python-shell-virtualenv-root (vc-find-root default-directory ".git"))
-         (eglot-ensure)))
+  (let* (
+         ;;(define-key python-mode-map (kbd "C-c C-k") 'copilot-complete)
+         (proj (vc-find-root default-directory ".git"))
+         (rel-configs (directory-files-recursively proj "pyvenv.cfg"))
+         (abs-configs (mapcar #'expand-file-name rel-configs))
+         (venv-command-xref (car (xref-matches-in-files "command = " abs-configs)))
+         )
+    (setq python-shell-virtualenv-root (if (and (file-exists-p (car abs-configs)) venv-command-xref)
+                                           (car (last (split-string (xref-item-summary venv-command-xref) " ")))
+                                         proj
+                                         ))
+    (eglot-ensure)
+    )
+  )
 
 (with-eval-after-load 'eglot
-
   (add-to-list 'eglot-server-programs
                `((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
                  .
@@ -217,6 +237,22 @@
                     :includeInlayFunctionLikeReturnTypeHints t
                     :includeInlayEnumMemberValueHints t
                     ))))
+               )
+  (add-to-list 'eglot-server-programs
+               `((swift-mode swift-ts-mode) "sourcekit-lsp"
+                 :initializationOptions
+                 (:preferences
+                  (
+                   :includeInlayParameterNameHints "all"
+                   :includeInlayParameterNameHintsWhenArgumentMatchesName t
+                   :includeInlayFunctionParameterTypeHints t
+                   :includeInlayVariableTypeHints t
+                   :includeInlayVariableTypeHintsWhenTypeMatchesName t
+                   :includeInlayPropertyDeclarationTypeHints t
+                   :includeInlayFunctionLikeReturnTypeHints t
+                   :includeInlayEnumMemberValueHints t
+                   ))
+                 )
                )
 
   (defalias 'lsp-rename 'eglot-rename)
@@ -245,6 +281,12 @@
   (add-hook 'java-mode-hook #'eglot-ensure)
   (add-hook 'rust-ts-mode-hook #'rust-lsp-startup)
   (add-hook 'rust-mode-hook #'rust-lsp-startup)
+  (add-hook 'yaml-mode-hook #'eglot-ensure)
+  (add-hook 'yaml-ts-mode-hook #'eglot-ensure)
+  (add-hook 'go-ts-mode-hook #'eglot-ensure)
+  (add-hook 'go-mode-hook #'eglot-ensure)
+  (add-hook 'go-mod-ts-mode-hook #'eglot-ensure)
+  (add-hook 'go-mod-mode-hook #'eglot-ensure)
   )
 ;; non-eglot-hooks
 (add-hook 'scss-hook #'rainbow-mode)

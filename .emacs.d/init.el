@@ -16,7 +16,7 @@
 (setenv "PATH"
         (concat
          (concat homebrew-prefix "/bin") ":"
-         (concat homebrew-prefix "/sbin")":"
+         (concat homebrew-prefix "/sbin") ":"
          (concat homebrew-prefix "/etc/openssl/misc") ":"
          (concat (car (process-lines "/usr/local/bin/brew" "--prefix" "openssl@3")) "/bin") ":"
          "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
@@ -54,13 +54,8 @@
 (require 'ibuffer)
 (require 'flyspell)
 (require 'lisp-mode)
-(require 'locate)
-(require 'server)
-(require 'sql)
 (require 'shell)
 (require 'vc-git)
-
-(editorconfig-mode 1)
 
 (require 'defuns)
 (require 'darwin nil t)
@@ -68,6 +63,7 @@
 (require 'tramphelp nil t)
 (require 'term-title nil t)
 
+(editorconfig-mode 1)
 (term-title-mode 1)
 
 ;;some modified keybindings
@@ -169,7 +165,7 @@
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.bash\\.d/" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.\\(bash_\\(profile\\|history\\|log\\(in\\|out\\)\\)\\|log\\(in\\|out\\)\\)\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
-(add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))
 
 (unless (display-images-p)
   (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))
@@ -274,7 +270,16 @@
 
 (ido-mode 1)
 (add-to-list 'ido-ignore-buffers 'ido-ignore-most-star-buffers)
+
+;;--------command completion------------------------------------
 (icomplete-mode 1)
+(add-hook 'icomplete-minibuffer-setup-hook
+          (lambda ()
+            (define-key icomplete-minibuffer-map "\C-n" 'icomplete-forward-completions)
+            (define-key icomplete-minibuffer-map "\C-s" 'icomplete-forward-completions)
+            (define-key icomplete-minibuffer-map "\C-p" 'icomplete-backward-completions)
+            (define-key icomplete-minibuffer-map "\C-r" 'icomplete-backward-completions)
+            ))
 
 ;;----------Look of Emacs in Terminal---------------------------------------
 (toggle-tool-bar-mode-from-frame -1)

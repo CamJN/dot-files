@@ -37,6 +37,11 @@
 (when (< emacs-major-version 27)
   (package-initialize))
 
+(when (> emacs-major-version 29)
+  ;;If you would prefer to see only Icomplete's in-buffer display, and not the *Completions* buffer, you can add this to your init:
+  (advice-add 'completion-at-point :after #'minibuffer-hide-completions)
+  )
+
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa")))
 

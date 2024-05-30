@@ -206,10 +206,13 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
     (print "Region must be active." t)))
 
 
-(defun sudo-edit-current-file ()
-  "Edit the current buffer as root."
-  (interactive)
+(if (functionp 'tramp-revert-buffer-with-sudo)
+    (defalias sudo-edit-current-file tramp-revert-buffer-with-sudo)
+  (defun sudo-edit-current-file ()
+    "Edit the current buffer as root."
+    (interactive)
   (find-alternate-file (concat "/sudo:root@localhost:" (buffer-file-name (current-buffer)))))
+)
 
 (unless (fboundp 'string-match-p)
   (defsubst string-match-p (regexp string &optional start)

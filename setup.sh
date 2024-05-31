@@ -44,10 +44,12 @@ export HOMEBREW_BUNDLE_BREW_SKIP
 
 comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
-(brew bundle check || brew bundle install --verbose) && brew list | grep -e emacs -e postgresql -e dnsmasq -e tree-sitter -e llvm -e transmission-cli -e gnupg -e mailpit | xargs brew pin
+brew bundle check || brew bundle install --verbose
+
+brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16
 
 if [ -z "${SKIP_DOCTOR-}" ]; then
-brew doctor --list-checks | grep -Fve cask -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
+    brew doctor --list-checks | grep -Fv -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
 fi
 
 function link_dotfiles {

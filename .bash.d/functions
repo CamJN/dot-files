@@ -369,6 +369,11 @@ function unix {
 }
 
 function password {
+    if ( -z "$*" ); then
+        echo "Must provide title for new password item" >&2
+        echo "eg: $0 Best Buy" >&2
+        return 1
+    fi
     op create item login title="$*" --generate-password
 }
 

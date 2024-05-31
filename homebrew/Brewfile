@@ -20,6 +20,7 @@ brew "dnsmasq"
 brew "docker"
 brew "docker-buildx"
 brew "docker-completion"
+brew "docker-compose"
 brew "docker-credential-helper"
 brew "dotnet"
 brew "doxygen"
@@ -36,6 +37,7 @@ brew "gnupg"
 brew "go"
 brew "google-authenticator-libpam"
 brew "htmlq"
+brew "hyfetch"
 brew "hyperfine"
 brew "jless"
 brew "jq"
@@ -43,7 +45,6 @@ brew "llvm"
 brew "mailpit"
 brew "mas"
 brew "maven"
-brew "hyfetch"
 brew "nginx"
 brew "node"
 brew "node@20"
@@ -58,9 +59,11 @@ brew "pkg-config"
 brew "pngcrush"
 brew "postgresql@16", link: true
 brew "pyright"
+brew "python"
 brew "rbenv"
 brew "rbenv-default-gems"
 brew "ripgrep"
+brew "ruby-build"
 brew "rust-analyzer"
 brew "rustup-init"
 brew "shellcheck"
@@ -86,11 +89,10 @@ cask_args appdir: '/Applications', require_sha: true, language: 'en-CA'
 
 # cask 'sketch' # cannot use latest version with my license... https://download.sketch.com/sketch-75-129697.zip
 cask "1password-cli"
-cask "tower"
-cask "firefox@developer-edition", args: { require_sha: false }
 # 1password 8 is electron crap
 cask "1password@7"
-cask "vmware-fusion"
+cask "blender"
 # cask 'dolphin'
-# cask 'wireshark'
-# cask 'sublime-merge'
+cask "firefox@developer-edition", args: { require_sha: false }
+cask "tower"
+cask "vmware-fusion"

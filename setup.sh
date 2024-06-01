@@ -96,13 +96,30 @@ for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
     ln -shFf "$file" "$HOMEBREW_PREFIX/bin/${file##*/}"
 done
 
+function getLaunchdPlist() {
+    for file in "$@"; do
+        filename=$(basename "$file")
+        formula="${filename%.plist}"
+        formula="${formula#homebrew.mxcl.}"
+        if [[ "$file" == *"/LaunchDaemons/"* ]]; then
+            # shellcheck disable=SC2024
+            # the read is non-root, tee is root to write
+            sudo tee "$file" < "$HOMEBREW_PREFIX/opt/$formula/${filename}" >/dev/null
+        else
+            cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
+        fi
+    done
+}
+
 ln -shFf ~/Developer/Bash/dot-files/usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
+getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
 ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
 mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 sudo -v
 
+getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
 sudo ln -shFf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
 find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do
     sudo find /private/etc \

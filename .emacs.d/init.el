@@ -10,7 +10,9 @@
 (setq debug-on-error t)
 
 (setq default-directory (getenv "HOME"))
-(setq homebrew-prefix (car (process-lines "/usr/local/bin/brew" "--prefix")))
+
+(setq homebrew-prefix (car (process-lines "/usr/bin/env" "-P" "/opt/homebrew/bin:/usr/local/bin" "brew" "--prefix")))
+
 (setenv "LANG" "en_CA.UTF-8")
 (setenv "__CF_USER_TEXT_ENCODING" "0x1F5:0x8000100:0x52")
 (setenv "PATH"
@@ -18,7 +20,6 @@
          (concat homebrew-prefix "/bin") ":"
          (concat homebrew-prefix "/sbin") ":"
          (concat homebrew-prefix "/etc/openssl/misc") ":"
-         (concat (car (process-lines "/usr/local/bin/brew" "--prefix" "openssl@3")) "/bin") ":"
          "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
          "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
          "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"

@@ -41,6 +41,7 @@ alias minimacs=mg
 alias minemacs=mg
 alias mkdir='mkdir -p'
 alias more='less'
+alias nano='mg'
 alias path='echo -e ${PATH//:/\\n}'
 alias peek='tee /dev/stderr'
 alias perl='perl -p'

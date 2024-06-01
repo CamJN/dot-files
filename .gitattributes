@@ -10,3 +10,4 @@
 *.conf diff
 *.css diff
 *.dict diff
+*.gpg binary

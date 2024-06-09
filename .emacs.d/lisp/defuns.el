@@ -50,9 +50,6 @@ The corresponding mode is `%s'."
      (message "No match in `auto-mode-alist' for %s." file))))
 
 ;;----------Scratch buffer-----------------------------
-(with-current-buffer "*scratch*"
-  (emacs-lock-mode 'kill))
-
 (defun dont-kill-scratch ()
   "Don't let scratch be killed."
   (unless (string= (buffer-name) "*scratch*") t))

@@ -256,8 +256,9 @@
 
 
 ;;----------buffer switching-------------------------------------
-
-(defvar ido-dont-ignore-buffer-names '("*scratch*" "*Occur*" "*Help*"))
+(defvar ido-dont-ignore-buffer-names '("*scratch*" "*eldoc*" "*Occur*" "*Help*"))
+(with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
+;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
 
 (defun ido-ignore-most-star-buffers (name)
   (and

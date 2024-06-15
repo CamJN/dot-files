@@ -234,134 +234,18 @@ function zipup {
 }
 
 function cnotify {
-    osascript -e 'on run argv
-      set AppleScript'\''s text item delimiters to " "
-      display notification (argv as string) with title "Terminal"
-    end run' "$@"
+    osascript "$HOME/.bash.d/cnotify.scpt" "$@"
 }
 
-function fplay {
-    TYPEREGEX='.*\.(3g[2|p]|a(ac|c3|dts|if[c|f]?|mr|nd|u)|caf|m4[a|r]|mp([1-4|a]|eg[0,9]?)|sd2|wav)'
-    DOAPPLESCRIPT=0
-    APPLESCRIPTPART1='tell application "QuickTime Player" to delay 1'
-    APPLESCRIPTPART2='tell application "QuickTime Player" to play the first document'
-    MUSICROOT=~/Music/
-    OUTPUT1="/dev/null"
-    OUTPUT2="/dev/null"
-    AUTHOR=""
-    ALBUM=""
-    NAME=""
-    PLAY=1
-    INFO=0
-    options_found=0
-    while getopts ":sd:hgia:A:o:v" OPTION
-    do
-        options_found=1
-        # shellcheck disable=SC2214
-        case $OPTION in
-            d|+d)
-                MUSICROOT="$OPTARG"
-                ;;
-            g|+g)
-                DOAPPLESCRIPT=1
-                ;;
-            s|+s)
-                PLAY=0
-                ;;
-            i|+i)
-                INFO=1
-                ;;
-            a|+a)
-                AUTHOR="AND author:$OPTARG"
-                ;;
-            A|+A)
-                ALBUM="AND album:$OPTARG"
-                ;;
-            o|+o)
-                OUTPUT2="$OPTARG"
-                ;;
-            v|+v)
-                OUTPUT1="/dev/stdout"
-                ;;
-            h|+h)
-                echo "usage: ${0##*/} [+-vshgi] [+-d music-directory] [+-a album] [+-A artist] [+-o playlist] [--] search terms..."
-                return
-                ;;
-            *)
-                echo "usage: ${0##*/} [+-vshgi] [+-d music-directory] [+-a album] [+-A artist] [+-o playlist] [--] search terms..."
-                return 2
-                ;;
-        esac
-    done
-    shift $((OPTIND-1))
-    OPTIND=1
-    if [ "$#" -gt "0" ]; then
-        NAME="AND name:$*"
-    fi
-    if [[ ( -n $NAME ) || ((options_found -eq 1)) ]]; then
-        mdfind -onlyin "$MUSICROOT" '(kind:music OR kind:movie)' "$NAME" "$AUTHOR" "$ALBUM" |
-            grep -E --color=auto "$TYPEREGEX" |
-            while read -r line; do
-                echo "$line" | tee -a "$OUTPUT2" > "$OUTPUT1"
-                if ((INFO)); then
-                    afinfo "$line"
-                fi
-                if ((DOAPPLESCRIPT)); then
-                    open -a 'QuickTime Player' "$line"
-                    if ((PLAY)); then
-                        osascript -e "$APPLESCRIPTPART1"
-                        osascript -e "$APPLESCRIPTPART2"
-                    fi
-                elif ((PLAY)); then
-                    # to get fplay to print the song names neatly, have it spawn a process that uses bash "wait" to wait for everything else to finish before echoing.
-
-                    # not sure how to avoid it waiting for it's parent.
-                    afplay "$line"
-                fi
-            done
-    fi
-}
+source "$HOME/.bash.d/fplay.sh"
 
 function ccal {
-
-    cat >/tmp/FileWithDates <<EOF
-EOD
+    awk -v month="$(date +%m)" -v day="$(date +%e)" -f "$HOME/.bash.d/ccal.awk" - <(cal -y) <<EOF
 10 31
 4 25
 2 14
 2 2
-EOD
 EOF
-
-    cal -y | awk -v month="$(date +%m)" -v day="$(date +%e) " '
-BEGIN {
-    max=0
-    sub(/^0/,"",month)
-    months[max] = month + 0
-    days[max]   = day + 0
-    max++
-}
-
-NR == FNR {
-    months[max] = $1 + 0
-    days[max]   = $2 + 0
-    max++
-    next
-}
-
-{   m = (int((FNR-3)/8) * 3) + 1
-    for (i=0; i<3; i++) {
-        t[i] = " " substr($0,1+i*22,20) " "
-         for(j=0; j < max; j++) {
-            if (m+i == months[j]) {
-                sub(" "days[j]" ",":"days[j]"@",t[i])
-            }
-        }
-        gsub(/:/," \033[0;31m",t[i])
-        gsub(/@/,"\033[0m ",t[i])
-    }
-    print t[0],t[1],t[2]
-} ' /tmp/FileWithDates -
 }
 
 function unix {
@@ -369,7 +253,7 @@ function unix {
 }
 
 function password {
-    if ( -z "$*" ); then
+    if [ -z "$*" ]; then
         echo "Must provide title for new password item" >&2
         echo "eg: $0 Best Buy" >&2
         return 1
@@ -484,14 +368,14 @@ function cdocker {
         return 1
     fi
 
-    docker run -it -v $PWD:/pwd --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
+    docker run -it -v "$PWD:/pwd" --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
 }
 
 function csoftwareupdate {
-    softwareupdate -l |\
+    softwareupdate --list |\
         grep -F Label |\
         awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
-        xargs -0 -I {} softwareupdate -d '{}'
+        xargs -0 -I {} softwareupdate --download '{}'
 }
 
 function postgresql-upgrade-database {
@@ -512,18 +396,31 @@ function postgresql-upgrade-database {
 function vergte() {
     echo -e "$1\n$2" | sort -rCV
 }
+function verlte() {
+    echo -e "$2\n$1" | sort -rCV
+}
+function vergt() {
+    ! verlte "$@"
+}
+function verlt() {
+    ! vergte "$@"
+}
 
 function update() {
-    sudo softwareupdate --install -a
     brew update
     brew upgrade
-    rbenv list | grep -Fvf <(rbenv versions --bare ) | xargs -n1 rbenv install
+    rbenv list | grep -Fvf <(rbenv versions --bare) | xargs -n1 rbenv install
     gem update
     npm update -g
     rustup update
     cargo install $(cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}')
+    sudo softwareupdate --install --all --restart
 }
 
 function xcode-clean() {
+    rm -rf ~/Library/Developer/Xcode/DerivedData
+    rm -rf ~/Library/Developer/Xcode/Archives
+    rm -rf ~/Library/Developer/Xcode/*\ DeviceSupport
+    rm -rf ~/Library/Caches/com.apple.dt.Xcode
     xcrun simctl shutdown all && xcrun simctl erase all
 }

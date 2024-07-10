@@ -125,6 +125,12 @@
                                                             (when (= orig-point (point))
                                                               (move-beginning-of-line 1)))))
 
+;;----------News----------------------------------------
+(add-hook 'news-mode-hook (lambda ()
+  (setq prettify-symbols-alist
+        '(
+           ("" . "⟪page break⟫")
+          ))))
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
@@ -282,6 +288,10 @@
             (define-key icomplete-minibuffer-map "\C-p" 'icomplete-backward-completions)
             (define-key icomplete-minibuffer-map "\C-r" 'icomplete-backward-completions)
             ))
+
+;; (when (>= emacs-major-version 28)
+;;   (setq completion-styles '(flex))
+;;   (icomplete-vertical-mode 1))
 
 ;;----------Look of Emacs in Terminal---------------------------------------
 (toggle-tool-bar-mode-from-frame -1)

@@ -11,7 +11,7 @@
 (require 'treesit)
 (require 'treemacs)
 
-(defun prettify-set ()
+(defun setup-prog ()
   (setq prettify-symbols-alist
         '(
           ("alpha" . "α")
@@ -66,8 +66,11 @@
           ("..." . "…")
           ("::" . "∷")
           ("ffi" . "ﬃ")
-          )))
-(add-hook 'prog-mode-hook 'prettify-set)
+          ))
+  (diff-hl-mode 1)
+  (diff-hl-margin-mode 1)
+)
+(add-hook 'prog-mode-hook 'setup-prog)
 
 (treemacs-hide-gitignored-files-mode t)
 (treemacs-project-follow-mode t)
@@ -248,7 +251,7 @@
 (defun python-lsp-startup ()
   (let* (
          ;;(define-key python-mode-map (kbd "C-c C-k") 'copilot-complete)
-         (proj (vc-find-root default-directory ".git"))
+         (proj (or (vc-find-root default-directory ".git") default-directory))
          (rel-configs (directory-files-recursively proj "pyvenv.cfg"))
          (abs-configs (mapcar #'expand-file-name rel-configs))
          (venv-command-xref (car (xref-matches-in-files "command = " abs-configs)))
@@ -334,5 +337,9 @@
 (add-hook 'scss-ts-hook #'rainbow-mode)
 (add-hook 'css-hook #'rainbow-mode)
 (add-hook 'css-ts-hook #'rainbow-mode)
+
+;; magit
+(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 (provide 'developer)

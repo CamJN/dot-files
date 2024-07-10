@@ -169,7 +169,7 @@
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   '(tree-sitter-ispell swift-ts-mode launchctl treemacs eglot transmission rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode gntp emojify alert circe oauth2 yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
+   '(markdown-ts-mode tree-sitter-ispell swift-ts-mode launchctl treemacs eglot transmission rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode gntp emojify alert circe oauth2 yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(project-mode-line t)
  '(project-vc-extra-root-markers
@@ -205,6 +205,7 @@
  '(truncate-partial-width-windows nil)
  '(user-full-name "Camden Narzt")
  '(user-mail-address "<camden.narzt@hotmail.com>")
+ '(vc-handled-backends '(Git Hg))
  '(version-control t)
  '(visible-bell t)
  '(which-func-mode t t)

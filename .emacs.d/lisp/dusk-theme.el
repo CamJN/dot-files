@@ -1,8 +1,10 @@
-;;; dusk-theme.el --- Tango-dark-based custom theme for faces
+;;; dusk-theme.el --- Tango-based custom theme for faces  -*- lexical-binding:t -*-
 
-;; Copyright (C) 2010-2012 Free Software Foundation, Inc.
+;; Copyright (C) 2010-2024 Free Software Foundation, Inc.
 
-;; Authors: Camden Narzt <camden.narzt@hotmail.com>
+;; Authors: Chong Yidong <cyd@stupidchicken>
+;;          Jan Moringen <jan.moringen@uni-bielefeld.de>
+;;          Camden Narzt <camden.narzt@hotmail.com>
 
 ;; This file is part of GNU Emacs.
 
@@ -17,47 +19,62 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
+;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary
+;;; Commentary:
+
+;; The colors in this theme come from the Tango palette, which is in
+;; the public domain: http://tango.freedesktop.org/
+
+;; This theme is based on emacs' built-in tango-dark-theme.el
+;; https://github.com/emacs-mirror/emacs/blob/master/etc/themes/tango-dark-theme.el
 
 ;;; Code:
 
+;;;###theme-autoload
 (deftheme dusk
-  "Face colors using a modified Tango palette (dark background).
+  "Face colors using the Tango palette (dark background).
 Basic, Font Lock, Isearch, Gnus, Message, Ediff, Flyspell,
-Semantic, and Ansi-Color faces are included.")
+Semantic, and Ansi-Color faces are included."
+  :background-mode 'dark
+  :kind 'color-scheme
+  :family 'tango)
+
 
 (let ((class '((class color) (min-colors 89)))
-      ;; Mostly Tango palette colors.
+      ;; Tango palette colors.
       (butter-1 "#af87ff") (butter-2 "#edd400") (butter-3 "#c4a000")
+      (butter-4 "#c0c000") (butter-1-old "#fce94f") (black "#000")
       (orange-1 "#fcaf3e") (orange-2 "#f57900") (orange-3 "#ce5c00")
       (choc-1 "#e9b96e") (choc-2 "#c17d11") (choc-3 "#8f5902")
       (cham-1 "#8ae234") (cham-2 "#5fafff") (cham-3 "#4e9a06")
       (blue-1 "#729fcf") (blue-2 "#3465a4") (blue-3 "#204a87")
-      (plum-1 "#ad7fa8") (plum-2 "#75507b") (plum-3 "#5c3566")
+      (plum-1 "#e090d7") (plum-2 "#75507b") (plum-3 "#5c3566")
       (red-1 "#ef2929")  (red-2 "#cc0000")  (red-3 "#a40000")
       (alum-1 "#eeeeec") (alum-2 "#e5e5e5") (alum-3 "#babdb6")
       (alum-4 "#888a85") (alum-5 "#555753") (alum-6 "#1c1c1c")
       ;; Not in Tango palette; used for better contrast.
-      (cham-0 "#afffaf") (blue-0 "#8cc4ff") (plum-0 "#e6a8df")
+      (cham-0 "#afffaf") (blue-0 "#8cc4ff") (plum-0 "#e9b2e3")
       (red-0 "#ff4b4b")  (alum-5.5 "#41423f") (alum-7 "#212526")
-      (grey-20 "#121212"))
+      (grey-3 "#222") (grey-10 "#666") (grey-20 "#121212")
+      ;; Not in Tango palette; used for ANSI cyan.
+      (cyan-1 "#34e2e2") (cyan-2 "#06989a"))
 
   (custom-theme-set-faces
    'dusk
    ;; Ensure sufficient contrast on low-color terminals.
    `(default ((((class color) (min-colors 4096))
-               (:foreground ,alum-1 :background ,alum-6))
-              (((class color) (min-colors 256))
-               (:foreground ,alum-1 :background "#222"))
-              (,class
-               (:foreground ,alum-1 :background "black"))))
+	       (:foreground ,alum-1 :background ,alum-6))
+	      (((class color) (min-colors 256))
+	       (:foreground ,alum-1 :background ,grey-3))
+	      (,class
+	       (:foreground ,alum-1 :background ,black))))
    `(cursor ((,class (:background ,butter-1))))
    `(shadow ((,class (:foreground ,grey-20))))
+   `(header-line ((,class (:background ,grey-10))))
    ;; Highlighting faces
    `(fringe ((,class (:background ,alum-7))))
-   `(highlight ((,class (:foreground ,alum-6 :background ,butter-2))))
+   `(highlight ((,class (:foreground ,alum-6 :background ,butter-4))))
    `(region ((,class (:background ,alum-5))))
    `(secondary-selection ((,class (:background ,blue-3))))
    `(isearch ((,class (:foreground ,alum-1 :background ,orange-3))))
@@ -65,14 +82,18 @@ Semantic, and Ansi-Color faces are included.")
    `(trailing-whitespace ((,class (:background ,red-3))))
    ;; Mode line faces
    `(mode-line ((,class
-                 (:box (:line-width -1 :style released-button)
-                       :background ,alum-2 :foreground ,alum-6))))
+		 (:box (:line-width -1 :style released-button)
+		  :background ,alum-2 :foreground ,alum-6))))
    `(mode-line-inactive ((,class
-                          (:box (:line-width -1 :style released-button)
-                                :background ,alum-5 :foreground ,alum-1))))
+			  (:box (:line-width -1 :style released-button)
+			   :background ,alum-5 :foreground ,alum-1))))
+   `(compilation-mode-line-fail ((,class (:foreground ,red-3))))
+   `(compilation-mode-line-run  ((,class (:foreground ,orange-3))))
+   `(compilation-mode-line-exit ((,class (:foreground ,cham-3))))
    ;; Escape and prompt faces
    `(minibuffer-prompt ((,class (:foreground ,cham-0))))
    `(escape-glyph ((,class (:foreground ,butter-3))))
+   `(homoglyph ((,class (:foreground ,butter-3))))
    `(error ((,class (:foreground ,red-0))))
    `(warning ((,class (:foreground ,orange-1))))
    `(success ((,class (:foreground ,cham-1))))
@@ -134,6 +155,16 @@ Semantic, and Ansi-Color faces are included.")
    ;; Flyspell faces
    `(flyspell-duplicate ((,class (:underline ,orange-1))))
    `(flyspell-incorrect ((,class (:underline ,red-1))))
+   ;; Realgud
+   `(realgud-overlay-arrow1  ((,class (:foreground "green"))))
+   `(realgud-overlay-arrow2  ((,class (:foreground ,orange-1))))
+   `(realgud-overlay-arrow3  ((,class (:foreground ,plum-0))))
+   `(realgud-bp-disabled-face      ((,class (:foreground ,blue-3))))
+   `(realgud-bp-line-enabled-face  ((,class (:underline "red"))))
+   `(realgud-bp-line-disabled-face ((,class (:underline ,blue-3))))
+   `(realgud-file-name             ((,class :foreground ,blue-1)))
+   `(realgud-line-number           ((,class :foreground ,plum-0)))
+   `(realgud-backtrace-number      ((,class :foreground ,plum-0 :weight bold)))
    ;; Semantic faces
    `(semantic-decoration-on-includes ((,class (:underline ,alum-4))))
    `(semantic-decoration-on-private-members-face
@@ -145,11 +176,37 @@ Semantic, and Ansi-Color faces are included.")
    `(semantic-decoration-on-unparsed-includes
      ((,class (:background ,alum-5.5))))
    `(semantic-tag-boundary-face ((,class (:overline ,blue-1))))
-   `(semantic-unmatched-syntax-face ((,class (:underline ,red-1)))))
-
-  (custom-theme-set-variables
-   'dusk
-   `(ansi-color-names-vector [,alum-7 ,red-0 ,cham-0 ,butter-1 ,blue-1 ,plum-1 ,blue-0 ,alum-1])))
+   `(semantic-unmatched-syntax-face ((,class (:underline ,red-1))))
+   ;; ANSI colors
+   `(ansi-color-black ((,class (:background ,alum-7 :foreground ,alum-7))))
+   `(ansi-color-red ((,class (:background ,red-0 :foreground ,red-0))))
+   ;;`(ansi-color-red ((,class (:background ,red-1 :foreground ,red-1))))
+   `(ansi-color-green ((,class (:background ,cham-0 :foreground ,cham-0))))
+   ;;`(ansi-color-green ((,class (:background ,cham-2 :foreground ,cham-2))))
+   `(ansi-color-yellow ((,class (:background ,butter-1 :foreground ,butter-1))))
+   ;;`(ansi-color-yellow ((,class (:background ,butter-2 :foreground ,butter-2))))
+   `(ansi-color-blue ((,class (:background ,blue-1 :foreground ,blue-1))))
+   ;;`(ansi-color-blue ((,class (:background ,blue-2 :foreground ,blue-2))))
+   `(ansi-color-magenta ((,class (:background ,plum-1 :foreground ,plum-1))))
+   `(ansi-color-cyan ((,class (:background ,blue-0 :foreground ,blue-0))))
+   ;;`(ansi-color-cyan ((,class (:background ,cyan-2 :foreground ,cyan-2))))
+   `(ansi-color-white ((,class (:background ,alum-1 :foreground ,alum-1))))
+   ;;`(ansi-color-white ((,class (:background ,alum-2 :foreground ,alum-2))))
+   `(ansi-color-bright-black ((,class (:background ,alum-5
+				       :foreground ,alum-5))))
+   `(ansi-color-bright-red ((,class (:background ,red-0 :foreground ,red-0))))
+   `(ansi-color-bright-green ((,class (:background ,cham-1
+				       :foreground ,cham-1))))
+   `(ansi-color-bright-yellow ((,class (:background ,butter-1
+					:foreground ,butter-1))))
+   `(ansi-color-bright-blue ((,class (:background ,blue-0
+				      :foreground ,blue-0))))
+   `(ansi-color-bright-magenta ((,class (:background ,plum-0
+					 :foreground ,plum-0))))
+   `(ansi-color-bright-cyan ((,class (:background ,cyan-1
+				      :foreground ,cyan-1))))
+   `(ansi-color-bright-white ((,class (:background ,alum-1
+				       :foreground ,alum-1))))))
 
 (provide-theme 'dusk)
 

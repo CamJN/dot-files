@@ -12,7 +12,7 @@
 	excludesfile = /Users/camdennarzt/Developer/Bash/dot-files/.gitignore
 	fsyncMethod = writeout-only
 	looseCompression = 9
-#       pager = delta --dark
+#       pager = delta --dark --theme TwoDark
 	whitespace = trailing-space,space-before-tab
 #	fsmonitor = true # really slow, wtf?
 #	fsync = none
@@ -61,19 +61,24 @@
 	ammend = commit --amend
 	history = log --oneline --abbrev-commit --all --graph --decorate --color
 	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	dlog = "-c diff.external=difft log -p --ext-diff"
+	idiff = difftool -t idiff -y
+	diffw = diff --ignore-space-change
 	git = !exec git
 	ignore = "!git status | grep \"$@\" | tr -d '[:space:]' >> .gitignore  #"
 	submodules = submodule
-	idiff = difftool -t idiff -y
-	diffw = diff --ignore-space-change
-	commitw = ! git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -
+	commitw = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -"
 	upto = "! git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
 	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
 	tar = "git archive --format=tar --output=archive.tar HEAD"
 	sbi = submodule update --init --recursive
 	files-in-commit = diff-tree --no-commit-id --name-only -r
+	track = "!git log -L$1,$2:$3 || echo 'usage: git track startLine endLine file' #"
+	trackf = "!git log -L:$1:$2 || echo 'usage: git trackf function file' #"
 [push]
 	default = simple
+	# When pushing to a branch without remote, automatically --set-upstream.
+	autoSetupRemote = true
 [filter "lfs"]
 # 	clean = git-lfs clean -- %f
 # 	smudge = git-lfs smudge -- %f
@@ -89,6 +94,7 @@
 	insteadOf = https://gitlab.phusion.nl/
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+	insteadOf = gh:
 [diff]
 	renames = copies
 	indentHeuristic = true
@@ -116,6 +122,9 @@
 	helper = osxkeychain
 [pull]
 	rebase = true
+[fetch]
+	# Remove references to remote branches that have been deleted.
+	prune = true
 [submodule]
 	recurse = true
 [trace2]
@@ -124,3 +133,6 @@
 #	eventTarget = /Users/camdennarzt/Desktop/gitlog.event
 [pager]
         difftool = true
+[rerere]
+	# Automatically record and reuse conflict resolutions.
+	enabled = true

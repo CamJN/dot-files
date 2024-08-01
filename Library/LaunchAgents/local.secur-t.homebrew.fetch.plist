@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>local.secur-t.dns</string>
+    <key>Program</key>
+    <string>/bin/bash</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>bash</string>
+      <string>-c</string>
+      <string>brew outdated --quiet | xargs brew fetch</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/homebrew/sbin:/opt/homebrew/bin</string>
+      <key>HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK</key>
+      <string>fuck you</string>
+      <key>HOMEBREW_NO_ANALYTICS</key>
+      <string>Fuck off, seriously</string>
+      <key>HOMEBREW_EVAL_ALL</key>
+      <string>lazy, cheap, fucking, asswipes</string>
+      <key>HOMEBREW_NO_INSTALL_CLEANUP</key>
+      <string>Fuck off</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/camdennarzt/Library/Logs/Homebrew/fetch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/camdennarzt/Library/Logs/Homebrew/fetch.log</string>
+    <key>StartCalendarInterval</key>
+    <array>
+      <dict>
+        <key>Hour</key>
+        <integer>0</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+      </dict>
+    </array>
+  </dict>
+</plist>

@@ -156,6 +156,11 @@ fi
 
 networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN' | cut -f 2- -d ' ' | xargs -I{} networksetup -setdnsservers "{}" 127.0.0.1
 
+if [ ! -e $HOME/.google_authenticator ]; then
+    google-authenticator --no-confirm --time-based --disallow-reuse --force --secret=~/.google_authenticator --qr-mode=ansi
+    # select correct pam_google_authenticator.so path in ./etc/pam.d/sshd
+fi
+
 # mkdir -p "$HOME/Pictures/Screenshots/"
 # defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 # defaults write com.apple.screensaver askForPassword -int 1

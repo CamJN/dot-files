@@ -161,8 +161,8 @@ if [ ! -e $HOME/.google_authenticator ]; then
     # select correct pam_google_authenticator.so path in ./etc/pam.d/sshd
 fi
 
-# mkdir -p "$HOME/Pictures/Screenshots/"
-# defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
+mkdir -p "$HOME/Pictures/Screenshots/"
+defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 # defaults write com.apple.screensaver askForPassword -int 1
 # defaults write com.apple.screensaver askForPasswordDelay -int 0
 # defaults write com.apple.Safari IncludeDevelopMenu -bool true
@@ -186,7 +186,7 @@ fi
 # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-# chflags nohidden ~/Library
+chflags nohidden ~/Library
 
 # sudo systemsetup -settimezone "America/Edmonton"
 

@@ -46,7 +46,7 @@ comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -
 
 brew bundle check || brew bundle install --verbose
 
-brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16
+brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16 colima
 
 if [ -z "${SKIP_DOCTOR-}" ]; then
     brew doctor --list-checks | grep -Fv -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
@@ -116,6 +116,9 @@ getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.
 ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
 mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+
+colima start
+docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1,env.BUILDKIT_STEP_LOG_MAX_SPEED=-1,default-load=true --use
 
 sudo -v
 

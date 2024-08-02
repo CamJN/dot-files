@@ -21,11 +21,6 @@ export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
 export GREP_OPTIONS='--binary-file=without-match --color=auto --line-buffered --exclude=*.xhprof'
 export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
-export SHELL_SESSION_HISTORY=1
-export HISTFILE="$HOME/.history/bash"
-export LESSHISTFILE="$HOME/.history/less"
-export HISTSIZE=1000000
-export HISTFILESIZE=1000000
 export PAGER="less -R"
 export BAT_PAGER="less -R"
 export MORE='-R -i'
@@ -48,7 +43,6 @@ export SUDO_EDITOR=mg
 stty -ixon
 
 #options (-s set, -u unset)
-shopt -s histappend
 shopt -s extglob
 shopt -s xpg_echo
 shopt -s globstar
@@ -98,6 +92,12 @@ fi
 if [ -f ~/.bash.d/emacs ]; then
 # shellcheck source=./.bash.d/emacs
     . ~/.bash.d/emacs
+fi
+
+#history
+if [ -f ~/.bash.d/history ]; then
+# shellcheck source=./.bash.d/history
+    . ~/.bash.d/history
 fi
 
 if [ "Darwin" = "$(uname)" ] && command -v neowofetch >/dev/null; then

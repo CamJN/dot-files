@@ -1,0 +1,22 @@
+#!/usr/local/bin/bash
+
+export SHELL_SESSION_HISTORY=1
+#export HISTFILE="$HOME/.history/bash" # breaks session history
+export LESSHISTFILE="$HOME/.history/less"
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000
+shopt -s histappend
+
+prompt_save_history() {
+    shell_session_history_enable
+    history -a
+    # If the session history doesn't exist yet, copy the shared history.
+    if [ -f "$SHELL_SESSION_HISTFILE_SHARED" ] && [ ! -s "$SHELL_SESSION_HISTFILE" ]; then
+        (umask 077; /bin/cp "$SHELL_SESSION_HISTFILE_SHARED" "$SHELL_SESSION_HISTFILE")
+    fi
+    # Save new history to the per-session and shared files.
+    (umask 077; /bin/cat "$SHELL_SESSION_HISTFILE_NEW" >> "$SHELL_SESSION_HISTFILE_SHARED")
+    (umask 077; /bin/cat "$SHELL_SESSION_HISTFILE_NEW" >> "$SHELL_SESSION_HISTFILE")
+}
+
+export PROMPT_COMMAND="${PROMPT_COMMAND};prompt_save_history"

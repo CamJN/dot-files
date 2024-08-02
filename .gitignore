@@ -17,7 +17,6 @@
 .fseventsd
 .sass-cache
 /.bash.d/.bash-git-prompt
-/.bash.d/history
 /.emacs.d/%backup%~
 /.emacs.d/.cache
 /.emacs.d/.dap-breakpoints

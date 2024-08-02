@@ -117,8 +117,12 @@ ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgent
 mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
-colima start
-docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1,env.BUILDKIT_STEP_LOG_MAX_SPEED=-1,default-load=true --use
+if ! (colima status 2>&1 | rg 'colima is running' >/dev/null); then
+    colima start
+fi
+if ! (docker buildx inspect | rg 'Driver:[\s]+docker-container' >/dev/null); then
+    docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1,env.BUILDKIT_STEP_LOG_MAX_SPEED=-1,default-load=true --use
+fi
 
 sudo -v
 

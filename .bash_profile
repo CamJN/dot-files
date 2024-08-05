@@ -40,6 +40,7 @@ export SUDO_EDITOR=mg
 stty -ixon
 
 #options (-s set, -u unset)
+shopt -s nullglob
 shopt -s extglob
 shopt -s xpg_echo
 shopt -s globstar

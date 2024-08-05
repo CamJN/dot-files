@@ -61,7 +61,7 @@ if [ "$(uname)" = "Darwin" ]; then
 
     export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
-    PATH="$PATH:$(ls -d "$HOME"/Library/Python/*/bin | paste -s -d ':' -)"
+    PATH="$PATH:$(/usr/bin/python3 -m site --user-base)/bin"
     PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     if [ -f ~/.cargo/env ]; then

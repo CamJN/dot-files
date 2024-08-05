@@ -1,5 +1,9 @@
 # no shebang
 
+if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
+    export JAVA_HOME
+    export MANPATH="$JAVA_HOME/man:$MANPATH"
+fi
 export NODE_REPL_HISTORY="$HOME/.history/node"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
 export GIT_CEILING_DIRECTORIES=/Users

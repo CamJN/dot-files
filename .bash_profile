@@ -11,9 +11,6 @@ if [ "$TERM" = "dumb" ]; then
 fi
 
 #environment variables
-if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
-    export JAVA_HOME
-fi
 export DO_NOT_TRACK=1
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
 export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"

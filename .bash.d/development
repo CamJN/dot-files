@@ -11,15 +11,10 @@ export DOCKER_SCAN_SUGGEST=false
 export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 
 if [ "$(uname)" = "Darwin" ]; then
+    # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
     export SDKROOT
     #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
-    if [[ $(uname -m) == 'arm64' ]]; then
-        # https://andreasfertig.blog/2021/02/clang-and-gcc-on-macos-catalina-finding-the-include-paths/
-        export CPATH=/opt/homebrew/include
-        export LIBRARY_PATH=/opt/homebrew/lib
-        export LD_LIBRARY_PATH=$LIBRARY_PATH
-    fi
 
     eval "$(brew shellenv)"
     export HOMEBREW_INSTALL_BADGE=🍷
@@ -36,6 +31,12 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_BUNDLE_BREW_SKIP
     export HOMEBREW_EVAL_ALL="lazy, cheap, fucking, asswipes"
     export HOMEBREW_USE_RUBY_FROM_PATH=1
+
+    export CPATH="$HOMEBREW_PREFIX/include"
+    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib"
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    # export DYLD_LIBRARY_PATH=$LIBRARY_PATH
+
     set -a
     # shellcheck disable=SC1090
     source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)

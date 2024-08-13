@@ -7,6 +7,8 @@
 !node_modules
 --regex-size-limit
 100M
+--type-not
+svg
 --type-add
 ruby:*.erb
 --type-add

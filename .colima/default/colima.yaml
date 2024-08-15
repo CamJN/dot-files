@@ -168,7 +168,7 @@ sshConfig: false
 # When set to 0, a random available port is used.
 #
 # Default: 0
-sshPort: 0
+sshPort: 1026
 
 # Configure volume mounts for the virtual machine.
 # Colima mounts user's home directory by default to provide a familiar

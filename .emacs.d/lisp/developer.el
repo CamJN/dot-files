@@ -69,7 +69,7 @@
           ))
   (diff-hl-mode 1)
   (diff-hl-margin-mode 1)
-)
+  )
 (add-hook 'prog-mode-hook 'setup-prog)
 
 (treemacs-hide-gitignored-files-mode t)
@@ -94,7 +94,10 @@
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (toml "https://github.com/tree-sitter/tree-sitter-toml")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
+
         (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+        (erb "https://github.com/tree-sitter/tree-sitter-embedded-template")
+
         (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
         (java "https://github.com/tree-sitter/tree-sitter-java")
         (php "https://github.com/tree-sitter/tree-sitter-php");;Warning (treesit): Error encountered when installing language grammar: (file-missing Setting current directory No such file or directory /var/folders/p7/03_g5t611499lmjqhwc5tljr0000gn/T/treesit-workdir1rXjsb/repo/src)
@@ -296,6 +299,33 @@
                    :includeInlayFunctionLikeReturnTypeHints t
                    :includeInlayEnumMemberValueHints t
                    ))
+                 )
+               )
+
+  (add-to-list 'eglot-server-programs
+               `((ruby-mode ruby-ts-mode) "ruby-lsp"
+                 :initializationOptions
+                 (:preferences
+                  (
+                   :includeInlayParameterNameHints "all"
+                   :includeInlayParameterNameHintsWhenArgumentMatchesName t
+                   :includeInlayFunctionParameterTypeHints t
+                   :includeInlayVariableTypeHints t
+                   :includeInlayVariableTypeHintsWhenTypeMatchesName t
+                   :includeInlayPropertyDeclarationTypeHints t
+                   :includeInlayFunctionLikeReturnTypeHints t
+                   :includeInlayEnumMemberValueHints t
+                   )
+                  ;;https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md#indexing-configuration
+                  :indexing
+                  (
+                   :excludedPatterns '("bin")
+                   :includedPatterns '("app/**.rb" "lib/**.rb" "test/**.rb" "db/**.rb" "config/**.rb")
+                   :excludedGems '("rubocop" "rubocop-performance")
+                   :includedPatterns '("rake")
+                   :excludedMagicComments '("compiled:true")
+                   )
+                  )
                  )
                )
 

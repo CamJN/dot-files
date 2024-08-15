@@ -196,6 +196,13 @@ if [ ! -e "$HOME/.google_authenticator" ]; then
     # select correct pam_google_authenticator.so path in ./etc/pam.d/sshd
 fi
 
+# .gnupg/ somehow setup gnupg and import my keys... maybe https://news.ycombinator.com/item?id=36953582 will help
+# .passenger-enterprise-download-token
+# .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+# .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
+# .ssh/
+# .op/config
+
 # set some defaults
 # https://apple.stackexchange.com/questions/195244/concise-compact-list-of-all-defaults-currently-configured-and-their-values
 mkdir -p "$HOME/Pictures/Screenshots/"
@@ -222,6 +229,18 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 # defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 # defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+# defaults write com.apple.Accessibility AccessibilityEnabled -bool true
+# defaults write com.apple.Accessibility ApplicationAccessibilityEnabled -int 1
+# defaults write com.apple.Accessibility GenericAccessibilityClientEnabled -int 1
+# defaults write com.apple.Accessibility KeyRepeatDelay -real  0.5
+# defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
+# defaults write com.apple.Accessibility KeyRepeatInterval -real 0.08
+# whole com.apple.ActivityMonitor domain
+# whole com.apple.AppleMultitouchMouse domain
+# whole com.apple.AppleMultitouchTrackpad domain
+# defaults write com.apple.AddressBook ABBirthDayVisible -bool true
+# defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
+# defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
 
 # show Library dir in home dir
 chflags nohidden ~/Library

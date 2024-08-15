@@ -258,15 +258,15 @@ function password {
         echo "eg: $0 Best Buy" >&2
         return 1
     fi
-    op create item login title="$*" --generate-password
+    op item create login title="$*" --generate-password
 }
 
 function getPasswordFor {
-    op get item "$*" --fields password
+    op read --no-newline "op://Private/$*/password"
 }
 
 function getUsernameFor {
-    op get item "$*" --fields username
+    op read --no-newline "op://Private/$*/username"
 }
 
 function ctar {

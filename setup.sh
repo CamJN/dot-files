@@ -126,6 +126,9 @@ function getLaunchdPlist() {
 
 # symlink postgres config
 ln -shFf ~/Developer/Bash/dot-files/usr/local/var/postgresql@*/postgresql.conf "$HOMEBREW_PREFIX"/var/postgresql@*/postgresql.conf
+# symlink transmission config
+ln -shFf ~/Developer/Bash/dot-files/usr/local/var/transmission/settings.json "$HOMEBREW_PREFIX"/var/transmission/settings.json
+
 # check LaunchAgents for changes
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
 # symlink LaunchAgents

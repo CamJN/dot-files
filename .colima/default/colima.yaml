@@ -76,6 +76,14 @@ network:
   # dnsHosts:
   #   example.com: 1.2.3.4
   dnsHosts: {}
+  
+  # Replicate host IP addresses in the VM. This enables port forwarding to specific
+  # host IP addresses.
+  #   e.g. `docker run --port 10.0.1.2:8080:8080 alpine` would only forward to the
+  #   specified IP address.
+  #
+  # Default: false
+  hostAddresses: false
 
 # ===================================================================== #
 # ADVANCED CONFIGURATION
@@ -116,6 +124,10 @@ vmType: vz
 # Utilise rosetta for amd64 emulation (requires m1 mac and vmType `vz`)
 # Default: false
 rosetta: false
+
+# Enable nested virtualization for the virtual machine (requires m3 mac and vmType `vz`)
+# Default: false
+nestedVirtualization: false
 
 # Volume mount driver for the virtual machine (virtiofs, 9p, sshfs).
 #

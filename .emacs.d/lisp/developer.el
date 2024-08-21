@@ -319,11 +319,11 @@
                   ;;https://github.com/Shopify/ruby-lsp/blob/main/EDITORS.md#indexing-configuration
                   :indexing
                   (
-                   :excludedPatterns '("bin")
-                   :includedPatterns '("app/**.rb" "lib/**.rb" "test/**.rb" "db/**.rb" "config/**.rb")
-                   :excludedGems '("rubocop" "rubocop-performance")
-                   :includedPatterns '("rake")
-                   :excludedMagicComments '("compiled:true")
+                   :excludedPatterns ["bin"]
+                   :includedPatterns ["app/**.rb" "lib/**.rb" "test/**.rb" "db/**.rb" "config/**.rb"]
+                   :excludedGems ["rubocop" "rubocop-performance"]
+                   :includedPatterns ["rake"]
+                   :excludedMagicComments ["compiled:true"]
                    )
                   )
                  )

@@ -64,14 +64,15 @@
 	dlog = "-c diff.external=difft log -p --ext-diff"
 	idiff = difftool -t idiff -y
 	diffw = diff --ignore-space-change
-	git = !exec git
+	git = "!exec git"
 	ignore = "!git status | grep \"$@\" | tr -d '[:space:]' >> .gitignore  #"
 	submodules = submodule
 	commitw = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -"
-	upto = "! git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
-	zip = "git archive --format=zip --output=archive.zip -9 HEAD"
-	tar = "git archive --format=tar --output=archive.tar HEAD"
-	sbi = submodule update --init --recursive
+	upto = "!git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
+	zip = archive --format=zip --output=archive.zip -9 HEAD
+	tar = archive --format=tar --output=archive.tar HEAD
+	sub = submodule update --init --recursive
+	swap = switch -
 	files-in-commit = diff-tree --no-commit-id --name-only -r
 	track = "!git log -L$1,$2:$3 || echo 'usage: git track startLine endLine file' #"
 	trackf = "!git log -L:$1:$2 || echo 'usage: git trackf function file' #"

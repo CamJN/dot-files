@@ -1,4 +1,15 @@
 #!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
 #/usr/local/bin/brew-junk
 
-brew leaves | fgrep -vf <(cat ~/Developer/Bash/dot-files/homebrew/Brewfile | grep '^brew' | tr -d '",' | cut -w -f2)
+declare -a junk_packages
+shopt -s lastpipe
+brew leaves | grep -Fxvf <(awk '/^brew /{print $2}' "$HOMEBREW_BUNDLE_FILE" | tr -d '",') | mapfile -t junk_packages
+
+echo "Uninstall:"
+echo "${junk_packages[@]}"
+
+declare -a dep_packages
+brew list --installed-on-request | grep -Fxvf <(awk '/^brew /{print $2}' "$HOMEBREW_BUNDLE_FILE" | tr -d '",' | awk -F/ '{print $NF}') -f <(printf '%s\n' "${junk_packages[@]}") | mapfile -t dep_packages
+
+echo -e "\nMark as dependency:"
+echo "${dep_packages[@]}"

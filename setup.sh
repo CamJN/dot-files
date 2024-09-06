@@ -151,6 +151,7 @@ sudo -v
 # check LaunchDaemons for changes
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
 # symlink LaunchDaemons
+sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
 sudo ln -shFf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
 # check OS's etc config files for changes, and symlink them
 find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do

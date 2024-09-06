@@ -48,6 +48,11 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 }
 
 /* link hover preview in url bar */
+:root[sizemode="fullscreen"] #statuspanel[type=overLink]:-moz-locale-dir(ltr),
+:root[sizemode="fullscreen"] #statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
+    top: 6px !important;
+}
+
 #statuspanel[type=overLink]:-moz-locale-dir(ltr),
 #statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
     margin: 0 !important;
@@ -98,4 +103,17 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 
 #statuspanel #statuspanel-label {
     border-radius: 0 !important;
+}
+
+:root[sizemode="fullscreen"] #tabbrowser-tabs .tabbrowser-tab:only-of-type,
+:root[sizemode="fullscreen"] #tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery,
+:root[sizemode="fullscreen"] #TabsToolbar,
+:root[sizemode="fullscreen"] #TabsToolbar .toolbar-items {
+    visibility: collapse !important;
+}
+:root[sizemode="fullscreen"] #tabbrowser-tabs, #tabbrowser-arrowscrollbox { min-height: 0!important; }
+:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) #alltabs-button,
+:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) #TabsToolbar-customization-target,
+:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) toolbartabstop {
+    display:none !important;
 }

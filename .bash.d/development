@@ -51,16 +51,6 @@ if [ "$(uname)" = "Darwin" ]; then
         eval "$(rbenv init -)";
     fi
 
-    function project {
-        if [ "$1" = 'size' ]; then
-            find . -type f \( -iname '*.h' -o -name '*.m' -o -name '*.pch' \) -print0 | xargs -0 wc -l | sort -nr
-        elif [ "$1" = 'build' ]; then
-            xcodebuild
-        elif [ "$1" = 'info' ]; then
-            xcodebuild -list
-        fi
-    }
-
     export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
     export GOTOOLCHAIN=local
@@ -68,6 +58,7 @@ if [ "$(uname)" = "Darwin" ]; then
     PATH=$PATH:$GOPATH/bin
     export PATH=$PATH:$GOROOT/bin
     if [ -f ~/.cargo/env ]; then
+        # shellcheck source=../../../../.cargo/env
         source ~/.cargo/env
     fi
 fi

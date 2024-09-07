@@ -12,13 +12,9 @@ else
     nameserver="nameserver $nameserver"
 fi
 
-if [ -d /usr/local/etc ]; then
-    PREFIX=/usr/local
-else
-    PREFIX=/opt/homebrew
-fi
+PREFIX="$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)"
 
-grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   $PREFIX/etc/dnsmasq.d/filtering.resolv || \
-    echo "${nameserver:-nameserver 1.1.1.1}" > $PREFIX/etc/dnsmasq.d/filtering.resolv
+grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   "$PREFIX/etc/dnsmasq.d/filtering.resolv" || \
+    echo "${nameserver:-nameserver 1.1.1.1}" > "$PREFIX/etc/dnsmasq.d/filtering.resolv"
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

@@ -3,11 +3,8 @@ declare -i last_called=0
 declare -i throttle_by=1
 declare -i parallel=1
 
-if [[ $(uname -m) == 'arm64' ]]; then
-    declare script=/opt/homebrew/etc/netwatchrc
-else
-    declare script=/usr/local/etc/netwatchrc
-fi
+PREFIX="$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)"
+declare script="$PREFIX/etc/netwatchrc"
 
 # parse options
 while getopts "h?c:p" opt; do

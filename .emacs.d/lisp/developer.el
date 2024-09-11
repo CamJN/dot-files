@@ -11,6 +11,8 @@
 (require 'treesit)
 (require 'treemacs)
 
+(require 'copilot nil t)
+
 (defun setup-prog ()
   (setq prettify-symbols-alist
         '(
@@ -69,6 +71,9 @@
           ))
   (diff-hl-mode 1)
   (diff-hl-margin-mode 1)
+  (when (not (eq major-mode 'lisp-interaction-mode))
+    (copilot-mode 1)
+    )
   )
 (add-hook 'prog-mode-hook 'setup-prog)
 
@@ -221,7 +226,6 @@
 (defun c-like-lsp-startup ()
   "setup eglot on c-likes"
   (progn
-    ;;(define-key c-mode-base-map (kbd "C-c C-k") 'copilot-complete)
     (setq comment-style 'multi-line
           comment-start "/* "
           comment-end " */"
@@ -253,7 +257,6 @@
 
 (defun python-lsp-startup ()
   (let* (
-         ;;(define-key python-mode-map (kbd "C-c C-k") 'copilot-complete)
          (proj (or (vc-find-root default-directory ".git") default-directory))
          (rel-configs (directory-files-recursively proj "pyvenv.cfg"))
          (abs-configs (mapcar #'expand-file-name rel-configs))

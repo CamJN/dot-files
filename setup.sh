@@ -3,12 +3,29 @@
 # To run:
 # bash -c "$(curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh)"
 
+# pre-reqs:
+# login app store
+
+# post-reqs:
+# login icloud
+# create VPN: install via profile file? how to provide password?
+# set up 1password & cli
+# set up mail, messages, other apple apps
+# set up slack & front PWAs in safari
+# set up firefox w/ userChrome.css
+# install sketch & license
+
 # wrap in a function to prevent partial execution if download fails
 function main() {
 # error-fast
 set -xeuo pipefail
 # ensure PATH includes likely dirs
 PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
+
+if (diskutil info -plist "$(diskutil list internal | grep Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
+    echo "Disk isn't case-sensitive, fix that before doing a bunch of work." >&2
+    exit 1
+fi
 
 # Make a snapshot before making any changes
 tmutil localsnapshot
@@ -25,6 +42,8 @@ fi
 if [ ! -e ~/Developer/Bash ]; then
     mkdir -p ~/Developer/Bash
 fi
+
+export GIT_CEILING_DIRECTORIES=/Users
 # Ensure repo installed
 if [ ! -e ~/Developer/Bash/dot-files ]; then
     git clone git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
@@ -41,7 +60,7 @@ fi
 if ! which -s brew ; then
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-HOMEBREW_PREFIX=$(brew --prefix)
+HOMEBREW_PREFIX="$(brew --prefix)"
 export HOMEBREW_PREFIX
 export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 
@@ -49,14 +68,16 @@ export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
 # install all homebrew packages in Brewfile
+# might require secrets file to be sourced...
+# might require rest of my formula to be put in a tap...
 brew bundle check || brew bundle install --verbose
 
 # pin formulae that shouldn't be changed without care & attention
-brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16 colima
+brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16 colima lima
 
-# Check if brew doctor has any new complaints, to skip set SKIP_DOCTOR env var to something
+# Check if brew doctor has any new complaints
 if [ -z "${SKIP_DOCTOR-}" ]; then
-    brew doctor --list-checks | grep -Fv -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor
+    brew doctor --list-checks | grep -Fv -e check_user_path_2 -e check_user_path_3 -e check_filesystem_case_sensitive -e check_for_unlinked_but_not_keg_only -e check_for_anaconda -e check_for_bitdefender -e check_for_pydistutils_cfg_in_home -e check_deleted_formula | xargs brew doctor || (echo "To skip brew doctor, set SKIP_DOCTOR env var to something." && false)
 fi
 
 function link_dotfiles {
@@ -180,7 +201,7 @@ rustup update
 rustup target list | rg darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
 
 # ensure local dns network location exists
-if ! ( networksetup -listlocations | grep -Fqe 'Local DNS' ); then
+if ! ( networksetup -listlocations | grep -Fxqe 'Local DNS' ); then
     networksetup -createlocation 'Local DNS' populate
 fi
 
@@ -195,9 +216,10 @@ networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN'
 # ensure google-authenticator setup for account
 if [ ! -e "$HOME/.google_authenticator" ]; then
     google-authenticator --no-confirm --time-based --disallow-reuse --force --secret=~/.google_authenticator --qr-mode=ansi
-    # select correct pam_google_authenticator.so path in ./etc/pam.d/sshd
+    sed -Ee 's/^[^#].*pam_google_authenticator.so$/#&/g' -e "s|^#(.*$HOMEBREW_PREFIX/lib/security/pam_google_authenticator.so)$|\1|" -i '' ./etc/pam.d/sshd
 fi
 
+# .bash.d/secrets.gpg
 # .gnupg/ somehow setup gnupg and import my keys... maybe https://news.ycombinator.com/item?id=36953582 will help
 # .passenger-enterprise-download-token
 # .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
@@ -247,10 +269,20 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 # show Library dir in home dir
 chflags nohidden ~/Library
 
-# sudo systemsetup -settimezone "America/Edmonton"
+# set user's shell
+if [ "$(dscl . -read ~/ UserShell)" != "$HOMEBREW_PREFIX/bin/bash" ]; then
+    chsh -s "$HOMEBREW_PREFIX/bin/bash"
+fi
 
-# # Last, causes restart
-# sudo softwareupdate -i -a --restart --agree-to-license
+if [ "$(sudo systemsetup -gettimezone)" != "Time Zone: America/Edmonton" ]; then
+    sudo systemsetup -settimezone "America/Edmonton"
+fi
+
+scutil --get LocalHostName | grep -Fxqe 'WALLE' || sudo scutil --set LocalHostName "WALLE"
+scutil --get ComputerName | grep -Fxqe 'WALL•E' || sudo scutil --set ComputerName "WALL•E"
+
+# Last, causes restart
+sudo softwareupdate --install --all --restart --agree-to-license
 }
 
 main

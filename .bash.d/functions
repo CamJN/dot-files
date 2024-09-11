@@ -413,7 +413,7 @@ function update() {
     gem update
     npm update -g
     rustup update
-    cargo install $(cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}')
+    cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}' | xargs cargo install
     sudo softwareupdate --install --all --restart
 }
 
@@ -423,4 +423,16 @@ function xcode-clean() {
     rm -rf ~/Library/Developer/Xcode/*\ DeviceSupport
     rm -rf ~/Library/Caches/com.apple.dt.Xcode
     xcrun simctl shutdown all && xcrun simctl erase all
+}
+
+function functions() {
+    declare -F | \sed -Ee 's/declare -f ([^ ]+)/\1/' | grep -Eve '^(git_prompt|gp|shell_session)?_'
+}
+
+function aliases() {
+    alias | \sed -Ee 's/alias ([^=]+)=.*/\1/'
+}
+
+function variables() {
+    declare | rg '^[^ \t].*=.' | rg -vie '[ _]IFS' -e COMPREPLY | \sed -Ee 's/^([^=]+)=.*/\1/'
 }

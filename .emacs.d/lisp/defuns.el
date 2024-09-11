@@ -208,12 +208,11 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
 
 (defun turn-on-useful-modes ()
   "Turn on modes I want on in every file and which only toggle locally."
-  (cond ((fboundp 'global-subword-mode)(global-subword-mode 1))
-        ((fboundp 'subword-mode)(subword-mode 1))
-        ((fboundp 'c-subword-mode)(c-subword-mode 1))
-        ((fboundp 'global-diff-hl-mode)(global-diff-hl-mode))
-        ((fboundp 'guru-mode)(guru-mode))
-        )
+  (when (fboundp 'global-subword-mode) (global-subword-mode 1))
+  (when (fboundp 'subword-mode)(subword-mode 1))
+  (when (fboundp 'c-subword-mode)(c-subword-mode 1))
+  (when (fboundp 'global-diff-hl-mode)(global-diff-hl-mode))
+  (when (and (fboundp 'guru-mode) (not guru-mode))(guru-mode))
   ;;(turn-on-auto-fill)
   ;;(pretty-lambda-for-modes)
   )

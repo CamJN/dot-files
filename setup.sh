@@ -271,6 +271,7 @@ chflags nohidden ~/Library
 
 # set user's shell
 if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ]; then
+    # this probably won't work with /etc/shells having been reset to default to capture changes...
     chsh -s "$HOMEBREW_PREFIX/bin/bash"
 fi
 

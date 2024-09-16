@@ -270,7 +270,7 @@ defaults write com.apple.screencapture location -string "$HOME/Pictures/Screensh
 chflags nohidden ~/Library
 
 # set user's shell
-if [ "$(dscl . -read ~/ UserShell)" != "$HOMEBREW_PREFIX/bin/bash" ]; then
+if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ]; then
     chsh -s "$HOMEBREW_PREFIX/bin/bash"
 fi
 

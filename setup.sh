@@ -282,6 +282,10 @@ fi
 scutil --get LocalHostName | grep -Fxqe 'WALLE' || sudo scutil --set LocalHostName "WALLE"
 scutil --get ComputerName | grep -Fxqe 'WALL•E' || sudo scutil --set ComputerName "WALL•E"
 
+if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.db' 'select client from access where client = "com.apple.Terminal" and auth_value > 0 and service = "kTCCServiceSystemPolicyAllFiles"')" ]; then
+    spctl developer-mode enable-terminal
+fi
+
 # Last, causes restart
 sudo softwareupdate --install --all --restart --agree-to-license
 }

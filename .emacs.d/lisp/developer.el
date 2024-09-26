@@ -260,10 +260,10 @@
          (proj (or (vc-find-root default-directory ".git") default-directory))
          (rel-configs (directory-files-recursively proj "pyvenv.cfg"))
          (abs-configs (mapcar #'expand-file-name rel-configs))
-         (venv-command-xref (car (xref-matches-in-files "command = " abs-configs)))
+         (venv-command-xref (when (consp abs-configs) (car (xref-matches-in-files "command = " abs-configs))))
          )
-    (setq python-shell-virtualenv-root (if (and (file-exists-p (car abs-configs)) venv-command-xref)
-                                           (car (last (split-string (xref-item-summary venv-command-xref) " ")))
+    (setq-local python-shell-virtualenv-root (if (and abs-configs (file-exists-p (car abs-configs)) venv-command-xref)
+                                           (substring-no-properties (car (last (split-string (xref-item-summary venv-command-xref) " "))))
                                          proj
                                          ))
     (eglot-ensure)

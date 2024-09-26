@@ -414,6 +414,7 @@ function update() {
     npm update -g
     rustup update
     cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}' | xargs cargo install
+    sudo xprotect update
     sudo softwareupdate --install --all --restart
 }
 

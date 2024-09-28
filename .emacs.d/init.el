@@ -127,10 +127,10 @@
 
 ;;----------News----------------------------------------
 (add-hook 'news-mode-hook (lambda ()
-  (setq prettify-symbols-alist
-        '(
-           ("" . "⟪page break⟫")
-          ))))
+                            (setq prettify-symbols-alist
+                                  '(
+                                    ("" . "⟪page break⟫")
+                                    ))))
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
@@ -175,11 +175,11 @@
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))
 
+(setq auto-mode-interpreter-regexp   "#![     ]?\\([^         \n]*/bin/env[   ]+\\(?:-P[      ]*[^    \n]+\\)?[      ]+\\)?\\([^       \n]+\\)")
+
 (unless (display-images-p)
   (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))
   )
-
-;;(remove-hook 'hook-variable-name (car hook-variable-name))
 
 ;; ------ Spelling ---------------------------------------
 
@@ -265,7 +265,7 @@
 ;;----------buffer switching-------------------------------------
 (defvar ido-dont-ignore-buffer-names '("*scratch*" "*eldoc*" "*Occur*" "*Help*"))
 (with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
-;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
+                                        ;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
 
 (defun ido-ignore-most-star-buffers (name)
   (and

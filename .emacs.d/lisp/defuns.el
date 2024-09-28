@@ -9,6 +9,12 @@
 
 ;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
 
+(defun remove-last-hook(hook-variable-name)
+  "Remove the hook from the variable."
+  (interactive)
+  (remove-hook hook-variable-name (car (symbol-value hook-variable-name)))
+)
+
 (defalias 'rebuilder 're-builder)
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")

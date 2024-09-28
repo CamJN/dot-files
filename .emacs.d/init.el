@@ -175,7 +175,7 @@
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))
 
-(setq auto-mode-interpreter-regexp   "#![     ]?\\([^         \n]*/bin/env[   ]+\\(?:-P[      ]*[^    \n]+\\)?[      ]+\\)?\\([^       \n]+\\)")
+(setq auto-mode-interpreter-regexp "^#![     ]?\\([^ 	\n]*/bin/env[   ]+\\(?:-P[	 ]*[^ 	\n]+[      ]+\\)?\\)?\\([^ 	\n]+\\)$")
 
 (unless (display-images-p)
   (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))

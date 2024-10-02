@@ -86,6 +86,7 @@ alias transmission='transmission-remote'
 alias tree="tree -aC -I '.git|node_modules|.DS_Store|target'"
 alias trim="tr -d ' '"
 # the below is augmented by cd being aliased to my chdir fn which allows upping n at a time
+alias unquarantine='xattr -d com.apple.quarantine'
 alias up='cd ../'
 alias version="sw_vers"
 #alias wait='sleep' # wait is for waiting for processes to end

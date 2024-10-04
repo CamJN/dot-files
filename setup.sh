@@ -271,10 +271,11 @@ chflags nohidden ~/Library
 
 # set user's shell
 if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ]; then
-    # this probably won't work with /etc/shells having been reset to default to capture changes...
+    # this might not work with /etc/shells having been reset to default to capture changes after updates...
     chsh -s "$HOMEBREW_PREFIX/bin/bash"
 fi
 
+# this sudo might prompt again... something is anyway
 if [ "$(sudo systemsetup -gettimezone)" != "Time Zone: America/Edmonton" ]; then
     sudo systemsetup -settimezone "America/Edmonton"
 fi

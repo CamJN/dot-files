@@ -20,7 +20,7 @@ function main() {
 # error-fast
 set -xeuo pipefail
 # ensure PATH includes likely dirs
-PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
 if (diskutil info -plist "$(diskutil list internal | grep Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
     echo "Disk isn't case-sensitive, fix that before doing a bunch of work." >&2
@@ -33,7 +33,7 @@ tmutil localsnapshot
 # Ensure CLT installed
 if [ ! -e /Library/Developer/CommandLineTools ]; then
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-    LABEL=$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')
+    declare LABEL="$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
     softwareupdate --no-scan -i "$LABEL" --verbose
     rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 fi
@@ -132,8 +132,8 @@ done
 
 function getLaunchdPlist() {
     for file in "$@"; do
-        filename=$(basename "$file")
-        formula="${filename%.plist}"
+        local filename=$(basename "$file")
+        local formula="${filename%.plist}"
         formula="${formula#homebrew.mxcl.}"
         if [[ "$file" == *"/LaunchDaemons/"* ]]; then
             # shellcheck disable=SC2024
@@ -189,7 +189,7 @@ if ! which -s rbenv; then
     echo "rbenv wasn't installed; is homebrew broken?" >&2
     exit 1
 else
-    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+    declare RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
     export RUBY_CONFIGURE_OPTS
     eval "$(rbenv init -)";
     rbenv list | xargs -n1 rbenv install -s
@@ -280,8 +280,14 @@ if [ "$(sudo systemsetup -gettimezone)" != "Time Zone: America/Edmonton" ]; then
     sudo systemsetup -settimezone "America/Edmonton"
 fi
 
-scutil --get LocalHostName | grep -Fxqe 'WALLE' || sudo scutil --set LocalHostName "WALLE"
-scutil --get ComputerName | grep -Fxqe 'WALL•E' || sudo scutil --set ComputerName "WALL•E"
+declare COMPNAME="$(scutil --get ComputerName)"
+declare DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq '.SPHardwareDataType[0].machine_name')"
+if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
+    read -rp 'Set computer name to: ' COMPNAME
+fi
+declare COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
+scutil --get LocalHostName | grep -Fxqe "$COMPNAME_SAFE" || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
+scutil --get ComputerName | grep -Fxqe "$COMPNAME" || sudo scutil --set ComputerName "$COMPNAME"
 
 if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.db' 'select client from access where client = "com.apple.Terminal" and auth_value > 0 and service = "kTCCServiceSystemPolicyAllFiles"')" ]; then
     spctl developer-mode enable-terminal

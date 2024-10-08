@@ -50,7 +50,7 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 /* link hover preview in url bar */
 :root[sizemode="fullscreen"] #statuspanel[type=overLink]:-moz-locale-dir(ltr),
 :root[sizemode="fullscreen"] #statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
-    top: 6px !important;
+    top: -30px !important;
 }
 
 #statuspanel[type=overLink]:-moz-locale-dir(ltr),

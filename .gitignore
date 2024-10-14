@@ -33,6 +33,7 @@
 /.emacs.d/tree-sitter/libtree-sitter-*.dylib
 /.emacs.d/workspace
 /.emacs.d/projects
+/.emacs.d/transient
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
 /usr/local/etc/dnsmasq.d/filtering.resolv
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf

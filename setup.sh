@@ -49,10 +49,10 @@ export GIT_CEILING_DIRECTORIES=/Users
 if [ ! -e ~/Developer/Bash/dot-files ]; then
     git clone git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
 else
-# ensure clean repo by making temp commit with changes
+    # ensure clean repo by making temp commit with changes
     pushd ~/Developer/Bash/dot-files
     git diff --exit-code 2>/dev/null || git commit -am 'tmp'
-# ensure up to date repo by rebasing on origin
+    # ensure up to date repo by rebasing on origin
     git pull -r
     popd
 fi
@@ -163,9 +163,46 @@ ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~
 if ! (colima status 2>&1 | grep -Fqe 'colima is running'); then
     colima start
 fi
+declare ARM_PLATFORMS=linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+declare INTEL_PLATFORMS=linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386
+#declare OTHER_PLATFORMS=linux/riscv64,linux/ppc64le,linux/s390x,linux/mips64le,linux/mips64
+declare NATIVE_DOCKER_PLATFORMS
+declare NON_NATIVE_DOCKER_PLATFORMS
+if [ "$(uname -m)" = "x86_64" ]; then
+    NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
+    NON_NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
+    REMOTE="eve"
+elif [ "$(uname -m)" = "arm64" ]; then
+    NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
+    NON_NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
+    REMOTE="walle"
+else
+    echo "Unknown architecture: $(uname -m) please update docker-buildx section of script." >&2
+    exit 1
+fi
+if ! (docker buildx ls | grep -qwe native_arch); then
+    docker buildx create \
+           --name local_remote_builder \
+           --node native_arch \
+           --platform "$NATIVE_DOCKER_PLATFORMS" \
+           --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
+           --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
+           --driver-opt default-load=true
+fi
+if ! (docker buildx ls | grep -qwe non_native_arch); then
+    docker buildx create \
+           --name local_remote_builder \
+           --append \
+           --node non_native_arch \
+           --platform "$NON_NATIVE_DOCKER_PLATFORMS" \
+           "ssh://$REMOTE" \
+           --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
+           --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
+           --driver-opt default-load=true
+fi
 # ensure docker buildx build-driver is non-default, as the default truncates logs
-if ! (docker buildx inspect | rg 'Driver:[\s]+docker-container' >/dev/null); then
-    docker buildx create --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1,env.BUILDKIT_STEP_LOG_MAX_SPEED=-1,default-load=true --use
+if ! (docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder'); then
+    docker buildx use local_remote_builder
 fi
 
 # cache sudo auth

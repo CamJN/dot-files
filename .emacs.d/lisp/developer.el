@@ -71,7 +71,7 @@
           ))
   (diff-hl-mode 1)
   (diff-hl-margin-mode 1)
-  (when (not (eq major-mode 'lisp-interaction-mode))
+  (when (and (not (eq major-mode 'lisp-interaction-mode)) (file-exists-p copilot-install-dir))
     (copilot-mode 1)
     )
   )

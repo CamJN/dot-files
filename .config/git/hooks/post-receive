@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-receive".
+
+#read oldrev newrev refname
+
+declare | rg '^[^ \t].*=.' | rg -vie '[ _]IFS' -e COMPREPLY | \sed -Ee 's/^([^=]+)=.*/\1/' > /tmp/post-receive.env
+
+exec git --git-dir=~/Developer/dot-files/.git --work-tree=~/Developer/dot-files/ checkout --quiet --force

@@ -13,6 +13,8 @@ fi
 #environment variables
 export DO_NOT_TRACK=1
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
+export DOCKER_SOCK="unix://$HOME/.colima/default/docker.sock"
+export DOCKER_HOST="$DOCKER_SOCK"
 export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx

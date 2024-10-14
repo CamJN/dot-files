@@ -33,7 +33,8 @@ tmutil localsnapshot
 # Ensure CLT installed
 if [ ! -e /Library/Developer/CommandLineTools ]; then
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-    declare LABEL="$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
+    declare LABEL
+    LABEL="$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
     softwareupdate --no-scan -i "$LABEL" --verbose
     rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 fi
@@ -132,7 +133,8 @@ done
 
 function getLaunchdPlist() {
     for file in "$@"; do
-        local filename=$(basename "$file")
+        local filename
+        filename=$(basename "$file")
         local formula="${filename%.plist}"
         formula="${formula#homebrew.mxcl.}"
         if [[ "$file" == *"/LaunchDaemons/"* ]]; then
@@ -158,7 +160,7 @@ mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 # ensure colima running
-if ! (colima status 2>&1 | rg 'colima is running' >/dev/null); then
+if ! (colima status 2>&1 | grep -Fqe 'colima is running'); then
     colima start
 fi
 # ensure docker buildx build-driver is non-default, as the default truncates logs
@@ -189,7 +191,8 @@ if ! which -s rbenv; then
     echo "rbenv wasn't installed; is homebrew broken?" >&2
     exit 1
 else
-    declare RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+    declare RUBY_CONFIGURE_OPTS
+    RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
     export RUBY_CONFIGURE_OPTS
     eval "$(rbenv init -)";
     rbenv list | xargs -n1 rbenv install -s
@@ -198,7 +201,7 @@ fi
 # ensure rust up to date
 rustup update
 # ensure rust has all macOS and wasm targets installed
-rustup target list | rg darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
+rustup target list | grep -Fe darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
 
 # ensure local dns network location exists
 if ! ( networksetup -listlocations | grep -Fxqe 'Local DNS' ); then
@@ -280,12 +283,15 @@ if [ "$(sudo systemsetup -gettimezone)" != "Time Zone: America/Edmonton" ]; then
     sudo systemsetup -settimezone "America/Edmonton"
 fi
 
-declare COMPNAME="$(scutil --get ComputerName)"
-declare DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq '.SPHardwareDataType[0].machine_name')"
+declare COMPNAME
+COMPNAME="$(scutil --get ComputerName)"
+declare DEFAULT_NAME
+DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq '.SPHardwareDataType[0].machine_name')"
 if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
     read -rp 'Set computer name to: ' COMPNAME
 fi
-declare COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
+declare COMPNAME_SAFE
+COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
 scutil --get LocalHostName | grep -Fxqe "$COMPNAME_SAFE" || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
 scutil --get ComputerName | grep -Fxqe "$COMPNAME" || sudo scutil --set ComputerName "$COMPNAME"
 

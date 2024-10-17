@@ -5,11 +5,15 @@ declare -a junk_packages
 shopt -s lastpipe
 brew leaves | grep -Fxvf <(awk '/^brew /{print $2}' "$HOMEBREW_BUNDLE_FILE" | tr -d '",') | mapfile -t junk_packages
 
-echo "Uninstall:"
-echo "${junk_packages[@]}"
+if [[ ${#junk_packages[@]} -gt 0 ]]; then
+    echo "Uninstall:"
+    echo "${junk_packages[@]}"
+fi
 
 declare -a dep_packages
 brew list --installed-on-request | grep -Fxvf <(awk '/^brew /{print $2}' "$HOMEBREW_BUNDLE_FILE" | tr -d '",' | awk -F/ '{print $NF}') -f <(printf '%s\n' "${junk_packages[@]}") | mapfile -t dep_packages
 
-echo -e "\nMark as dependency:"
-echo "${dep_packages[@]}"
+if [[ ${#dep_packages[@]} -gt 0 ]]; then
+    echo -e "\nMark as dependency:"
+    echo "${dep_packages[@]}"
+fi

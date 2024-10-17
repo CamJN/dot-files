@@ -109,7 +109,7 @@
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
-	ff = false
+	# ff = false
 [difftool]
         prompt = false
 [difftool "vim"]

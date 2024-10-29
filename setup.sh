@@ -98,7 +98,7 @@ function link_dotfiles {
         fi
         if [ -d "$HOME/$path/$file_l1" ]; then
             # deal with dirs
-            if [ "$path" -eq "." ]; then
+            if [ "${path}" = "." ]; then
                 link_dotfiles "$file_l1" "${file}"/*
             else
                 link_dotfiles "$path/$file_l1" "${file}"/*

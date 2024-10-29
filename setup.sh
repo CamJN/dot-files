@@ -22,7 +22,7 @@ set -xeuo pipefail
 # ensure PATH includes likely dirs
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
-if (diskutil info -plist "$(diskutil list internal | grep Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
+if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
     echo "Disk isn't case-sensitive, fix that before doing a bunch of work." >&2
     exit 1
 fi
@@ -34,7 +34,7 @@ tmutil localsnapshot
 if [ ! -e /Library/Developer/CommandLineTools ]; then
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
     declare LABEL
-    LABEL="$(softwareupdate -l | grep -E "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
+    LABEL="$(softwareupdate -l | grep -Ee "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
     softwareupdate --no-scan -i "$LABEL" --verbose
     rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 fi
@@ -66,7 +66,7 @@ export HOMEBREW_PREFIX
 export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 
 # untap unwanted homebrew taps
-comm -12 <(brew tap) <(grep -F untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
+comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
 # install all homebrew packages in Brewfile
 # might require secrets file to be sourced...
@@ -180,7 +180,7 @@ else
     echo "Unknown architecture: $(uname -m) please update docker-buildx section of script." >&2
     exit 1
 fi
-if ! (docker buildx ls | grep -qwe native_arch); then
+if ! (docker buildx ls | grep -Fqwe native_arch); then
     docker buildx create \
            --name local_remote_builder \
            --node native_arch \
@@ -189,7 +189,7 @@ if ! (docker buildx ls | grep -qwe native_arch); then
            --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
            --driver-opt default-load=true
 fi
-if ! (docker buildx ls | grep -qwe non_native_arch); then
+if ! (docker buildx ls | grep -Fqwe non_native_arch); then
     docker buildx create \
            --name local_remote_builder \
            --append \

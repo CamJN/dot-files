@@ -12,7 +12,7 @@
 # set up 1password & cli
 # set up mail, messages, other apple apps
 # set up slack & front PWAs in safari
-# set up firefox w/ userChrome.css
+# set up firefox w/ userChrome.css & profile & addons
 # install sketch & license
 
 # wrap in a function to prevent partial execution if download fails
@@ -51,7 +51,8 @@ if [ ! -e ~/Developer/Bash/dot-files ]; then
 else
     # ensure clean repo by making temp commit with changes
     pushd ~/Developer/Bash/dot-files
-    git diff --exit-code 2>/dev/null || git commit -am 'tmp'
+    git diff --quiet --exit-code || git commit -am 'tmp'
+    git diff --cached --quiet --exit-code || git commit -am 'tmp'
     # ensure up to date repo by rebasing on origin
     git pull -r
     popd
@@ -160,9 +161,10 @@ mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 # ensure colima running
-if ! (colima status 2>&1 | grep -Fqe 'colima is running'); then
+if ! colima status 2>&1 | grep -Fe 'colima is running' >/dev/null; then
     colima start
 fi
+
 declare ARM_PLATFORMS=linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
 declare INTEL_PLATFORMS=linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386
 #declare OTHER_PLATFORMS=linux/riscv64,linux/ppc64le,linux/s390x,linux/mips64le,linux/mips64
@@ -180,7 +182,7 @@ else
     echo "Unknown architecture: $(uname -m) please update docker-buildx section of script." >&2
     exit 1
 fi
-if ! (docker buildx ls | grep -Fqwe native_arch); then
+if ! docker buildx ls | grep -Fwe native_arch >/dev/null; then
     docker buildx create \
            --name local_remote_builder \
            --node native_arch \
@@ -189,7 +191,7 @@ if ! (docker buildx ls | grep -Fqwe native_arch); then
            --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
            --driver-opt default-load=true
 fi
-if ! (docker buildx ls | grep -Fqwe non_native_arch); then
+if ! docker buildx ls | grep -Fwe non_native_arch >/dev/null; then
     docker buildx create \
            --name local_remote_builder \
            --append \
@@ -201,7 +203,7 @@ if ! (docker buildx ls | grep -Fqwe non_native_arch); then
            --driver-opt default-load=true
 fi
 # ensure docker buildx build-driver is non-default, as the default truncates logs
-if ! (docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder'); then
+if ! docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder' >/dev/null; then
     docker buildx use local_remote_builder
 fi
 
@@ -241,7 +243,7 @@ rustup update
 rustup target list | grep -Fe darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
 
 # ensure local dns network location exists
-if ! ( networksetup -listlocations | grep -Fxqe 'Local DNS' ); then
+if ! networksetup -listlocations | grep -Fxe 'Local DNS' >/dev/null; then
     networksetup -createlocation 'Local DNS' populate
 fi
 
@@ -315,10 +317,8 @@ if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ];
     chsh -s "$HOMEBREW_PREFIX/bin/bash"
 fi
 
-# this sudo might prompt again... something is anyway
-if [ "$(sudo systemsetup -gettimezone)" != "Time Zone: America/Edmonton" ]; then
-    sudo systemsetup -settimezone "America/Edmonton"
-fi
+declare TZ="America/Edmonton"
+sudo systemsetup -gettimezone | grep -Fxe "Time Zone: $TZ" >/dev/null || sudo systemsetup -settimezone "$TZ"
 
 declare COMPNAME
 COMPNAME="$(scutil --get ComputerName)"
@@ -329,8 +329,8 @@ if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
 fi
 declare COMPNAME_SAFE
 COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
-scutil --get LocalHostName | grep -Fxqe "$COMPNAME_SAFE" || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
-scutil --get ComputerName | grep -Fxqe "$COMPNAME" || sudo scutil --set ComputerName "$COMPNAME"
+scutil --get LocalHostName | grep -Fxe "$COMPNAME_SAFE" >/dev/null || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
+scutil --get ComputerName | grep -Fxe "$COMPNAME" >/dev/null || sudo scutil --set ComputerName "$COMPNAME"
 
 if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.db' 'select client from access where client = "com.apple.Terminal" and auth_value > 0 and service = "kTCCServiceSystemPolicyAllFiles"')" ]; then
     spctl developer-mode enable-terminal

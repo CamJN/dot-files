@@ -8,7 +8,7 @@ export HISTFILESIZE=1000000
 shopt -s histappend
 
 if command -v shell_session_history_enable >/dev/null; then
-    prompt_save_history() {
+    function prompt_save_history() {
         shell_session_history_enable
         history -a
         # If the session history doesn't exist yet, copy the shared history.

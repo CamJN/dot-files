@@ -204,7 +204,7 @@ if ! docker buildx ls | grep -Fwe non_native_arch >/dev/null; then
 fi
 # ensure docker buildx build-driver is non-default, as the default truncates logs
 if ! docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder' >/dev/null; then
-    docker buildx use local_remote_builder
+    docker buildx use --default local_remote_builder
 fi
 
 # cache sudo auth

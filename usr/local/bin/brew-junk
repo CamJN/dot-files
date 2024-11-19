@@ -15,5 +15,5 @@ brew list --installed-on-request | grep -Fxvf <(awk '/^brew /{print $2}' "$HOMEB
 
 if [[ ${#dep_packages[@]} -gt 0 ]]; then
     echo -e "\nMark as dependency:"
-    echo "${dep_packages[@]}"
+    echo "brew tab --no-installed-on-request ${dep_packages[@]}"
 fi

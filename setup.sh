@@ -5,6 +5,8 @@
 
 # pre-reqs:
 # login app store
+# copy over secrets file?
+# copy over ssh keys?
 
 # post-reqs:
 # login icloud
@@ -318,12 +320,13 @@ if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ];
 fi
 
 declare TZ="America/Edmonton"
+# second sudo below after || seems to trigger another prompt
 sudo systemsetup -gettimezone | grep -Fxe "Time Zone: $TZ" >/dev/null || sudo systemsetup -settimezone "$TZ"
 
 declare COMPNAME
 COMPNAME="$(scutil --get ComputerName)"
 declare DEFAULT_NAME
-DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq '.SPHardwareDataType[0].machine_name')"
+DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq -r '.SPHardwareDataType[0].machine_name')"
 if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
     read -rp 'Set computer name to: ' COMPNAME
 fi

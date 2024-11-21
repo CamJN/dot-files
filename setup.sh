@@ -223,7 +223,7 @@ find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*p
          -type f \
          -path "*/${file#"$HOME"/Developer/Bash/dot-files/etc/}" \
          -print0
-done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "mv '{}' '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
+done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "cat '{}' > '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
 # copy paths files into paths dirs
 sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
 sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/

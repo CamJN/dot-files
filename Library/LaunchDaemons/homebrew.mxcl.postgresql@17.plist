@@ -10,7 +10,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.postgresql@16</string>
+	<string>homebrew.mxcl.postgresql@17</string>
 	<key>UserName</key>
 	<string>camdennarzt</string>
 	<key>LimitLoadToSessionType</key>
@@ -23,16 +23,16 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/postgresql@16/bin/postgres</string>
+		<string>/usr/local/opt/postgresql@17/bin/postgres</string>
 		<string>-D</string>
-		<string>/usr/local/var/postgresql@16</string>
+		<string>/usr/local/var/postgresql@17</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
-	<string>/usr/local/var/log/postgresql@16.log</string>
+	<string>/usr/local/var/log/postgresql@17.log</string>
 	<key>StandardOutPath</key>
-	<string>/usr/local/var/log/postgresql@16.log</string>
+	<string>/usr/local/var/log/postgresql@17.log</string>
 	<key>WorkingDirectory</key>
 	<string>/usr/local</string>
 </dict>

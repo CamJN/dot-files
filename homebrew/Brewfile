@@ -61,7 +61,7 @@ brew "pigz"
 brew "pinentry-mac"
 brew "pkg-config"
 brew "pngcrush"
-brew "postgresql@16", link: true
+brew "postgresql@17", link: true
 brew "pyright"
 brew "python@3.13"
 brew "rbenv"

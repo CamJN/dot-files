@@ -77,7 +77,7 @@ comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr 
 brew bundle check || brew bundle install --verbose
 
 # pin formulae that shouldn't be changed without care & attention
-brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@16 colima lima
+brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@17 colima lima
 
 # Check if brew doctor has any new complaints
 if [ -z "${SKIP_DOCTOR-}" ]; then

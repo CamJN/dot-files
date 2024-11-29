@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# A hook script to verify what is about to be pushed. Called by "git push" after it has checked the remote status, but
+# before anything has been pushed. If this script exits with a non-zero status nothing will be pushed.
+# This hook is called with the following parameters:
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+# If pushing without using a named remote those arguments will be equal.
+# Information about the commits which are being pushed is supplied as lines to the standard input in the form:
+# <local ref> <local oid> <remote ref> <remote oid>
+
+# Name the arguments:
+# declare remote_name="$1"
+# declare remote_url="$2"
+
+declare zero="$(git hash-object --stdin </dev/null | tr '[:xdigit:]' '0')"
+
+function predicate() {
+    local local_ref="$1"
+    local range="$2"
+    local pattern="$3"
+    # try using --quiet flag and checking the exit status?
+    if [ -n "$(git rev-list --max-count=1 --regexp-ignore-case --fixed-strings --grep "$pattern" "$range")" ]; then
+        echo "Found $pattern in comment in $local_ref, not pushing." >&2
+        git rev-list --format='%B' --max-count=1 "$local_ref" | grep --color=always -Fie "$pattern" -e '' >&2
+        return 1
+    fi
+    return 0
+}
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+    if [ "$local_oid" = "$zero" ]; then
+        # Handle delete here
+        exit 0
+    else
+        if [ "$remote_oid" = "$zero" ]; then
+            # New branch, examine all commits
+            range="$local_oid"
+        else
+            # Update to existing branch, examine new commits
+            range="$remote_oid..$local_oid"
+        fi
+
+        # This script prevents pushing of commits where the log message includes
+        # "WIP" (work in progress) or "don't" or "tmp".
+        if   predicate "$local_ref" "$range" "wip"; then
+            exit 1
+        elif predicate "$local_ref" "$range" "don't"; then
+            exit 1
+        elif predicate "$local_ref" "$range" "tmp"; then
+            exit 1
+        fi
+    fi
+done

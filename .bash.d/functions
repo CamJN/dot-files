@@ -28,6 +28,7 @@ function forward {
 }
 
 function csudo {
+    # `sudo -su _www` logs in as _www and runs the shell from your $SHELL var
     local login
 
     while getopts 'Aa:BbC:c:D:Eeg:Hh::iKklnPp:r:SsT:t:U:u:Vv' opt

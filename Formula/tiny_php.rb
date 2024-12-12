@@ -289,7 +289,7 @@ class TinyPhp < Formula
       else
         ext_config_path.write <<~EOS
           [#{e}]
-          #{extension_type}=";#{php_ext_dir}/#{e}.so"
+          ;#{extension_type}=#{php_ext_dir}/#{e}.so
         EOS
       end
     end

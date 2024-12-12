@@ -69,6 +69,7 @@
 	ignore = "!git status | grep \"$@\" | tr -d '[:space:]' >> .gitignore  #"
 	submodules = submodule
 	commitw = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -"
+	unstage = restore --staged
 	upto = "!git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
 	zip = archive --format=zip --output=archive.zip -9 HEAD
 	tar = archive --format=tar --output=archive.tar HEAD

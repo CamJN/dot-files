@@ -49,7 +49,7 @@ fi
 export GIT_CEILING_DIRECTORIES=/Users
 # Ensure repo installed
 if [ ! -e ~/Developer/Bash/dot-files ]; then
-    git clone git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
+    git clone --recurse-submodules git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
 else
     # ensure clean repo by making temp commit with changes
     pushd ~/Developer/Bash/dot-files
@@ -57,6 +57,7 @@ else
     git diff --cached --quiet --exit-code || git commit -am 'tmp'
     # ensure up to date repo by rebasing on origin
     git pull -r
+    git submodule update --init --recursive
     popd
 fi
 
@@ -73,8 +74,14 @@ comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr 
 
 # install all homebrew packages in Brewfile
 # might require secrets file to be sourced...
-# might require rest of my formula to be put in a tap...
 brew bundle check || brew bundle install --verbose
+
+# make my tap have one location on disk
+declare TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
+if ! test -L "$TAP_PATH"; then
+    rm -rf "$TAP_PATH"
+    ln -sf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
+fi
 
 # pin formulae that shouldn't be changed without care & attention
 brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@17 colima lima
@@ -129,7 +136,7 @@ for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
     fi
 done
 
-# symlink homebrew bin executables
+# symlink executables
 for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
     ln -shFf "$file" "$HOMEBREW_PREFIX/bin/${file##*/}"
 done

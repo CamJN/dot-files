@@ -67,6 +67,17 @@
  '(hscroll-step 1)
  '(ibuffer-auto-mode t t)
  '(ibuffer-expert t)
+ '(ibuffer-formats
+   '((mark modified read-only " "
+           (name 30 30 :left :elide)
+           " "
+           (size 9 -1 :right)
+           " "
+           (mode 16 16 :left :elide)
+           " " filename-and-process)
+     (mark " "
+           (name 16 -1)
+           " " filename)))
  '(ibuffer-saved-filter-groups
    '(("personal"
       ("elisp"
@@ -150,16 +161,6 @@
        (name . ".*")))))
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
- '(ibuffer-formats '((mark modified read-only " "
-              (name 30 30 :left :elide) ; change: 30s were originally 18s
-              " "
-              (size 9 -1 :right)
-              " "
-              (mode 16 16 :left :elide)
-              " " filename-and-process)
-        (mark " "
-              (name 16 -1)
-              " " filename)))
  '(icomplete-mode t)
  '(ido-use-virtual-buffers t)
  '(image-file-name-extensions
@@ -185,6 +186,7 @@
  '(project-vc-extra-root-markers
    '("tsconfig.json" "package.json" "pyvenv.cfg" "requirements.txt" "pyrightconfig.json" "*.gemspec" "Gemfile" "Cargo.toml" "compile_commands.json" "*.cs.sln" "go.mod" "pom.xml" "Package.swift"))
  '(project-vc-ignores '("__pycache__" "node_modules" "site-packages"))
+ '(project-vc-merge-submodules nil)
  '(query-replace-highlight t)
  '(recentf-exclude '("/docker:.*"))
  '(recentf-mode t)

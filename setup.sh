@@ -328,6 +328,7 @@ fi
 
 declare TZ="America/Edmonton"
 # second sudo below after || seems to trigger another prompt
+# settimezone emits error -99 message, but seems to work
 sudo systemsetup -gettimezone | grep -Fxe "Time Zone: $TZ" >/dev/null || sudo systemsetup -settimezone "$TZ"
 
 declare COMPNAME

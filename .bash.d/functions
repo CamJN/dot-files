@@ -1,5 +1,11 @@
 #!/usr/local/bin/bash
 
+function pipe_stds {
+#(echo out >&1; echo err >&2) 2> >(sed 's/^.*/ERR: "&"/') 1> >(sed 's/^.*/OUT: "&"/')
+echo 'Run the following form, the order of redirects is important.'
+echo 'command_one 2> >(command_for_stderr) 1> >(command_for_stdout)'
+}
+
 function direct_math {
     echo "scale=4; $*" | \bc -l
 }

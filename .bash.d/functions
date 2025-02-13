@@ -1,5 +1,9 @@
 #!/usr/local/bin/bash
 
+function clt_version {
+    pkgutil --pkg-info=com.apple.pkg.CLTools_Executables
+}
+
 function pipe_stds {
 #(echo out >&1; echo err >&2) 2> >(sed 's/^.*/ERR: "&"/') 1> >(sed 's/^.*/OUT: "&"/')
 echo 'Run the following form, the order of redirects is important.'

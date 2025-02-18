@@ -2,12 +2,10 @@
 
 ;;; Commentary:
 ;; This file sets emacs into a generally useful state,
-;; without setting up too much specific beheviour for
+;; without setting up too much specific behaviour for
 ;; programming tasks.
 
 ;;; Code: elisp
-(setq stack-trace-on-error t)
-(setq debug-on-error t)
 
 (setq default-directory (getenv "HOME"))
 
@@ -38,8 +36,12 @@
 (when (< emacs-major-version 27)
   (package-initialize))
 
+(when (>= emacs-major-version 28)
+  (setq completion-styles '(flex))
+  ;;(icomplete-vertical-mode t)
+)
+
 (when (> emacs-major-version 29)
-  ;;If you would prefer to see only Icomplete's in-buffer display, and not the *Completions* buffer, you can add this to your init:
   (advice-add 'completion-at-point :after #'minibuffer-hide-completions)
   )
 
@@ -77,6 +79,7 @@
                               (define-key input-map "\e[?~" (kbd "C-<backspace>"))
                               (define-key input-map "\e\e[?~" (kbd "C-M-<backspace>"))
                               ))
+(define-key y-or-n-p-map        (kbd "C-s")            #'ignore )
 (define-key emacs-lisp-mode-map (kbd "<f5>")            'emacs-lisp-byte-compile-and-load)
 (define-key isearch-mode-map    (kbd "C-o")             'isearch-occur)
 (define-key read-expression-map (kbd "<tab>")           'lisp-complete-symbol)
@@ -85,7 +88,7 @@
 (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'elisp-byte-compile-buffer)
 (define-key flyspell-mode-map (kbd "C-x s b") 'flyspell-buffer)
 (define-key flyspell-mode-map (kbd "C-x s n") 'flyspell-goto-next-error)
-(define-key flyspell-mode-map (kbd "C-x s c") 'flyspell-correct-word)
+(define-key flyspell-mode-map (kbd "C-x s c") 'flyspell-correct-word-before-point)
 (global-set-key                 (kbd "C-M-<backspace>") 'backward-kill-sexp)
 (global-set-key                 (kbd "C-M-h")           'mark-defun)
 (global-set-key                 (kbd "C-x c")           'quick-save)
@@ -175,7 +178,30 @@
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))
 
-(setq auto-mode-interpreter-regexp "^#![     ]?\\([^ 	\n]*/bin/env[   ]+\\(?:-P[	 ]*[^ 	\n]+[      ]+\\)?\\)?\\([^ 	\n]+\\)$")
+(setq auto-mode-interpreter-regexp (concat
+                                    "^"
+                                    "#![ \t]*"
+                                    ;; Optional group 1: env(1) invocation.
+                                    "\\("
+                                    "[^ \t\n]*/bin/env[ \t]*"
+                                    ;; Within group 1: possible environment adjustments.
+                                    "\\(?:"
+                                    ;; -S/--split-string
+                                    "\\(?:-[0a-z]*S[ \t]*\\|--split-string=\\)"
+                                    ;; More env arguments.
+                                    "\\(?:-[^ \t\n]+[ \t]+\\)*"
+                                    ;; Interpreter environment modifications.
+                                    "\\(?:[^ \t\n]+=[^ \t\n]*[ \t]+\\)*"
+                                    ;; macOS env path flag
+                                    "\\(?:-P[ \t]*[^ \t\n]+[ \t]+\\)?"
+                                    ;; end of env adjustments
+                                    "\\)?"
+                                    ;; end of group 1
+                                    "\\)?"
+                                    ;; Group 2: interpreter.
+                                    "\\([^ \t\n]+\\)"
+                                    "$"
+                                    ))
 
 (unless (display-images-p)
   (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))
@@ -247,25 +273,13 @@
    ((> (buffer-size) (expt 1024 2)) (format "%7.3fM" (/ (buffer-size) (expt 1024.0 2.0))))
    (t (format "%7dB" (buffer-size)))))
 
-(setq ibuffer-formats '((mark modified read-only " "
-                              (name 18 18 :left :elide)
-                              " "
-                              (size-h 9 -1 :right)
-                              " "
-                              (mode 16 16 :left :elide)
-                              " "
-                              filename-and-process)
-                        (mark " "
-                              (name 16 -1)
-                              " " filename)))
-
 (add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "personal")))
 
 
 ;;----------buffer switching-------------------------------------
 (defvar ido-dont-ignore-buffer-names '("*scratch*" "*eldoc*" "*Occur*" "*Help*"))
 (with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
-                                        ;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
+;;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
 
 (defun ido-ignore-most-star-buffers (name)
   (and
@@ -289,14 +303,6 @@
             (define-key icomplete-minibuffer-map "\C-p" 'icomplete-backward-completions)
             (define-key icomplete-minibuffer-map "\C-r" 'icomplete-backward-completions)
             ))
-
-;; (when (>= emacs-major-version 28)
-;;   (setq completion-styles '(flex))
-;;   (icomplete-vertical-mode 1))
-
-;;----------Look of Emacs in Terminal---------------------------------------
-(toggle-tool-bar-mode-from-frame -1)
-(add-hook 'after-make-frame-functions 'on-frame-open)
 
 ;;----------Turn on useful functionality------------------------------------
 (add-hook 'find-file-hook 'turn-on-useful-modes)

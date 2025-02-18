@@ -17,12 +17,6 @@
 
 (defalias 'rebuilder 're-builder)
 
-(defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")
-
-(defun on-frame-open (frame)
-  (if (not (display-graphic-p frame))
-      (set-face-background 'default "unspecified-bg" frame)))
-
 ;;----------auto mode debug---------------------------
 (defun explain-auto-mode (file)
   "Explain in which mode FILE gets visited according to `auto-mode-alist'.
@@ -242,7 +236,7 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
 
 
 (if (functionp 'tramp-revert-buffer-with-sudo)
-    (defalias sudo-edit-current-file tramp-revert-buffer-with-sudo)
+    (defalias 'sudo-edit-current-file 'tramp-revert-buffer-with-sudo)
   (defun sudo-edit-current-file ()
     "Edit the current buffer as root."
     (interactive)

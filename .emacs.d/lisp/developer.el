@@ -11,7 +11,9 @@
 (require 'treesit)
 (require 'treemacs)
 
-(require 'copilot nil t)
+(require 'copilot)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion-by-word)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion-by-word)
 
 (defun setup-prog ()
   (setq prettify-symbols-alist
@@ -71,9 +73,9 @@
           ))
   (diff-hl-mode 1)
   (diff-hl-margin-mode 1)
-  (when (and (not (eq major-mode 'lisp-interaction-mode)) (file-exists-p copilot-install-dir))
-    (copilot-mode 1)
-    )
+  ;; (when (and (not (eq major-mode 'lisp-interaction-mode)) (boundp 'copilot-install-dir) (file-exists-p copilot-install-dir))
+  ;;   (copilot-mode 1)
+  ;;   )
   )
 (add-hook 'prog-mode-hook 'setup-prog)
 
@@ -218,11 +220,6 @@
 (define-key c++-mode-map (kbd "C-c v") 'ff-get-other-file)
 (define-key objc-mode-map (kbd "C-c v") 'ff-find-other-file)
 
-;; eglot
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      )
-
 (defun c-like-lsp-startup ()
   "setup eglot on c-likes"
   (progn
@@ -364,6 +361,10 @@
   (add-hook 'go-mode-hook #'eglot-ensure)
   (add-hook 'go-mod-ts-mode-hook #'eglot-ensure)
   (add-hook 'go-mod-mode-hook #'eglot-ensure)
+  (add-hook 'html-ts-mode-hook #'eglot-ensure)
+  (add-hook 'html-mode-hook #'eglot-ensure)
+  (add-hook 'php-ts-mode #'eglot-ensure)
+  (add-hook 'php-mode #'eglot-ensure)
   )
 ;; non-eglot-hooks
 (add-hook 'scss-hook #'rainbow-mode)

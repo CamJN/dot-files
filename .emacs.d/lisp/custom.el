@@ -10,16 +10,11 @@
  '(auto-encryption-mode t)
  '(auto-image-file-mode nil)
  '(auto-save-file-name-transforms
-   (list
-    (list ".*"
-          (expand-file-name "~/.emacs.d/auto-save-files/")
-          t)))
+   (list (list ".*" (expand-file-name "~/.emacs.d/auto-save-files/") t)))
  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/auto-save-list/"))
  '(backup-by-copying-when-linked t)
  '(backup-directory-alist
-   (list
-    (cons ".*"
-          (expand-file-name "~/.emacs.d/backup-files/"))))
+   (list (cons ".*" (expand-file-name "~/.emacs.d/backup-files/"))))
  '(bell-volume 0)
  '(browse-url-browser-function 'browse-url-default-macosx-browser)
  '(calendar-mark-holidays-flag t)
@@ -29,10 +24,14 @@
  '(confirm-nonexistent-file-or-buffer nil)
  '(copilot-bin
    (expand-file-name "~/Developer/Python/huggingface_convert/wizard-2-q4_0.llamafile"))
+ '(copilot-idle-delay 1)
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   '("87b3c8ef305e22d169fdb6c9bb1a6830ab57f4acb18b5e06c36bde31cc6bbd10" "0bdba1ff15d205dd3feb6210e4838a697b3c32b81c0888ccfcdcc8cf7afdac8c" "0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e" "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default))
+   '("87b3c8ef305e22d169fdb6c9bb1a6830ab57f4acb18b5e06c36bde31cc6bbd10"
+     "0bdba1ff15d205dd3feb6210e4838a697b3c32b81c0888ccfcdcc8cf7afdac8c"
+     "0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e"
+     "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default))
  '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
  '(delete-active-region 'kill)
  '(delete-by-moving-to-trash t)
@@ -52,113 +51,50 @@
  '(eglot-events-buffer-size 0)
  '(file-name-shadow-mode t)
  '(fill-column 120)
- '(flymake-show-diagnostics-at-end-of-line t)
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)
  '(global-prettify-symbols-mode t)
  '(grep-use-headings t)
  '(hippie-expand-try-functions-list
-   '(try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-expand-dabbrev-visible try-expand-line-all-buffers try-expand-list-all-buffers try-expand-whole-kill try-complete-file-name-partially try-complete-file-name try-complete-lisp-symbol-partially try-complete-lisp-symbol))
+   '(try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill
+                            try-expand-dabbrev-visible try-expand-line-all-buffers try-expand-list-all-buffers
+                            try-expand-whole-kill try-complete-file-name-partially try-complete-file-name
+                            try-complete-lisp-symbol-partially try-complete-lisp-symbol))
  '(holiday-other-holidays
-   '((holiday-fixed 4 25 "Jenn's Birthday")
-     (holiday-fixed 10 31 "My Birthday")
+   '((holiday-fixed 4 25 "Jenn's Birthday") (holiday-fixed 10 31 "My Birthday")
      (holiday-fixed 2 2 "Our Wedding Anniversary")))
  '(hscroll-step 1)
  '(ibuffer-auto-mode t t)
  '(ibuffer-expert t)
  '(ibuffer-formats
-   '((mark modified read-only " "
-           (name 30 30 :left :elide)
-           " "
-           (size 9 -1 :right)
-           " "
-           (mode 16 16 :left :elide)
-           " " filename-and-process)
-     (mark " "
-           (name 16 -1)
-           " " filename)))
+   '((mark modified read-only " " (name 30 30 :left :elide) " " (size-h 9 -1 :right) " " (mode 16 16 :left :elide) " "
+           filename-and-process)
+     (mark " " (name 16 -1) " " filename)))
  '(ibuffer-saved-filter-groups
-   '(("personal"
-      ("elisp"
-       (mode . emacs-lisp-mode))
-      ("bash-config"
-       (or
-        (name . "^\\.bash(rc|_.*)$")
-        (mode . shell-script-mode)
-        (mode . bash-ts-mode)))
+   '(("personal" ("elisp" (mode . emacs-lisp-mode))
+      ("bash-config" (or (name . "^\\.bash(rc|_.*)$") (mode . shell-script-mode) (mode . bash-ts-mode)))
       ("shell-script"
-       (or
-        (mode . awk-mode)
-        (mode . sh-mode)
-        (mode . shell-mode)
-        (mode . makefile-mode)
-        (mode . makefile-bsdmake-mode)))
+       (or (mode . awk-mode) (mode . sh-mode) (mode . shell-mode) (mode . makefile-mode) (mode . makefile-bsdmake-mode)))
       ("c-ish code"
-       (or
-        (mode . c-mode)
-        (mode . c-ts-mode)
-        (mode . objc-mode)
-        (mode . objc-ts-mode)
-        (mode . c++-mode)
-        (mode . c++-ts-mode)))
-      ("rust code"
-       (or
-        (mode . rust-mode)
-        (mode . rust-ts-mode)))
+       (or (mode . c-mode) (mode . c-ts-mode) (mode . objc-mode) (mode . objc-ts-mode) (mode . c++-mode)
+           (mode . c++-ts-mode)))
+      ("rust code" (or (mode . rust-mode) (mode . rust-ts-mode)))
       ("other code"
-       (or
-        (mode . lisp-mode)
-        (mode . scheme-mode)
-        (mode . python-mode)
-        (mode . python-ts-mode)
-        (mode . swift-mode)
-        (mode . swift-ts-mode)
-        (mode . java-mode)
-        (mode . java-ts-mode)
-        (mode . go-mode)
-        (mode . go-ts-mode)
-        (mode . csharp-ts-mode)
-        (mode . sql-mode)))
+       (or (mode . lisp-mode) (mode . scheme-mode) (mode . python-mode) (mode . python-ts-mode) (mode . swift-mode)
+           (mode . swift-ts-mode) (mode . java-mode) (mode . java-ts-mode) (mode . go-mode) (mode . go-ts-mode)
+           (mode . csharp-ts-mode) (mode . sql-mode)))
       ("config"
-       (or
-        (mode . json-ts-mode)
-        (mode . json-mode)
-        (mode . yaml-mode)
-        (mode . yaml-ts-mode)
-        (mode . toml-mode)
-        (mode . toml-ts-mode)
-        (mode . conf-mode)))
+       (or (mode . json-ts-mode) (mode . json-mode) (mode . yaml-mode) (mode . yaml-ts-mode) (mode . toml-mode)
+           (mode . toml-ts-mode) (mode . conf-mode)))
       ("web code"
-       (or
-        (mode . html-mode)
-        (mode . html-ts-mode)
-        (mode . css-mode)
-        (mode . css-ts-mode)
-        (mode . scss-mode)
-        (mode . ruby-mode)
-        (mode . ruby-ts-mode)
-        (mode . web-mode)
-        (mode . javascript-mode)
-        (mode . typescript-ts-mode)
-        (mode . tsx-ts-mode)
-        (mode . js-ts-mode)
-        (mode . js-mode)
-        (mode . less-css-mode)
-        (mode . php-mode)
-        (mode . php-ts-mode)))
-      ("git"
-       (name . "^\\.git.*$"))
-      ("help"
-       (name . "^\\*\\(Help\\|Apropos\\|info\\|eldoc\\)\\*$"))
-      ("keep around"
-       (name . "^\\*\\(shell\\|scratch\\)\\*$"))
-      ("built-in"
-       (name . "^\\*.*\\*$"))
-      ("Tags"
-       (filename . "TAGS"))
-      ("other"
-       (name . ".*")))))
+       (or (mode . html-mode) (mode . html-ts-mode) (mode . css-mode) (mode . css-ts-mode) (mode . scss-mode)
+           (mode . ruby-mode) (mode . ruby-ts-mode) (mode . web-mode) (mode . javascript-mode)
+           (mode . typescript-ts-mode) (mode . tsx-ts-mode) (mode . js-ts-mode) (mode . js-mode) (mode . less-css-mode)
+           (mode . php-mode) (mode . php-ts-mode)))
+      ("git" (name . "^\\.git.*$")) ("help" (name . "^\\*\\(Help\\|Apropos\\|info\\|eldoc\\)\\*$"))
+      ("keep around" (name . "^\\*\\(shell\\|scratch\\)\\*$")) ("built-in" (name . "^\\*.*\\*$"))
+      ("Tags" (filename . "TAGS")) ("other" (name . ".*")))))
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)
  '(icomplete-mode t)
@@ -180,11 +116,18 @@
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   '(markdown-ts-mode tree-sitter-ispell swift-ts-mode launchctl treemacs eglot transmission rbs-mode yasnippet diff-hl ibuffer-tramp rpm-spec-mode csv-mode markdown-preview-mode company osx-lib gitconfig-mode gitignore-mode json-mode jsx-mode rust-mode ssh-config-mode graphql-mode hide-lines groovy-mode gntp emojify alert circe oauth2 yaml-mode web-mode typescript-mode toml-mode swift-mode scss-mode sass-mode ruby-dev ruby-block rjsx-mode rinari rhtml-mode rake rainbow-mode osx-location osx-clipboard nginx-mode markdown-mode logstash-conf less-css-mode julia-mode guru-mode go-mode folding flycheck-rust flycheck-css-colorguard editorconfig-core editorconfig dockerfile-mode apache-mode))
+   '(alert apache-mode circe company copilot csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot emojify
+           f flycheck-css-colorguard flycheck-rust folding gitconfig-mode gitignore-mode gntp go-mode graphql-mode
+           groovy-mode guru-mode hide-lines ibuffer-tramp json-mode jsx-mode julia-mode launchctl less-css-mode
+           logstash-conf markdown-mode markdown-preview-mode markdown-ts-mode nginx-mode oauth2 osx-clipboard osx-lib
+           osx-location rainbow-mode rake rbs-mode rhtml-mode rinari rjsx-mode rpm-spec-mode ruby-block ruby-dev
+           rust-mode sass-mode scss-mode ssh-config-mode swift-mode swift-ts-mode toml-mode transmission
+           tree-sitter-ispell treemacs typescript-mode web-mode yaml-mode yasnippet))
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(project-mode-line t)
  '(project-vc-extra-root-markers
-   '("tsconfig.json" "package.json" "pyvenv.cfg" "requirements.txt" "pyrightconfig.json" "*.gemspec" "Gemfile" "Cargo.toml" "compile_commands.json" "*.cs.sln" "go.mod" "pom.xml" "Package.swift"))
+   '("tsconfig.json" "package.json" "pyvenv.cfg" "requirements.txt" "pyrightconfig.json" "*.gemspec" "Gemfile" "Cargo.toml"
+     "compile_commands.json" "*.cs.sln" "go.mod" "pom.xml" "Package.swift"))
  '(project-vc-ignores '("__pycache__" "node_modules" "site-packages"))
  '(project-vc-merge-submodules nil)
  '(query-replace-highlight t)
@@ -196,9 +139,7 @@
  '(replace-character-fold t)
  '(require-final-newline t)
  '(safe-local-variable-values
-   '((python-shell-virtualenv-root . default-directory)
-     (eval highlight-regexp "^\11* ")
-     (web-mode-use-tabs)))
+   '((python-shell-virtualenv-root . default-directory) (eval highlight-regexp "^\11* ") (web-mode-use-tabs)))
  '(search-default-mode 'character-fold-to-regexp)
  '(search-highlight t)
  '(send-mail-function 'sendmail-send-it)
@@ -225,7 +166,9 @@
  '(whitespace-empty-at-bob-regexp "\\(\\([      ]*\12\\)+\\)")
  '(whitespace-line-column 120)
  '(whitespace-style
-   '(face trailing tabs spaces empty indentation::tab indentation::space indentation space-after-tab::tab space-after-tab::space space-after-tab space-before-tab::tab space-before-tab::space space-before-tab space-mark tab-mark)))
+   '(face trailing tabs spaces empty indentation::tab indentation::space indentation space-after-tab::tab
+          space-after-tab::space space-after-tab space-before-tab::tab space-before-tab::space space-before-tab
+          space-mark tab-mark)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -72,9 +72,11 @@ export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 # untap unwanted homebrew taps
 comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
-# install all homebrew packages in Brewfile
-# might require secrets file to be sourced...
-brew bundle check || brew bundle install --verbose
+if [ -z "${SKIP_BUNDLE-}" ]; then
+    # install all homebrew packages in Brewfile
+    # might require secrets file to be sourced...
+    brew bundle check || brew bundle install --verbose
+fi
 
 # make my tap have one location on disk
 declare TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
@@ -124,7 +126,7 @@ link_dotfiles . ~/Developer/Bash/dot-files/.[!.]*
 # ensure docker plugin dir exists
 mkdir -p ~/.docker/cli-plugins
 # symlink docker plugins
-brew list --formulae -1 | grep -Fe docker- | xargs brew --prefix | xargs -J {} ln -shfF {} ~/.docker/cli-plugins/
+brew list --formulae -1 | grep -Fe docker- | xargs brew --prefix | xargs -J {} ln -shf {} ~/.docker/cli-plugins/
 
 # symlink homebrew's etc config files
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
@@ -158,12 +160,12 @@ function getLaunchdPlist() {
 }
 
 # link var config files
-find ~/Developer/Bash/dot-files/usr/local/var -type f -exec sh -c 'ln -shFf $0 "'"$HOMEBREW_PREFIX"'"`dirname $0 | sed -e "s|'"$HOME/Developer/Bash/dot-files/usr/local"'||g"`/' {} \;
+find ~/Developer/Bash/dot-files/usr/local/var -type f -exec sh -c 'ln -shf $0 "'"$HOMEBREW_PREFIX"'"`dirname $0 | sed -e "s|'"$HOME/Developer/Bash/dot-files/usr/local"'||g"`/' {} \;
 
 # check LaunchAgents for changes
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
 # symlink LaunchAgents
-ln -shFf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
+ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
 # Ensure keybindings dir exists
 mkdir -p ~/Library/KeyBindings/
 # symlink keybindings
@@ -223,7 +225,7 @@ sudo -v
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
 # symlink LaunchDaemons
 sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
-sudo ln -shFf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
+sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
 # check OS's etc config files for changes, and symlink them
 find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do
     sudo find /private/etc \
@@ -243,7 +245,7 @@ else
     RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
     export RUBY_CONFIGURE_OPTS
     eval "$(rbenv init -)";
-    rbenv list | xargs -n1 rbenv install -s
+    rbenv list | xargs -n1 rbenv install --skip-existing
 fi
 
 # ensure rust up to date
@@ -282,40 +284,63 @@ fi
 # https://apple.stackexchange.com/questions/195244/concise-compact-list-of-all-defaults-currently-configured-and-their-values
 mkdir -p "$HOME/Pictures/Screenshots/"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
-# defaults write com.apple.screensaver askForPassword -int 1
-# defaults write com.apple.screensaver askForPasswordDelay -int 0
-# defaults write com.apple.Safari IncludeDevelopMenu -bool true
-# defaults write com.apple.terminal SecureKeyboardEntry -bool true
-# defaults write com.apple.terminal StringEncodings -array 4
-# defaults write com.apple.ActivityMonitor IconType -int 5
-# defaults write com.apple.ActivityMonitor ShowCategory -int 0
-# defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
-# defaults write com.apple.ActivityMonitor SortDirection -int 0
-# defaults write com.apple.finder QLEnableTextSelection -bool true
-# defaults write com.apple.finder NewWindowTarget -string "PfHm"
-# defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-# defaults write com.apple.TextEdit RichText -int 0
-# defaults write com.apple.TextEdit PlainTextEncoding -int 4
-# defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
-# defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-# defaults write NSGlobalDomain AppleAccentColor -int 2
-# defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
-# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
-# defaults write com.apple.Accessibility AccessibilityEnabled -bool true
-# defaults write com.apple.Accessibility ApplicationAccessibilityEnabled -int 1
-# defaults write com.apple.Accessibility GenericAccessibilityClientEnabled -int 1
-# defaults write com.apple.Accessibility KeyRepeatDelay -real  0.5
-# defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
-# defaults write com.apple.Accessibility KeyRepeatInterval -real 0.08
-# whole com.apple.ActivityMonitor domain
-# whole com.apple.AppleMultitouchMouse domain
-# whole com.apple.AppleMultitouchTrackpad domain
-# defaults write com.apple.AddressBook ABBirthDayVisible -bool true
-# defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
-# defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
+
+defaults write NSGlobalDomain AppleAccentColor -int 2
+# defaults write NSGlobalDomain AppleLocale -string "en_CA"
+# defaults write NSGlobalDomain AppleLanguages -array "en-CA" "de-CA" "ja-CA"
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
+defaults write NSGlobalDomain "com.apple.sound.beep.sound" -string "/System/Library/Sounds/Funk.aiff"
+
+defaults write com.apple.menuextra.battery ShowPercent -bool no
+
+defaults write com.apple.preference.security.privacy limitAdTrackingCached -int 0
+defaults write com.apple.AdLib forceLimitAdTracking -int 1
+defaults write com.apple.AdLib "AD_DEVICE_IDFA" -string "00000000-0000-0000-0000-000000000000"
+defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
+defaults write com.apple.AdLib allowIdentifierForAdvertising -int 0
+defaults write com.apple.AdLib personalizedAdsMigrated -int 0
+#sudo chflags uchg ~/Library/Preferences/com.apple.AdLib # doesn't exist
+
+defaults write com.apple.Safari IncludeDevelopMenu -int 1
+defaults write com.apple.Safari AutoOpenSafeDownloads -int 0
+defaults write com.apple.Safari MobileDeviceRemoteXPCEnabled -int 1
+defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -int 1
+# shellcheck disable=SC2016
+defaults write com.apple.Safari NSUserKeyEquivalents -dict "Reload Page From Origin" '@$r' "Show JavaScript Console" "@~k"
+
+defaults write com.apple.Terminal SecureKeyboardEntry -int 0
+#open -a Terminal ~/Developer/Bash/dot-files/Library/Application\ Support/Terminal/My\ Homebrew.terminal
+#sleep 5
+#killall Terminal
+defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
+defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
+defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
+
+defaults write com.apple.ActivityMonitor IconType -int 5
+defaults write com.apple.ActivityMonitor UpdatePeriod -int 1
+
+defaults write com.apple.finder QLEnableTextSelection -bool true
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -int 1
+defaults write com.apple.finder ShowHardDrivesOnDesktop -int 0
+defaults write com.apple.finder ShowMountedServersOnDesktop -int 1
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -int 1
+
+defaults write com.apple.TextEdit RichText -int 0
+defaults write com.apple.TextEdit CheckGrammarWithSpelling -int 1
+defaults write com.apple.TextEdit CheckSpellingAsYouTypeEnabledInRichTextOnly -int 1
+defaults write com.apple.TextEdit DataDetectors -int 1
+defaults write com.apple.TextEdit IgnoreHTML -int 1
+defaults write com.apple.TextEdit SmartLinks -int 1
+
+defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
+defaults write com.apple.Accessibility FullKeyboardAccessFocusRingEnabled -int 1
+
+defaults write com.apple.AddressBook ABBirthDayVisible -bool true
+defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
+defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
 
 # show Library dir in home dir
 chflags nohidden ~/Library
@@ -346,6 +371,8 @@ scutil --get ComputerName | grep -Fxe "$COMPNAME" >/dev/null || sudo scutil --se
 if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.db' 'select client from access where client = "com.apple.Terminal" and auth_value > 0 and service = "kTCCServiceSystemPolicyAllFiles"')" ]; then
     spctl developer-mode enable-terminal
 fi
+
+sudo apachectl -t && sudo apachectl restart
 
 # Last, causes restart
 sudo softwareupdate --install --all --restart --agree-to-license

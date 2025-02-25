@@ -15,6 +15,7 @@
 #       pager = delta --dark --theme TwoDark
 	whitespace = trailing-space,space-before-tab
 #	fsmonitor = true # really slow, wtf?
+#       untrackedCache = true
 #	fsync = none
 #	filemode = false
 	hooksPath = ~/Developer/Bash/dot-files/.git/hooks
@@ -59,10 +60,10 @@
 	root = rev-parse --show-toplevel
 	amend = commit --amend
 	ammend = commit --amend
+	fixup = commit --fixup
 	contains = describe --contains
-	history = log --oneline --abbrev-commit --all --graph --decorate --color
-	lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	dlog = "-c diff.external=difft log -p --ext-diff"
+	history = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	diff-log = "-c diff.external=difft log -p --ext-diff"
 	idiff = difftool -t idiff -y
 	diffw = diff --ignore-space-change
 	git = "!exec git"
@@ -71,6 +72,7 @@
 	commitw = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -"
 	unstage = restore --staged
 	upto = "!git push $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
+	upto-force = "!git push --force $(git rev-parse --abbrev-ref --symbolic @{u} | cut -d/ -f1) \"$*\":$(git config --get \"branch.$(git branch --show-current).merge\") #"
 	zip = archive --format=zip --output=archive.zip -9 HEAD
 	tar = archive --format=tar --output=archive.tar HEAD
 	sub = submodule update --init --recursive
@@ -78,10 +80,16 @@
 	files-in-commit = diff-tree --no-commit-id --name-only -r
 	track = "!git log -L$1,$2:$3 || echo 'usage: git track startLine endLine file' #"
 	trackf = "!git log -L:$1:$2 || echo 'usage: git trackf function file' #"
+	hash-type = cat-file -t
+	hash-dump = cat-file -p
+	stat = status
+	pop = reset HEAD~
+	authors = shortlog --summary --numbered
 [push]
 	default = simple
 	# When pushing to a branch without remote, automatically --set-upstream.
 	autoSetupRemote = true
+	# followTags = true # bad! pushes all local tags, always!
 [filter "lfs"]
 # 	clean = git-lfs clean -- %f
 # 	smudge = git-lfs smudge -- %f
@@ -91,6 +99,7 @@
 	program = /usr/local/bin/gpg
 # if broken try to replace with script containing: exec gpg --no-tty "$@"
 [commit]
+	verbose = true
 	gpgsign = true
 	template = ~/.config/git/commitMsg
 [url "git@gitlab.phusion.nl:"]
@@ -98,27 +107,32 @@
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 	insteadOf = gh:
+	insteadOf = github:
+[url "git@gist.github.com:"]
+	insteadOf = https://gist.github.com/
+	insteadOf = gist:
 [diff]
-	renames = copies
+	renames = true
 	indentHeuristic = true
 	compactionHeuristic = true
 	algorithm = histogram
-	colorMoved = default
+	colorMoved = plain
 	colorMovedWS = ignore-all-space
-        tool = difftastic
+	tool = difftastic
 	external = difft
+	mnemonicPrefix = true
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 	# ff = false
 [difftool]
-        prompt = false
+	prompt = false
 [difftool "vim"]
 	cmd = vimdiff $LOCAL $REMOTE
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "difftastic"]
-        cmd = difft "$LOCAL" "$REMOTE"
+	cmd = difft "$LOCAL" "$REMOTE"
 [init]
 	defaultBranch = main
 [credential]
@@ -128,6 +142,8 @@
 [fetch]
 	# Remove references to remote branches that have been deleted.
 	prune = true
+	pruneTags = true
+	all = true
 [submodule]
 	recurse = true
 [trace2]
@@ -135,7 +151,20 @@
 #	normalTarget = ~/Desktop/gitlog.normal
 #	eventTarget = ~/Desktop/gitlog.event
 [pager]
-        difftool = true
+	difftool = true
 [rerere]
 	# Automatically record and reuse conflict resolutions.
 	enabled = true
+	autoupdate = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[help]
+	autocorrect = prompt
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true

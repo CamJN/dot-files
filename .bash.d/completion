@@ -46,3 +46,4 @@ _filedir() {
     #cleanup_code
     echo -n ''
 }
+source <(node --completion-bash)

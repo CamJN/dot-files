@@ -1,13 +1,15 @@
 #!/usr/local/bin/bash
 
 function clt_version {
-    pkgutil --pkg-info=com.apple.pkg.CLTools_Executables
+    pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | tee \
+    >(awk '/install-time:/{print $2}' | xargs date -r | xargs -I{} printf -- 'install-time: %s\n' '{}') \
+    >(grep -Fve 'install-time:') >/dev/null
 }
 
 function pipe_stds {
-#(echo out >&1; echo err >&2) 2> >(sed 's/^.*/ERR: "&"/') 1> >(sed 's/^.*/OUT: "&"/')
-echo 'Run the following form, the order of redirects is important.'
-echo 'command_one 2> >(command_for_stderr) 1> >(command_for_stdout)'
+    #(echo out >&1; echo err >&2) 2> >(sed 's/^.*/ERR: "&"/') 1> >(sed 's/^.*/OUT: "&"/')
+    echo 'Run the following form, the order of redirects is important.'
+    echo 'command_one 2> >(command_for_stderr) 1> >(command_for_stdout)'
 }
 
 function direct_math {
@@ -160,20 +162,12 @@ function loveSongsForCamden {
     fi
 }
 
-function dedup_dirs(){
-    declare -a new=() copy=("${DIRSTACK[@]:1}")
-    declare -A seen
-    local v i
-    seen[$PWD]=1
-    for v in "${copy[@]}"; do
-        if [ -z "${seen[$v]}" ]; then
-            new+=("$v")
-            seen[$v]=1
-        fi
-    done
+function dedup_dirs {
+    readarray -t new < <(printf "%s\n" "${DIRSTACK[@]:1}" | sort -u)
     dirs -c
-    for ((i=${#new[@]}-1; i>=0; i--)); do
-        builtin pushd -n "${new[i]}" >/dev/null
+    for dir in "${new[@]}"; do
+        if [ "$dir" = "$PWD" ]; then continue; fi
+        builtin pushd -n "$dir" >/dev/null
     done
 }
 
@@ -382,13 +376,6 @@ function cdocker {
     docker run -it -v "$PWD:/pwd" --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
 }
 
-function csoftwareupdate {
-    softwareupdate --list |\
-        grep -F Label |\
-        awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
-        xargs -0 -I {} softwareupdate --download '{}'
-}
-
 function postgresql-upgrade-database {
     if [ $# -lt 2 ] || [ "$1" -eq "$2" ]; then
         echo "Usage: brew postgresql-upgrade-database 14 16" >&2
@@ -417,7 +404,12 @@ function verlt() {
     ! vergte "$@"
 }
 
-function update() {
+function csoftwareupdate {
+    softwareupdate --list |\
+        grep -F Label |\
+        awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
+        xargs -0 -I {} softwareupdate --download '{}' &
+
     brew update
     brew upgrade
     rbenv list | grep -Fvf <(rbenv versions --bare) | xargs -n1 rbenv install
@@ -426,6 +418,7 @@ function update() {
     rustup update
     cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}' | xargs cargo install
     sudo xprotect update
+    wait
     sudo softwareupdate --install --all --restart
 }
 
@@ -447,4 +440,66 @@ function aliases() {
 
 function variables() {
     declare | rg '^[^ \t].*=.' | rg -vie '[ _]IFS' -e COMPREPLY | \sed -Ee 's/^([^=]+)=.*/\1/'
+}
+
+function start_under_debugger() {
+    #echo "run lldb -p $(nc -lkU aSocket.sock)" # k is for keep alive and listen for more
+
+    local dir
+    dir="$(mktemp -d)"
+    exec 3< <(nc -lU "$dir/aSocket.sock")
+    darwin-debug --unix-socket=aSocket.sock -- "$@" &
+    read -r <&3 pid
+    echo "run lldb -p $pid" &
+    rm -rf "$dir"
+}
+
+function ssid(){
+    ipconfig getsummary en0 | grep SSID | grep -v redacted | cut -d: -f 2 | tr -d '[:space:]'
+}
+
+function czip() {
+    local file='-'
+    local dir='./'
+    read -ra args < <(getopt 'ctxf:C:' "$@")
+    set -- "${args[@]}"
+    while :; do
+        case "$1" in
+            -c)
+                command=create
+                shift
+                ;;
+            -t)
+                command=list
+                shift
+                ;;
+            -x)
+                command=extract
+                shift
+                ;;
+            -f)
+                file="$2"
+                shift 2;
+                ;;
+            -C)
+                dir="$2"
+                shift 2;
+                ;;
+            --)
+                shift;
+                break
+                ;;
+        esac
+    done
+
+    echo "d: $dir f: $file c: $command"
+
+    case "$command" in
+        create)
+            printf -v files -- '-subdir %s ' "$@"
+            # shellcheck disable=SC2086
+            echo aa archive -output_file "${file%%.aar}.aar" $files -dir "$dir" ;;
+        list) echo aa list -input_file "${file}" "$@" ;;
+        extract) echo aa extract -input_file "${file}" -dir "$dir" ;;
+    esac
 }

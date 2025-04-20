@@ -5,6 +5,9 @@ if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
     export MANPATH="$JAVA_HOME/man:$MANPATH"
 fi
 export NODE_REPL_HISTORY="$HOME/.history/node"
+export PYTHON_HISTORY="$HOME/.history/python"
+# /Users/camdennarzt/.bun_repl_history
+export RUBY_DEBUG_HISTORY_FILE="$HOME/.history/rdbg"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
 export GIT_CEILING_DIRECTORIES=/Users
 export DOCKER_SCAN_SUGGEST=false
@@ -31,6 +34,8 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_BUNDLE_BREW_SKIP
     export HOMEBREW_EVAL_ALL="lazy, cheap, fucking, asswipes"
     export HOMEBREW_USE_RUBY_FROM_PATH=1
+    # /Users/camdennarzt/.brew_irb_history # move if possible in future
+    # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
 
     # export SWIFT_FLAGS="--disable-xctest" # does nothing
 

@@ -160,9 +160,9 @@
         )
 (setq exec-path (eval (car (get 'exec-path 'standard-value))))
 
-(setq company-idle-delay 0.2)
-(setq company-minimum-prefix-length 1)
-(setq company-tooltip-align-annotations t)
+(setopt company-idle-delay 0.2)
+(setopt company-minimum-prefix-length 1)
+(setopt company-tooltip-align-annotations t)
 
 ;;----------CC Mode stuff------------------------------------
 ;; change file extension meanings
@@ -194,14 +194,14 @@
 ;;compilation
 (define-key c-mode-base-map (kbd "<f5>") 'compile)
 (define-key compilation-mode-map (kbd "<f5>") 'recompile)
-(setq compilation-read-command nil)
-(setq compilation-scroll-output t)
+(setopt compilation-read-command nil)
+(setopt compilation-scroll-output t)
 (when (boundp 'compile-auto-highlight) (setq compile-auto-highlight t))
 
 ;; change paragraph start and separate
 (let ((separators "\\|#\\(end\\)?ifn?\\(def\\)?"))
-  (setq paragraph-separate (concat paragraph-separate separators))
-  (setq paragraph-start (concat paragraph-start separators)))
+  (setopt paragraph-separate (concat paragraph-separate separators))
+  (setopt paragraph-start (concat paragraph-start separators)))
 
 ;; file switching
 (delete '("\\.h\\'" (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".c++" ".m")) cc-other-file-alist)
@@ -223,11 +223,11 @@
 (defun c-like-lsp-startup ()
   "setup eglot on c-likes"
   (progn
-    (setq comment-style 'multi-line
-          comment-start "/* "
+    (setopt comment-style 'multi-line)
+    (setopt company-idle-delay 0.0)
+    (setq comment-start "/* "
           comment-end " */"
           c-tab-always-indent t
-          company-idle-delay 0.0
           )
     (eglot-ensure)
     ))
@@ -249,7 +249,7 @@
 (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
 
 (defun rust-lsp-startup ()
-  (progn (setq compile-command "cargo build")
+  (progn (setopt compile-command "cargo build")
          (eglot-ensure)))
 
 (defun python-lsp-startup ()

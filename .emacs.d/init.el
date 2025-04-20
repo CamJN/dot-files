@@ -26,9 +26,9 @@
          )
         )
 ;;set exec-path based on PATH
-(setq exec-path (eval (car (get 'exec-path 'standard-value))))
+(setopt exec-path (eval (car (get 'exec-path 'standard-value))))
 
-(setq package-archives '(
+(setopt package-archives '(
                          ("gnu" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa" . "https://melpa.org/packages/")
@@ -37,7 +37,7 @@
   (package-initialize))
 
 (when (>= emacs-major-version 28)
-  (setq completion-styles '(flex))
+  (setopt completion-styles '(flex))
   ;;(icomplete-vertical-mode t)
 )
 
@@ -48,7 +48,7 @@
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa")))
 
-(setq custom-file (concat user-emacs-directory
+(setopt custom-file (concat user-emacs-directory
                           (file-name-as-directory "lisp")
                           "custom.el"))
 (load custom-file nil t t t)
@@ -102,6 +102,7 @@
 (global-set-key                 (kbd "C-x C-d")         'duplicate-lines)
 (global-set-key                 (kbd "C-x f")           'find-file-at-point)
 (global-set-key                 (kbd "C-x o")           'next-multiframe-window)
+(global-set-key                 (kbd "C-x M-r")         'rotate-windows)
 (global-set-key                 (kbd "C-M-y")           (lambda (arg)
                                                           (interactive "^p")
                                                           ;;(setq arg (or arg -1))
@@ -233,7 +234,7 @@
 ;;----------Shell Mode stuff------------------------------------
 (add-hook 'shell-mode-hook
           (lambda ()
-            (setq dirtrack-list '("^.*@[^@:]+:\\(.+\\) \\$" 1))
+            (setopt dirtrack-list '("^.*@[^@:]+:\\(.+\\) \\$" 1))
             (dirtrack-mode 1)
             (ansi-color-for-comint-mode-on)
             (setenv "PS1" "\\[$(echo -n $?)\\]\\u@\\h:\\w \\$ ")

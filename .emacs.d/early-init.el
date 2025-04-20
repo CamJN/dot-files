@@ -1,14 +1,15 @@
 ;(setq stack-trace-on-error t)
-;(setq debug-on-error t)
+;(setopt debug-on-error t)
 
 ;; startup uses a lot of ram
-(setq gc-cons-threshold most-positive-fixnum)
+(setopt gc-cons-threshold most-positive-fixnum)
 
 ;; fix limits later
 (add-hook 'emacs-startup-hook
-          (lambda () (setq gc-cons-threshold (* 100 1024 1024)
-                      read-process-output-max (* 1024 1024)
-                      )))
+          (lambda () (progn
+                  (setopt gc-cons-threshold (* 100 1024 1024))
+                  (setq read-process-output-max (* 1024 1024))
+                  )))
 
 ;; Look of Emacs in Terminal
 (defun on-frame-open (frame)

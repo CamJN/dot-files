@@ -342,6 +342,8 @@ defaults write com.apple.AddressBook ABBirthDayVisible -bool true
 defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
 defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
 
+#sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
+
 # show Library dir in home dir
 chflags nohidden ~/Library
 

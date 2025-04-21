@@ -50,8 +50,6 @@ shopt -s nocaseglob
 shopt -s nocasematch
 shopt -s direxpand
 
-#sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
-
 #paths
 if [ -f ~/.bash.d/paths ]; then
 # shellcheck source=./.bash.d/paths

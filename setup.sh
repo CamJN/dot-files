@@ -3,9 +3,13 @@
 # To run:
 # bash -c "$(curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh)"
 
+# error-fast
+set -xeuo pipefail
+
 # pre-reqs:
 # login app store
 # copy over secrets file?
+# copy over gpg key
 # copy over ssh keys?
 
 # post-reqs:
@@ -16,11 +20,10 @@
 # set up slack & front PWAs in safari
 # set up firefox w/ userChrome.css & profile & addons
 # install sketch & license
+# install vmware fusion
 
 # wrap in a function to prevent partial execution if download fails
 function main() {
-# error-fast
-set -xeuo pipefail
 # ensure PATH includes likely dirs
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
@@ -342,6 +345,7 @@ defaults write com.apple.AddressBook ABBirthDayVisible -bool true
 defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
 defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
 
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 #sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
 
 # show Library dir in home dir

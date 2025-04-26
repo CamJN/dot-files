@@ -83,6 +83,7 @@ alias swap='pushd +1'
 alias tail='tail -f'
 alias tar='ctar'
 alias top='top -u -stats pid,command,cpu,time,mem,state,uid,user'
+alias tower='gittower'
 alias transmission='transmission-remote'
 alias tree="tree -aC -I '.git|node_modules|.DS_Store|target'"
 alias trim="tr -d ' '"

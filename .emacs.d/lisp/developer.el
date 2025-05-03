@@ -11,9 +11,9 @@
 (require 'treesit)
 (require 'treemacs)
 
-(require 'copilot)
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion-by-word)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion-by-word)
+;;(require 'copilot)
+;;(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion-by-word)
+;;(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion-by-word)
 
 (defun setup-prog ()
   (setq prettify-symbols-alist

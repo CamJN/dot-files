@@ -1,20 +1,3 @@
-/* translucency/vibrancy */
-/*
- requires setting:
- - browser.theme.macos.native-theme
- - widget.macos.titlebar-blend-mode.behind-window
- doesn't work with colorways
-*/
-:root #TabsToolbar,
-:root #titlebar,
-:root #tabbrowser-tabs,
-:root #PersonalToolbar,
-:root #nav-bar,
-:root #browser {
-    -moz-default-appearance: menupopup !important;
-    appearance: auto !important;
-}
-
 /* hide stupid shit */
 #PanelUI-button,
 #forward-button[disabled="true"],
@@ -31,12 +14,6 @@ notification[value="plugin-hidden"]
     display: none !important;
 }
 
-/* force addon buttons to match theme */
-#page-action-buttons .urlbar-addon-page-action image {
-    /*filter: grayscale(100%) invert() contrast(33%) sepia(100%) saturate(200%) !important; for colorways*/
-    filter: grayscale(100%) invert() contrast(33%) !important;
-}
-
 /* make urlbar dropdown full size */
 #urlbar[breakout][breakout-extend] {
     left: unset !important;
@@ -48,72 +25,61 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
 }
 
 /* link hover preview in url bar */
-:root[sizemode="fullscreen"] #statuspanel[type=overLink]:-moz-locale-dir(ltr),
-:root[sizemode="fullscreen"] #statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
-    top: -30px !important;
-}
-
-#statuspanel[type=overLink]:-moz-locale-dir(ltr),
-#statuspanel[inactive][previoustype=overLink]:-moz-locale-dir(ltr) {
+#statuspanel[type=overLink],
+#statuspanel[inactive][previoustype=overLink] {
     margin: 0 !important;
     position: fixed !important;
-    top: 42px !important;
-    right: 95px !important;
+    top: -26px !important;
+    right: 155px !important;
     left: unset !important;
     bottom: unset !important;
     padding: 2px !important;
-    max-width:500px !important;
-    min-width: 160px !important;
-    /*align: right;*/
+    background: none !important;
+
+    #statuspanel-label {
+        border: none !important;
+        color: var(--toolbar-field-focus-color) !important;
+        font-size: 1.25em !important;
+        background: none !important;
+        padding: 0 !important;
+        margin: -1.5px 0 0 5px !important;
+    }
+    &::before {
+        content: "⟩";
+    }
+
+    :root[sizemode="fullscreen"] &{
+        max-width:500px !important;
+    }
+
+    :root:not([sizemode="fullscreen"]) &{
+        max-width:430px !important;
+    }
 }
 
-/* focused
-#statuspanel[type=overLink] #statuspanel-label,
-#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
---lwt-toolbar-field-background-color: var(—-toolbar-field-focus-background-color);
---lwt-toolbar-field-background:  var(—-toolbar-field-focus-background-color);
-} */
+:root[sizemode="fullscreen"] {
+    #tabbrowser-tabs {
+        #tabbrowser-arrowscrollbox:not([orient="vertical"]) {
+            .tabbrowser-tab:only-of-type {
+                & + #tabbrowser-arrowscrollbox-periphery, & {
+                    visibility: collapse !important;
+                }
+            }
+            min-height: 0!important;
+        }
+    }
 
-/* not-focused
-#statuspanel[type=overLink] #statuspanel-label,
-#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
-    --lwt-toolbar-field-background-color: var(--toolbar-field-background-color);
-    --lwt-toolbar-field-background: var(--lwt-toolbar-field-background-color);
-} */
+    #TabsToolbar {
+        .toolbar-items {
+            visibility: collapse !important;
+        }
 
-#statuspanel[type=overLink] #statuspanel-label,
-#statuspanel[inactive][previoustype=overLink] #statuspanel-label {
-    --lwt-toolbar-field-color: var(--toolbar-field-focus-color);
-    --lwt-toolbar-field-background-color: var(--toolbar-field-focus-background-color);
-    --lwt-toolbar-field-background: var(--toolbar-field-focus-background-color);
-
-    border: none !important;
-    color: var(--lwt-toolbar-field-color) !important;
-    font-size: 1.25em !important;
-    padding-left: 22px!important;
-    background-color: var(--lwt-toolbar-field-background)!important;
-    --left: calc(100% - 18.5px);
-    --width: 1px;
-    background-image:
-        linear-gradient(-45deg,  var(--lwt-toolbar-field-background) var(--left),       transparent var(--left)),
-        linear-gradient(-135deg, var(--lwt-toolbar-field-background) var(--left),       transparent var(--left)),
-        linear-gradient(-45deg,  var(--lwt-toolbar-field-color) calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))),
-        linear-gradient(-135deg, var(--lwt-toolbar-field-color) calc(var(--left) + var(--width)), transparent calc(var(--left) + var(--width))) !important;
-}
-
-#statuspanel #statuspanel-label {
-    border-radius: 0 !important;
-}
-
-:root[sizemode="fullscreen"] #tabbrowser-tabs .tabbrowser-tab:only-of-type,
-:root[sizemode="fullscreen"] #tabbrowser-tabs .tabbrowser-tab:only-of-type + #tabbrowser-arrowscrollbox-periphery,
-:root[sizemode="fullscreen"] #TabsToolbar,
-:root[sizemode="fullscreen"] #TabsToolbar .toolbar-items {
-    visibility: collapse !important;
-}
-:root[sizemode="fullscreen"] #tabbrowser-tabs, #tabbrowser-arrowscrollbox { min-height: 0!important; }
-:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) #alltabs-button,
-:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) #TabsToolbar-customization-target,
-:root[sizemode="fullscreen"] #TabsToolbar:not(:hover) toolbartabstop {
-    display:none !important;
+        &:not(:hover) {
+            #alltabs-button,
+            #TabsToolbar-customization-target,
+            toolbartabstop {
+                display:none !important;
+            }
+        }
+    }
 }

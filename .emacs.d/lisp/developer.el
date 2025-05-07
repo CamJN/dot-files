@@ -252,17 +252,25 @@
   (progn (setopt compile-command "cargo build")
          (eglot-ensure)))
 
-(defun python-lsp-startup ()
+(defun python-find-venv ()
   (let* (
          (proj (or (vc-find-root default-directory ".git") default-directory))
          (rel-configs (directory-files-recursively proj "pyvenv.cfg"))
          (abs-configs (mapcar #'expand-file-name rel-configs))
-         (venv-command-xref (when (consp abs-configs) (car (xref-matches-in-files "command = " abs-configs))))
+         (matches (xref-matches-in-files "command = " abs-configs))
+         (matchstrings (mapcar (lambda(s) (substring-no-properties (car (last (split-string (xref-item-summary s) " "))))) matches))
+         (lengths (mapcar (lambda(s) (length (fill-common-string-prefix default-directory s))) matchstrings))
+         (winner-index (cl-position (apply #'max lengths) lengths))
          )
-    (setq-local python-shell-virtualenv-root (if (and abs-configs (file-exists-p (car abs-configs)) venv-command-xref)
-                                           (substring-no-properties (car (last (split-string (xref-item-summary venv-command-xref) " "))))
-                                         proj
-                                         ))
+ (nth winner-index matchstrings)
+    ))
+
+(defun python-lsp-startup ()
+  (let* (
+         (proj (or (vc-find-root default-directory ".git") default-directory))
+         (venv-path (python-find-venv))
+         )
+    (setq-local python-shell-virtualenv-root (if (file-exists-p venv-path) venv-path proj))
     (eglot-ensure)
     )
   )

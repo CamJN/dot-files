@@ -347,6 +347,19 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
            pairs)
      :query :regexp nil)))
 
+;; -- spelling/language --
+
+(defun set-language (code name)
+  (let* ((dir (expand-file-name "~/.config/aspell/"))
+         (pd (concat dir code ".pws"))
+         (rd (concat dir code ".prepl")))
+    (make-directory dir t)
+    (setq ispell-personal-dictionary pd)
+    (setq ispell-extra-args (list "--repl" rd)))
+  (ispell-change-dictionary code)
+  (flyspell-buffer)
+)
+
 (provide 'defuns)
 
 ;;; defuns.el ends here

@@ -210,14 +210,13 @@
 
 ;; ------ Spelling ---------------------------------------
 
-(defun spell-gud()
-  (flyspell-mode 1)
-  )
+(defun spell-gud() (flyspell-mode 1))
 (add-hook 'markdown-ts-mode-hook #'spell-gud)
 (add-hook 'markdown-mode-hook #'spell-gud)
 (add-hook 'html-ts-mode-hook #'spell-gud)
 (add-hook 'html-mode-hook #'spell-gud)
 (add-hook 'text-mode-hook #'spell-gud)
+(add-hook 'flyspell-mode-hook (lambda () (set-language "en" "English")))
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()

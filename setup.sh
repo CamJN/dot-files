@@ -59,7 +59,7 @@ else
     git diff --quiet --exit-code || git commit -am 'tmp'
     git diff --cached --quiet --exit-code || git commit -am 'tmp'
     # ensure up to date repo by rebasing on origin
-    git pull -r --no-recurse-submodules
+    git pull --rebase --no-recurse-submodules origin master
     git submodule update --init --recursive
     popd
 fi

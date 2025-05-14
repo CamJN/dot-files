@@ -443,15 +443,15 @@ function variables() {
 }
 
 function start_under_debugger() {
-    #echo "run lldb -p $(nc -lkU aSocket.sock)" # k is for keep alive and listen for more
-
-    local dir
-    dir="$(mktemp -d)"
-    exec 3< <(nc -lU "$dir/aSocket.sock")
-    darwin-debug --unix-socket=aSocket.sock -- "$@" &
-    read -r <&3 pid
-    echo "run lldb -p $pid" &
-    rm -rf "$dir"
+    read -rp "Did you want to just use lldb? [Yn] " yn
+    case $yn in
+        [Nn]* )
+            echo 'nc -lU "lldb.sock"'
+            echo "darwin-debug --unix-socket=lldb.sock -- \"$*\""
+            echo 'lldb -p "$pid_from_nc"'
+            ;;
+        * ) lldb -- "$@";;
+    esac
 }
 
 function ssid(){

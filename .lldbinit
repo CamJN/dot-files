@@ -3,3 +3,4 @@ settings set target.x86-disassembly-flavor intel
 b malloc_error_break
 platform shell echo 'to set breakpoint on function: breakpoint set -F function_name'
 platform shell echo 'to set breakpoint on line: breakpoint set --file file.c --line 183'
+platform shell echo 'to add missing symbols: add-dsym /path/to/the.dSYM'

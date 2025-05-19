@@ -22,8 +22,6 @@
  '(completion-styles '(substring partial-completion emacs22))
  '(confirm-kill-processes nil)
  '(confirm-nonexistent-file-or-buffer nil)
- '(copilot-bin
-   (expand-file-name "~/Developer/Python/huggingface_convert/wizard-2-q4_0.llamafile"))
  '(copilot-idle-delay 1)
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))

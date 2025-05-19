@@ -262,7 +262,7 @@
          (lengths (mapcar (lambda(s) (length (fill-common-string-prefix default-directory s))) matchstrings))
          (winner-index (cl-position (apply #'max lengths) lengths))
          )
- (nth winner-index matchstrings)
+    (nth winner-index matchstrings)
     ))
 
 (defun python-lsp-startup ()
@@ -274,6 +274,38 @@
     (eglot-ensure)
     )
   )
+
+(defun yaml-lsp-startup ()
+  (let* (
+         (fa/ts-font-lock-settings
+          (treesit-font-lock-rules
+           :language 'yaml
+           :feature 'property
+           :override t
+           '(
+             (block_mapping_pair
+              key: (flow_node (plain_scalar (string_scalar) @yaml-string-face)))
+             (block_mapping_pair
+              key: (flow_node
+                    [(double_quote_scalar) (single_quote_scalar)] @yaml-string-face))
+             (flow_mapping
+              (_ key: (flow_node (plain_scalar (string_scalar) @yaml-string-face))))
+             (flow_mapping
+              (_ key:
+                 (flow_node
+                  [(double_quote_scalar) (single_quote_scalar)] @yaml-string-face)))
+             (flow_sequence
+              (_ key: (flow_node (plain_scalar (string_scalar) @yaml-string-face))))
+             (flow_sequence
+              (_ key:
+                 (flow_node
+                  [(double_quote_scalar) (single_quote_scalar)] @yaml-string-face))))
+           ))
+         (new-settings (append treesit-font-lock-settings fa/ts-font-lock-settings))
+         )
+    (setq-local treesit-font-lock-settings new-settings)
+    (eglot-ensure)
+    ))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
@@ -363,8 +395,8 @@
   (add-hook 'java-mode-hook #'eglot-ensure)
   (add-hook 'rust-ts-mode-hook #'rust-lsp-startup)
   (add-hook 'rust-mode-hook #'rust-lsp-startup)
-  (add-hook 'yaml-mode-hook #'eglot-ensure)
-  (add-hook 'yaml-ts-mode-hook #'eglot-ensure)
+  (add-hook 'yaml-mode-hook #'yaml-lsp-startup)
+  (add-hook 'yaml-ts-mode-hook #'yaml-lsp-startup)
   (add-hook 'go-ts-mode-hook #'eglot-ensure)
   (add-hook 'go-mode-hook #'eglot-ensure)
   (add-hook 'go-mod-ts-mode-hook #'eglot-ensure)

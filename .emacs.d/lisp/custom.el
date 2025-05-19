@@ -28,10 +28,7 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   '("87b3c8ef305e22d169fdb6c9bb1a6830ab57f4acb18b5e06c36bde31cc6bbd10"
-     "0bdba1ff15d205dd3feb6210e4838a697b3c32b81c0888ccfcdcc8cf7afdac8c"
-     "0e10d3217ec77493fa491be0b638e16d9015b0e0af2a9694692e4050e6d3fb1e"
-     "e3390c0c51e18f0d4f3661b5e41a758c31768d4a7fbd5b781925ebc676293e9d" default))
+   '("dc73a43b79dda955cc4d81ce46616a753ed8ed476b5804af7764654f94b6fbfe" default))
  '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
  '(delete-active-region 'kill)
  '(delete-by-moving-to-trash t)

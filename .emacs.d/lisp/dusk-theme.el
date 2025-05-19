@@ -40,21 +40,25 @@ Semantic, and Ansi-Color faces are included."
   :kind 'color-scheme
   :family 'tango)
 
+(defface yaml-string-face
+  '((t (:inherit font-lock-string-face)))
+  "Contrasting string face.")
 
 (let ((class '((class color) (min-colors 89)))
       ;; Tango palette colors.
-      (butter-1 "#af87ff") (butter-2 "#edd400") (butter-3 "#c4a000")
-      (butter-4 "#c0c000") (butter-1-old "#fce94f") (black "#000")
+      (butter-1 "#fce94f") (butter-2 "#edd400") (butter-3 "#c4a000")
+      (butter-4 "#c0c000") (plum-4 "#af87ff") (black "#000")
       (orange-1 "#fcaf3e") (orange-2 "#f57900") (orange-3 "#ce5c00")
       (choc-1 "#e9b96e") (choc-2 "#c17d11") (choc-3 "#8f5902")
-      (cham-1 "#8ae234") (cham-2 "#5fafff") (cham-3 "#4e9a06")
+      (cham-1 "#8ae234") (cham-2 "#73d216") (cham-3 "#4e9a06")
       (blue-1 "#729fcf") (blue-2 "#3465a4") (blue-3 "#204a87")
       (plum-1 "#e090d7") (plum-2 "#75507b") (plum-3 "#5c3566")
       (red-1 "#ef2929")  (red-2 "#cc0000")  (red-3 "#a40000")
-      (alum-1 "#eeeeec") (alum-2 "#e5e5e5") (alum-3 "#babdb6")
+      (alum-1 "#eeeeec") (alum-2 "#d3d7cf") (alum-3 "#babdb6")
       (alum-4 "#888a85") (alum-5 "#555753") (alum-6 "#1c1c1c")
       ;; Not in Tango palette; used for better contrast.
-      (cham-0 "#afffaf") (blue-0 "#8cc4ff") (plum-0 "#e9b2e3")
+      (cham-0 "#b4fa70") (blue-0 "#8cc4ff") (plum-0 "#e9b2e3")
+      (cham-4 "#afffaf") (blue-1.5 "#5fafff") (cyan-3 "#2e3436")
       (red-0 "#ff4b4b")  (alum-5.5 "#41423f") (alum-7 "#212526")
       (grey-3 "#222") (grey-10 "#666") (grey-20 "#121212")
       ;; Not in Tango palette; used for ANSI cyan.
@@ -91,7 +95,7 @@ Semantic, and Ansi-Color faces are included."
    `(compilation-mode-line-run  ((,class (:foreground ,orange-3))))
    `(compilation-mode-line-exit ((,class (:foreground ,cham-3))))
    ;; Escape and prompt faces
-   `(minibuffer-prompt ((,class (:foreground ,cham-0))))
+   `(minibuffer-prompt ((,class (:foreground ,cham-4))))
    `(escape-glyph ((,class (:foreground ,butter-3))))
    `(homoglyph ((,class (:foreground ,butter-3))))
    `(error ((,class (:foreground ,red-0))))
@@ -99,11 +103,12 @@ Semantic, and Ansi-Color faces are included."
    `(success ((,class (:foreground ,cham-1))))
    ;; Font lock faces
    `(font-lock-builtin-face ((,class (:foreground ,plum-1))))
-   `(font-lock-comment-face ((,class (:foreground ,cham-2))))
+   `(font-lock-comment-face ((,class (:foreground ,blue-1.5))))
    `(font-lock-constant-face ((,class (:foreground ,plum-0))))
-   `(font-lock-function-name-face ((,class (:foreground ,butter-1))))
-   `(font-lock-keyword-face ((,class (:foreground ,cham-0))))
+   `(font-lock-function-name-face ((,class (:foreground ,plum-4))))
+   `(font-lock-keyword-face ((,class (:foreground ,cham-4))))
    `(font-lock-string-face ((,class (:foreground ,choc-1))))
+   `(yaml-string-face ((,class (:foreground ,choc-3))))
    `(font-lock-type-face ((,class (:foreground ,blue-0))))
    `(font-lock-variable-name-face ((,class (:foreground ,orange-1))))
    ;; Button and link faces

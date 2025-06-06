@@ -56,6 +56,11 @@ if [ "$(uname)" = "Darwin" ]; then
         eval "$(rbenv init -)";
     fi
 
+    export SWIFTLY_HOME_DIR="$HOME/.config/swiftly"
+    export SWIFTLY_BIN_DIR="$HOME/.config/swiftly/bin"
+    export SWIFTLY_TOOLCHAINS_DIR="$HOME/Library/Developer/Toolchains"
+    source "$SWIFTLY_HOME_DIR/env.sh"
+
     export GOPATH=~/Developer/Go
     export GOROOT=/usr/local/opt/go/libexec
     export GOTOOLCHAIN=local

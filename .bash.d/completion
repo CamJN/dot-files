@@ -12,11 +12,9 @@ complete -C aws_completer aws
 
 set completion-ignore-case on
 
-# pip bash completion start
-eval $(pip3 completion --bash)
+source <(pip3 completion --bash)
 complete -o default -F _pip_completion pip
 # do not try to add 'python -m pip' style invocations
-# pip bash completion end
 
 function copy_function() {
   test -n "$(declare -f "$1")" || return
@@ -40,3 +38,4 @@ _filedir() {
     echo -n ''
 }
 source <(node --completion-bash)
+source <(rustup completions bash)

@@ -1,0 +1,4 @@
+#load_module /usr/local/opt/passenger/libexec/modules/ngx_http_passenger_module.so;
+load_module /usr/local/opt/passenger-enterprise/libexec/modules/ngx_http_passenger_module.so;
+#load_module /Users/camdennarzt/Developer/C++/passenger/buildout/nginx_dynamic/ngx_http_passenger_module.so;
+#load_module /Users/camdennarzt/Developer/C++/passenger-enterprise/buildout/nginx/objs/ngx_http_passenger_module.so;

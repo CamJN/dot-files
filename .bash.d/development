@@ -9,7 +9,7 @@ export PYTHON_HISTORY="$HOME/.history/python"
 # /Users/camdennarzt/.bun_repl_history
 export RUBY_DEBUG_HISTORY_FILE="$HOME/.history/rdbg"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
-export GIT_CEILING_DIRECTORIES=/Users
+export GIT_CEILING_DIRECTORIES=/Users:/Users/camdennarzt/Developer
 export DOCKER_SCAN_SUGGEST=false
 export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 

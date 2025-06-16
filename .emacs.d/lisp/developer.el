@@ -10,6 +10,7 @@
 (require 'eglot)
 (require 'treesit)
 (require 'treemacs)
+(require 'mm-url)
 
 ;;(require 'copilot)
 ;;(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion-by-word)
@@ -307,7 +308,28 @@
     (eglot-ensure)
     ))
 
+(defun my--eldoc-preprocess (orig-fun &rest args)
+  "Preprocess the docs to be displayed by eldoc to replace HTML escapes."
+  (let ((doc (car args)))
+    ;; The first argument is a list of (STRING :KEY VALUE ...) entries
+    ;; we replace the text in each such string
+    ;; see docstring of `eldoc-display-functions'
+    (when (listp doc)
+      (setq doc (mapcar
+                 (lambda (doc) (cons
+                           (mm-url-decode-entities-string (car doc))
+                           (cdr doc)
+                           )
+                   )
+                 doc)
+            )
+      )
+    (apply orig-fun (cons doc (cdr args)))
+    )
+  )
+
 (with-eval-after-load 'eglot
+  (advice-add 'eldoc-display-in-buffer :around #'my--eldoc-preprocess)
   (add-to-list 'eglot-server-programs
                `((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
                  .

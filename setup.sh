@@ -223,6 +223,7 @@ fi
 
 # cache sudo auth
 sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # check LaunchDaemons for changes
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
@@ -314,8 +315,6 @@ defaults write com.apple.Safari NSUserKeyEquivalents -dict "Reload Page From Ori
 
 defaults write com.apple.Terminal SecureKeyboardEntry -int 0
 #open -a Terminal ~/Developer/Bash/dot-files/Library/Application\ Support/Terminal/My\ Homebrew.terminal
-#sleep 5
-#killall Terminal
 defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
 defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
 defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"

@@ -13,7 +13,7 @@ function pipe_stds {
 }
 
 function direct_math {
-    echo "scale=4; $*" | \bc -l
+    \bc -l <<< "scale=4; $*"
 }
 
 function remac {
@@ -30,8 +30,8 @@ function forward {
 
     if [[ $2 =~ .*:[0-9]+ ]]
     then
-        server=$(echo "$2" | cut -f1 -d:)
-        remote=$(echo "$2" | cut -f2 -d:)
+        server=$(cut -f1 -d: <<< "$2")
+        remote=$(cut -f2 -d: <<< "$2")
     else
         server=$2
         remote=$3
@@ -67,7 +67,7 @@ function csudo {
 }
 
 function cscp {
-    if echo "$@" | xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- | { read -r c; [[ "${c}" =~ --\ .*:.*\ .*:.* ]]; }; then
+    if xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- <<< "$@" | { read -r c; [[ "${c}" =~ --\ .*:.*\ .*:.* ]]; }; then
         # 2 remotes, cannot use rsync, try: https://unix.stackexchange.com/questions/183504/how-to-rsync-files-between-two-remotes
         \scp -3 "$@"
     else
@@ -105,8 +105,8 @@ function cdiff {
 }
 
 function ramdrive {
-    # diskutil erasevolume HFS+ 'ramdisk' $(hdiutil attach -nomount ram://$(echo '4 * 1024 ^ 3 / 512' | bc)) 2>/dev/null
-    diskutil partitionDisk "$(hdiutil attach -nomount "ram://$(echo '4 * 1024 ^ 3 / 512' | bc)")" 1 GPTFormat APFS 'ramdisk' '100%'
+    # diskutil erasevolume HFS+ 'ramdisk' $(hdiutil attach -nomount ram://$(bc <<< '4 * 1024 ^ 3 / 512')) 2>/dev/null
+    diskutil partitionDisk "$(hdiutil attach -nomount "ram://$(bc <<< '4 * 1024 ^ 3 / 512')")" 1 GPTFormat APFS 'ramdisk' '100%'
 }
 
 function clocate {
@@ -153,7 +153,7 @@ function loveSongsForCamden {
                 mdfind kind:music album:camden | sort -nt / -k+11 | grep -E --color='never' -i "[^/]*$*[^/]*/[^/]*$" | while read -r line; do afplay "$line"; done &
                 ;;
             *)
-                echo "usage: ${0##*/} [+-vn album-number] +-N album name"
+                echo "usage: ${0##*/} [+-vn album-number] +-N album name" >&2
                 return 2
         esac
     done
@@ -209,7 +209,7 @@ function getIp {
         elif [ "$1" = "-4" ]; then
             getIpv4
         else
-            echo "Usage: getIp [-4] [-6]"
+            echo "Usage: getIp [-4] [-6]" >&2
         fi
     else
         getIpv4
@@ -317,8 +317,8 @@ function checkIsDebian {
     checkIsDistro debian "$1"
 }
 
-function checkIsCentOS {
-    checkIsDistro centos "$1"
+function checkIsRocky {
+    checkIsDistro rockylinux/rockylinux "$1"
 }
 
 function checkIsFedora {
@@ -326,54 +326,67 @@ function checkIsFedora {
 }
 
 function checkIsRHEL {
-    checkIsDistro "registry.access.redhat.com/$1/${1%%[0-9]*[0-9]}" latest || checkIsDistro "registry.access.redhat.com/${1/rhel/ubi}/ubi" latest
+    checkIsDistro "registry.redhat.io/${1/rhel/ubi}/ubi" || checkIsDistro "registry.access.redhat.com/${1/rhel/ubi}/ubi" latest || checkIsDistro "registry.access.redhat.com/$1/${1%%[0-9]*[0-9]}" latest
 }
 
 # shellcheck disable=SC2034
 function makeRHELArgs {
-    local RHEL_ID=nkxqcwvnljffnae3ewas2s3afq
-    # shellcheck disable=SC2155
-    local RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
-    # shellcheck disable=SC2155
-    local RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
-    local c1="subscription-manager register --username '$RHEL_USERNAME' --password '$RHEL_PASSWORD' --auto-attach"
-    # shellcheck disable=SC2016
-    local c2='yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(< /etc/redhat-release tr -dc "0-9." | cut -d \. -f1).noarch.rpm'
-    local c3="yum-config-manager --enable epel"
+    local c1='subscription-manager register --username "$RHEL_USERNAME" --password "$RHEL_PASSWORD" --auto-attach'
+    local c2='dnf install epel-release'
     local -n largs=$1
-    largs=("$c1" '&&' "$c2" '&&' "$c3")
+    largs=("$c1" '&&' "$c2")
 }
 
 function cdocker {
     local IMAGE
-    local args=('-l')
-    if [[ "$1" == *:* ]]; then
+    local args=()
+    if [[ "$1" == rocky:* ]] || [[ "$1" == rockylinux:* ]]; then
+        IMAGE="rockylinux/rockylinux:${1#*:}"
+    elif [[ "$1" == *:* ]]; then
         IMAGE="$1"
     elif checkIsUbuntu "$1"; then
         IMAGE="ubuntu:$1"
     elif checkIsDebian "$1"; then
         IMAGE="debian:$1"
-    elif checkIsCentOS "$1"; then
-        IMAGE="centos:$1"
-    elif checkIsCentOS "${1/el/centos}"; then
-        IMAGE="centos:${1/el/centos}"
+    elif checkIsRocky "$1"; then
+        IMAGE="rockylinux/rockylinux:$1"
+    elif checkIsRocky "${1#el}"; then
+        IMAGE="rockylinux/rockylinux:${1#el}"
     elif checkIsFedora "$1"; then
         IMAGE="fedora:$1"
     elif checkIsRHEL "$1"; then
         local version=${1##[a-z]*[a-z]}
         if [[ ${version:-8} -ge 8 ]]; then
-            IMAGE="registry.access.redhat.com/ubi${version}/ubi"
+            IMAGE="registry.redhat.io/ubi${version}/ubi"
+            # OLD_REGISTRY="registry.access.redhat.com/ubi${version}/ubi"
         else
             IMAGE="registry.access.redhat.com/rhel${version}/rhel"
         fi
 
         makeRHELArgs args
+        local RHEL_ID=ppwb5hgbzvd4lcvfeo5ga3jgoq
+        if ! op whoami 2>/dev/null; then
+            source <(op signin)
+        fi
+        # shellcheck disable=SC2155
+        export RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
+        # shellcheck disable=SC2155
+        export RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
+        local envs=('-e' 'RHEL_USERNAME' '-e' 'RHEL_PASSWORD')
     else
-        echo "Couldn't find proper distro for $1"
+        echo "Couldn't find proper distro for $1" >&2
         return 1
     fi
 
-    docker run -it -v "$PWD:/pwd" --security-opt seccomp=unconfined "$IMAGE" bash --init-file <(echo "${args[*]}")
+    # docker -H ssh://eve.local run ... <- note -H must be before run
+
+    if [ "$(uname -m)" = 'x86_64' ]; then
+        local arch=amd64
+    else
+        local arch=arm64
+    fi
+
+    docker run --platform="linux/$arch" -it -v "$PWD:/pwd" -e "BASH_INIT_CMDS=${args[*]}" "${envs[@]}" --security-opt seccomp=unconfined "$IMAGE" bash --login --init-file '<(echo "$BASH_INIT_CMDS")'
 }
 
 function postgresql-upgrade-database {
@@ -444,6 +457,7 @@ function variables() {
 
 function start_under_debugger() {
     read -rp "Did you want to just use lldb? [Yn] " yn
+    # shellcheck disable=SC2016
     case $yn in
         [Nn]* )
             echo 'nc -lU "lldb.sock"'
@@ -502,4 +516,43 @@ function czip() {
         list) echo aa list -input_file "${file}" "$@" ;;
         extract) echo aa extract -input_file "${file}" -dir "$dir" ;;
     esac
+}
+
+function volume() {
+    if [ $# -ne 1 ]; then
+        echo "Valid arguments are: 0-100, mute, unmute" >&2
+        exit 1
+    fi
+
+    local volume="$1"
+    local -l muted
+    muted=$(osascript -e 'get output muted of (get volume settings)')
+    local -i oldVolume
+    oldVolume=$(osascript -e 'get output volume of (get volume settings)')
+
+    if [ "$volume" = "mute" ] && [ "$muted" == 'false' ]; then
+        osascript -e "set volume output muted true"
+    elif [ "$volume" = "mute" ]; then
+        read -rp "Already muted, did you want to unmute? [yn] " yn
+        case $yn in
+            [Yy]* ) osascript -e "set volume output muted false";;
+        esac
+    elif [ "$volume" = "unmute" ]; then
+        osascript -e "set volume output muted false"
+    elif [ "$volume" -eq "$oldVolume" ]; then
+        read -rp "Volume already set to $volume, did you want to unmute? [yn] " yn
+        case $yn in
+            [Yy]* ) osascript -e "set volume output muted false";;
+        esac
+    elif [ "$volume" -ge 0 ] && [ "$volume" -le 100 ]; then
+        if [ "$muted" = 'true' ]; then  osascript -e "set volume output muted false"; fi
+        osascript -e "set volume output volume $volume"
+    else
+        echo "Valid arguments are: 0-100, mute, unmute" >&2
+        exit 1
+    fi
+}
+
+function heic2jpeg(){
+    sips -s format jpeg --out "${1%.*}.jpg" "$1"
 }

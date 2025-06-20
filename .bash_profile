@@ -39,7 +39,7 @@ export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 export SUDO_EDITOR=mg
 # export GPG_TTY=$(tty) # for if the Curses based Pinentry does not work
 
-stty -ixon
+stty -ixon -ixoff # disable ^S and ^Q shortcuts, I never want them
 
 #options (-s set, -u unset)
 shopt -s nullglob

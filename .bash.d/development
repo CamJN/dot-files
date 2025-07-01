@@ -9,16 +9,19 @@ export PYTHON_HISTORY="$HOME/.history/python"
 # /Users/camdennarzt/.bun_repl_history
 export RUBY_DEBUG_HISTORY_FILE="$HOME/.history/rdbg"
 export SQLITE_HISTORY="$HOME/.history/sqlite"
-export GIT_CEILING_DIRECTORIES=/Users:/Users/camdennarzt/Developer
 export DOCKER_SCAN_SUGGEST=false
 export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 
 if [ "$(uname)" = "Darwin" ]; then
-    # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
     export SDKROOT
+    # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
+    export CPATH="$HOMEBREW_PREFIX/include"
     #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
-
+    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib"
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    # export DYLD_LIBRARY_PATH=$LIBRARY_PATH
+    export GIT_CEILING_DIRECTORIES=/Users:/Users/camdennarzt/Developer
     #export CDPATH="$HOME/Developer"
 
     eval "$(brew shellenv)"
@@ -39,13 +42,6 @@ if [ "$(uname)" = "Darwin" ]; then
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
 
-    # export SWIFT_FLAGS="--disable-xctest" # does nothing
-
-    export CPATH="$HOMEBREW_PREFIX/include"
-    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib"
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
-    # export DYLD_LIBRARY_PATH=$LIBRARY_PATH
-
     set -a
     # shellcheck disable=SC1090
     source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
@@ -58,11 +54,19 @@ if [ "$(uname)" = "Darwin" ]; then
         source <(rbenv init -)
     fi
 
-    function enable_swiftly {
+    function activate_swiftly {
         export SWIFTLY_HOME_DIR="$HOME/.config/swiftly"
         export SWIFTLY_BIN_DIR="$HOME/.config/swiftly/bin"
         export SWIFTLY_TOOLCHAINS_DIR="$HOME/Library/Developer/Toolchains"
+        # shellcheck source=../../../../.config/swiftly/env.sh
         source "$SWIFTLY_HOME_DIR/env.sh"
+    }
+    # export SWIFT_FLAGS="--disable-xctest" # does nothing
+
+    function activate_python {
+        local PYVENV_PATH
+        PYVENV_PATH=$(git ls-files --others --ignored --exclude-standard | rg 'pyvenv.cfg' | head -1 | xargs dirname)
+        source "$PYVENV_PATH/bin/activate"
     }
 
     export PIP_DISABLE_PIP_VERSION_CHECK=1
@@ -80,4 +84,12 @@ if [ "$(uname)" = "Darwin" ]; then
 
     # supplementary .pc files
     export PKG_CONFIG_PATH=/usr/lib/pkgconfig
+
+    function enrol_dev_beta {
+        local ver
+        ver=$(sw_vers -ProductVersion | cut -d. -f1)
+        # Catalog URLs look like this:
+        # https://swscan.apple.com/content/catalogs/others/index-26seed-26-15-14-13-12-10.16-10.15-10.14-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz
+        sudo softwareupdate --set-catalog "https://swscan.apple.com/content/catalogs/others/index-${ver}seed-$(seq -s - "$ver" 26)$(seq -s - 15 12)$(seq 16 9 | xargs printf '10.%d-')mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz"
+    }
 fi

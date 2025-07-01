@@ -1,5 +1,6 @@
 # no shebang
 
+alias aws="docker run -v ~/.aws:/root/.aws amazon/aws-cli:latest"
 alias battery="pmset -g batt | egrep -o '[0-9]+%' --color=never"
 alias bc='direct_math'
 alias bell='tput bel'

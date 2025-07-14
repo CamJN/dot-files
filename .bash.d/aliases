@@ -67,6 +67,7 @@ alias realpath='readlink -f'
 alias reboot='launchctl reboot userspace'
 alias restart-gpg-agent=gpg-restart-agent
 alias check-gpg-agent=gpg-check
+alias s_client='openssl s_client'
 alias scan='airport -s'
 alias screen='screen -a'
 alias screensaver='ScreenSaverEngine 2>/dev/null'

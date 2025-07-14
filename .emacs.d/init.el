@@ -138,6 +138,7 @@
 
 ;;----------Opening Stuff----------------------------------------
 (add-to-list 'completion-ignored-extensions ".elc")
+(add-to-list 'completion-ignored-extensions ".pyc")
 (add-to-list 'completion-ignored-extensions ".DS_Store")
 
 (add-to-list 'auto-mode-alist '("Jenkinsfile" . groovy-mode))
@@ -175,6 +176,7 @@
 (when (functionp 'html-ts-mode) (add-to-list 'auto-mode-alist '("\\.html?\\'" . html-ts-mode)))
 (add-to-list 'auto-mode-alist '("\\.\\(ba\\)?sh\\(rc\\)?\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.bash\\.d/" . bash-ts-mode))
+(add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)cmd/brew-" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.\\(bash_\\(profile\\|history\\|log\\(in\\|out\\)\\)\\|log\\(in\\|out\\)\\)\\'" . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))

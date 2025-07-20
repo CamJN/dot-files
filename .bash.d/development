@@ -84,12 +84,4 @@ if [ "$(uname)" = "Darwin" ]; then
 
     # supplementary .pc files
     export PKG_CONFIG_PATH=/usr/lib/pkgconfig
-
-    function enrol_dev_beta {
-        local ver
-        ver=$(sw_vers -ProductVersion | cut -d. -f1)
-        # Catalog URLs look like this:
-        # https://swscan.apple.com/content/catalogs/others/index-26seed-26-15-14-13-12-10.16-10.15-10.14-10.13-10.12-10.11-10.10-10.9-mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz
-        sudo softwareupdate --set-catalog "https://swscan.apple.com/content/catalogs/others/index-${ver}seed-$(seq -s - "$ver" 26)$(seq -s - 15 12)$(seq 16 9 | xargs printf '10.%d-')mountainlion-lion-snowleopard-leopard.merged-1.sucatalog.gz"
-    }
 fi

@@ -1,0 +1,13 @@
+# no shebang
+
+# disable ^S and ^Q shortcuts, I never want them
+stty -ixon -ixoff
+
+#options (-s set, -u unset)
+shopt -s nullglob
+shopt -s extglob
+shopt -s xpg_echo
+shopt -s globstar
+shopt -s nocaseglob
+shopt -s nocasematch
+shopt -s direxpand

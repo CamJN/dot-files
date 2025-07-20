@@ -10,45 +10,17 @@ if [ "$TERM" = "dumb" ]; then
     return 0
 fi
 
-#environment variables
-export DO_NOT_TRACK=1
-export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
-export DOCKER_SOCK="unix://$HOME/.colima/default/docker.sock"
-export DOCKER_HOST="$DOCKER_SOCK"
-export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
-export CLICOLOR=1
-export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
-export GREP_OPTIONS='--binary-files=without-match --color=auto --line-buffered --exclude=*.xhprof'
-export RSYNC_RSH="ssh -oRequestTTY=no -oRemoteCommand=none"
-export PAGER="less -R"
-export BAT_PAGER="less -R"
-export MORE='-R -i'
-export LESS="$MORE"
-export GZIP="-9"
-export PIGZ="$GZIP"
-export GZIP_OPT="$GZIP"
-export XZ_OPT="$GZIP"
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;37m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;36m'
-export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
-export SUDO_EDITOR=mg
-# export GPG_TTY=$(tty) # for if the Curses based Pinentry does not work
+#env
+if [ -f ~/.bash.d/env ]; then
+# shellcheck source=./.bash.d/env
+    . ~/.bash.d/env
+fi
 
-stty -ixon -ixoff # disable ^S and ^Q shortcuts, I never want them
-
-#options (-s set, -u unset)
-shopt -s nullglob
-shopt -s extglob
-shopt -s xpg_echo
-shopt -s globstar
-shopt -s nocaseglob
-shopt -s nocasematch
-shopt -s direxpand
+#options
+if [ -f ~/.bash.d/options ]; then
+# shellcheck source=./.bash.d/options
+    . ~/.bash.d/options
+fi
 
 #paths
 if [ -f ~/.bash.d/paths ]; then

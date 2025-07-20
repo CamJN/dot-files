@@ -181,30 +181,31 @@
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'" . dockerfile-ts-mode))
 
-(setq auto-mode-interpreter-regexp (concat
-                                    "^"
-                                    "#![ \t]*"
-                                    ;; Optional group 1: env(1) invocation.
-                                    "\\("
-                                    "[^ \t\n]*/bin/env[ \t]*"
-                                    ;; Within group 1: possible environment adjustments.
-                                    "\\(?:"
-                                    ;; -S/--split-string
-                                    "\\(?:-[0a-z]*S[ \t]*\\|--split-string=\\)"
-                                    ;; More env arguments.
-                                    "\\(?:-[^ \t\n]+[ \t]+\\)*"
-                                    ;; Interpreter environment modifications.
-                                    "\\(?:[^ \t\n]+=[^ \t\n]*[ \t]+\\)*"
-                                    ;; macOS env path flag
-                                    "\\(?:-P[ \t]*[^ \t\n]+[ \t]+\\)?"
-                                    ;; end of env adjustments
-                                    "\\)?"
-                                    ;; end of group 1
-                                    "\\)?"
-                                    ;; Group 2: interpreter.
-                                    "\\([^ \t\n]+\\)"
-                                    "$"
-                                    ))
+(setq auto-mode-interpreter-regexp
+      (concat
+       "^"
+       "#![ \t]*"
+       ;; Optional group 1: env(1) invocation.
+       "\\("
+       "[^ \t\n]*/bin/env[ \t]*"
+       ;; Within group 1: possible environment adjustments.
+       "\\(?:"
+       ;; -S/--split-string
+       "\\(?:-[0a-z]*S[ \t]*\\|--split-string=\\)"
+       ;; More env arguments.
+       "\\(?:-[^ \t\n]+[ \t]+\\)*"
+       ;; Interpreter environment modifications.
+       "\\(?:[^ \t\n]+=[^ \t\n]*[ \t]+\\)*"
+       ;; macOS env path flag
+       "\\(?:-P[ \t]*[^ \t\n]+[ \t]+\\)?"
+       ;; end of env adjustments
+       "\\)?"
+       ;; end of group 1
+       "\\)?"
+       ;; Group 2: interpreter.
+       "\\([^ \t\n]+\\)"
+       "$"
+       ))
 
 (unless (display-images-p)
   (setq auto-mode-alist (delq (assoc "\\.svgz?\\'" auto-mode-alist) auto-mode-alist))

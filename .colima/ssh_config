@@ -6,11 +6,11 @@ Host colima
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
   NoHostAuthenticationForLocalhost yes
-  GSSAPIAuthentication no
   PreferredAuthentications publickey
   Compression no
   BatchMode yes
   IdentitiesOnly yes
+  GSSAPIAuthentication no
   Ciphers "^aes128-gcm@openssh.com,aes256-gcm@openssh.com"
   User camdennarzt
   ControlMaster auto

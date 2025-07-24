@@ -3,7 +3,6 @@
 # shellcheck disable=SC2155
 export EMACS_SOCKET_NAME="${TMPDIR}emacs$(id -u)/server"
 export EDITOR="/usr/local/bin/emacsclient --tty"
-export GIT_EDITOR="$EDITOR"
 
 alias emacs-save="emacsclient --eval '(save-some-buffers t)' >/dev/null"
 alias emacs-kill="emacsclient --eval '(kill-emacs)' >/dev/null"
@@ -15,22 +14,13 @@ function emacs {
     if [ $# -eq 0 ]; then
         $EDITOR
     else
-        local files=("$@") # rename list for better syntax
-        files=("${files[@]//\"/\\&}") # escape internal quotes
-        files=("${files[@]/%/&\"}") # trailing quote
-        files=("${files[@]/#/&\"}") # leading quote
-        $EDITOR --eval "(mapc #'(lambda (file) (find-file-noselect file t)) '(${files[*]}))" -e "(find-file ${files[0]})"
-        # when emacs >= 30 use the following instead:
-        #$EDITOR --eval "(let ((file (car server-eval-args-left)))(mapc #'find-file-noselect server-eval-args-left)(setq server-eval-args-left nil)(find-file file))" -- "$@"
+        $EDITOR --eval "(let ((file (car server-eval-args-left)))(mapc #'find-file-noselect server-eval-args-left)(setq server-eval-args-left nil)(find-file file))" -- "$@"
     fi
 }
 
 function emacs-give {
-    local files=("$@") # rename list for better syntax
-    files=("${files[@]//\"/\\&}") # escape internal quotes
-    files=("${files[@]/%/&\"}") # trailing quote
-    files=("${files[@]/#/&\"}") # leading quote
-    emacsclient --eval "(mapc #'(lambda (file) (find-file-noselect file t)) '(${files[*]}))" >/dev/null
-    # when emacs >= 30 use the following instead:
-    # emacsclient --eval "(mapc #'find-file-noselect server-eval-args-left)" --eval "(setq server-eval-args-left nil)" -- "$@" >/dev/null
+    if [ $# -eq 0 ]; then
+        return 0
+    fi
+    emacsclient --eval "(mapc #'find-file-noselect server-eval-args-left)" --eval "(setq server-eval-args-left nil)" -- "$@" >/dev/null
 }

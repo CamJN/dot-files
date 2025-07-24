@@ -10,6 +10,13 @@ if [ "$TERM" = "dumb" ]; then
     return 0
 fi
 
+# if false; then
+#     PS4='+ $EPOCHREALTIME\011 '
+#     exec 5> $HOME/bash.profile
+#     BASH_XTRACEFD=5
+#     set -x
+# fi
+
 #env
 if [ -f ~/.bash.d/env ]; then
 # shellcheck source=./.bash.d/env
@@ -52,16 +59,16 @@ if [ -f ~/.bash.d/completion ]; then
     . ~/.bash.d/completion
 fi
 
-#development
-if [ -f ~/.bash.d/development ]; then
-# shellcheck source=./.bash.d/development
-    . ~/.bash.d/development
-fi
-
 #emacs
 if [ -f ~/.bash.d/emacs ]; then
 # shellcheck source=./.bash.d/emacs
     . ~/.bash.d/emacs
+fi
+
+#development
+if [ -f ~/.bash.d/development ]; then
+# shellcheck source=./.bash.d/development
+    . ~/.bash.d/development
 fi
 
 #history
@@ -73,3 +80,7 @@ fi
 if [ "Darwin" = "$(uname)" ] && command -v neowofetch >/dev/null; then
     neowofetch
 fi
+
+# if false; then
+#     set +x
+# fi

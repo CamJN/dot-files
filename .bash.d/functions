@@ -331,6 +331,7 @@ function checkIsRHEL {
 
 # shellcheck disable=SC2034
 function makeRHELArgs {
+    # shellcheck disable=SC2016
     local c1='subscription-manager register --username "$RHEL_USERNAME" --password "$RHEL_PASSWORD" --auto-attach'
     local c2='dnf install epel-release'
     local -n largs=$1
@@ -366,6 +367,7 @@ function cdocker {
         makeRHELArgs args
         local RHEL_ID=ppwb5hgbzvd4lcvfeo5ga3jgoq
         if ! op whoami 2>/dev/null; then
+            # shellcheck disable=SC1090
             source <(op signin)
         fi
         # shellcheck disable=SC2155
@@ -401,7 +403,7 @@ function postgresql-upgrade-database {
         local V1=postgresql@$2
         local V2=postgresql@$1
     fi
-    "$(brew --prefix "$V2")/bin/pg_upgrade" -b "$(brew --prefix "$V1")/bin" -d "$(brew --prefix)/var/$V1" -D "$(brew --prefix )/var/$V2"
+    "$(brew --prefix "$V2")/bin/pg_upgrade" -b "$(brew --prefix "$V1")/bin" -d "${HOMEBREW_PREFIX}/var/${V1}" -D "${HOMEBREW_PREFIX}/var/${V2}"
 }
 
 function vergte() {

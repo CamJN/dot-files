@@ -11,3 +11,4 @@ shopt -s globstar
 shopt -s nocaseglob
 shopt -s nocasematch
 shopt -s direxpand
+shopt -s checkwinsize

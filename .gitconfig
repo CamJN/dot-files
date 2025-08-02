@@ -57,6 +57,7 @@
 [apply]
 	whitespace = fix
 [alias]
+	delete-untracked = clean -dXf
 	root = rev-parse --show-toplevel
 	amend = commit --amend
 	ammend = commit --amend

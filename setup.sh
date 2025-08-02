@@ -21,6 +21,10 @@ set -xeuo pipefail
 # set up firefox w/ userChrome.css & profile & addons
 # install sketch & license
 # install vmware fusion
+function fail() {
+    echo "$*" >&2
+    exit 1
+}
 
 # wrap in a function to prevent partial execution if download fails
 function main() {
@@ -28,8 +32,7 @@ function main() {
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
 if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
-    echo "Disk isn't case-sensitive, fix that before doing a bunch of work." >&2
-    exit 1
+    fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
 fi
 
 # Make a snapshot before making any changes
@@ -196,8 +199,7 @@ elif [ "$(uname -m)" = "arm64" ]; then
     NON_NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
     REMOTE="walle"
 else
-    echo "Unknown architecture: $(uname -m) please update docker-buildx section of script." >&2
-    exit 1
+    fail "Unknown architecture: $(uname -m) please update docker-buildx section of script."
 fi
 if ! docker buildx ls | grep -Fwe native_arch >/dev/null; then
     docker buildx create \
@@ -245,8 +247,7 @@ sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
 sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
 # ensure rbenv installed and all current c-rubies
 if ! which -s rbenv; then
-    echo "rbenv wasn't installed; is homebrew broken?" >&2
-    exit 1
+    fail "rbenv wasn't installed; is homebrew broken?"
 else
     declare RUBY_CONFIGURE_OPTS
     RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"

@@ -108,7 +108,14 @@ if [ -z "${SKIP_BUNDLE-}" ]; then
 fi
 
 # make my tap have one location on disk
-declare TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
+declare TAP_PATH
+if [ "$(uname -m)" = "x86_64" ]; then
+    TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
+elif [ "$(uname -m)" = "arm64" ]; then
+    TAP_PATH="${HOMEBREW_PREFIX}/Library/Taps/camjn/homebrew-fixed"
+else
+    fail "Unknown architecture: $(uname -m) please update homebrew taps section of script."
+fi
 if ! [ -L "$TAP_PATH" ]; then
     rm -rf "$TAP_PATH"
     ln -sf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"

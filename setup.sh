@@ -87,7 +87,7 @@ fi
 
 # Ensure brew installed
 if ! which -s brew ; then
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    NONINTERACTIVE=true bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 HOMEBREW_PREFIX="$(brew --prefix)"
 export HOMEBREW_PREFIX

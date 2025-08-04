@@ -97,15 +97,11 @@ export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
 if [ -z "${SKIP_BUNDLE-}" ]; then
-    # ensure gpg available
-    if ! [ -d "$HOME/.gnupg" ]; then
-        fail "gpg directory not found, please provide it at $HOME/.gnupg"
+    if [ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]; then
+        fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
     fi
-    # source secrets
-    if ! [ -f "$HOME/.bash.d/secrets.gpg" ]; then
-        fail "Secrets file not found, please provide it at $HOME/.bash.d/secrets.gpg"
-    else
-        source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
+    if ! [ -d "$HOME/.passenger-enterprise-download-token" ]; then
+        fail "$HOME/.passenger-enterprise-download-token is required to continue."
     fi
     # install all homebrew packages in Brewfile
     brew bundle check || brew bundle install --verbose

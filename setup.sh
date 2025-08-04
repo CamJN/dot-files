@@ -100,7 +100,7 @@ if [ -z "${SKIP_BUNDLE-}" ]; then
     if [ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]; then
         fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
     fi
-    if ! [ -d "$HOME/.passenger-enterprise-download-token" ]; then
+    if ! [ -f "$HOME/.passenger-enterprise-download-token" ]; then
         fail "$HOME/.passenger-enterprise-download-token is required to continue."
     fi
     # install all homebrew packages in Brewfile

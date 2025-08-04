@@ -208,7 +208,7 @@ mkdir -p ~/Library/KeyBindings/
 ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
 # ensure colima running
-if ! colima status 2>&1 | grep -Fe 'colima is running' >/dev/null; then
+if [ "colima" != "$(colima status --json | jq -r .display_name)" ]; then
     colima start
 fi
 
@@ -224,11 +224,13 @@ if [ "$(uname -m)" = "x86_64" ]; then
 elif [ "$(uname -m)" = "arm64" ]; then
     NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
     NON_NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
-    REMOTE="walle"
+    REMOTE="wall-a"
 else
     fail "Unknown architecture: $(uname -m) please update docker-buildx section of script."
 fi
-if ! docker buildx ls | grep -Fwe native_arch >/dev/null; then
+declare builders
+builders=$(docker buildx ls)
+if ! grep -Fwe native_arch >/dev/null <<< "$builders"; then
     docker buildx create \
            --name local_remote_builder \
            --node native_arch \
@@ -237,7 +239,7 @@ if ! docker buildx ls | grep -Fwe native_arch >/dev/null; then
            --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
            --driver-opt default-load=true
 fi
-if ! docker buildx ls | grep -Fwe non_native_arch >/dev/null; then
+if ! grep -Fwe non_native_arch >/dev/null <<< "$builders"; then
     docker buildx create \
            --name local_remote_builder \
            --append \

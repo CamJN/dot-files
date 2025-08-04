@@ -43,3 +43,4 @@ node_modules
 passenger.*.log
 passenger.*.pid
 passenger.*.pid.lock
+.docker/cli-plugins

@@ -8,14 +8,15 @@ set -xeuo pipefail
 
 # pre-reqs:
 # make fs case sensitive
-# login app store
+# login to app store
 # copy over secrets file
-# copy over gpg key
+# copy over gpg keys
 # copy over ssh keys
 
 # post-reqs:
 # configure VPN
 # set up 1password cli
+# set global rbenv version
 # set up firefox w/ userChrome.css & profile & addons
 # install sketch & license
 # login to tower & git accounts
@@ -314,7 +315,7 @@ networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN'
 
 # ensure google-authenticator setup for account
 if [ ! -e "$HOME/.google_authenticator" ]; then
-    google-authenticator --no-confirm --time-based --disallow-reuse --force --secret=~/.google_authenticator --qr-mode=ansi
+    google-authenticator --no-confirm --time-based --disallow-reuse --force --secret="$HOME/.google_authenticator" --qr-mode=ansi
     sed -Ee 's/^[^#].*pam_google_authenticator.so$/#&/g' -e "s|^#(.*$HOMEBREW_PREFIX/lib/security/pam_google_authenticator.so)$|\1|" -i '' ./etc/pam.d/sshd
 fi
 

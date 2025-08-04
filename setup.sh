@@ -201,7 +201,7 @@ function getLaunchdPlist() {
 find ~/Developer/Bash/dot-files/usr/local/var -type f -exec sh -c 'ln -shf $0 "'"$HOMEBREW_PREFIX"'"`dirname $0 | sed -e "s|'"$HOME/Developer/Bash/dot-files/usr/local"'||g"`/' {} \;
 
 # ensure LaunchAgents path exists
-mkdir ~/Library/LaunchAgents
+mkdir -p ~/Library/LaunchAgents
 # check LaunchAgents for changes
 getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
 # symlink LaunchAgents

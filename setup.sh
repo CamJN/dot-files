@@ -166,14 +166,13 @@ brew list --formulae -1 | grep -Fe docker- | xargs brew --prefix | xargs -J {} l
 
 # symlink homebrew's etc config files
 for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
-    if [ "${file##*/}" = "openssl" ]; then
-        ln -shFf "openssl@3" "$HOMEBREW_PREFIX/etc/openssl"
-        ln -shFf "$file/openssl.cnf" "$HOMEBREW_PREFIX/etc/openssl/openssl.cnf"
-    elif [ "${file##*/}" = "nginx" ]; then
+    if [ "${file##*/}" = "nginx" ]; then
         ln -shFf "$file/nginx.conf" "$HOMEBREW_PREFIX/etc/nginx/nginx.conf"
         ln -shFf "$file/modules" "$HOMEBREW_PREFIX/etc/nginx/modules"
     else
-        ln -shFf "$file" "$HOMEBREW_PREFIX/etc/${file##*/}"
+        DIR="$HOMEBREW_PREFIX/etc/${file##*/}"
+        find "$DIR" -type d -empty -print -delete
+        ln -shFf "$file" "$DIR"
     fi
 done
 

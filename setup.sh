@@ -7,20 +7,29 @@
 set -xeuo pipefail
 
 # pre-reqs:
+# make fs case sensitive
 # login app store
-# copy over secrets file?
+# copy over secrets file
 # copy over gpg key
-# copy over ssh keys?
+# copy over ssh keys
 
 # post-reqs:
-# login icloud
-# create VPN: install via profile file? how to provide password?
-# set up 1password & cli
-# set up mail, messages, other apple apps
-# set up slack & front PWAs in safari
+# configure VPN
+# set up 1password cli
 # set up firefox w/ userChrome.css & profile & addons
 # install sketch & license
-# install vmware fusion
+# login to tower & git accounts
+# make TLS CA & import to keychain
+# setup TimeMachine over smb
+# make code signing root cert
+# login to things that store creds in keychain:
+# - docker: redhat, ghcr, docker
+# - gnupg agent
+# - ssh agent
+# - gh auth
+# - git-osxkeychain
+# - mvn master password
+
 function fail() {
     echo "$*" >&2
     exit 1
@@ -33,6 +42,10 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin
 
 if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
     fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
+fi
+
+if ! [ -d "$HOME/.ssh" ]; then
+    fail "ssh directory not found, please provide it at $HOME/.ssh"
 fi
 
 # Make a snapshot before making any changes
@@ -48,8 +61,13 @@ if [ ! -e /Library/Developer/CommandLineTools ]; then
 fi
 
 # Ensure Bash dir exists in Developer dir
-if [ ! -e ~/Developer/Bash ]; then
+if [ ! -d ~/Developer/Bash ]; then
     mkdir -p ~/Developer/Bash
+fi
+
+# Ensure Sites dir exists in home dir
+if [ ! -d ~/Sites ]; then
+    mkdir -p ~/Sites
 fi
 
 export GIT_CEILING_DIRECTORIES=/Users
@@ -79,14 +97,23 @@ export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
 comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
 if [ -z "${SKIP_BUNDLE-}" ]; then
+    # ensure gpg available
+    if ! [ -d "$HOME/.gnupg" ]; then
+        fail "gpg directory not found, please provide it at $HOME/.gnupg"
+    fi
+    # source secrets
+    if ! [ -f "$HOME/.bash.d/secrets.gpg" ]; then
+        fail "Secrets file not found, please provide it at $HOME/.bash.d/secrets.gpg"
+    else
+        source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
+    fi
     # install all homebrew packages in Brewfile
-    # might require secrets file to be sourced...
     brew bundle check || brew bundle install --verbose
 fi
 
 # make my tap have one location on disk
 declare TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
-if ! test -L "$TAP_PATH"; then
+if ! [ -L "$TAP_PATH" ]; then
     rm -rf "$TAP_PATH"
     ln -sf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
 fi
@@ -381,7 +408,11 @@ if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.
     spctl developer-mode enable-terminal
 fi
 
-sudo apachectl -t && sudo apachectl restart
+if (security find-identity -v -p codesigning | rg '0 valid identities found'); then
+    fail "No code-signing authority found, apache cannot load 3rd party modules."
+else
+    sudo apachectl -t && sudo apachectl restart
+fi
 
 # Last, causes restart
 sudo softwareupdate --install --all --restart --agree-to-license

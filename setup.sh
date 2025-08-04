@@ -55,7 +55,7 @@ tmutil localsnapshot
 if [ ! -e /Library/Developer/CommandLineTools ]; then
     touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
     declare LABEL
-    LABEL="$(softwareupdate -l | grep -Ee "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $2}' | sort -Vr | head -1 | tr -d '\n')"
+    LABEL="$(softwareupdate -l | grep -Ee "(Label:|\*) Command Line (Developer|Tools)" | awk -F"[:\*] " '{print $NF}' | sort -Vr | head -1 | tr -d '\n')"
     softwareupdate --no-scan -i "$LABEL" --verbose
     rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 fi

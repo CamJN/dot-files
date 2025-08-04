@@ -97,8 +97,7 @@
 # 	required = true
 # 	process = git-lfs filter-process
 [gpg]
-	program = /usr/local/bin/gpg
-# if broken try to replace with script containing: exec gpg --no-tty "$@"
+	#program = # if broken try to set to a script that finds gpg
 [commit]
 	verbose = true
 	gpgsign = true

@@ -171,7 +171,7 @@ for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
         ln -shFf "$file/modules" "$HOMEBREW_PREFIX/etc/nginx/modules"
     else
         DIR="$HOMEBREW_PREFIX/etc/${file##*/}"
-        find "$DIR" -type d -empty -print -delete
+        find "$DIR" -empty -print -delete
         ln -shFf "$file" "$DIR"
     fi
 done

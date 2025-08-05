@@ -344,13 +344,6 @@ defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
 defaults write com.apple.AdLib allowIdentifierForAdvertising -int 0
 defaults write com.apple.AdLib personalizedAdsMigrated -int 0
 
-defaults write com.apple.Safari IncludeDevelopMenu -int 1
-defaults write com.apple.Safari AutoOpenSafeDownloads -int 0
-defaults write com.apple.Safari MobileDeviceRemoteXPCEnabled -int 1
-defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -int 1
-# shellcheck disable=SC2016
-defaults write com.apple.Safari NSUserKeyEquivalents -dict "Reload Page From Origin" '@$r' "Show JavaScript Console" "@~k"
-
 defaults write com.apple.Terminal SecureKeyboardEntry -int 0
 defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
 defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
@@ -377,12 +370,7 @@ defaults write com.apple.TextEdit SmartLinks -int 1
 defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
 defaults write com.apple.Accessibility FullKeyboardAccessFocusRingEnabled -int 1
 
-defaults write com.apple.AddressBook ABBirthDayVisible -bool true
-defaults write com.apple.AddressBook ABDefaultAddressCountryCode -string ca
-defaults write com.apple.AddressBook ABUserHasSelectedDefaultCountryCode -bool true
-
 /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-#sudo nvram boot-args="mbasd=1" # enable macbook air superdrive
 
 # show Library dir in home dir
 chflags nohidden ~/Library

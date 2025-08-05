@@ -1,0 +1,10 @@
+etc/shells --- Text
+2 2 # Ftpd will not allow users to connect who are not using
+3 3 # one of these shells.
+4 4 
+5 . /opt/homebrew/bin/bash
+6 . /usr/local/bin/bash
+7 5 /bin/bash
+8 6 /bin/csh
+9 7 /bin/dash
+

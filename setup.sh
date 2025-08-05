@@ -12,12 +12,18 @@ set -xeuo pipefail
 # copy over secrets file
 # copy over gpg keys
 # copy over ssh keys
+# copy over passenger enterprise download token
+
+# .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+# .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
+# .op/config
 
 # post-reqs:
 # configure VPN
 # set up 1password cli
 # set global rbenv version
 # set up firefox w/ userChrome.css & profile & addons
+# import terminal theme & set as default
 # install sketch & license
 # login to tower & git accounts
 # make TLS CA & import to keychain
@@ -319,22 +325,12 @@ if [ ! -e "$HOME/.google_authenticator" ]; then
     sed -Ee 's/^[^#].*pam_google_authenticator.so$/#&/g' -e "s|^#(.*$HOMEBREW_PREFIX/lib/security/pam_google_authenticator.so)$|\1|" -i '' ./etc/pam.d/sshd
 fi
 
-# .bash.d/secrets.gpg
-# .gnupg/ somehow setup gnupg and import my keys... maybe https://news.ycombinator.com/item?id=36953582 will help
-# .passenger-enterprise-download-token
-# .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-# .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
-# .ssh/
-# .op/config
-
 # set some defaults
 # https://apple.stackexchange.com/questions/195244/concise-compact-list-of-all-defaults-currently-configured-and-their-values
 mkdir -p "$HOME/Pictures/Screenshots/"
 defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 
 defaults write NSGlobalDomain AppleAccentColor -int 2
-# defaults write NSGlobalDomain AppleLocale -string "en_CA"
-# defaults write NSGlobalDomain AppleLanguages -array "en-CA" "de-CA" "ja-CA"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
 defaults write NSGlobalDomain "com.apple.sound.beep.sound" -string "/System/Library/Sounds/Funk.aiff"
@@ -347,7 +343,6 @@ defaults write com.apple.AdLib "AD_DEVICE_IDFA" -string "00000000-0000-0000-0000
 defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
 defaults write com.apple.AdLib allowIdentifierForAdvertising -int 0
 defaults write com.apple.AdLib personalizedAdsMigrated -int 0
-#sudo chflags uchg ~/Library/Preferences/com.apple.AdLib # doesn't exist
 
 defaults write com.apple.Safari IncludeDevelopMenu -int 1
 defaults write com.apple.Safari AutoOpenSafeDownloads -int 0
@@ -357,7 +352,6 @@ defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -int 1
 defaults write com.apple.Safari NSUserKeyEquivalents -dict "Reload Page From Origin" '@$r' "Show JavaScript Console" "@~k"
 
 defaults write com.apple.Terminal SecureKeyboardEntry -int 0
-#open -a Terminal ~/Developer/Bash/dot-files/Library/Application\ Support/Terminal/My\ Homebrew.terminal
 defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
 defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
 defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
@@ -395,7 +389,9 @@ chflags nohidden ~/Library
 
 # set user's shell
 if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ]; then
-    # this might not work with /etc/shells having been reset to default to capture changes after updates...
+    if diff -q <(git diff etc/shells) saved_diffs/etc/shells; then
+        git restore etc/shells
+    fi
     chsh -s "$HOMEBREW_PREFIX/bin/bash"
 fi
 

@@ -52,10 +52,15 @@ if [ "$(uname)" = "Darwin" ]; then
     source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
     set +a
 
+    declare OPENSSL_CONF
+    OPENSSL_CONF="$(brew --prefix)/etc/openssl/openssl.cnf"
+    export OPENSSL_CONF
+
     if command -v rbenv > /dev/null; then
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
         export RUBY_CONFIGURE_OPTS
         export RUBY_YJIT_ENABLE=1
+        # shellcheck disable=SC1090
         source <(rbenv init -)
     fi
 

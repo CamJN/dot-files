@@ -114,17 +114,18 @@
         (yaml       "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
         (make       "https://github.com/tree-sitter-grammars/tree-sitter-make")
         (ssh-config "https://github.com/tree-sitter-grammars/tree-sitter-ssh-config")
-        (csv        "https://github.com/tree-sitter-grammars/tree-sitter-csv")
         (objc       "https://github.com/tree-sitter-grammars/tree-sitter-objc")
         (scss       "https://github.com/tree-sitter-grammars/tree-sitter-scss")
         (gpg-config "https://github.com/tree-sitter-grammars/tree-sitter-gpg-config")
         (pem        "https://github.com/tree-sitter-grammars/tree-sitter-pem")
-        (xml        "https://github.com/tree-sitter-grammars/tree-sitter-xml")
+
 
         (tsx        "https://github.com/tree-sitter/tree-sitter-typescript"        "master"               "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript"        "master"               "typescript/src")
         (php        "https://github.com/tree-sitter/tree-sitter-php"               "master"               "php/src")
         (markdown   "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser"         "tree-sitter-markdown/src")
+        (csv        "https://github.com/tree-sitter-grammars/tree-sitter-csv"      "master"               "csv/src")
+        (xml        "https://github.com/tree-sitter-grammars/tree-sitter-xml"      "master"               "xml/src")
         (swift      "https://github.com/alex-pinkus/tree-sitter-swift"             "with-generated-files" "src")
 
         (elisp      "https://github.com/Wilfred/tree-sitter-elisp")

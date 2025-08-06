@@ -111,13 +111,13 @@
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   '(alert apache-mode circe company csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot emojify f
-           flycheck-css-colorguard flycheck-rust flyover folding gitconfig-mode gitignore-mode gntp go-mode graphql-mode
-           groovy-mode guru-mode hide-lines ibuffer-tramp json-mode jsx-mode julia-mode launchctl less-css-mode
-           logstash-conf markdown-mode markdown-preview-mode markdown-ts-mode nginx-mode oauth2 osx-clipboard osx-lib
-           osx-location rainbow-mode rake rbs-mode rhtml-mode rinari rjsx-mode rpm-spec-mode ruby-block ruby-dev
-           rust-mode sass-mode scss-mode ssh-config-mode swift-mode swift-ts-mode toml-mode transmission
-           tree-sitter-ispell treemacs typescript-mode web-mode yaml-mode yasnippet))
+   '(alert apache-mode company csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot emojify f
+           flycheck-css-colorguard flycheck-rust flyover folding git-modes gitconfig-mode gitignore-mode gntp go-mode
+           graphql-mode groovy-mode guru-mode hide-lines ibuffer-tramp json-mode julia-mode launchctl less-css-mode
+           logstash-conf markdown-mode markdown-preview-mode markdown-ts-mode nginx-mode osx-clipboard osx-lib
+           osx-location rainbow-mode rake rbs-mode rhtml-mode rpm-spec-mode rust-mode sass-mode scss-mode
+           ssh-config-mode swift-mode swift-ts-mode toml-mode transmission tree-sitter-ispell treemacs typescript-mode
+           web-mode yaml-mode yasnippet))
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(project-mode-line t)
  '(project-vc-extra-root-markers

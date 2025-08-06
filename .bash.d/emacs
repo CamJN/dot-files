@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2155
 export EMACS_SOCKET_NAME="${TMPDIR}emacs$(id -u)/server"
-export EDITOR="/usr/local/bin/emacsclient --tty"
+export EDITOR="$(which emacsclient) --tty"
 
 alias emacs-save="emacsclient --eval '(save-some-buffers t)' >/dev/null"
 alias emacs-kill="emacsclient --eval '(kill-emacs)' >/dev/null"

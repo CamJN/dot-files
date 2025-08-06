@@ -1,0 +1,10 @@
+Library/LaunchAgents/homebrew.mxcl.colima.plist --- XML
+ 5     <key>EnvironmentVariables</key>                                                                      5     <key>EnvironmentVariables</key>
+ 6     <dict>                                                                                               6     <dict>
+ 7         <key>PATH</key>                                                                                  7         <key>PATH</key>
+ 8         <string>/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/hom  8         <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+ . ebrew/sbin</string>                                                                                      . 
+ 9     </dict>                                                                                              9     </dict>
+10     <key>KeepAlive</key>                                                                                10     <key>KeepAlive</key>
+11     <dict>                                                                                              11     <dict>
+

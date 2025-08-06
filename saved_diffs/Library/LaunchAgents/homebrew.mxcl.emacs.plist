@@ -1,0 +1,13 @@
+Library/LaunchAgents/homebrew.mxcl.emacs.plist --- XML
+21 21     </array>
+22 22     <key>RunAtLoad</key>
+23 23     <true/>
+24 ..     <key>StandardOutPath</key>
+25 ..     <string>/usr/local/var/run/emacs/stdout.log</string>
+26 ..     <key>StandardErrorPath</key>
+27 ..     <string>/usr/local/var/run/emacs/stderr.log</string>
+28 ..     <key>WorkingDirectory</key>
+29 ..     <string>/Users/camdennarzt</string>
+30 24 </dict>
+31 25 </plist>
+

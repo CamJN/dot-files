@@ -1,0 +1,10 @@
+Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist --- XML
+24 24         <string>/opt/homebrew/etc/dnsmasq.d,*.conf</string>
+25 25     </array>
+26 26     <key>RunAtLoad</key>
+27 27     <true/>
+28 ..     <key>KeepAlive</key>
+29 ..     <true/>
+30 28 </dict>
+31 29 </plist>
+

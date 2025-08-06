@@ -86,6 +86,7 @@
 	stat = status
 	pop = reset HEAD~
 	authors = shortlog --summary --numbered
+	save-diff = "!mkdir -p \"saved_diffs/${1%/*}\" && git diff $1 > \"saved_diffs/$1\" #"
 [push]
 	default = simple
 	# When pushing to a branch without remote, automatically --set-upstream.

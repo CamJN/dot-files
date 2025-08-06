@@ -56,7 +56,7 @@ function main() {
         fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
     fi
 
-    if ! [ -d "$HOME/.ssh" ]; then
+    if [ ! -d "$HOME/.ssh" ]; then
         fail "ssh directory not found, please provide it at $HOME/.ssh"
     fi
 
@@ -112,7 +112,7 @@ function main() {
         if [ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]; then
             fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
         fi
-        if ! [ -f "$HOME/.passenger-enterprise-download-token" ]; then
+        if [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
             fail "$HOME/.passenger-enterprise-download-token is required to continue."
         fi
         # install all homebrew packages in Brewfile
@@ -128,7 +128,7 @@ function main() {
     else
         fail "Unknown architecture: $(uname -m) please update homebrew taps section of script."
     fi
-    if ! [ -L "$TAP_PATH" ]; then
+    if [ ! -L "$TAP_PATH" ]; then
         rm -rf "$TAP_PATH"
         ln -shf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
     fi

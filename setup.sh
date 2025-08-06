@@ -14,28 +14,26 @@ set -xeuo pipefail
 # copy over ssh keys
 # copy over passenger enterprise download token
 
-# .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-# .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
-# .op/config
-
 # post-reqs:
+# allow Terminal full disk access
 # configure VPN
-# set up 1password cli
+# set up 1password cli: .op/config
 # set global rbenv version
+# setup aws: .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 # set up firefox w/ userChrome.css & profile & addons
 # import terminal theme & set as default
 # install sketch & license
 # login to tower & git accounts
 # make TLS CA & import to keychain
 # setup TimeMachine over smb
-# make code signing root cert
+# make code signing root cert, sign apache modules
 # login to things that store creds in keychain:
 # - docker: redhat, ghcr, docker
 # - gnupg agent
 # - ssh agent
 # - gh auth
 # - git-osxkeychain
-# - mvn master password
+# - mvn master password: .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
 
 function fail() {
     echo "$*" >&2
@@ -297,7 +295,7 @@ function main() {
         sudo ln -shf "$file" "$DIR"
     done
 
-    # copy paths files into paths dirs
+    # copy paths files into paths dirs, cannot be links for some reason
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
     sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/

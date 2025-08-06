@@ -43,6 +43,7 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_USE_RUBY_FROM_PATH=1
     # have to specify the socket name because the shit-for-brains devs filter the env for the editor
     export HOMEBREW_EDITOR="${EDITOR} --socket-name ${EMACS_SOCKET_NAME}"
+    export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
 

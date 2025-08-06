@@ -282,6 +282,7 @@ function main() {
     sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
+    sudo mkdir -p /etc/resolver/
 
     # check OS's etc config files for changes, and symlink them
     find ~/Developer/Bash/dot-files/etc -type f \! -path '*paths.d/*' -print0 | while IFS= read -r -d '' file; do

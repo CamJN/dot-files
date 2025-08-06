@@ -284,13 +284,14 @@ function main() {
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
 
     # check OS's etc config files for changes, and symlink them
-    find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do
-        sudo find /private/etc \
-             -type f \
-             -path "*/${file#"$HOME"/Developer/Bash/dot-files/etc/}" \
-             -print0
-    done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "cat '{}' > '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
-    sudo ln -shf ~/Developer/Bash/dot-files/etc/pam.d/sudo_local /etc/pam.d/sudo_local
+    find ~/Developer/Bash/dot-files/etc -type f \! -path '*paths.d/*' -print0 | while IFS= read -r -d '' file; do
+        DIR="/${file#$HOME/Developer/Bash/dot-files/}"
+        # if DIR is a file and is not a symlink
+        if [ -f "$DIR" -a ! -h "$DIR" ]; then
+            cat "$DIR" > "$file"
+        fi
+        sudo ln -shf "$file" "$DIR"
+    done
 
     # copy paths files into paths dirs
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/

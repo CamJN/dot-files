@@ -204,8 +204,12 @@ function main() {
             else
                 cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
             fi
-            if diff -q <(git diff "$file") "saved_diffs/${file#$HOME/Developer/Bash/dot-files/}"; then
+            # weird quoting in $file expansion is necessary
+            if diff -q <(git diff "$file") "saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}"; then
                 git restore "$file"
+                if [[ "$file" == *"/LaunchDaemons/"* ]]; then
+                    sudo chown root:wheel "$file"
+                fi
             fi
         done
     }
@@ -287,9 +291,10 @@ function main() {
 
     # check OS's etc config files for changes, and symlink them
     find ~/Developer/Bash/dot-files/etc -type f \! -path '*paths.d/*' -print0 | while IFS= read -r -d '' file; do
-        DIR="/${file#$HOME/Developer/Bash/dot-files/}"
+        # weird quoting in $file expansion is necessary
+        DIR="/${file#"$HOME/Developer/Bash/dot-files/"}"
         # if DIR is a file and is not a symlink
-        if [ -f "$DIR" -a ! -h "$DIR" ]; then
+        if [ -f "$DIR" ] && [ ! -h "$DIR" ]; then
             cat "$DIR" > "$file"
         fi
         sudo ln -shf "$file" "$DIR"

@@ -130,7 +130,7 @@ function main() {
     fi
     if ! [ -L "$TAP_PATH" ]; then
         rm -rf "$TAP_PATH"
-    ln -sf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
+        ln -shf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
     fi
 
     # pin formulae that shouldn't be changed without care & attention
@@ -290,6 +290,8 @@ function main() {
              -path "*/${file#"$HOME"/Developer/Bash/dot-files/etc/}" \
              -print0
     done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "cat '{}' > '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
+    sudo ln -shf ~/Developer/Bash/dot-files/etc/pam.d/sudo_local /etc/pam.d/sudo_local
+
     # copy paths files into paths dirs
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
     sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/homebrew

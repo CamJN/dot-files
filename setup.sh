@@ -410,7 +410,7 @@ function main() {
         spctl developer-mode enable-terminal
     fi
 
-    if (security find-identity -v -p codesigning | rg '0 valid identities found'); then
+    if (security find-identity -v -p codesigning | grep -q '0 valid identities found'); then
         fail "No code-signing authority found, apache cannot load 3rd party modules."
     else
         sudo apachectl -t && sudo apachectl restart

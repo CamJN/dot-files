@@ -5,8 +5,5 @@
 /opt/homebrew/sbin
 /opt/homebrew/etc/openssl/misc
 /usr/libexec
-/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources
-/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS
-/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers
 /Library/Developer/CommandLineTools/usr/bin
 /Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources

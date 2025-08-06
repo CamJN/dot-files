@@ -206,6 +206,9 @@ function main() {
             else
                 cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
             fi
+            if diff -q <(git diff "$file") "saved_diffs/${file#$HOME/Developer/Bash/dot-files/}"; then
+                git restore "$file"
+            fi
         done
     }
 

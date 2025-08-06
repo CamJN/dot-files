@@ -280,6 +280,9 @@ getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*
 # symlink LaunchDaemons
 sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
 sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
+
+mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
+
 # check OS's etc config files for changes, and symlink them
 find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*paths.d/*' \) -print0 | while IFS= read -r -d '' file; do
     sudo find /private/etc \
@@ -289,6 +292,7 @@ find ~/Developer/Bash/dot-files/etc -type f \! \( -name '.DS_Store' -o -path '*p
 done | sed -e 's|private/||g' | xargs -S 100000 -0 -I{} -t sudo sh -xc "cat '{}' > '$HOME/Developer/Bash/dot-files{}'; ln -shFf '$HOME/Developer/Bash/dot-files{}' '{}'"
 # copy paths files into paths dirs
 sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
+sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/homebrew
 sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
 # ensure rbenv installed and all current c-rubies
 if ! which -s rbenv; then
@@ -322,7 +326,7 @@ networksetup -listnetworkserviceorder | grep -Ee '^\([0-9]+\)' | grep -Fve 'VPN'
 # ensure google-authenticator setup for account
 if [ ! -e "$HOME/.google_authenticator" ]; then
     google-authenticator --no-confirm --time-based --disallow-reuse --force --secret="$HOME/.google_authenticator" --qr-mode=ansi
-    sed -Ee 's/^[^#].*pam_google_authenticator.so$/#&/g' -e "s|^#(.*$HOMEBREW_PREFIX/lib/security/pam_google_authenticator.so)$|\1|" -i '' ./etc/pam.d/sshd
+    sed -Ee 's/^[^#].*pam_google_authenticator.so$/#&/g' -e "s|^#(.*$HOMEBREW_PREFIX/lib/security/pam_google_authenticator.so)$|\1|" -i '' "$HOME/Developer/Bash/dot-files/etc/pam.d/sshd"
 fi
 
 # set some defaults

@@ -2,6 +2,7 @@ default_host_triple = "x86_64-apple-darwin"
 default_toolchain = "stable"
 telemetry = false
 version = "12"
+profile = "default"
 
 [overrides]
 "/Users/camdennarzt/Developer/Rust/hello-rocket" = "nightly-x86_64-apple-darwin"

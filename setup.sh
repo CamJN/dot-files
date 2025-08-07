@@ -323,6 +323,16 @@ function main() {
         rbenv list | xargs -n1 rbenv install --skip-existing
     fi
 
+    # ensure rustup initialized
+    if [ "$(uname -m)" = "x86_64" ]; then
+            rustup-init -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable
+            rustup toolchain list | ( grep -Fve x86_64 || true ) | xargs rustup toolchain uninstall
+    elif [ "$(uname -m)" = "arm64" ]; then
+            rustup-init -y --no-modify-path --default-host aarch64-apple-darwin --default-toolchain stable
+            rustup toolchain list | ( grep -Fve aarch64 || true ) | xargs rustup toolchain uninstall
+    else
+        fail "Unknown architecture: $(uname -m) please update rustup section of script."
+    fi
     # ensure rust up to date
     rustup update
     # ensure rust has all macOS and wasm targets installed

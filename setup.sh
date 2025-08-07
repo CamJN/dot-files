@@ -238,7 +238,7 @@ function main() {
 
     # ensure colima running
     if [ "colima" != "$(colima status --json | jq -r .display_name)" ]; then
-        colima start
+        colima start --template default
     fi
 
     declare ARM_PLATFORMS=linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6

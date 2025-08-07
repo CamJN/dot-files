@@ -71,18 +71,18 @@ function main() {
     fi
 
     # Ensure Bash dir exists in Developer dir
-    if [ ! -d ~/Developer/Bash ]; then
+    if [ ! -d "$HOME/Developer/Bash" ]; then
         mkdir -p ~/Developer/Bash
     fi
 
     # Ensure Sites dir exists in home dir
-    if [ ! -d ~/Sites ]; then
+    if [ ! -d "$HOME/Sites" ]; then
         mkdir -p ~/Sites
     fi
 
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
-    if [ ! -e ~/Developer/Bash/dot-files ]; then
+    if [ ! -e "$HOME/Developer/Bash/dot-files" ]; then
         git clone --recurse-submodules git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
     else
         # ensure clean repo by making temp commit with changes

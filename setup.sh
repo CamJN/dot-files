@@ -118,18 +118,26 @@ function main() {
     fi
 
     # make my tap have one location on disk
-    declare TAP_PATH
-    if [ "$(uname -m)" = "x86_64" ]; then
-        TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/camjn/homebrew-fixed"
-    elif [ "$(uname -m)" = "arm64" ]; then
-        TAP_PATH="${HOMEBREW_PREFIX}/Library/Taps/camjn/homebrew-fixed"
-    else
-        fail "Unknown architecture: $(uname -m) please update homebrew taps section of script."
+    function unify_tap() {
+        declare TAP_PATH
+        if [ "$(uname -m)" = "x86_64" ]; then
+            TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/$1"
+        elif [ "$(uname -m)" = "arm64" ]; then
+            TAP_PATH="${HOMEBREW_PREFIX}/Library/Taps/$1"
+        else
+            fail "Unknown architecture: $(uname -m) please update homebrew taps section of script."
+        fi
+        if [ ! -L "$TAP_PATH" ]; then
+            rm -rf "$TAP_PATH"
+            ln -shFf "$HOME/Developer/$2" "$TAP_PATH"
+        fi
+    }
+    unify_tap camjn/homebrew-fixed Bash/dot-files/homebrew
+    if [ ! -d "$HOME/Developer/Ruby/getargv-tap" ]; then
+        mkdir -p "$HOME/Developer/Ruby"
+        git clone git@github.com:getargv/homebrew-tap.git ~/Developer/Ruby/getargv-tap
     fi
-    if [ ! -L "$TAP_PATH" ]; then
-        rm -rf "$TAP_PATH"
-        ln -shf ~/Developer/Bash/dot-files/homebrew "$TAP_PATH"
-    fi
+    unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
     brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@17 colima lima

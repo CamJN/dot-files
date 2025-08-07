@@ -308,7 +308,7 @@ function main() {
         sudo ln -shf "$file" "$DIR"
     done
 
-    # copy paths files into paths dirs, cannot be links for some reason
+    # copy paths files into paths dirs, cannot be symlinks for some reason
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
     sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/

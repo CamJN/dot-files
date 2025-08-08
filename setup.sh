@@ -27,6 +27,7 @@ set -xeuo pipefail
 # make TLS CA & import to keychain
 # setup TimeMachine over smb
 # make code signing root cert, sign apache modules
+# install passenger enterprise license file
 # login to things that store creds in keychain:
 # - docker: redhat, ghcr, docker
 # - gnupg agent

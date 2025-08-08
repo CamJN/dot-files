@@ -76,11 +76,6 @@ function main() {
         mkdir -p ~/Developer/Bash
     fi
 
-    # Ensure Sites dir exists in home dir
-    if [ ! -d "$HOME/Sites" ]; then
-        mkdir -p ~/Sites
-    fi
-
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files" ]; then
@@ -290,6 +285,15 @@ function main() {
     # cache sudo auth
     sudo -v
     while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+    # Ensure Sites dir exists in home dir
+    if [ ! -d "$HOME/Sites" ]; then
+        mkdir -p ~/Sites
+    fi
+    chmod -R 770 ~/Sites
+    if [ "$(stat -f '%g' ~/Sites/)" -ne "$(dscl . -read /Groups/_www PrimaryGroupID | awk '{print $NF}')" ]; then
+        sudo chgrp -R _www ~/Sites
+    fi
 
     # check LaunchDaemons for changes
     getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist

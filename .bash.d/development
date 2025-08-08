@@ -15,17 +15,8 @@ export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 if [ "$(uname)" = "Darwin" ]; then
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
     export SDKROOT
-    # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
-    export CPATH="$HOMEBREW_PREFIX/include"
-    #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
-    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib"
-    export LD_LIBRARY_PATH=$LIBRARY_PATH
-    # export DYLD_LIBRARY_PATH=$LIBRARY_PATH
-    export GIT_CEILING_DIRECTORIES=/Users:/Users/camdennarzt/Developer
-    export GIT_EDITOR="$EDITOR"
-    #export CDPATH="$HOME/Developer"
 
-    eval "$(brew shellenv)"
+    source <(brew shellenv)
     # cannot use ~/.config/homebrew/brew.env because the idiots don't allow variable substitution
     export HOMEBREW_INSTALL_BADGE=🍷
     export HOMEBREW_AUTO_UPDATE_SECS=86400
@@ -46,6 +37,16 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
+
+    # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
+    export CPATH="$HOMEBREW_PREFIX/include"
+    #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
+    export LIBRARY_PATH="$HOMEBREW_PREFIX/lib"
+    export LD_LIBRARY_PATH=$LIBRARY_PATH
+    # export DYLD_LIBRARY_PATH=$LIBRARY_PATH
+    export GIT_CEILING_DIRECTORIES=/Users:/Users/camdennarzt/Developer
+    export GIT_EDITOR="$EDITOR"
+    #export CDPATH="$HOME/Developer"
 
     set -a
     # shellcheck disable=SC1090

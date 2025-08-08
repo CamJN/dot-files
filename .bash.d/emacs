@@ -22,5 +22,5 @@ function emacs-give {
     if [ $# -eq 0 ]; then
         return 0
     fi
-    emacsclient --eval "(mapc #'find-file-noselect server-eval-args-left)" --eval "(setq server-eval-args-left nil)" -- "$@" >/dev/null
+    emacsclient --eval "(let ((files server-eval-args-left)) (setq server-eval-args-left nil) (mapc #'find-file-noselect files))" -- "$@" >/dev/null
 }

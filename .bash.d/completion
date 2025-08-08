@@ -3,8 +3,11 @@
 # includes git-completion.bash
 # and brew_bash_completion.sh
 
-export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+HOMEBREW_PREFIX=$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)
+export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
+if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
+    source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+fi
 
 source ~/.bash.d/launchctl-completion.bash
 

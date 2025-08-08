@@ -118,6 +118,8 @@ function main() {
         brew bundle check || brew bundle install --verbose
     fi
 
+    find "${HOMEBREW_PREFIX}/Cellar" -path '*/bash_completion.d/*' -type f -exec ln -shf {} "${HOMEBREW_PREFIX}/etc/bash_completion.d/" \;
+
     # make my tap have one location on disk
     function unify_tap() {
         declare TAP_PATH

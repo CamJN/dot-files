@@ -112,7 +112,7 @@
  '(osx-clipboard-mode t)
  '(package-selected-packages
    '(alert apache-mode company csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot emojify f
-           flycheck-css-colorguard flycheck-rust flyover folding git-modes gitconfig-mode gitignore-mode gntp go-mode
+           flycheck-css-colorguard flycheck-rust folding git-modes gitconfig-mode gitignore-mode gntp go-mode
            graphql-mode groovy-mode guru-mode hide-lines ibuffer-tramp json-mode julia-mode launchctl less-css-mode
            logstash-conf markdown-mode markdown-preview-mode markdown-ts-mode nginx-mode osx-clipboard osx-lib
            osx-location rainbow-mode rake rbs-mode rhtml-mode rpm-spec-mode rust-mode sass-mode scss-mode

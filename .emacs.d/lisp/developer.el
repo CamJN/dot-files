@@ -258,29 +258,6 @@
 
 (add-hook 'flymake-diagnostics-buffer-mode-hook #'visual-line-mode)
 
-;; https://github.com/konrad1977/flyover
-(add-hook 'flycheck-mode-hook #'flyover-mode)
-(setq flyover-levels '(error warning info))
-(setq flyover-use-theme-colors t)
-(setq flyover-wrap-messages t)
-(setq flyover-max-line-length 80)
-;; (setq flyover-info-icon "🛈")
-;; (setq flyover-warning-icon "⚠")
-;; (setq flyover-error-icon "✘")
-;; (setq flyover-icon-left-padding 0.9)
-;; (setq flyover-icon-right-padding 0.9)
-;; (setq flyover-background-lightness 45)
-;; (setq flyover-percent-darker 40)
-;; (setq flyover-text-tint 'lighter) ;; or 'darker or nil
-;; (setq flyover-text-tint-percent 50)
-;; (setq flyover-checkers '(flymake)) ;; flycheck
-;; (setq flyover-debounce-interval 0.2)
-;; (custom-set-faces
-;;  '(flyover-error   ((t :background "#453246" :foreground "#ea8faa" :height 0.9 :weight normal)))
-;;  '(flyover-warning ((t :background "#331100" :foreground "#DCA561" :height 0.9 :weight normal)))
-;;  '(flyover-info    ((t :background "#374243" :foreground "#a8e3a9" :height 0.9 :weight normal)))
-;; )
-
 (defun rust-lsp-startup ()
   (progn (setopt compile-command "cargo build")
          (eglot-ensure)))

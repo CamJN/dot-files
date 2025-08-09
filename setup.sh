@@ -95,6 +95,7 @@ function main() {
     if ! which -s brew ; then
         NONINTERACTIVE=true bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
+    brew completions link
     HOMEBREW_PREFIX="$(brew --prefix)"
     export HOMEBREW_PREFIX
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
@@ -326,7 +327,7 @@ function main() {
         declare RUBY_CONFIGURE_OPTS
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
         export RUBY_CONFIGURE_OPTS
-        eval "$(rbenv init -)";
+        source <(rbenv init -)
         rbenv list | xargs -n1 rbenv install --skip-existing
     fi
 

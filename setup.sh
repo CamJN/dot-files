@@ -34,7 +34,6 @@ set -xeuo pipefail
 # - ssh agent
 # - gh auth
 # - git-osxkeychain
-# - mvn master password: .m2/settings{-security,}.xml https://stackoverflow.com/questions/31251259/how-to-pass-maven-settings-via-environment-vars
 
 function fail() {
     echo "$*" >&2

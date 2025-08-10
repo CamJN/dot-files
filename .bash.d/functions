@@ -87,12 +87,12 @@ function cps {
 
 function cfind {
     if [ "$(uname)" = "Darwin" ]; then
-        find -x "$@"
+        \find -x "$@"
     else
         #handle multiple search locations
         PLACE="$1"
         shift 1
-        find "$PLACE" -xdev "$@"
+        \find "$PLACE" -xdev "$@"
     fi
 }
 
@@ -100,7 +100,7 @@ function cdiff {
     if hash git &>/dev/null; then
         git diff --no-index --color-words "$@"
     else
-        diff "$@"
+        \diff "$@"
     fi
 }
 
@@ -571,8 +571,8 @@ function heic2jpeg(){
 function cls() {
     local -a flags
     local -a dirs
-shopt -u nocaseglob
-shopt -u nocasematch
+    shopt -u nocaseglob
+    shopt -u nocasematch
     while [[ "$#" -gt 0 ]]; do
         case "$1" in
             #--hyperlink|
@@ -619,6 +619,16 @@ shopt -u nocasematch
             done
             ;;
     esac
-shopt -s nocaseglob
-shopt -s nocasematch
+    shopt -s nocaseglob
+    shopt -s nocasematch
+}
+
+function dump_defaults() {
+    pushd ~/Developer/Bash/dot-files/Library/Preferences || return
+    defaults domains | tr ' ,' '\n' | grep . | xargs -I{} defaults export {} {}.plist
+    for f in .*.plist; do
+        mv "$f" "${f#.}";
+    done
+    \find . -name '*.plist' -print0 | xargs -0 plutil -convert xml1 --
+    popd || return
 }

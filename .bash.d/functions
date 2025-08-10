@@ -267,11 +267,19 @@ function password {
 }
 
 function getPasswordFor {
-    op read --no-newline "op://Private/$*/password"
+    if [ $# -eq 0 ]; then
+        echo "Missing item title" >&2
+        return 1
+    fi
+    op read --no-newline "op://${2:-Private}/${1:-}/password"
 }
 
 function getUsernameFor {
-    op read --no-newline "op://Private/$*/username"
+    if [ $# -eq 0 ]; then
+        echo "Missing item title" >&2
+        return 1
+    fi
+    op read --no-newline "op://${2:-Private}/${1:-}/username"
 }
 
 function ctar {

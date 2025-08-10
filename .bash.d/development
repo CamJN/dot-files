@@ -5,6 +5,7 @@ if JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null); then
     export MANPATH="$JAVA_HOME/man:$MANPATH"
 fi
 export NODE_REPL_HISTORY="$HOME/.history/node"
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PYTHON_HISTORY="$HOME/.history/python"
 # /Users/camdennarzt/.bun_repl_history
 export RUBY_DEBUG_HISTORY_FILE="$HOME/.history/rdbg"

@@ -114,6 +114,7 @@ function main() {
         brew bundle check || brew bundle install --verbose
     fi
 
+    sudo chown "$(whoami)" "${HOMEBREW_PREFIX}/var/log/postgresql@17.log"
     find "${HOMEBREW_PREFIX}/Cellar" -path '*/bash_completion.d/*' -type f -exec ln -shf {} "${HOMEBREW_PREFIX}/etc/bash_completion.d/" \;
 
     # make my tap have one location on disk
@@ -302,7 +303,17 @@ function main() {
     sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
     sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
 
+    pg_isready -q || sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.postgresql@17.plist
+    local wait_count=0
+    until pg_isready -q || [ $wait_count -gt 5 ]; do
+        ((wait_count+=1))
+        echo "Waiting for postgresql to come up"
+        sleep 1
+    done
+    createdb
+
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
+    chmod 755 ~ # for _www (httpd) and nobody (dnsmasq) to read symlinks.
     sudo mkdir -p /etc/resolver/
 
     # check OS's etc config files for changes, and symlink them

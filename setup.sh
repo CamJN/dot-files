@@ -286,7 +286,7 @@ function main() {
 
     # cache sudo auth
     sudo -v
-    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    while kill -0 "$$"; do sudo -n true; sleep 60; done 2>/dev/null &
 
     # Ensure Sites dir exists in home dir
     if [ ! -d "$HOME/Sites" ]; then
@@ -338,6 +338,7 @@ function main() {
         declare RUBY_CONFIGURE_OPTS
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
         export RUBY_CONFIGURE_OPTS
+        # shellcheck disable=SC1090
         source <(rbenv init -)
         rbenv list | xargs -n1 rbenv install --skip-existing
     fi

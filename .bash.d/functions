@@ -609,12 +609,16 @@ function cls() {
             eza "${flags[@]}" "${dirs[*]}"
             ;;
         *)
-            for dir in "${dirs[@]}"; do
-                echo "${dir}:"
-                if [[ "${dir}" != '/opt/homebrew'* ]]; then
-                    eza --git-ignore "${flags[@]}" "$dir";
+            for i in "${!dirs[@]}"; do
+                if [ "${i:-0}" -gt 0 ]; then
+                    printf "\n%s:\n" "${dirs[i]}"
                 else
-                    eza "${flags[@]}" "$dir";
+                    echo "${dirs[i]}:"
+                fi
+                if [[ "${dirs[i]}" != '/opt/homebrew'* ]]; then
+                    eza --git-ignore "${flags[@]}" "${dirs[i]}";
+                else
+                    eza "${flags[@]}" "${dirs[i]}";
                 fi
             done
             ;;

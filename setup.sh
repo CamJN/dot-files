@@ -342,6 +342,17 @@ function main() {
         rbenv list | xargs -n1 rbenv install --skip-existing
     fi
 
+    # ensure swiftly initialized
+    export SWIFTLY_HOME_DIR="$HOME/.config/swiftly"
+    export SWIFTLY_BIN_DIR="$HOME/.config/swiftly/bin"
+    export SWIFTLY_TOOLCHAINS_DIR="$HOME/Library/Developer/Toolchains"
+
+    if [ ! -e "$SWIFTLY_HOME_DIR/env.sh" ]; then
+        swiftly init --assume-yes --no-modify-profile
+    fi
+    source "$SWIFTLY_HOME_DIR/env.sh"
+    swiftly update latest --assume-yes
+
     # ensure rustup initialized
     if [ "$(uname -m)" = "x86_64" ]; then
             rustup-init -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable

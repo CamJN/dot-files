@@ -67,9 +67,6 @@ if [ "$(uname)" = "Darwin" ]; then
     fi
 
     function activate_swiftly {
-        export SWIFTLY_HOME_DIR="$HOME/.config/swiftly"
-        export SWIFTLY_BIN_DIR="$HOME/.config/swiftly/bin"
-        export SWIFTLY_TOOLCHAINS_DIR="$HOME/Library/Developer/Toolchains"
         # shellcheck source=../../../../.config/swiftly/env.sh
         source "$SWIFTLY_HOME_DIR/env.sh"
     }

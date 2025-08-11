@@ -17,6 +17,7 @@ if [ "$(uname)" = "Darwin" ]; then
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
     export SDKROOT
 
+    # shellcheck disable=SC1090
     source <(brew shellenv)
     # cannot use ~/.config/homebrew/brew.env because the idiots don't allow variable substitution
     export HOMEBREW_INSTALL_BADGE=🍷
@@ -59,6 +60,7 @@ if [ "$(uname)" = "Darwin" ]; then
     export OPENSSL_CONF
 
     if command -v rbenv > /dev/null; then
+        declare RUBY_CONFIGURE_OPTS
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
         export RUBY_CONFIGURE_OPTS
         export RUBY_YJIT_ENABLE=1
@@ -75,17 +77,18 @@ if [ "$(uname)" = "Darwin" ]; then
     function activate_python {
         local PYVENV_PATH
         PYVENV_PATH=$(git ls-files --others --ignored --exclude-standard | rg 'pyvenv.cfg' | head -1 | xargs dirname)
-        source "$PYVENV_PATH/bin/activate"
+        # shellcheck disable=SC1091
+        source "${PYVENV_PATH:-"$PWD"}/bin/activate"
     }
 
     export PIP_DISABLE_PIP_VERSION_CHECK=1
 
     export GOPATH=~/Developer/Go
-    export GOROOT=$(brew --prefix go)/libexec
+    declare GOROOT
+    GOROOT="$(brew --prefix go)/libexec"
+    export GOROOT
     export GOTOOLCHAIN=local
-    #PATH="$PATH:$(/usr/bin/python3 -m site --user-base)/bin"
-    PATH=$PATH:$GOPATH/bin
-    export PATH=$PATH:$GOROOT/bin
+    export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
     if [ -f ~/.cargo/env ]; then
         # shellcheck source=../../../../.cargo/env
         source ~/.cargo/env

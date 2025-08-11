@@ -52,7 +52,7 @@ if [ "$(uname)" = "Darwin" ]; then
 
     set -a
     # shellcheck disable=SC1090
-    source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
+    gpg-check && source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
     set +a
 
     declare OPENSSL_CONF

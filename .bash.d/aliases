@@ -22,7 +22,7 @@ alias egrep='grep -E'
 alias emptycache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder;'
 alias fgrep='grep -F --color=always'
 alias find='cfind'
-alias gpg-check='gpg --quiet --sign --armor <<< ok | gpg --decrypt 2>/dev/null'
+alias gpg-check='gpg --quiet --sign --armor <<< ok | gpg --verify 2>/dev/null'
 alias gpg-restart-agent='gpgconf --kill gpg-agent'
 alias gzip='pigz'
 alias ip="xargs -n1 ipconfig getifaddr <<< $'eth0\nen0\nen1'"

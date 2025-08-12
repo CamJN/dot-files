@@ -388,7 +388,6 @@ function main() {
     fi
 
     # set some defaults
-    # https://apple.stackexchange.com/questions/195244/concise-compact-list-of-all-defaults-currently-configured-and-their-values
     mkdir -p "$HOME/Pictures/Screenshots/"
     defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 
@@ -399,17 +398,39 @@ function main() {
 
     defaults write com.apple.menuextra.battery ShowPercent -bool no
 
+    defaults write com.apple.WindowManager StandardHideWidgets -bool true
+    defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+    defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+
+    defaults write com.apple.dock largesize -float 70
+    defaults write com.apple.dock magnification -bool true
+    defaults write com.apple.dock minimize-to-application -bool true
+    defaults write com.apple.dock show-process-indicators -bool false
+    defaults write com.apple.dock showMissionControlGestureEnabled -bool true
+    defaults write com.apple.dock wvous-br-corner -int 1
+    defaults write com.apple.dock wvous-br-modifier -int 0
+    defaults write com.apple.dock wvous-tr-corner -int 12
+    defaults write com.apple.dock wvous-tr-modifier -int 0
+
     defaults write com.apple.preference.security.privacy limitAdTrackingCached -int 0
     defaults write com.apple.AdLib forceLimitAdTracking -int 1
     defaults write com.apple.AdLib "AD_DEVICE_IDFA" -string "00000000-0000-0000-0000-000000000000"
     defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
-    defaults write com.apple.AdLib allowIdentifierForAdvertising -int 0
+    defaults write com.apple.AdLib allowIdentifierForAdvertising -bool false
     defaults write com.apple.AdLib personalizedAdsMigrated -int 0
+    defaults write com.apple.AdLib CKDPIDSyncState -int 0
 
     defaults write com.apple.Terminal SecureKeyboardEntry -int 0
     defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
+    declare terminal_settings
+    terminal_settings=$(defaults export com.apple.Terminal -)
+    readarray -t themes < <(plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' -)
+    for theme in "${themes[@]}"; do
+        terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
+    done
+    defaults import com.apple.Terminal - <<< "$terminal_settings"
 
     defaults write com.apple.ActivityMonitor IconType -int 5
     defaults write com.apple.ActivityMonitor UpdatePeriod -int 1
@@ -431,6 +452,38 @@ function main() {
 
     defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
     defaults write com.apple.Accessibility FullKeyboardAccessFocusRingEnabled -int 1
+
+    defaults write com.apple.Safari.SandboxBroker ShowDevelopMenu -bool true
+    defaults write com.apple.Safari IncludeDevelopMenu -bool true
+    defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -bool true
+    defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+    defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool true
+    defaults write com.apple.Safari NSUserKeyEquivalents -dict 'Reload Page From Origin' '@$r' 'Show Javascript Console' '@~k'
+
+    defaults write com.apple.Passwords EnableMenuBarExtra -bool true
+    defaults write com.apple.Passwords ShowServiceNamesInPasswords -bool true
+
+    defaults write com.apple.onetimepasscodes DeleteVerificationCodes -bool true
+
+    defaults write com.apple.MobileSMS DeleteVerificationCodes -bool true
+    defaults write com.apple.MobileSMS KeepMessageForDays -int 0
+
+    defaults write com.apple.mail FavoriteMailboxDraftsAutomaticallyAdded -bool true
+    defaults write com.apple.mail FavoriteMailboxFlaggedAutomaticallyAdded -bool true
+    defaults write com.apple.mail FavoriteMailboxInboxAutomaticallyAdded -bool true
+    defaults write com.apple.mail FavoriteMailboxSentAutomaticallyAdded -bool true
+    defaults write com.apple.mail FavoriteMailboxVIPsAutomaticallyAdded -bool true
+    defaults write com.apple.mail SpellCheckingBehavior -string InlineSpellCheckingEnabled
+    defaults write com.apple.mail EnableContactPhotos -int 1
+
+    defaults write com.apple.FaceTime FaceTimeIsAlwaysOnTop -bool true
+
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad HIDScrollZoomModifierMask -int 786432
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 1
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 1
+    defaults write com.apple.AppleMultitouchTrackpad HIDScrollZoomModifierMask -int 786432
+    defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 1
+    defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 1
 
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 

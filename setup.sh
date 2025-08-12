@@ -350,6 +350,7 @@ function main() {
     if [ ! -e "$SWIFTLY_HOME_DIR/env.sh" ]; then
         swiftly init --assume-yes --no-modify-profile
     fi
+    # shellcheck source=.config/swiftly/env.sh
     source "$SWIFTLY_HOME_DIR/env.sh"
     swiftly update latest --assume-yes
 

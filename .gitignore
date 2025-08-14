@@ -35,9 +35,11 @@ passenger.*.pid.lock
 /.colima/_lima
 /.colima/default/daemon
 /.config/op
+/.config/swiftly
 /.docker/buildx
 /.docker/cli-plugins
 /.docker/contexts
+/.docker/manifests
 /.emacs.d/%backup%~
 /.emacs.d/.cache
 /.emacs.d/.dap-breakpoints
@@ -63,4 +65,3 @@ passenger.*.pid.lock
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
 /usr/local/etc/dnsmasq.d/filtering.resolv
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
-/.config/swiftly

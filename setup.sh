@@ -17,14 +17,14 @@ set -xeuo pipefail
 # post-reqs:
 # allow Terminal full disk access
 # configure VPN
-# set up 1password cli: .op/config
+# set up 1password cli: .config/op/copfig
 # set global rbenv version
+# make TLS CA & import to keychain & firefox
 # setup aws: .aws/config https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 # set up firefox w/ userChrome.css & profile & addons
 # import terminal theme & set as default
 # install sketch & license
 # login to tower & git accounts
-# make TLS CA & import to keychain
 # setup TimeMachine over smb
 # make code signing root cert, sign apache modules
 # install passenger enterprise license file

@@ -27,4 +27,5 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 export SUDO_EDITOR=mg
+export XDG_CACHE_HOME="$HOME/Library/Caches"
 #export XDG_CONFIG_HOME="${HOME}/.config"

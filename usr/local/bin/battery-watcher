@@ -1,0 +1,31 @@
+#!/bin/bash
+
+full=$(pmset -g batt)
+status=$(grep -Eoe '\b(dis)?charging\b' <<<$full)
+percent=$(grep -Eoe '\d+%' <<< $full | tr -d %)
+
+oldVolume=$(osascript -e 'output volume of (get volume settings)')
+
+#test "${status:-x}" = 'charging'    && test $percent -ge 80 && say -v "Tessa" "[[volm 0.35]]battery charged"
+
+if [ "${status:-x}" = 'charging' ]; then
+    echo -e "charging\npercent: $percent%" >&2
+    if [ $percent -ge 80 ]; then
+        osascript -e "set volume without output muted"
+        osascript -e "set Volume 4"
+        say -v "Tessa" "battery charged"
+        osascript -e "set volume output volume $oldVolume"
+    fi
+elif [ "${status:-x}" = 'discharging' ]; then
+    echo -e "discharging\npercent: $percent%" >&2
+    if [ $percent -le 20 ]; then
+        osascript -e "set volume without output muted"
+        osascript -e "set Volume 4"
+        say -v "Tessa" "charge battery"
+        osascript -e "set volume output volume $oldVolume"
+    fi
+else
+    echo -e "status: $status\npercent: $percent%" >&2
+fi
+
+exit 0

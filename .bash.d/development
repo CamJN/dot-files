@@ -60,6 +60,7 @@ if [ "$(uname)" = "Darwin" ]; then
     OPENSSL_CONF="$(brew --prefix)/etc/openssl/openssl.cnf"
     export OPENSSL_CONF
 
+    export GEM_SPEC_CACHE="$HOME/Library/Caches/RubyGems"
     if command -v rbenv > /dev/null; then
         declare RUBY_CONFIGURE_OPTS
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) --enable-yjit"
@@ -71,7 +72,7 @@ if [ "$(uname)" = "Darwin" ]; then
 
     function activate_swiftly {
         # shellcheck source=../../../../.config/swiftly/env.sh
-        source "$SWIFTLY_HOME_DIR/env.sh"
+        source "$HOME/.config/swiftly/env.sh"
     }
     # export SWIFT_FLAGS="--disable-xctest" # does nothing
 

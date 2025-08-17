@@ -40,5 +40,6 @@ source <(node --completion-bash)
 source <(rustup completions bash)
 source <(pip3 completion --bash)
 source <(colima completion bash)
+source <(batt completion bash)
 complete -o default -F _pip_completion pip
 # do not try to add 'python -m pip' style invocations

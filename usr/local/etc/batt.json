@@ -1,0 +1,7 @@
+{
+  "allowNonRootAccess": false,
+  "controlMagSafeLED": false,
+  "disableChargingPreSleep": true,
+  "preventIdleSleep": true,
+  "limit": 80
+}

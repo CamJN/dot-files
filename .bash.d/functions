@@ -570,9 +570,12 @@ function heic2jpeg(){
 
 function cls() {
     local -a flags
+    local -a files
     local -a dirs
+    local -a things
     shopt -u nocaseglob
     shopt -u nocasematch
+    local DISABLE_HEADER=false
     while [[ "$#" -gt 0 ]]; do
         case "$1" in
             #--hyperlink|
@@ -581,21 +584,34 @@ function cls() {
                 flags+=("$2")
                 shift 2
                 ;;
+            -1|--oneline)
+                DISABLE_HEADER=true
+                flags+=("$1")
+                shift
+                ;;
             -*)
                 flags+=("$1")
                 shift
                 ;;
             *)
-                dirs+=("$1")
+                things+=("$1")
                 shift
                 ;;
         esac
     done
 
+    for thing in "${things[@]}"; do
+        if [ -d "$thing" ]; then
+            dirs+=("$thing")
+        else
+            files+=("$thing")
+        fi
+    done
+
     flags+=(--header --group --git)
     # flags+=('--hyperlink=auto')
 
-    case "${#dirs[*]}" in
+    case "${#things[*]}" in
         0)
             if [[ "$PWD" != '/opt/homebrew'* ]]; then
                 flags+=('--git-ignore')
@@ -609,11 +625,19 @@ function cls() {
             eza "${flags[@]}" "${dirs[*]}"
             ;;
         *)
+            if [ "${#files[*]}" -gt 0 ]; then
+               eza "${flags[@]}" "${files[@]}"
+               if [ "${#dirs[*]}" -gt 0 ]; then
+                   echo
+               fi
+            fi
             for i in "${!dirs[@]}"; do
-                if [ "${i:-0}" -gt 0 ]; then
-                    printf "\n%s:\n" "${dirs[i]}"
-                else
-                    echo "${dirs[i]}:"
+                if ! $DISABLE_HEADER; then
+                    if [ "${i:-0}" -gt 0 ]; then
+                        printf "\n%s:\n" "${dirs[i]}"
+                    else
+                        echo "${dirs[i]}:"
+                    fi
                 fi
                 if [[ "${dirs[i]}" != '/opt/homebrew'* ]]; then
                     eza --git-ignore "${flags[@]}" "${dirs[i]}";

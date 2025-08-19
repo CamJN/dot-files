@@ -205,9 +205,13 @@ function main() {
             local formula="${filename%.plist}"
             formula="${formula#homebrew.mxcl.}"
             if [[ "$file" == *"/LaunchDaemons/"* ]]; then
-                # shellcheck disable=SC2024
                 # the read is non-root, tee is root to write
-                sudo tee "$file" < "$HOMEBREW_PREFIX/opt/$formula/${filename}" >/dev/null
+                if [ -f "$HOMEBREW_PREFIX/opt/$formula/${filename}" ]; then
+                    # shellcheck disable=SC2024
+                    sudo tee "$file" < "$HOMEBREW_PREFIX/opt/$formula/${filename}" >/dev/null
+                else
+                    echo "$HOMEBREW_PREFIX/opt/$formula/${filename} doesn't exist, not checking for updates."
+                fi
             else
                 cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
             fi
@@ -329,7 +333,7 @@ function main() {
         echo "Waiting for postgresql to come up"
         sleep 1
     done
-    createdb
+    psql "$(whoami)" -c '\q' 2>/dev/null || createdb
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
     chmod 755 ~ # for _www (httpd) and nobody (dnsmasq) to read symlinks.
@@ -447,7 +451,8 @@ function main() {
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
     declare terminal_settings
     terminal_settings=$(defaults export com.apple.Terminal -)
-    readarray -t themes < <(plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' -)
+    declare -a themes
+    IFS=$'\n' themes=($(plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' -))
     for theme in "${themes[@]}"; do
         terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
     done

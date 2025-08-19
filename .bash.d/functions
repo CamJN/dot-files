@@ -619,10 +619,10 @@ function cls() {
             eza "${flags[@]}"
             ;;
         1)
-            if [[ "$(readlink -f "${dirs[*]}")" != '/opt/homebrew'* ]]; then
+            if [[ "$(readlink -f "${things[*]}")" != '/opt/homebrew'* ]]; then
                 flags+=('--git-ignore')
             fi
-            eza "${flags[@]}" "${dirs[*]}"
+            eza "${flags[@]}" "${things[*]}"
             ;;
         *)
             if [ "${#files[*]}" -gt 0 ]; then
@@ -639,10 +639,10 @@ function cls() {
                         echo "${dirs[i]}:"
                     fi
                 fi
-                if [[ "${dirs[i]}" != '/opt/homebrew'* ]]; then
-                    eza --git-ignore "${flags[@]}" "${dirs[i]}";
+                if [[ "$(readlink -f "${dirs[i]}")" != '/opt/homebrew'* ]]; then
+                    eza --git-ignore "${flags[@]}" "${dirs[i]}"
                 else
-                    eza "${flags[@]}" "${dirs[i]}";
+                    eza "${flags[@]}" "${dirs[i]}"
                 fi
             done
             ;;

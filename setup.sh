@@ -184,7 +184,7 @@ function main() {
     # symlink homebrew's etc config files
     for file in ~/Developer/Bash/dot-files/usr/local/etc/*; do
         if [ "${file##*/}" = "nginx" ]; then
-            ln -shFf "$file/nginx.conf" "$HOMEBREW_PREFIX/etc/nginx/nginx.conf"
+            ln -shf "$file/nginx.conf" "$HOMEBREW_PREFIX/etc/nginx/nginx.conf"
             ln -shFf "$file/modules" "$HOMEBREW_PREFIX/etc/nginx/modules"
         else
             DIR="$HOMEBREW_PREFIX/etc/${file##*/}"
@@ -195,7 +195,7 @@ function main() {
 
     # symlink executables
     for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
-        ln -shFf "$file" "$HOMEBREW_PREFIX/bin/${file##*/}"
+        ln -shf "$file" "$HOMEBREW_PREFIX/bin/"
     done
 
     function getLaunchdPlist() {
@@ -229,11 +229,15 @@ function main() {
     # check LaunchAgents for changes
     getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
     # symlink LaunchAgents
-    ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/* ~/Library/LaunchAgents/
+    ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.* ~/Library/LaunchAgents/
+    ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/local.all.* ~/Library/LaunchAgents/
+    for agent in "$HOME/Developer/Bash/dot-files/Library/LaunchAgents/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
+        ln -shf "$agent" ~/Library/LaunchAgents/
+    done
     # Ensure keybindings dir exists
     mkdir -p ~/Library/KeyBindings/
     # symlink keybindings
-    ln -shFf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+    ln -shf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
     # ensure colima running
     if [ "colima" != "$(colima status --json | jq -r .display_name)" ]; then
@@ -287,6 +291,18 @@ function main() {
     sudo -v
     while kill -0 "$$"; do sudo -n true; sleep 60; done 2>/dev/null &
 
+    declare COMPNAME
+    COMPNAME="$(scutil --get ComputerName)"
+    declare DEFAULT_NAME
+    DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq -r '.SPHardwareDataType[0].machine_name')"
+    if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
+        read -rp 'Set computer name to: ' COMPNAME
+    fi
+    declare COMPNAME_SAFE
+    COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
+    scutil --get LocalHostName | grep -Fxe "$COMPNAME_SAFE" >/dev/null || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
+    scutil --get ComputerName | grep -Fxe "$COMPNAME" >/dev/null || sudo scutil --set ComputerName "$COMPNAME"
+
     # Ensure Sites dir exists in home dir
     if [ ! -d "$HOME/Sites" ]; then
         mkdir -p ~/Sites
@@ -300,7 +316,11 @@ function main() {
     getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
     # symlink LaunchDaemons
     sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
-    sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/* /Library/LaunchDaemons/
+    sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.* /Library/LaunchDaemons/
+    sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/local.all.* /Library/LaunchDaemons/
+    for daemon in "$HOME/Developer/Bash/dot-files/Library/LaunchDaemons/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
+        sudo ln -shf "$daemon" /Library/LaunchDaemons/
+    done
 
     pg_isready -q || sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.postgresql@17.plist
     local wait_count=0
@@ -459,6 +479,7 @@ function main() {
     defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -bool true
     defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
     defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool true
+    # shellcheck disable=SC2016
     defaults write com.apple.Safari NSUserKeyEquivalents -dict 'Reload Page From Origin' '@$r' 'Show Javascript Console' '@~k'
 
     defaults write com.apple.Passwords EnableMenuBarExtra -bool true
@@ -503,18 +524,6 @@ function main() {
     # second sudo below after || seems to trigger another prompt
     # settimezone emits error -99 message, but seems to work
     sudo systemsetup -gettimezone | grep -Fxe "Time Zone: $TZ" >/dev/null || sudo systemsetup -settimezone "$TZ"
-
-    declare COMPNAME
-    COMPNAME="$(scutil --get ComputerName)"
-    declare DEFAULT_NAME
-    DEFAULT_NAME="$(id -F)'s $(system_profiler SPHardwareDataType -json | jq -r '.SPHardwareDataType[0].machine_name')"
-    if [ "$COMPNAME" = "$DEFAULT_NAME" ]; then
-        read -rp 'Set computer name to: ' COMPNAME
-    fi
-    declare COMPNAME_SAFE
-    COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
-    scutil --get LocalHostName | grep -Fxe "$COMPNAME_SAFE" >/dev/null || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
-    scutil --get ComputerName | grep -Fxe "$COMPNAME" >/dev/null || sudo scutil --set ComputerName "$COMPNAME"
 
     if [ -z "$(<. sqlite3 -noheader '/Library/Application Support/com.apple.TCC/TCC.db' 'select client from access where client = "com.apple.Terminal" and auth_value > 0 and service = "kTCCServiceSystemPolicyAllFiles"')" ]; then
         spctl developer-mode enable-terminal

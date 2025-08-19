@@ -56,6 +56,9 @@ if [ "$(uname)" = "Darwin" ]; then
     gpg-check && source <(gpg --quiet --decrypt ~/.bash.d/secrets.gpg)
     set +a
 
+    export npm_package_config_node_gyp_devdir="${HOME}/Library/Caches/node-gyp"
+    export npm_package_config_node_gyp_nodedir="${HOMEBREW_PREFIX}/opt/node/"
+
     declare OPENSSL_CONF
     OPENSSL_CONF="$(brew --prefix)/etc/openssl/openssl.cnf"
     export OPENSSL_CONF

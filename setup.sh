@@ -40,6 +40,8 @@ function fail() {
     exit 1
 }
 
+declare -i PGVER=17
+
 # wrap in a function to prevent partial execution if download fails
 function main() {
     # ensure PATH includes likely dirs
@@ -113,7 +115,6 @@ function main() {
         brew bundle check || brew bundle install --verbose
     fi
 
-    sudo chown "$(whoami)" "${HOMEBREW_PREFIX}/var/log/postgresql@17.log"
     find "${HOMEBREW_PREFIX}/Cellar" -path '*/bash_completion.d/*' -type f -exec ln -shf {} "${HOMEBREW_PREFIX}/etc/bash_completion.d/" \;
 
     # make my tap have one location on disk
@@ -139,7 +140,7 @@ function main() {
     unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
-    brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit postgresql@17 colima lima
+    brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
 
     # Check if brew doctor has any new complaints
     if [ -z "${SKIP_DOCTOR-}" ]; then
@@ -315,6 +316,7 @@ function main() {
     if [ "$(stat -f '%g' ~/Sites/)" -ne "$(dscl . -read /Groups/_www PrimaryGroupID | awk '{print $NF}')" ]; then
         sudo chgrp -R _www ~/Sites
     fi
+    sudo chown "$(whoami)" "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
 
     # check LaunchDaemons for changes
     getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
@@ -326,7 +328,7 @@ function main() {
         sudo ln -shf "$daemon" /Library/LaunchDaemons/
     done
 
-    pg_isready -q || sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.postgresql@17.plist
+    pg_isready -q || sudo launchctl load "/Library/LaunchDaemons/homebrew.mxcl.postgresql@${PGVER}.plist"
     local wait_count=0
     until pg_isready -q || [ $wait_count -gt 5 ]; do
         ((wait_count+=1))

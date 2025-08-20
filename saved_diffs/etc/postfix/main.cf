@@ -1,0 +1,21 @@
+etc/postfix/main.cf --- 1/2 --- Text
+329 #relayhost = [gateway.my.domain]                                                                       329 #relayhost = [gateway.my.domain]
+330 #relayhost = [mailserver.isp.tld]                                                                      330 #relayhost = [mailserver.isp.tld]
+331 #relayhost = uucphost                                                                                  331 #relayhost = uucphost
+332 relayhost = 127.0.0.1:1025                                                                             332 #relayhost = [an.ip.add.ress]
+333                                                                                                        333 
+334 # REJECTING UNKNOWN RELAY USERS                                                                        334 # REJECTING UNKNOWN RELAY USERS
+335 #                                                                                                      335 #
+
+etc/postfix/main.cf --- 2/2 --- Text
+609 # the process marches on. If you use an X-based debugger, be sure to                                   609 # the process marches on. If you use an X-based debugger, be sure to
+610 # set up your XAUTHORITY environment variable before starting Postfix.                                 610 # set up your XAUTHORITY environment variable before starting Postfix.
+611 #                                                                                                      611 #
+612 debugger_command = (echo cont; echo where) | lldb $daemon_directory/$process_name $process_id 2>&1 >$c 612 debugger_command =
+... onfig_directory/$process_name.$process_id.log & sleep 5                                                ... 
+...                                                                                                        613      PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+...                                                                                                        614      ddd $daemon_directory/$process_name $process_id & sleep 5
+613                                                                                                        615 
+614 # If you can't use X, use this to capture the call stack when a                                        616 # If you can't use X, use this to capture the call stack when a
+615 # daemon crashes. The result is in a file in the configuration                                         617 # daemon crashes. The result is in a file in the configuration
+

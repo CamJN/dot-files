@@ -1,0 +1,10 @@
+etc/pam.d/sshd --- Text
+1 # sshd: auth account password session                                              1 # sshd: auth account password session
+2 auth       requisite      /opt/homebrew/lib/security/pam_google_authenticator.so   2 auth       optional       pam_krb5.so use_kcminit
+3 #auth       requisite      /usr/local/lib/security/pam_google_authenticator.so     3 auth       optional       pam_ntlm.so try_first_pass
+.                                                                                    4 auth       optional       pam_mount.so try_first_pass
+.                                                                                    5 auth       required       pam_opendirectory.so try_first_pass
+4 account    required       pam_nologin.so                                           6 account    required       pam_nologin.so
+5 account    required       pam_sacl.so sacl_service=ssh                             7 account    required       pam_sacl.so sacl_service=ssh
+6 account    required       pam_opendirectory.so                                     8 account    required       pam_opendirectory.so
+

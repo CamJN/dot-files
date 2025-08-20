@@ -456,8 +456,9 @@ function main() {
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
     declare terminal_settings
     terminal_settings=$(defaults export com.apple.Terminal -)
-    declare -a themes
-    IFS=$'\n' themes=($(plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' -))
+    IFS=$'\n' read -r -d '' -a themes < <(
+        plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' - && printf '\0'
+    )
     for theme in "${themes[@]}"; do
         terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
     done

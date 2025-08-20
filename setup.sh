@@ -342,12 +342,15 @@ function main() {
     # check OS's etc config files for changes, and symlink them
     find ~/Developer/Bash/dot-files/etc -type f \! -path '*paths.d/*' -print0 | while IFS= read -r -d '' file; do
         # weird quoting in $file expansion is necessary
-        DIR="/${file#"$HOME/Developer/Bash/dot-files/"}"
+        DIR="${file#"$HOME/Developer/Bash/dot-files/"}"
         # if DIR is a file and is not a symlink
-        if [ -f "$DIR" ] && [ ! -h "$DIR" ]; then
-            cat "$DIR" > "$file"
+        if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
+            cat "/$DIR" > "$file"
+            if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
+                git restore "$file"
+            fi
         fi
-        sudo ln -shf "$file" "$DIR"
+        sudo ln -shf "$file" "/$DIR"
     done
 
     # copy paths files into paths dirs, cannot be symlinks for some reason

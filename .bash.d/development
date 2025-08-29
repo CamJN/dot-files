@@ -93,7 +93,9 @@ if [ "$(uname)" = "Darwin" ]; then
     GOROOT="$(brew --prefix go)/libexec"
     export GOROOT
     export GOTOOLCHAIN=local
-    export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+    declare RUSTUP_ROOT
+    RUSTUP_ROOT="$(brew --prefix rustup)"
+    export PATH="$PATH:$GOPATH/bin:$GOROOT/bin:$RUSTUP_ROOT/bin"
     if [ -f ~/.cargo/env ]; then
         # shellcheck source=../../../../.cargo/env
         source ~/.cargo/env

@@ -115,7 +115,7 @@ function main() {
         brew bundle check || brew bundle install --verbose
     fi
 
-    find "${HOMEBREW_PREFIX}/Cellar" -path '*/bash_completion.d/*' -type f -exec ln -shf {} "${HOMEBREW_PREFIX}/etc/bash_completion.d/" \;
+    find "${HOMEBREW_PREFIX}/Cellar" -name 'bash_completion.d' | cut -d/ -f5 | sort -u | grep -vFxf <(brew info --installed --json=v1 | jq -r 'map(select(.keg_only == true) | .name)[]')  | xargs -I{} bash -c 'brew unlink {}; brew link --overwrite {}'
 
     # make my tap have one location on disk
     function unify_tap() {

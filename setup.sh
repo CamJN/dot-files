@@ -115,7 +115,9 @@ function main() {
         brew bundle check || brew bundle install --verbose
     fi
 
-    find "${HOMEBREW_PREFIX}/Cellar" -name 'bash_completion.d' | cut -d/ -f5 | sort -u | grep -vFxf <(brew info --installed --json=v1 | jq -r 'map(select(.keg_only == true) | .name)[]')  | xargs -I{} bash -c 'brew unlink {}; brew link --overwrite {}'
+    if [ -z "${SKIP_RELINK_COMPLETIONS-}" ]; then
+        find "${HOMEBREW_PREFIX}/Cellar" -name 'bash_completion.d' | cut -d/ -f5 | sort -u | grep -vFxf <(brew info --installed --json=v1 | jq -r 'map(select(.keg_only == true) | .name)[]')  | xargs -I{} bash -c 'brew unlink {}; brew link --overwrite {}'
+    fi
 
     # make my tap have one location on disk
     function unify_tap() {
@@ -140,7 +142,11 @@ function main() {
     unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
-    brew pin batt emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
+    brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
+    if [ "$(uname -m)" = "arm64" ]; then
+        brew pin batt
+    fi
+
 
     # Check if brew doctor has any new complaints
     if [ -z "${SKIP_DOCTOR-}" ]; then
@@ -463,7 +469,10 @@ function main() {
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
     declare terminal_settings
+    set +x
     terminal_settings=$(defaults export com.apple.Terminal -)
+    echo '+ terminal_settings=$(defaults export com.apple.Terminal -)'
+    set -x
     IFS=$'\n' read -r -d '' -a themes < <(
         plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' - && printf '\0'
     )

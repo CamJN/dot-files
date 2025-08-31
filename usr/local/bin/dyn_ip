@@ -4,6 +4,7 @@ ipv4="$(\curl -4 -s https://v4.ident.me)"
 ipv6="$(\ifconfig en0 inet6 | \grep -Eve 'inet6\sf(d|e80)' | \awk '/inet6.*secured/{print $2}')"
 HostedZoneId="ZEI4I8ORTSXK2"
 domain="secur-t.narzt.cam"
+export PAGER=/bin/cat
 
 function input-json() {
     # shellcheck disable=SC2016

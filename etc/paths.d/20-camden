@@ -1,9 +1,11 @@
 /usr/local/bin
 /usr/local/sbin
 /usr/local/etc/openssl/misc
+/usr/local/opt/rustup/bin
 /opt/homebrew/bin
 /opt/homebrew/sbin
 /opt/homebrew/etc/openssl/misc
+/opt/homebrew/opt/rustup/bin
 /usr/libexec
 /Library/Developer/CommandLineTools/usr/bin
 /Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/Resources

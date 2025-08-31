@@ -217,11 +217,13 @@ function main() {
                 cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
             fi
             # weird quoting in $file expansion is necessary
+            if [ -f "saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}" ]; then
             if diff -q <(git diff "$file") "saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}"; then
                 git restore "$file"
                 if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                     sudo chown root:wheel "$file"
                 fi
+            fi
             fi
         done
     }
@@ -352,8 +354,10 @@ function main() {
         # if DIR is a file and is not a symlink
         if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
             cat "/$DIR" | sudo tee "$file"
+            if [ -f "saved_diffs/$DIR" ]; then
             if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
                 git restore "$file"
+            fi
             fi
         fi
         sudo ln -shf "$file" "/$DIR"
@@ -529,9 +533,6 @@ function main() {
 
     # set user's shell
     if [ "$(dscl . -read ~/ UserShell)" != "UserShell: $HOMEBREW_PREFIX/bin/bash" ]; then
-        if diff -q <(git diff etc/shells) saved_diffs/etc/shells; then
-            git restore etc/shells
-        fi
         chsh -s "$HOMEBREW_PREFIX/bin/bash"
     fi
 

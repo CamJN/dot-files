@@ -3,16 +3,17 @@
 ipv4="$(\curl -4 -s https://v4.ident.me)"
 ipv6="$(\ifconfig en0 inet6 | \grep -Eve 'inet6\sf(d|e80)' | \awk '/inet6.*secured/{print $2}')"
 HostedZoneId="ZEI4I8ORTSXK2"
+domain="secur-t.narzt.cam"
 
 function input-json() {
     # shellcheck disable=SC2016
     local output='{$HostedZoneId, "ChangeBatch": {"Changes":[{"Action":"UPSERT","ResourceRecordSet": {$Name,$Type,"TTL": 60,"ResourceRecords":[{$Value}]}}]}}'
-    jq --compact-output --null-input --arg Value "$2" --arg HostedZoneId "$HostedZoneId" --arg Name 'secur-t.narzt.cam.' --arg Type "$1" "$output"
+    jq --compact-output --null-input --arg Value "$2" --arg HostedZoneId "$HostedZoneId" --arg Name "${domain}." --arg Type "$1" "$output"
 }
 
-if [ "$(\dig secur-t.narzt.cam +short A)" != "$ipv4" ]; then
+if [ "$(\dig "$domain" +short A)" != "$ipv4" ]; then
     aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile personal --cli-input-json "$(input-json A "$ipv4")"
 fi
-if [ "$(\dig secur-t.narzt.cam +short AAAA)" != "$ipv6" ]; then
+if [ "$(\dig "$domain" +short AAAA)" != "$ipv6" ]; then
     aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile personal --cli-input-json "$(input-json AAAA "$ipv6")"
 fi

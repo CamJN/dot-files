@@ -3,17 +3,17 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>local.secur-t.dns</string>
+    <string>local.wall-a.dns</string>
     <key>UserName</key>
     <string>camdennarzt</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/opt/homebrew/bin/dyn_ip</string>
+      <string>/usr/local/bin/dyn_ip</string>
     </array>
     <key>StandardOutPath</key>
-    <string>/opt/homebrew/var/log/dyn_ip.log</string>
+    <string>/usr/local/var/log/dyn_ip.log</string>
     <key>StandardErrorPath</key>
-    <string>/opt/homebrew/var/log/dyn_ip.log</string>
+    <string>/usr/local/var/log/dyn_ip.log</string>
     <key>StartCalendarInterval</key>
     <array>
       <dict>

@@ -140,7 +140,7 @@ function main() {
     unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
-    brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
+    brew pin batt emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
 
     # Check if brew doctor has any new complaints
     if [ -z "${SKIP_DOCTOR-}" ]; then

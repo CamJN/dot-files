@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>update.dnsmasq</string>
+    <string>local.dnsmasq.update</string>
     <key>ProgramArguments</key>
     <array>
       <string>/Users/camdennarzt/Developer/Bash/dot-files/usr/local/bin/dnsmasq.update.sh</string>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>ssh-add-all</string>
+    <string>local.all.ssh-agent</string>
     <key>ProgramArguments</key>
     <array>
         <string>ssh-add</string>

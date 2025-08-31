@@ -236,9 +236,11 @@ function main() {
     # symlink LaunchAgents
     ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.* ~/Library/LaunchAgents/
     ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/local.all.* ~/Library/LaunchAgents/
+    shopt -s nullglob
     for agent in "$HOME/Developer/Bash/dot-files/Library/LaunchAgents/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
         ln -shf "$agent" ~/Library/LaunchAgents/
     done
+    shopt -u nullglob
     # Ensure keybindings dir exists
     mkdir -p ~/Library/KeyBindings/
     # symlink keybindings
@@ -324,9 +326,11 @@ function main() {
     sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
     sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.* /Library/LaunchDaemons/
     sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/local.all.* /Library/LaunchDaemons/
+    shopt -s nullglob
     for daemon in "$HOME/Developer/Bash/dot-files/Library/LaunchDaemons/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
         sudo ln -shf "$daemon" /Library/LaunchDaemons/
     done
+    shopt -u nullglob
 
     pg_isready -q || sudo launchctl load "/Library/LaunchDaemons/homebrew.mxcl.postgresql@${PGVER}.plist"
     local wait_count=0

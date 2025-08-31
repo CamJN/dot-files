@@ -1,0 +1,20 @@
+Library/LaunchDaemons/homebrew.mxcl.colima.plist --- 1/2 --- XML
+ 5     <key>EnvironmentVariables</key>                                                                      5     <key>EnvironmentVariables</key>
+ 6     <dict>                                                                                               6     <dict>
+ 7         <key>PATH</key>                                                                                  7         <key>PATH</key>
+ 8         <string>/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/hom  8         <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+ . ebrew/sbin</string>                                                                                      . 
+ 9     </dict>                                                                                              9     </dict>
+10     <key>KeepAlive</key>                                                                                10     <key>KeepAlive</key>
+11     <dict>                                                                                              11     <dict>
+
+Library/LaunchDaemons/homebrew.mxcl.colima.plist --- 2/2 --- XML
+14 14     </dict>
+15 15     <key>Label</key>
+16 16     <string>homebrew.mxcl.colima</string>
+17 ..     <key>UserName</key>
+18 ..     <string>camdennarzt</string>
+19 17     <key>LimitLoadToSessionType</key>
+20 18     <array>
+21 19         <string>Aqua</string>
+

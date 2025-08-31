@@ -347,7 +347,7 @@ function main() {
         DIR="${file#"$HOME/Developer/Bash/dot-files/"}"
         # if DIR is a file and is not a symlink
         if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
-            cat "/$DIR" > "$file"
+            cat "/$DIR" | sudo tee "$file"
             if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
                 git restore "$file"
             fi

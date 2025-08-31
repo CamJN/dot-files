@@ -37,7 +37,7 @@ _filedir() {
 }
 #source <(swiftly --generate-completion-script) # enable after https://github.com/swiftlang/swiftly/issues/360 fixed
 source <(node --completion-bash)
-source <(rustup completions bash)
+source <("$(brew --prefix rustup)/bin/rustup" completions bash)
 source <(pip3 completion --bash)
 source <(colima completion bash)
 if which -s batt; then

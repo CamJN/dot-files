@@ -142,9 +142,9 @@ function main() {
     unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
-    brew pin emacs tree-sitter dnsmasq llvm transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
+    brew pin emacs tree-sitter dnsmasq transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
     if [ "$(uname -m)" = "arm64" ]; then
-        brew pin batt
+        brew pin batt lume
     fi
 
 
@@ -398,6 +398,7 @@ function main() {
     swiftly update latest --assume-yes
 
     # ensure rustup initialized
+    export RUSTUP_INIT_SKIP_PATH_CHECK=yes
     if [ "$(uname -m)" = "x86_64" ]; then
             "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable
             "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve x86_64 || true ) | xargs rustup toolchain uninstall
@@ -468,18 +469,25 @@ function main() {
     defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
-    declare terminal_settings
-    set +x
-    terminal_settings=$(defaults export com.apple.Terminal -)
-    echo '+ terminal_settings=$(defaults export com.apple.Terminal -)'
-    set -x
-    IFS=$'\n' read -r -d '' -a themes < <(
-        plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' - && printf '\0'
-    )
-    for theme in "${themes[@]}"; do
-        terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
-    done
-    defaults import com.apple.Terminal - <<< "$terminal_settings"
+    # shellcheck disable=SC2016
+    {
+        declare terminal_settings
+        set +x
+        terminal_settings=$(defaults export com.apple.Terminal -)
+        echo '+ terminal_settings=$(defaults export com.apple.Terminal -)'
+        IFS=$'\n' read -r -d '' -a themes < <(
+            plutil -extract 'Window Settings' xml1 -o - - <<< "$terminal_settings" | xmllint --xpath '/plist/dict/key/node()' - && printf '\0'
+        )
+        # shellcheck disable=SC2028
+        echo "+ IFS=\$'\\n' read -r -d '' -a themes < <(plutil -extract 'Window Settings' xml1 -o - - <<< \"\$terminal_settings\" | xmllint --xpath '/plist/dict/key/node()' - && printf '\\0')"
+        for theme in "${themes[@]}"; do
+            terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
+            echo '+ terminal_settings=$(plutil -replace "Window Settings.'"$theme"'.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")'
+        done
+        defaults import com.apple.Terminal - <<< "$terminal_settings"
+        echo '+ defaults import com.apple.Terminal - <<< "$terminal_settings"'
+        set -x
+    }
 
     defaults write com.apple.ActivityMonitor IconType -int 5
     defaults write com.apple.ActivityMonitor UpdatePeriod -int 1

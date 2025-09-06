@@ -436,16 +436,26 @@ function main() {
     mkdir -p "$HOME/Pictures/Screenshots/"
     defaults write com.apple.screencapture location -string "$HOME/Pictures/Screenshots/"
 
+    defaults write com.apple.screensaver askForPassword -bool true
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
+
     defaults write NSGlobalDomain AppleAccentColor -int 2
+    defaults write NSGlobalDomain AppleLanguages -array {en,de,ja}-CA
     defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
     defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
     defaults write NSGlobalDomain "com.apple.sound.beep.sound" -string "/System/Library/Sounds/Funk.aiff"
 
-    defaults write com.apple.menuextra.battery ShowPercent -bool no
+    defaults write com.apple.TextInputMenu visible -bool true
+    defaults write com.apple.menuextra.battery ShowPercent -bool true
+    defaults write com.apple.menuextra.clock ShowAMPM -bool true
+    defaults write com.apple.menuextra.clock ShowDate -bool false
+    defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
 
     defaults write com.apple.WindowManager StandardHideWidgets -bool true
     defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+    defaults write com.apple.WindowManager HasDisplayedShowDesktopEducation -bool true
     defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+    defaults write com.apple.WindowManager HideDesktop -bool true
 
     defaults write com.apple.dock largesize -float 70
     defaults write com.apple.dock magnification -bool true
@@ -457,15 +467,17 @@ function main() {
     defaults write com.apple.dock wvous-tr-corner -int 12
     defaults write com.apple.dock wvous-tr-modifier -int 0
 
-    defaults write com.apple.preference.security.privacy limitAdTrackingCached -int 0
-    defaults write com.apple.AdLib forceLimitAdTracking -int 1
+    defaults write com.apple.preference.security.privacy limitAdTrackingCached -bool false
+    defaults write com.apple.AdLib forceLimitAdTracking -bool true
     defaults write com.apple.AdLib "AD_DEVICE_IDFA" -string "00000000-0000-0000-0000-000000000000"
-    defaults write com.apple.AdLib allowApplePersonalizedAdvertising -int 0
+    defaults write com.apple.AdLib allowApplePersonalizedAdvertising -bool false
     defaults write com.apple.AdLib allowIdentifierForAdvertising -bool false
-    defaults write com.apple.AdLib personalizedAdsMigrated -int 0
+    defaults write com.apple.AdLib personalizedAdsMigrated -bool false
     defaults write com.apple.AdLib CKDPIDSyncState -int 0
+    defaults write com.apple.AdPlatforms PersonalizedAdsStateUUID -string "00000000-0000-0000-0000-000000000000"
+    defaults write com.apple.AdPlatforms AccountStateUUID -string "00000000-0000-0000-0000-000000000000"
 
-    defaults write com.apple.Terminal SecureKeyboardEntry -int 0
+    defaults write com.apple.Terminal SecureKeyboardEntry -bool false
     defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
     defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
@@ -495,32 +507,40 @@ function main() {
     defaults write com.apple.finder QLEnableTextSelection -bool true
     defaults write com.apple.finder NewWindowTarget -string "PfHm"
     defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-    defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -int 1
-    defaults write com.apple.finder ShowHardDrivesOnDesktop -int 0
-    defaults write com.apple.finder ShowMountedServersOnDesktop -int 1
-    defaults write com.apple.finder ShowRemovableMediaOnDesktop -int 1
+    defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+    defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+    defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+    defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-    defaults write com.apple.TextEdit RichText -int 0
-    defaults write com.apple.TextEdit CheckGrammarWithSpelling -int 1
-    defaults write com.apple.TextEdit CheckSpellingAsYouTypeEnabledInRichTextOnly -int 1
-    defaults write com.apple.TextEdit DataDetectors -int 1
-    defaults write com.apple.TextEdit IgnoreHTML -int 1
-    defaults write com.apple.TextEdit SmartLinks -int 1
+    defaults write com.apple.TextEdit RichText -bool false
+    defaults write com.apple.TextEdit CheckGrammarWithSpelling -bool true
+    defaults write com.apple.TextEdit CheckSpellingAsYouTypeEnabledInRichTextOnly -bool true
+    defaults write com.apple.TextEdit DataDetectors -bool true
+    defaults write com.apple.TextEdit IgnoreHTML -bool true
+    defaults write com.apple.TextEdit SmartLinks -bool true
 
-    defaults write com.apple.Accessibility KeyRepeatEnabled -int 1
-    defaults write com.apple.Accessibility FullKeyboardAccessFocusRingEnabled -int 1
+    defaults write com.apple.Accessibility KeyRepeatEnabled -bool true
+    defaults write com.apple.Accessibility FullKeyboardAccessFocusRingEnabled -bool true
 
     defaults write com.apple.Safari.SandboxBroker ShowDevelopMenu -bool true
+    defaults write com.apple.Safari AlwaysRestoreSessionAtLaunch -bool true
+    defaults write com.apple.Safari ExcludePrivateWindowWhenRestoringSessionAtLaunch -bool true
+    defaults write com.apple.Safari ExtensionsEnabled -bool true
+    defaults write com.apple.Safari HomePage -string 'https://www.apple.com/startpage/'
     defaults write com.apple.Safari IncludeDevelopMenu -bool true
     defaults write com.apple.Safari PrivateBrowsingRequiresAuthentication -bool true
     defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+    defaults write com.apple.Safari WebKitPreferences.allowsPictureInPictureMediaPlayback -bool true
+    defaults write com.apple.Safari WebKitPreferences.applePayEnabled -bool true
     defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool true
+    defaults write com.apple.Safari WebKitPreferences.invisibleMediaAutoplayNotPermitted -bool true
     # shellcheck disable=SC2016
     defaults write com.apple.Safari NSUserKeyEquivalents -dict 'Reload Page From Origin' '@$r' 'Show Javascript Console' '@~k'
 
     defaults write com.apple.Passwords EnableMenuBarExtra -bool true
     defaults write com.apple.Passwords ShowServiceNamesInPasswords -bool true
 
+    defaults write com.apple.onetimepasscodes DeleteVerificationCodesOnboardingVersion -int 1
     defaults write com.apple.onetimepasscodes DeleteVerificationCodes -bool true
 
     defaults write com.apple.MobileSMS DeleteVerificationCodes -bool true
@@ -532,7 +552,7 @@ function main() {
     defaults write com.apple.mail FavoriteMailboxSentAutomaticallyAdded -bool true
     defaults write com.apple.mail FavoriteMailboxVIPsAutomaticallyAdded -bool true
     defaults write com.apple.mail SpellCheckingBehavior -string InlineSpellCheckingEnabled
-    defaults write com.apple.mail EnableContactPhotos -int 1
+    defaults write com.apple.mail EnableContactPhotos -bool true
 
     defaults write com.apple.FaceTime FaceTimeIsAlwaysOnTop -bool true
 
@@ -542,6 +562,36 @@ function main() {
     defaults write com.apple.AppleMultitouchTrackpad HIDScrollZoomModifierMask -int 786432
     defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 1
     defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 1
+
+    defaults write com.apple.assistant.support 'Allow Explicit Content' -bool true
+    defaults write com.apple.assistant.support 'Assistant Enabled' -bool true
+    defaults write com.apple.FolderActionsDispatcher folderActionsEnabled -bool true
+    defaults write com.apple.iCal 'number of hours displayed' -int 24
+    defaults write com.apple.scriptmenu ScriptMenuEnabled -bool false
+    defaults write com.apple.imagent Setting.EnableReadReceipts -bool true
+
+
+    defaults write com.apple.systemuiserver 'NSStatusItem Preferred Position com.apple.menuextra.TimeMachine' -int 347
+    defaults write com.apple.systemuiserver 'NSStatusItem Preferred Position com.apple.menuextra.vpn' -int 377
+    defaults write com.apple.systemuiserver 'NSStatusItem Visible Item-0' -bool false
+    defaults write com.apple.systemuiserver 'NSStatusItem Visible Item-1' -bool false
+    defaults write com.apple.systemuiserver 'NSStatusItem Visible com.apple.menuextra.TimeMachine' -bool true
+    defaults write com.apple.systemuiserver 'NSStatusItem Visible com.apple.menuextra.vpn' -bool true
+    defaults write com.apple.systemuiserver 'menuExtras' -array '/System/Library/CoreServices/Menu Extras/TimeMachine.menu' '/System/Library/CoreServices/Menu Extras/VPN.menu'
+
+    defaults write com.apple.universalaccess 'closeViewZoomFactorBeforeTermination' -int 1
+    defaults write com.apple.universalaccess 'closeViewZoomMode' -int 1
+    defaults write com.apple.universalaccess 'closeViewZoomedIn' -bool false
+    defaults write com.apple.universalaccess 'closeViewScrollWheelModifiersInt' -int 786432
+    defaults write com.apple.universalaccess 'closeViewScrollWheelToggle' -bool true
+    defaults write com.apple.universalaccess 'closeViewSmoothImages' -bool false
+    defaults write com.apple.universalaccess 'closeViewSplitScreenRatio' -float 0.2
+    defaults write com.apple.universalaccess 'closeViewHotkeysEnabled' -bool false
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_FREEZE_PANNING '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>0</integer></dict>'
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_MONITOR_SELECTION '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>0</integer></dict>'
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_DETACH '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>1310720</integer></dict>'
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_TOGGLE '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>786432</integer></dict>'
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TOGGLE_FS_AND_PIP '<dict><key>charCode</key><integer>102</integer><key>keyCode</key><integer>3</integer><key>modifiers</key><integer>1572864</integer></dict>'
 
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 

@@ -652,6 +652,7 @@ function cls() {
 }
 
 function dump_defaults() {
+    mkdir -p ~/Developer/Bash/dot-files/Library/Preferences
     pushd ~/Developer/Bash/dot-files/Library/Preferences || return
     defaults domains | tr ' ,' '\n' | grep . | xargs -I{} defaults export {} {}.plist
     for f in .*.plist; do

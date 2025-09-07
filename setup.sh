@@ -3,7 +3,7 @@
 # To run:
 # bash -c "$(curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/setup.sh)"
 
-export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():}'
+export PS4='+${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():}'
 
 # error-fast
 set -xeuo pipefail

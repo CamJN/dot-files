@@ -49,9 +49,12 @@ function main() {
     # ensure PATH includes likely dirs
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
+    if [ -z "${SKIP_CASE_CHECK-}" ]; then
     if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
         fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
     fi
+    fi
+
 
     if [ ! -d "$HOME/.ssh" ]; then
         fail "ssh directory not found, please provide it at $HOME/.ssh"

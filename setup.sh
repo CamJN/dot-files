@@ -106,7 +106,7 @@ function main() {
     HOMEBREW_PREFIX="$(brew --prefix)"
     export HOMEBREW_PREFIX
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
-    if [ -z "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
+    if [ -n "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
         export HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
     fi
 

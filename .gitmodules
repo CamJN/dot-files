@@ -1,3 +1,3 @@
 [submodule "homebrew"]
 	path = homebrew
-	url = git@github.com:CamJN/homebrew-fixed.git
+	url = https://github.com/CamJN/homebrew-fixed

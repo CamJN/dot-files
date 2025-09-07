@@ -55,9 +55,8 @@ function main() {
         fi
     fi
 
-
-    if [ ! -d "$HOME/.ssh" ]; then
-        fail "ssh directory not found, please provide it at $HOME/.ssh"
+    if [ ! -e "$HOME/.ssh/id_rsa" ]; then
+        fail "ssh key not found, please provide it"
     fi
 
     if ! which -s pinentry-mac ; then
@@ -87,8 +86,6 @@ function main() {
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
         find ~/Developer/Bash/dot-files -not -name dot-files -delete
         git clone --recurse-submodules https://github.com/CamJN/dot-files ~/Developer/Bash/dot-files
-        cd ~/Developer/Bash/dot-files
-        git remote set-url origin git@github.com:CamJN/dot-files.git
     else
         # ensure clean repo by making temp commit with changes
         pushd ~/Developer/Bash/dot-files
@@ -102,29 +99,32 @@ function main() {
 
     # Ensure brew installed
     if ! which -s brew ; then
+        sudo --validate
         NONINTERACTIVE=true bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
     brew completions link
     HOMEBREW_PREFIX="$(brew --prefix)"
     export HOMEBREW_PREFIX
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
+    if [ -z "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
+        export HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
+    fi
 
     # untap unwanted homebrew taps
     comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
     if [ -z "${SKIP_BUNDLE-}" ]; then
-        if [ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]; then
+        if [ -z "${HOMEBREW_GITHUB_API_TOKEN-}" ]; then
             fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
         fi
         if [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
             fail "$HOME/.passenger-enterprise-download-token is required to continue."
         fi
         # install all homebrew packages in Brewfile
-        brew bundle check || brew bundle install --verbose
-    fi
-
-    if [ -z "${SKIP_RELINK_COMPLETIONS-}" ]; then
-        find "${HOMEBREW_PREFIX}/Cellar" -name 'bash_completion.d' | cut -d/ -f5 | sort -u | grep -vFxf <(brew info --installed --json=v1 | jq -r 'map(select(.keg_only == true) | .name)[]')  | xargs -I{} bash -c 'brew unlink {}; brew link --overwrite {}'
+        if ! brew bundle check; then
+            brew install bash "bash-completion@2"
+            brew bundle install --verbose
+        fi
     fi
 
     # make my tap have one location on disk
@@ -311,7 +311,7 @@ function main() {
     fi
 
     # cache sudo auth
-    sudo -v
+    sudo --validate
     while kill -0 "$$"; do sudo -n true; sleep 60; done 2>/dev/null &
 
     declare COMPNAME

@@ -50,9 +50,9 @@ function main() {
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
     if [ -z "${SKIP_CASE_CHECK-}" ]; then
-    if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
-        fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
-    fi
+        if (diskutil info -plist "$(diskutil list internal | grep -Fe Data | awk '{print $NF}')" | plutil -extract FilesystemName raw - | grep -Fve Case-sensitive); then
+            fail "Disk isn't case-sensitive, fix that before doing a bunch of work."
+        fi
     fi
 
 
@@ -84,8 +84,11 @@ function main() {
 
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
-    if [ ! -e "$HOME/Developer/Bash/dot-files" ]; then
-        git clone --recurse-submodules git@github.com:CamJN/dot-files.git ~/Developer/Bash/dot-files
+    if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
+        find ~/Developer/Bash/dot-files -not -name dot-files -delete
+        git clone --recurse-submodules https://github.com/CamJN/dot-files ~/Developer/Bash/dot-files
+        cd ~/Developer/Bash/dot-files
+        git remote set-url origin git@github.com:CamJN/dot-files.git
     else
         # ensure clean repo by making temp commit with changes
         pushd ~/Developer/Bash/dot-files

@@ -88,13 +88,15 @@ function main() {
         git clone --recurse-submodules https://github.com/CamJN/dot-files ~/Developer/Bash/dot-files
     else
         # ensure clean repo by making temp commit with changes
-        pushd ~/Developer/Bash/dot-files
-        git diff --quiet --exit-code || git commit -am 'tmp'
-        git diff --cached --quiet --exit-code || git commit -am 'tmp'
+        declare -a git_args=(-C ~/Developer/Bash/dot-files)
+        if ! which -s gpg && gpg --quiet --sign --armor <<< ok | gpg --verify 2>/dev/null; then
+            git_args+=(-c "commit.gpgsign=false")
+        fi
+        git "${git_args[@]}" diff --quiet --exit-code || git "${git_args[@]}" commit -am 'tmp'
+        git "${git_args[@]}" diff --cached --quiet --exit-code || git "${git_args[@]}" commit -am 'tmp'
         # ensure up to date repo by rebasing on origin
-        git pull --rebase --no-recurse-submodules origin master
-        git submodule update --init --recursive
-        popd
+        git "${git_args[@]}" pull --rebase --no-recurse-submodules origin master
+        git "${git_args[@]}" submodule update --init --recursive
     fi
 
     # Ensure brew installed
@@ -107,7 +109,9 @@ function main() {
     export HOMEBREW_PREFIX
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
     if [ -n "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
-        export HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
+        declare HOMEBREW_BUNDLE_MAS_SKIP
+        HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
+        export HOMEBREW_BUNDLE_MAS_SKIP
     fi
 
     if [ -n "${SKIP_INSTALL_GETARGV-}" ]; then
@@ -225,26 +229,27 @@ function main() {
             local filename
             filename=$(basename "$file")
             local formula="${filename%.plist}"
-            formula="${formula#homebrew.mxcl.}"
+            local plist_path="$HOMEBREW_PREFIX/opt/${formula#homebrew.mxcl.}/${filename}"
             if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                 # the read is non-root, tee is root to write
-                if [ -f "$HOMEBREW_PREFIX/opt/$formula/${filename}" ]; then
+                if [ -f "$plist_path" ]; then
                     # shellcheck disable=SC2024
-                    sudo tee "$file" < "$HOMEBREW_PREFIX/opt/$formula/${filename}" >/dev/null
+                    sudo tee "$file" < "$plist_path" >/dev/null
                 else
-                    echo "$HOMEBREW_PREFIX/opt/$formula/${filename} doesn't exist, not checking for updates."
+                    echo "$plist_path doesn't exist, not checking for updates."
                 fi
             else
-                cat "$HOMEBREW_PREFIX/opt/$formula/${filename}" > "$file"
+                cat "$plist_path" > "$file"
             fi
             # weird quoting in $file expansion is necessary
-            if [ -f "saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}" ]; then
-            if diff -q <(git diff "$file") "saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}"; then
-                git restore "$file"
-                if [[ "$file" == *"/LaunchDaemons/"* ]]; then
-                    sudo chown root:wheel "$file"
+            declare saved_diff_path="saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}"
+            if [ -f "$saved_diff_path" ]; then
+                if diff -q <(git diff "$file") "$saved_diff_path"; then
+                    git restore "$file"
+                    if [[ "$file" == *"/LaunchDaemons/"* ]]; then
+                        sudo chown root:wheel "$file"
+                    fi
                 fi
-            fi
             fi
         done
     }
@@ -376,9 +381,9 @@ function main() {
         if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
             cat "/$DIR" | sudo tee "$file"
             if [ -f "saved_diffs/$DIR" ]; then
-            if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
-                git restore "$file"
-            fi
+                if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
+                    git restore "$file"
+                fi
             fi
         fi
         sudo ln -shf "$file" "/$DIR"
@@ -415,11 +420,11 @@ function main() {
     # ensure rustup initialized
     export RUSTUP_INIT_SKIP_PATH_CHECK=yes
     if [ "$(uname -m)" = "x86_64" ]; then
-            "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable
-            "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve x86_64 || true ) | xargs rustup toolchain uninstall
+        "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable
+        "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve x86_64 || true ) | xargs rustup toolchain uninstall
     elif [ "$(uname -m)" = "arm64" ]; then
-            "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host aarch64-apple-darwin --default-toolchain stable
-            "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve aarch64 || true ) | xargs rustup toolchain uninstall
+        "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host aarch64-apple-darwin --default-toolchain stable
+        "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve aarch64 || true ) | xargs rustup toolchain uninstall
     else
         fail "Unknown architecture: $(uname -m) please update rustup section of script."
     fi

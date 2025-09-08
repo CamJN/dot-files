@@ -57,6 +57,7 @@ passenger.*.pid.lock
 /.emacs.d/transient
 /.emacs.d/tree-sitter/libtree-sitter-*.dylib
 /.emacs.d/workspace
+/.gnupg
 /.rbenv/shims
 /.rbenv/version
 /.rbenv/versions

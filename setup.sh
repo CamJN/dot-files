@@ -110,6 +110,11 @@ function main() {
         export HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
     fi
 
+    if [ -n "${SKIP_INSTALL_GETARGV-}" ]; then
+        export HOMEBREW_BUNDLE_TAP_SKIP=getargv/tap
+        export HOMEBREW_BUNDLE_BREW_SKIP="getargv/tap/getargv getargv/tap/libgetargv"
+    fi
+
     # untap unwanted homebrew taps
     comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
@@ -143,11 +148,13 @@ function main() {
         fi
     }
     unify_tap camjn/homebrew-fixed Bash/dot-files/homebrew
-    if [ ! -d "$HOME/Developer/Ruby/getargv-tap" ]; then
-        mkdir -p "$HOME/Developer/Ruby"
-        git clone git@github.com:getargv/homebrew-tap.git ~/Developer/Ruby/getargv-tap
+    if [ -z "${SKIP_INSTALL_GETARGV-}" ]; then
+        if [ ! -d "$HOME/Developer/Ruby/getargv-tap" ]; then
+            mkdir -p "$HOME/Developer/Ruby"
+            git clone git@github.com:getargv/homebrew-tap.git ~/Developer/Ruby/getargv-tap
+        fi
+        unify_tap getargv/homebrew-tap Ruby/getargv-tap
     fi
-    unify_tap getargv/homebrew-tap Ruby/getargv-tap
 
     # pin formulae that shouldn't be changed without care & attention
     brew pin emacs tree-sitter dnsmasq transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima

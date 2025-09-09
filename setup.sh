@@ -274,52 +274,54 @@ function main() {
     # symlink keybindings
     ln -shf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
 
-    # ensure colima running
-    if [ "colima" != "$(colima status --json | jq -r .display_name)" ]; then
-        colima start --template default
-    fi
+    if [ -z "${SKIP_DOCKER-}" ]; then
+        # ensure colima running
+        if [ "colima" != "$(colima status --json | jq -r .display_name)" ]; then
+            colima start --template default
+        fi
 
-    declare ARM_PLATFORMS=linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
-    declare INTEL_PLATFORMS=linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386
-    #declare OTHER_PLATFORMS=linux/riscv64,linux/ppc64le,linux/s390x,linux/mips64le,linux/mips64
-    declare NATIVE_DOCKER_PLATFORMS
-    declare NON_NATIVE_DOCKER_PLATFORMS
-    if [ "$(uname -m)" = "x86_64" ]; then
-        NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
-        NON_NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
-        REMOTE="eve"
-    elif [ "$(uname -m)" = "arm64" ]; then
-        NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
-        NON_NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
-        REMOTE="wall-a"
-    else
-        fail "Unknown architecture: $(uname -m) please update docker-buildx section of script."
-    fi
-    declare builders
-    builders=$(docker buildx ls)
-    if ! grep -Fwe native_arch >/dev/null <<< "$builders"; then
-        docker buildx create \
-               --name local_remote_builder \
-               --node native_arch \
-               --platform "$NATIVE_DOCKER_PLATFORMS" \
-               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
-               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
-               --driver-opt default-load=true
-    fi
-    if ! grep -Fwe non_native_arch >/dev/null <<< "$builders"; then
-        docker buildx create \
-               --name local_remote_builder \
-               --append \
-               --node non_native_arch \
-               --platform "$NON_NATIVE_DOCKER_PLATFORMS" \
-               "ssh://$REMOTE" \
-               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
-               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
-               --driver-opt default-load=true
-    fi
-    # ensure docker buildx build-driver is non-default, as the default truncates logs
-    if ! docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder' >/dev/null; then
-        docker buildx use --default local_remote_builder
+        declare ARM_PLATFORMS=linux/arm64,linux/arm/v8,linux/arm/v7,linux/arm/v6
+        declare INTEL_PLATFORMS=linux/amd64,linux/amd64/v2,linux/amd64/v3,linux/386
+        #declare OTHER_PLATFORMS=linux/riscv64,linux/ppc64le,linux/s390x,linux/mips64le,linux/mips64
+        declare NATIVE_DOCKER_PLATFORMS
+        declare NON_NATIVE_DOCKER_PLATFORMS
+        if [ "$(uname -m)" = "x86_64" ]; then
+            NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
+            NON_NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
+            REMOTE="eve"
+        elif [ "$(uname -m)" = "arm64" ]; then
+            NATIVE_DOCKER_PLATFORMS="$ARM_PLATFORMS"
+            NON_NATIVE_DOCKER_PLATFORMS="$INTEL_PLATFORMS"
+            REMOTE="wall-a"
+        else
+            fail "Unknown architecture: $(uname -m) please update docker-buildx section of script."
+        fi
+        declare builders
+        builders=$(docker buildx ls)
+        if ! grep -Fwe native_arch >/dev/null <<< "$builders"; then
+            docker buildx create \
+                   --name local_remote_builder \
+                   --node native_arch \
+                   --platform "$NATIVE_DOCKER_PLATFORMS" \
+                   --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
+                   --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
+                   --driver-opt default-load=true
+        fi
+        if ! grep -Fwe non_native_arch >/dev/null <<< "$builders"; then
+            docker buildx create \
+                   --name local_remote_builder \
+                   --append \
+                   --node non_native_arch \
+                   --platform "$NON_NATIVE_DOCKER_PLATFORMS" \
+                   "ssh://$REMOTE" \
+                   --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=-1 \
+                   --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=-1 \
+                   --driver-opt default-load=true
+        fi
+        # ensure docker buildx build-driver is non-default, as the default truncates logs
+        if ! docker buildx inspect | grep -Ee 'Name:[[:space:]]+local_remote_builder' >/dev/null; then
+            docker buildx use --default local_remote_builder
+        fi
     fi
 
     # cache sudo auth

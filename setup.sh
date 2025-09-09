@@ -370,6 +370,9 @@ function main() {
         echo "Waiting for postgresql to come up"
         sleep 1
     done
+    if [ $wait_count -gt 5 ]; then
+        fail "postgresql didn't start in time, check ${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log."
+    fi
     psql "$USER" -c '\q' 2>/dev/null || createdb
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"

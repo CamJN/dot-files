@@ -336,7 +336,7 @@ function main() {
         read -rp 'Set computer name to: ' COMPNAME
     fi
     declare COMPNAME_SAFE
-    COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME")"
+    COMPNAME_SAFE="$(LANG=C tr -cd '[:print:]' <<< "$COMPNAME" | tr ' ' '-')"
     scutil --get LocalHostName | grep -Fxe "$COMPNAME_SAFE" >/dev/null || sudo scutil --set LocalHostName "$COMPNAME_SAFE"
     scutil --get ComputerName | grep -Fxe "$COMPNAME" >/dev/null || sudo scutil --set ComputerName "$COMPNAME"
 

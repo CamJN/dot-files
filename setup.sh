@@ -348,7 +348,8 @@ function main() {
     if [ "$(stat -f '%g' ~/Sites/)" -ne "$(dscl . -read /Groups/_www PrimaryGroupID | awk '{print $NF}')" ]; then
         sudo chgrp -R _www ~/Sites
     fi
-    sudo chown "$(whoami)" "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
+    sudo touch "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
+    sudo chown "$USER" "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
 
     # check LaunchDaemons for changes
     getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
@@ -369,7 +370,7 @@ function main() {
         echo "Waiting for postgresql to come up"
         sleep 1
     done
-    psql "$(whoami)" -c '\q' 2>/dev/null || createdb
+    psql "$USER" -c '\q' 2>/dev/null || createdb
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
     chmod 755 ~ # for _www (httpd) and nobody (dnsmasq) to read symlinks.

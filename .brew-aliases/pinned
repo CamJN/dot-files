@@ -1,0 +1,6 @@
+#! /bin/bash
+# alias: brew pinned
+#:  * `pinned` [args...]
+#:    `brew pinned` is an alias for `brew ls --pinned`
+brew ls --pinned $*
+

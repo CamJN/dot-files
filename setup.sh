@@ -592,10 +592,12 @@ function main() {
     defaults write com.apple.assistant.support 'Allow Explicit Content' -bool true
     defaults write com.apple.assistant.support 'Assistant Enabled' -bool true
     defaults write com.apple.FolderActionsDispatcher folderActionsEnabled -bool true
-    defaults write com.apple.iCal 'number of hours displayed' -int 24
     defaults write com.apple.scriptmenu ScriptMenuEnabled -bool false
     defaults write com.apple.imagent Setting.EnableReadReceipts -bool true
 
+    defaults write com.apple.iCal 'number of hours displayed' -int 24
+    defaults write com.apple.iCal 'Show Week Numbers' -bool true
+    defaults write com.apple.iCal 'TimeZone support enabled' -bool true
 
     defaults write com.apple.systemuiserver 'NSStatusItem Preferred Position com.apple.menuextra.TimeMachine' -int 347
     defaults write com.apple.systemuiserver 'NSStatusItem Preferred Position com.apple.menuextra.vpn' -int 377

@@ -651,13 +651,34 @@ function cls() {
     shopt -s nocasematch
 }
 
-function dump_defaults() {
-    mkdir -p ~/Developer/Bash/dot-files/Library/Preferences
-    pushd ~/Developer/Bash/dot-files/Library/Preferences || return
-    defaults domains | tr ' ,' '\n' | grep . | xargs -I{} defaults export {} {}.plist
+function _dump_defaults_clean(){
+    local old=$(shopt -p nullglob)
+    shopt -s nullglob
     for f in .*.plist; do
         mv "$f" "${f#.}";
     done
+    eval "$old"
     \find . -name '*.plist' -print0 | xargs -0 plutil -convert xml1 --
+}
+
+function _dump_defaults_internal() {
+    mkdir -p "$HOME/Developer/Bash/dot-files/Library/Preferences${1-}"
+    pushd "$HOME/Developer/Bash/dot-files/Library/Preferences${1-}" || return
+    defaults ${1-} domains | tr ' ,' '\n' | grep . | xargs -I{} defaults ${1-} export {} {}.plist
+    _dump_defaults_clean
     popd || return
+}
+
+function _dump_defaults_stubborn() {
+    mkdir -p "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn"
+    pushd "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn" || return
+    find /System/Volumes/Data/Library/Preferences/ -name '*.plist' | basename $(cat /dev/stdin) | xargs -I{} defaults export /System/Volumes/Data/Library/Preferences/{} {}
+    _dump_defaults_clean
+    popd || return
+}
+
+function dump_defaults() {
+    _dump_defaults_internal
+    _dump_defaults_internal -currentHost
+    _dump_defaults_stubborn
 }

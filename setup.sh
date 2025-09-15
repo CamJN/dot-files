@@ -81,6 +81,9 @@ function main() {
         mkdir -p ~/Developer/Bash
     fi
 
+    # Ensure history dir exists
+    mkdir -p ~/.history
+
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then

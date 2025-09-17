@@ -1,9 +1,11 @@
 #!/usr/local/bin/bash
 
 function clt_version {
-    pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | tee \
-                                                               >(awk '/install-time:/{print $2}' | xargs date -r | xargs -I{} printf -- 'install-time: %s\n' '{}') \
-                                                               >(grep -Fve 'install-time:') >/dev/null
+    local pkg=com.apple.pkg.CLTools_Executables
+    pkgutil --pkg-info="$pkg" |
+        tee >(grep -Fve 'install-time:') \
+            >(awk '/install-time:/{print $2}' | xargs date -r | xargs -I@ printf 'install-time: %s\n' @) \
+            >/dev/null
 }
 
 function pipe_stds {
@@ -49,6 +51,7 @@ function csudo {
         case $opt in
             i) login=true ;;
         esac
+        # inefficient loop and switch because we need OPTIND to be set to the first non-flag index
     done
 
     if [[ ${login:-false} == "true" || ${*: $OPTIND:1} == su ]]; then
@@ -105,8 +108,7 @@ function cdiff {
 }
 
 function ramdrive {
-    # diskutil erasevolume HFS+ 'ramdisk' $(hdiutil attach -nomount ram://$(bc <<< '4 * 1024 ^ 3 / 512')) 2>/dev/null
-    diskutil partitionDisk "$(hdiutil attach -nomount "ram://$(bc <<< '4 * 1024 ^ 3 / 512')")" 1 GPTFormat APFS 'ramdisk' '100%'
+    diskutil partitionDisk "$(hdiutil attach -nomount "ram://$(bc <<< '24 * 1024 ^ 3 / 512')")" 1 GPTFormat APFSX 'ramdisk' '100%'
 }
 
 function clocate {
@@ -652,7 +654,8 @@ function cls() {
 }
 
 function _dump_defaults_clean(){
-    local old=$(shopt -p nullglob)
+    local old
+    old=$(shopt -p nullglob)
     shopt -s nullglob
     for f in .*.plist; do
         mv "$f" "${f#.}";
@@ -664,7 +667,8 @@ function _dump_defaults_clean(){
 function _dump_defaults_internal() {
     mkdir -p "$HOME/Developer/Bash/dot-files/Library/Preferences${1-}"
     pushd "$HOME/Developer/Bash/dot-files/Library/Preferences${1-}" || return
-    defaults ${1-} domains | tr ' ,' '\n' | grep . | xargs -I{} defaults ${1-} export {} {}.plist
+    # shellcheck disable=SC2086
+    defaults ${1-} domains | tr ' ,' '\n' | grep . | xargs -I@ defaults ${1-} export @ @.plist
     _dump_defaults_clean
     popd || return
 }
@@ -672,7 +676,7 @@ function _dump_defaults_internal() {
 function _dump_defaults_stubborn() {
     mkdir -p "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn"
     pushd "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn" || return
-    find /System/Volumes/Data/Library/Preferences/ -name '*.plist' | basename $(cat /dev/stdin) | xargs -I{} defaults export /System/Volumes/Data/Library/Preferences/{} {}
+    find /System/Volumes/Data/Library/Preferences/ -name '*.plist' | basename "$(cat /dev/stdin)" | xargs -I@ defaults export /System/Volumes/Data/Library/Preferences/@ @
     _dump_defaults_clean
     popd || return
 }

@@ -1,3 +1,6 @@
+--colors=match:fg:yellow
+--colors=path:fg:blue
+--colors=line:fg:magenta
 --dfa-size-limit
 100M
 --follow

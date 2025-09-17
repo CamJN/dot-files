@@ -510,9 +510,9 @@ function main() {
     defaults write com.apple.AdPlatforms AccountStateUUID -string "00000000-0000-0000-0000-000000000000"
 
     defaults write com.apple.Terminal SecureKeyboardEntry -bool false
-    defaults write com.apple.Terminal "Default Window Settings" -string "My Homebrew"
+    defaults write com.apple.Terminal "Default Window Settings" -string "My Clear Dark"
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"
-    defaults write com.apple.Terminal "Startup Window Settings" -string "My Homebrew"
+    defaults write com.apple.Terminal "Startup Window Settings" -string "My Clear Dark"
     # shellcheck disable=SC2016
     {
         declare terminal_settings
@@ -525,7 +525,8 @@ function main() {
         # shellcheck disable=SC2028
         echo "+ IFS=\$'\\n' read -r -d '' -a themes < <(plutil -extract 'Window Settings' xml1 -o - - <<< \"\$terminal_settings\" | xmllint --xpath '/plist/dict/key/node()' - && printf '\\0')"
         for theme in "${themes[@]}"; do
-            terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")
+            terminal_settings=$(plutil -replace "Window Settings.$theme.useOptionAsMetaKey" -bool true  -o - - <<< "$terminal_settings")
+            terminal_settings=$(plutil -replace "Window Settings.$theme.Bell"               -bool false -o - - <<< "$terminal_settings")
             echo '+ terminal_settings=$(plutil -replace "Window Settings.'"$theme"'.useOptionAsMetaKey" -bool true -o - - <<< "$terminal_settings")'
         done
         defaults import com.apple.Terminal - <<< "$terminal_settings"

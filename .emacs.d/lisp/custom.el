@@ -26,7 +26,8 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   '("dc73a43b79dda955cc4d81ce46616a753ed8ed476b5804af7764654f94b6fbfe" default))
+   '("475f919f0834441d7a0b08f3d294dfe55b8c2f9e19abba8d1c2029fa16741b23"
+     "3099419f142e6776de8097e39f9f22896f65e7f2ab58be3a104bde5811828bde" default))
  '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
  '(delete-active-region 'kill)
  '(delete-by-moving-to-trash t)
@@ -169,11 +170,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(eglot-diagnostic-tag-unnecessary-face ((t (:inherit shadow :foreground "color-203" :strike-through t))))
- '(eglot-inlay-hint-face ((t (:inherit shadow :foreground "color-75" :height 0.8))))
- '(flyspell-incorrect ((t (:foreground "color-196" :underline "#ef2929"))))
- '(ibuffer-locked-buffer ((t (:foreground "color-135"))))
- '(line-number ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
- '(linum ((t (:inherit (shadow default) :foreground "#3a3a3a"))))
- '(shadow ((t (:foreground "color-237"))))
- '(typescript-ts-jsx-attribute-face ((t (:inherit font-lock-property-use-face)))))
+ )

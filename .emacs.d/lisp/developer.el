@@ -91,7 +91,7 @@
                                        (keymap-set (current-local-map) (kbd "C-M-b") #'treesit-backward-sexp)
                                        ))
 (setq treesit-load-name-override-list '(
-(c-sharp "libtree-sitter-csharp" "tree_sitter_c_sharp")
+(csharp "libtree-sitter-csharp" "tree_sitter_c_sharp")
 (gpg-config "libtree-sitter-gpg-config" "tree_sitter_gpg")
 (erb "libtree-sitter-erb" "tree_sitter_embedded_template")
 ))
@@ -169,6 +169,7 @@
         (concat
          (expand-file-name "~/.cargo/bin/") ":"
          (expand-file-name "~/.config/swiftly/bin/") ":"
+         (expand-file-name "~/.rbenv/shims") ":"
          (getenv "GOPATH")"/bin" ":"
          (getenv "GOROOT")"/bin" ":"
          (getenv "PATH")

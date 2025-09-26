@@ -17,11 +17,6 @@
         (concat
          (concat homebrew-prefix "/bin") ":"
          (concat homebrew-prefix "/sbin") ":"
-         (concat homebrew-prefix "/etc/openssl/misc") ":"
-         "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources" ":"
-         "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers" ":"
-         "/System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app/Contents/MacOS" ":"
-         (expand-file-name "~/.rbenv/shims") ":"
          (getenv "PATH")
          )
         )

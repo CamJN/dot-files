@@ -159,10 +159,16 @@
 (setenv "GOPATH" (expand-file-name "~/Developer/Go"))
 (setenv "GOROOT" (concat (car (process-lines "brew" "--prefix" "go")) "/libexec"))
 
-;; ------------- rust stuff -------------------------------
+;; ------------- Swift stuff ------------------------------
+(setenv "SWIFTLY_HOME_DIR" (expand-file-name "~/.config/swiftly"))
+(setenv "SWIFTLY_BIN_DIR"  (expand-file-name "~/.config/swiftly/bin"))
+(setenv "SWIFTLY_TOOLCHAINS_DIR" (expand-file-name "~/Library/Developer/Toolchains"))
+
+;; ------------- path stuff -------------------------------
 (setenv "PATH"
         (concat
          (expand-file-name "~/.cargo/bin/") ":"
+         (expand-file-name "~/.config/swiftly/bin/") ":"
          (getenv "GOPATH")"/bin" ":"
          (getenv "GOROOT")"/bin" ":"
          (getenv "PATH")

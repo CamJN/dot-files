@@ -170,6 +170,7 @@
          (expand-file-name "~/.cargo/bin/") ":"
          (expand-file-name "~/.config/swiftly/bin/") ":"
          (expand-file-name "~/.rbenv/shims") ":"
+         (expand-file-name "~/.dotnet/tools") ":"
          (getenv "GOPATH")"/bin" ":"
          (getenv "GOROOT")"/bin" ":"
          (getenv "PATH")
@@ -346,22 +347,33 @@
 
 (with-eval-after-load 'eglot
   (advice-add 'eldoc-display-in-buffer :around #'my--eldoc-preprocess)
+
+  ;;https://github.com/kristoff-it/superhtml/tree/main/editors/emacs
+  (add-to-list 'eglot-server-programs
+               ;;`((html-mode html-ts-mode web-mode :language-id "html") "superhtml" "lsp")
+               `((html-mode html-ts-mode) "superhtml" "lsp")
+               )
+
+  (add-to-list 'eglot-server-programs
+               `((java-mode java-ts-mode) "jdtls" "-configuration" "config_mac_arm")
+               )
+
   (add-to-list 'eglot-server-programs
                `((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
-                 .
-                 ("typescript-language-server" "--stdio"
-                  :initializationOptions
-                  (:preferences
-                   (
-                    :includeInlayParameterNameHints "all"
-                    :includeInlayParameterNameHintsWhenArgumentMatchesName t
-                    :includeInlayFunctionParameterTypeHints t
-                    :includeInlayVariableTypeHints t
-                    :includeInlayVariableTypeHintsWhenTypeMatchesName t
-                    :includeInlayPropertyDeclarationTypeHints t
-                    :includeInlayFunctionLikeReturnTypeHints t
-                    :includeInlayEnumMemberValueHints t
-                    ))))
+                 "typescript-language-server" "--stdio"
+                 :initializationOptions
+                 (:preferences
+                  (
+                   :includeInlayParameterNameHints "all"
+                   :includeInlayParameterNameHintsWhenArgumentMatchesName t
+                   :includeInlayFunctionParameterTypeHints t
+                   :includeInlayVariableTypeHints t
+                   :includeInlayVariableTypeHintsWhenTypeMatchesName t
+                   :includeInlayPropertyDeclarationTypeHints t
+                   :includeInlayFunctionLikeReturnTypeHints t
+                   :includeInlayEnumMemberValueHints t
+                   ))
+                 )
                )
   (add-to-list 'eglot-server-programs
                `((swift-mode swift-ts-mode) "sourcekit-lsp"
@@ -381,6 +393,7 @@
                )
 
   (add-to-list 'eglot-server-programs
+               ;;`((ruby-mode ruby-ts-mode web-mode :language-id "ruby") "ruby-lsp"
                `((ruby-mode ruby-ts-mode) "ruby-lsp"
                  :initializationOptions
                  (:preferences
@@ -409,6 +422,7 @@
 
   (defalias 'lsp-rename 'eglot-rename)
   (add-hook 'eglot-managed-mode-hook #'setup-eglot)
+  (add-hook 'dockerfile-ts-mode-hook #'eglot-ensure)
   (add-hook 'c-ts-mode-hook #'c-like-lsp-startup)
   (add-hook 'c-mode-hook #'c-like-lsp-startup)
   (add-hook 'c++-ts-mode-hook #'c-like-lsp-startup)

@@ -95,7 +95,8 @@ if [ "$(uname)" = "Darwin" ]; then
     export GOTOOLCHAIN=local
     declare RUSTUP_ROOT
     RUSTUP_ROOT="$(brew --prefix rustup)"
-    export PATH="$PATH:$GOPATH/bin:$GOROOT/bin:$RUSTUP_ROOT/bin"
+    declare CSHARP_TOOLS="$HOME/.dotnet/tools"
+    export PATH="$PATH:$GOPATH/bin:$GOROOT/bin:$RUSTUP_ROOT/bin:$CSHARP_TOOLS"
     if [ -f ~/.cargo/env ]; then
         # shellcheck source=../../../../.cargo/env
         source ~/.cargo/env

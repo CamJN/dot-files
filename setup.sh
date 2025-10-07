@@ -419,6 +419,9 @@ function main() {
         rbenv list | xargs -n1 rbenv install --skip-existing
     fi
 
+    # install csharp language server
+    dotnet tool install --global csharp-ls
+
     # ensure swiftly initialized
     export SWIFTLY_HOME_DIR="$HOME/.config/swiftly"
     export SWIFTLY_BIN_DIR="$HOME/.config/swiftly/bin"

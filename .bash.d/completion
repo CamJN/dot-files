@@ -1,5 +1,7 @@
 #!/usr/local/bin/bash
 
+# completion-ignore-case set in .inputrc
+
 HOMEBREW_PREFIX=$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)
 export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
 if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
@@ -11,8 +13,6 @@ source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.ba
 source ~/.bash.d/launchctl-completion.bash
 
 complete -C aws_completer aws
-
-set completion-ignore-case on
 
 function copy_function() {
   test -n "$(declare -f "$1")" || return

@@ -66,3 +66,5 @@ passenger.*.pid.lock
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
 /usr/local/etc/dnsmasq.d/filtering.resolv
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
+/.docker/.token_seed
+/.docker/.token_seed.lock

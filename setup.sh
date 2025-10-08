@@ -495,6 +495,8 @@ function main() {
     defaults write com.apple.WindowManager HasDisplayedShowDesktopEducation -bool true
     defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
     defaults write com.apple.WindowManager HideDesktop -bool true
+    defaults write com.apple.WindowManager AutoHide -bool false
+    defaults write com.apple.WindowManager AppWindowGroupingBehavior -int 1
 
     defaults write com.apple.dock largesize -float 70
     defaults write com.apple.dock magnification -bool true
@@ -508,6 +510,7 @@ function main() {
 
     defaults write com.apple.preference.security.privacy limitAdTrackingCached -bool false
     defaults write com.apple.AdLib forceLimitAdTracking -bool true
+    defaults write com.apple.AdLib allowIdentifierForAdvertising -bool false
     defaults write com.apple.AdLib "AD_DEVICE_IDFA" -string "00000000-0000-0000-0000-000000000000"
     defaults write com.apple.AdLib allowApplePersonalizedAdvertising -bool false
     defaults write com.apple.AdLib allowIdentifierForAdvertising -bool false
@@ -515,6 +518,8 @@ function main() {
     defaults write com.apple.AdLib CKDPIDSyncState -int 0
     defaults write com.apple.AdPlatforms PersonalizedAdsStateUUID -string "00000000-0000-0000-0000-000000000000"
     defaults write com.apple.AdPlatforms AccountStateUUID -string "00000000-0000-0000-0000-000000000000"
+    defaults write com.apple.AdPlatforms AdPlatformsPAAvailable -bool false
+    defaults write com.apple.AdPlatforms personalizedAdsDefaulted -bool false
 
     defaults write com.apple.Terminal SecureKeyboardEntry -bool false
     defaults write com.apple.Terminal "Default Window Settings" -string "My Clear Dark"
@@ -551,6 +556,8 @@ function main() {
     defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
     defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
     defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+    defaults write com.apple.finder ShowRecentTags -bool false
+    defaults write com.apple.finder ShowSidebar -bool true
 
     defaults write com.apple.TextEdit RichText -bool false
     defaults write com.apple.TextEdit CheckGrammarWithSpelling -bool true

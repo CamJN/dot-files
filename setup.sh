@@ -450,7 +450,8 @@ function main() {
     rustup update
     # ensure rust has all macOS and wasm targets installed
     rustup target list | grep -Fe darwin | cut -wf1 | xargs rustup target add wasm32-unknown-unknown
-
+    # ensure rust has lsp server installed
+    rustup component add rust-analyzer
     # ensure local dns network location exists
     if ! networksetup -listlocations | grep -Fxe 'Local DNS' >/dev/null; then
         networksetup -createlocation 'Local DNS' populate

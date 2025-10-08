@@ -279,6 +279,7 @@ function main() {
     mkdir -p ~/Library/KeyBindings/
     # symlink keybindings
     ln -shf ~/Developer/Bash/dot-files/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
+    ln -shf ~/Developer/Bash/dot-files/Library/Application\ Support/hyfetch.json ~/Library/Application\ Support/hyfetch.json
     mkdir -p ~/Library/Application\ Support/go/telemetry
     ln -shf ~/Developer/Bash/dot-files/Library/Application\ Support/go/telemetry/mode ~/Library/Application\ Support/go/telemetry/mode
 

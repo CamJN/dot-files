@@ -230,6 +230,9 @@ function main() {
             filename=$(basename "$file")
             local formula="${filename%.plist}"
             local plist_path="$HOMEBREW_PREFIX/opt/${formula#homebrew.mxcl.}/${filename}"
+            if [ "$(uname -m)" != "arm64" ] && [ "$formula" = 'homebrew.mxcl.lume' ]; then
+                continue
+            fi
             if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                 # the read is non-root, tee is root to write
                 if [ -f "$plist_path" ]; then

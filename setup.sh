@@ -484,6 +484,13 @@ function main() {
     defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
     defaults write NSGlobalDomain "com.apple.sound.beep.sound" -string "/System/Library/Sounds/Funk.aiff"
 
+    defaults write com.apple.controlcenter AirplayReceiverEnabled -bool false
+    defaults write com.apple.controlcenter Battery -int 1
+    defaults write com.apple.controlcenter MusicRecognition -int 1
+    defaults write com.apple.controlcenter Siri -int 8
+    defaults write com.apple.controlcenter VoiceControl -int 8
+    defaults write com.apple.controlcenter Sound -int 2
+
     defaults write com.apple.TextInputMenu visible -bool true
     defaults write com.apple.menuextra.battery ShowPercent -bool true
     defaults write com.apple.menuextra.clock ShowAMPM -bool true
@@ -498,6 +505,7 @@ function main() {
     defaults write com.apple.WindowManager AutoHide -bool false
     defaults write com.apple.WindowManager AppWindowGroupingBehavior -int 1
 
+    defaults write com.apple.dock autohide -bool false
     defaults write com.apple.dock largesize -float 70
     defaults write com.apple.dock magnification -bool true
     defaults write com.apple.dock minimize-to-application -bool true
@@ -592,6 +600,11 @@ function main() {
 
     defaults write com.apple.MobileSMS DeleteVerificationCodes -bool true
     defaults write com.apple.MobileSMS KeepMessageForDays -int 0
+    defaults write com.apple.MobileSMS EnableJunkFiltering -bool true
+
+    # what are these? phone relay?
+    # defaults write com.apple.TTY TUIsRelayCallingEnabledPreference -bool true
+    # defaults write com.apple.TTY TUSupportsRelayCallingPreference -bool true
 
     defaults write com.apple.mail FavoriteMailboxDraftsAutomaticallyAdded -bool true
     defaults write com.apple.mail FavoriteMailboxFlaggedAutomaticallyAdded -bool true
@@ -628,6 +641,24 @@ function main() {
     defaults write com.apple.systemuiserver 'NSStatusItem Visible com.apple.menuextra.vpn' -bool true
     defaults write com.apple.systemuiserver 'menuExtras' -array '/System/Library/CoreServices/Menu Extras/TimeMachine.menu' '/System/Library/CoreServices/Menu Extras/VPN.menu'
 
+    function HIToolbox() {
+        echo -n "<dict><key>Bundle ID</key><string>$1</string>"
+        shift
+        while [ $# -gt 0 ]; do
+            echo -n "<key>$1</key><string>$2</string>"
+            shift 2
+        done
+        echo -n "</dict>"
+    }
+    declare selected="$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Roman' 'InputSourceKind' 'Input Mode')"
+
+    defaults write com.apple.HIToolbox AppleCurrentKeyboardLayoutInputSourceID -string com.apple.keylayout.Canadian
+    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Japanese' 'InputSourceKind' 'Input Mode')"
+    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'InputSourceKind' 'Keyboard Input Method')"
+    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$selected"
+    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.50onPaletteIM' 'InputSourceKind' 'Non Keyboard Input Method')"
+    defaults write com.apple.HIToolbox AppleSelectedInputSources -array    "$selected"
+
     defaults write com.apple.universalaccess 'closeViewZoomFactorBeforeTermination' -int 1
     defaults write com.apple.universalaccess 'closeViewZoomMode' -int 1
     defaults write com.apple.universalaccess 'closeViewZoomedIn' -bool false
@@ -636,11 +667,16 @@ function main() {
     defaults write com.apple.universalaccess 'closeViewSmoothImages' -bool false
     defaults write com.apple.universalaccess 'closeViewSplitScreenRatio' -float 0.2
     defaults write com.apple.universalaccess 'closeViewHotkeysEnabled' -bool false
-    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_FREEZE_PANNING '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>0</integer></dict>'
-    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_MONITOR_SELECTION '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>0</integer></dict>'
-    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_DETACH '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>1310720</integer></dict>'
-    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_TOGGLE '<dict><key>charCode</key><integer>65535</integer><key>keyCode</key><integer>65535</integer><key>modifiers</key><integer>786432</integer></dict>'
-    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TOGGLE_FS_AND_PIP '<dict><key>charCode</key><integer>102</integer><key>keyCode</key><integer>3</integer><key>modifiers</key><integer>1572864</integer></dict>'
+
+    function universalaccess(){
+        echo -n "<dict><key>charCode</key><integer>$1</integer><key>keyCode</key><integer>$2</integer><key>modifiers</key><integer>$3</integer></dict>"
+    }
+
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_FREEZE_PANNING    "$(universalaccess 65535 65535 0)"
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_MONITOR_SELECTION "$(universalaccess 65535 65535 0)"
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_DETACH       "$(universalaccess 65535 65535 1310720)"
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TEMP_TOGGLE       "$(universalaccess 65535 65535 786432)"
+    defaults write com.apple.universalaccess 'closeViewCustomHotkeyKey' -dict-add AX_ZOOM_TOGGLE_FS_AND_PIP "$(universalaccess 102   3     1572864)"
 
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 

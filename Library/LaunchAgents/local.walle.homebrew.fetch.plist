@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>local.secur-t.dns</string>
+    <string>local.walle.homebrew.fetch</string>
     <key>Program</key>
     <string>/bin/bash</string>
     <key>ProgramArguments</key>

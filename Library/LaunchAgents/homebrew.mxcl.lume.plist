@@ -19,6 +19,11 @@
 		<string>/opt/homebrew/opt/lume/bin/lume</string>
 		<string>serve</string>
 	</array>
+        <key>EnvironmentVariables</key>
+        <dict>
+          <key>CUA_TELEMETRY_ENABLED</key>
+          <string>false</string>
+        </dict>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>

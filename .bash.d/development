@@ -13,6 +13,7 @@ export SQLITE_HISTORY="$HOME/.history/sqlite"
 export DOCKER_SCAN_SUGGEST=false
 export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
 export DOTNET_ROOT="$(brew --prefix dotnet)/libexec"
+export CUA_TELEMETRY_ENABLED=false
 
 if [ "$(uname)" = "Darwin" ]; then
     SDKROOT=$(xcrun -sdk macosx --show-sdk-path)

@@ -24,6 +24,10 @@
       <string>lazy, cheap, fucking, asswipes</string>
       <key>HOMEBREW_NO_INSTALL_CLEANUP</key>
       <string>Fuck off</string>
+      <key>HOMEBREW_CACHE</key>
+      <string>/Users/camdennarzt/Library/Caches/Homebrew</string>
+      <key>HOMEBREW_DOWNLOAD_CONCURRENCY</key>
+      <string>auto</string>
     </dict>
     <key>StandardOutPath</key>
     <string>/Users/camdennarzt/Library/Logs/Homebrew/fetch.log</string>

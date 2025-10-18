@@ -1,7 +1,7 @@
 # Lume Configuration
 
 defaultLocationName: "default"
-cacheDirectory: "/Users/camdennarzt/Library/Caches/Lume"
+cacheDirectory: "/Users/camdennarzt/Library/Caches/lume"
 cachingEnabled: true
 
 # VM Locations

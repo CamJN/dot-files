@@ -2,6 +2,8 @@
 
 # completion-ignore-case set in .inputrc
 
+export FIGNORE=".git:.DS_Store:~"
+
 HOMEBREW_PREFIX=$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)
 export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
 if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then

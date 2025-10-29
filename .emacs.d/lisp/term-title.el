@@ -92,7 +92,7 @@ normally, the original title is not restored."
   (let* (
          (file (s-replace " " "%20" (or (buffer-file-name (window-buffer (selected-window))) "")))
          (hostname (or (file-remote-p default-directory 'host) (system-name)))
-         (dir (or (file-name-directory file) default-directory))
+         (dir (or (file-name-directory file) (expand-file-name default-directory)))
          )
     (send-string-to-terminal (format "\e]1;%s\a" title))
     (send-string-to-terminal (format "\e]6;file://%s%s\a" hostname file))

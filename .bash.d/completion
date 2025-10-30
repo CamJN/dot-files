@@ -42,6 +42,7 @@ source <(node --completion-bash)
 source <("$(brew --prefix rustup)/bin/rustup" completions bash)
 source <(pip3 completion --bash)
 source <(colima completion bash)
+source <(bat --completion bash)
 if which -s batt; then
     source <(batt completion bash)
 fi

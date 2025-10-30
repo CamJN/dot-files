@@ -78,6 +78,7 @@
 	tar = archive --format=tar --output=archive.tar HEAD
 	sub = submodule update --init --recursive
 	swap = switch -
+	test = "!ssh -T $@ #"
 	files-in-commit = diff-tree --no-commit-id --name-only -r
 	track = "!git log -L$1,$2:$3 || echo 'usage: git track startLine endLine file' #"
 	trackf = "!git log -L:$1:$2 || echo 'usage: git trackf function file' #"

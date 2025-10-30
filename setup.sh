@@ -616,6 +616,9 @@ function main() {
 
     defaults write com.apple.FaceTime FaceTimeIsAlwaysOnTop -bool true
 
+    defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string TwoButton
+    defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string TwoButton
+
     defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad HIDScrollZoomModifierMask -int 786432
     defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 1
     defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 1

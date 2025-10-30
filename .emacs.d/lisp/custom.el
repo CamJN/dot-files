@@ -101,6 +101,7 @@
  '(indicate-empty-lines t)
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
+ '(isearch-lazy-count t)
  '(kill-buffer-query-functions (cons 'dont-kill-scratch kill-buffer-query-functions) t)
  '(kill-read-only-ok 1)
  '(large-file-warning-threshold nil)

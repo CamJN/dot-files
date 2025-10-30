@@ -73,6 +73,9 @@ function cscp {
     if xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- <<< "$@" | { read -r c; [[ "${c}" =~ --\ .*:.*\ .*:.* ]]; }; then
         # 2 remotes, cannot use rsync, try: https://unix.stackexchange.com/questions/183504/how-to-rsync-files-between-two-remotes
         \scp -3 "$@"
+# https://stackoverflow.com/questions/32642188/rsync-equivalent-to-scp-3/32656801#32656801
+# ssh -M -R 9999:serverB:22 serverA rsync -a --rsh "ssh -p 9999" /path/to/source/files/ localhost:/path/to/destination/files/
+# where "9999" is any port number you like, as long as it matches in both places, and "22" is the SSH port number on serverB
     else
         # shellcheck disable=SC2034
         local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
@@ -590,27 +593,55 @@ function cls() {
     shopt -u nocasematch
     local DISABLE_HEADER=false
     while [[ "$#" -gt 0 ]]; do
-        case "$1" in
-            #--hyperlink|
-            -F|--classify|--absolute|--color|--colour|--icons|-w|--width|-L|--level|-s|--sort|-I|--ignore-glob|-t|--time|--time-style)
-                flags+=("$1")
-                flags+=("$2")
-                shift 2
-                ;;
-            -1|--oneline)
-                DISABLE_HEADER=true
-                flags+=("$1")
-                shift
-                ;;
-            -*)
-                flags+=("$1")
-                shift
-                ;;
-            *)
-                things+=("$1")
-                shift
-                ;;
-        esac
+        if [ "${1:1:1}" != "-" ]; then
+            case "$1" in
+                -*F*|-*w*|-*L*|-*s*|-*I*|-*t*)
+                    flags+=("$1")
+                    flags+=("$2")
+                    shift 2
+                    ;;
+                -*1*)
+                    DISABLE_HEADER=true
+                    flags+=("$1")
+                    shift
+                    ;;
+                -*d*)
+                    DISABLE_HEADER=true
+                    flags+=("$1")
+                    shift
+                    ;;
+                -*)
+                    flags+=("$1")
+                    shift
+                    ;;
+                *)
+                    things+=("$1")
+                    shift
+                    ;;
+            esac
+        else
+            case "$1" in
+                #--hyperlink|
+                --classify|--absolute|--color|--colour|--icons|--width|--level|--sort|--ignore-glob|--time|--time-style)
+                    flags+=("$1")
+                    flags+=("$2")
+                    shift 2
+                    ;;
+                --oneline|--treat-dirs-as-files)
+                    DISABLE_HEADER=true
+                    flags+=("$1")
+                    shift
+                    ;;
+                -*)
+                    flags+=("$1")
+                    shift
+                    ;;
+                *)
+                    things+=("$1")
+                    shift
+                    ;;
+            esac
+        fi
     done
 
     for thing in "${things[@]}"; do
@@ -696,4 +727,51 @@ function dump_defaults() {
     _dump_defaults_internal
     _dump_defaults_internal -currentHost
     _dump_defaults_stubborn
+}
+
+function apply_symbol() {
+    if [ $# -ne 2 ]; then
+        echo "apply_symbol symbol_name folder"
+        return 1
+    fi
+    xattr -w 'com.apple.icon.folder#S' "$(printf '{"sym":"%s"}' "$1")" "$2"
+}
+
+function nato () {
+    emacsclient --eval "(with-temp-buffer (insert (mapconcat 'identity server-eval-args-left (char-to-string ?\s))) (nato-region (point-min) (point-max)) (setq server-eval-args-left nil) (buffer-string))" -- "$@" | tr -d '"'
+}
+
+function lines () {
+    sed -n -f <(printf '%sp\n' "$@")
+}
+
+function awakefor () {
+    pgrep -x "$*" | xargs caffeinate -simw
+}
+
+function http() {
+    ruby -n -l -rnet/http/status -e 'puts Net::HTTP::STATUS_CODES[$_.to_i]' <<< "$@"
+}
+
+function catbin () {
+    case $(type -t "$1") in
+        alias)
+            alias "$1";;
+        keyword)
+            help "$1";;
+        function)
+            command -V "$1";;
+        builtin)
+            help "$1";;
+        file)
+            local path="$(which "$1")"
+            if file -I "$path" | grep -q binary; then
+                codesign -dv "$path"
+            else
+                bat "$path"
+            fi
+            ;;
+        *)
+            echo "$1 not found";;
+    esac
 }

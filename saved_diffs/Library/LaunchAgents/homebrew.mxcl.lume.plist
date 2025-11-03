@@ -1,0 +1,13 @@
+Library/LaunchAgents/homebrew.mxcl.lume.plist --- XML
+19 19         <string>/opt/homebrew/opt/lume/bin/lume</string>
+20 20         <string>serve</string>
+21 21     </array>
+22 ..         <key>EnvironmentVariables</key>
+23 ..         <dict>
+24 ..           <key>CUA_TELEMETRY_ENABLED</key>
+25 ..           <string>false</string>
+26 ..         </dict>
+27 22     <key>RunAtLoad</key>
+28 23     <true/>
+29 24     <key>StandardErrorPath</key>
+

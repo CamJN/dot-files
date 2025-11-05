@@ -775,3 +775,11 @@ function catbin () {
             echo "$1 not found";;
     esac
 }
+
+function cul(){
+    if [ $# -gt 0 ]; then
+        sed 's/./&_/g' <<< "$*" | ul
+    else
+        sed 's/./&_/g' < /dev/stdin | ul
+    fi
+}

@@ -9,6 +9,7 @@ alias emacs-kill="emacsclient --eval '(kill-emacs)' >/dev/null"
 alias save-emacs=emacs-save
 alias kill-emacs=emacs-kill
 alias give-emacs=emacs-give
+alias gib=emacs-give
 
 function emacs {
     if [ $# -eq 0 ]; then

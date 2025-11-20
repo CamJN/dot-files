@@ -783,3 +783,12 @@ function cul(){
         sed 's/./&_/g' < /dev/stdin | ul
     fi
 }
+
+function catch() {
+    # usage: `catch stdout_varname stderr_varname command arg1 arg2 ...`
+    {
+        IFS=$'\n' read -r -d '' "${1}";
+        IFS=$'\n' read -r -d '' "${2}";
+        (IFS=$'\n' read -r -d '' _ERRNO_; return "${_ERRNO_}");
+    } < <((printf '\0%s\0%d\0' "$( ( ( ({ shift 2; "${@}"; echo "${?}" 1>&3-; } | tr -d '\0' 1>&4-) 4>&2- 2>&1- | tr -d '\0' 1>&4-) 3>&1- | exit "$(cat)") 4>&1-)" "${?}" 1>&2) 2>&1)
+}

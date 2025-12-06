@@ -376,7 +376,7 @@
                  )
                )
   (add-to-list 'eglot-server-programs
-               `((swift-mode swift-ts-mode) "sourcekit-lsp"
+               `((swift-mode swift-ts-mode) "sourcekit-lsp" "--default-workspace-type" "swiftPM"
                  :initializationOptions
                  (:preferences
                   (

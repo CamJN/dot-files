@@ -29,3 +29,5 @@ export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 export SUDO_EDITOR=mg
 export XDG_CACHE_HOME="$HOME/Library/Caches"
 #export XDG_CONFIG_HOME="${HOME}/.config"
+
+export DEFAULT_LOADABLE_BUILTINS_PATH="$HOMEBREW_PREFIX/lib/bash:."

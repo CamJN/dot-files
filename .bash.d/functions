@@ -258,6 +258,7 @@ function cnotify {
     osascript "$HOME/.bash.d/cnotify.scpt" "$@"
 }
 
+# shellcheck source=./fplay.sh
 source "$HOME/.bash.d/fplay.sh"
 
 function ccal {
@@ -718,7 +719,7 @@ function _dump_defaults_internal() {
 function _dump_defaults_stubborn() {
     mkdir -p "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn"
     pushd "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn" || return
-    find /System/Volumes/Data/Library/Preferences/ -name '*.plist' | basename "$(cat /dev/stdin)" | xargs -I@ defaults export /System/Volumes/Data/Library/Preferences/@ @
+    find /System/Volumes/Data/Library/Preferences/ -name '*.plist' -execdir defaults export /System/Volumes/Data/Library/Preferences/{} "$HOME/Developer/Bash/dot-files/Library/Preferences-stubborn/{}" \;
     _dump_defaults_clean
     popd || return
 }
@@ -750,6 +751,7 @@ function awakefor () {
 }
 
 function http() {
+    # shellcheck disable=SC2016
     ruby -n -l -rnet/http/status -e 'puts Net::HTTP::STATUS_CODES[$_.to_i]' <<< "$@"
 }
 
@@ -764,7 +766,8 @@ function catbin () {
         builtin)
             help "$1";;
         file)
-            local path="$(which "$1")"
+            local path
+            path="$(which "$1")"
             if file -I "$path" | grep -q binary; then
                 codesign -dv "$path"
             else
@@ -777,10 +780,11 @@ function catbin () {
 }
 
 function cul(){
+    # underline text
     if [ $# -gt 0 ]; then
-        sed 's/./&_/g' <<< "$*" | ul
+        ul <<< "${*//?/&_}"
     else
-        sed 's/./&_/g' < /dev/stdin | ul
+        sed 's/./&_/g' | ul
     fi
 }
 

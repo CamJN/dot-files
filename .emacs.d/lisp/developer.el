@@ -139,6 +139,14 @@
 (add-hook 'nroff-mode-hook
           (lambda () (add-hook 'after-save-hook 'nroff-view nil 'local)))
 
+;;-------sql interactive mode -------------------
+(define-key sql-interactive-mode-map (kbd "C-l") (lambda ()
+                                                   (interactive)
+                                                   (let
+                                                       ((comint-buffer-maximum-size 0))
+                                                     (comint-truncate-buffer))))
+
+
 ;;----------Makefile Stuff------------------------------------
 (add-hook 'makefile-mode-hook
           (lambda ()

@@ -385,6 +385,7 @@ function main() {
     psql "$USER" -c '\q' 2>/dev/null || createdb
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
+    chgrp _uucp "${HOMEBREW_PREFIX}/var/log/dnsmasq"
     chmod 755 ~ # for _www (httpd) and nobody (dnsmasq) to read symlinks.
     sudo mkdir -p /etc/resolver/
 

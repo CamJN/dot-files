@@ -121,7 +121,7 @@
 	colorMoved = plain
 	colorMovedWS = ignore-all-space
 	tool = difftastic
-	external = difft
+	external = "difft --syntax-highlight on --ignore-comments"
 	mnemonicPrefix = true
 [merge]
 	tool = vimdiff
@@ -134,7 +134,7 @@
 [difftool "idiff"]
 	cmd = diff -iwu $LOCAL $REMOTE | less
 [difftool "difftastic"]
-	cmd = difft "$LOCAL" "$REMOTE"
+	cmd = difft --syntax-highlight on --ignore-comments "$LOCAL" "$REMOTE"
 [init]
 	defaultBranch = main
 [credential]

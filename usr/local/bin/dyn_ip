@@ -13,8 +13,8 @@ function input-json() {
 }
 
 if [ "$(\dig "$domain" +short A)" != "$ipv4" ]; then
-    aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile personal --cli-input-json "$(input-json A "$ipv4")"
+    aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile default --cli-input-json "$(input-json A "$ipv4")"
 fi
 if [ "$(\dig "$domain" +short AAAA)" != "$ipv6" ]; then
-    aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile personal --cli-input-json "$(input-json AAAA "$ipv6")"
+    aws route53 change-resource-record-sets --hosted-zone-id "$HostedZoneId" --profile default --cli-input-json "$(input-json AAAA "$ipv6")"
 fi

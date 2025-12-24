@@ -481,9 +481,27 @@ function main() {
 
     defaults write NSGlobalDomain AppleAccentColor -int 2
     defaults write NSGlobalDomain AppleLanguages -array {en,de,ja}-CA
+    defaults write NSGlobalDomain AppleLocale -string en_CA
     defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
     defaults write NSGlobalDomain AppleActionOnDoubleClick -string Minimize
     defaults write NSGlobalDomain "com.apple.sound.beep.sound" -string "/System/Library/Sounds/Funk.aiff"
+
+    defaults write com.apple.SoftwareUpdate AutomaticDownload -bool true
+    defaults write com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool true
+    defaults write com.apple.SoftwareUpdate ConfigDataInstall -bool true
+    defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -bool true
+    defaults write com.apple.SoftwareUpdate PrimaryLanguages -array 'en-CA' 'en'
+
+    defaults write com.apple.TimeMachine AutoBackup -int 1
+    defaults write com.apple.TimeMachine AutoBackupInterval -int 3600
+    defaults write com.apple.TimeMachine RequiresACPower -bool false
+
+    defaults write com.apple.timezone.auto Active -bool true
+
+    defaults write com.apple.Spotlight PasteboardHistoryVersion -int 2
+
+    defaults write com.apple.Music showAppleMusic -bool false
+    defaults write com.apple.Music TransitionsEnabled -bool false
 
     defaults write com.apple.controlcenter AirplayReceiverEnabled -bool false
     defaults write com.apple.controlcenter Battery -int 1
@@ -493,6 +511,8 @@ function main() {
     defaults write com.apple.controlcenter Sound -int 2
 
     defaults write com.apple.TextInputMenu visible -bool true
+    defaults write com.apple.CharacterPaletteIM CVStartAsLargeWindow -bool true
+
     defaults write com.apple.menuextra.battery ShowPercent -bool true
     defaults write com.apple.menuextra.clock ShowAMPM -bool true
     defaults write com.apple.menuextra.clock ShowDate -bool false
@@ -645,6 +665,7 @@ function main() {
     defaults write com.apple.systemuiserver 'NSStatusItem Visible com.apple.menuextra.vpn' -bool true
     defaults write com.apple.systemuiserver 'menuExtras' -array '/System/Library/CoreServices/Menu Extras/TimeMachine.menu' '/System/Library/CoreServices/Menu Extras/VPN.menu'
 
+    defaults write com.apple.inputmethod.Kotoeri JIMPrefPunctuationTypeKey -int 0
     function HIToolbox() {
         echo -n "<dict><key>Bundle ID</key><string>$1</string>"
         shift
@@ -662,6 +683,7 @@ function main() {
     defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$selected"
     defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.50onPaletteIM' 'InputSourceKind' 'Non Keyboard Input Method')"
     defaults write com.apple.HIToolbox AppleSelectedInputSources -array    "$selected"
+    defaults write com.apple.HIToolbox AppleFnUsageType -int 2
 
     defaults write com.apple.universalaccess 'closeViewZoomFactorBeforeTermination' -int 1
     defaults write com.apple.universalaccess 'closeViewZoomMode' -int 1

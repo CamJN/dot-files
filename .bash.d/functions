@@ -73,9 +73,9 @@ function cscp {
     if xargs getopt '346BCpqrTvc:F:i:J:l:o:P:S:' -- <<< "$@" | { read -r c; [[ "${c}" =~ --\ .*:.*\ .*:.* ]]; }; then
         # 2 remotes, cannot use rsync, try: https://unix.stackexchange.com/questions/183504/how-to-rsync-files-between-two-remotes
         \scp -3 "$@"
-# https://stackoverflow.com/questions/32642188/rsync-equivalent-to-scp-3/32656801#32656801
-# ssh -M -R 9999:serverB:22 serverA rsync -a --rsh "ssh -p 9999" /path/to/source/files/ localhost:/path/to/destination/files/
-# where "9999" is any port number you like, as long as it matches in both places, and "22" is the SSH port number on serverB
+        # https://stackoverflow.com/questions/32642188/rsync-equivalent-to-scp-3/32656801#32656801
+        # ssh -M -R 9999:serverB:22 serverA rsync -a --rsh "ssh -p 9999" /path/to/source/files/ localhost:/path/to/destination/files/
+        # where "9999" is any port number you like, as long as it matches in both places, and "22" is the SSH port number on serverB
     else
         # shellcheck disable=SC2034
         local RSYNC_RSH="/usr/bin/ssh -oRequestTTY=no -oRemoteCommand=none"
@@ -671,10 +671,10 @@ function cls() {
             ;;
         *)
             if [ "${#files[*]}" -gt 0 ]; then
-               eza "${flags[@]}" "${files[@]}"
-               if [ "${#dirs[*]}" -gt 0 ]; then
-                   echo
-               fi
+                eza "${flags[@]}" "${files[@]}"
+                if [ "${#dirs[*]}" -gt 0 ]; then
+                    echo
+                fi
             fi
             for i in "${!dirs[@]}"; do
                 if ! $DISABLE_HEADER; then
@@ -800,7 +800,13 @@ function catch() {
 function download() {
     for label in "$@"; do
         ( yt-dlp --no-mtime -f m4a    "https://www.youtube.com/watch?v=$label" || \
-          yt-dlp --no-mtime -t mp4 -x "https://www.youtube.com/watch?v=$label" ) &
+              yt-dlp --no-mtime -t mp4 -x "https://www.youtube.com/watch?v=$label" ) &
     done
     wait
+}
+
+function free(){
+    pages=$(vm_stat | grep -e "^Pages free" | awk '{print $NF}' | tr -d '.')
+    bytes=$(\bc -l <<< "$pages * $(pagesize)")
+    units -o "%0.f GB free" -t "$bytes bytes" gigabytes
 }

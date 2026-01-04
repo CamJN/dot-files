@@ -79,6 +79,14 @@
 (define-key isearch-mode-map    (kbd "C-o")             'isearch-occur)
 (define-key read-expression-map (kbd "<tab>")           'lisp-complete-symbol)
 (define-key occur-mode-map      (kbd "C-x C-q")         'occur-edit-mode)
+
+(define-key dired-mode-map      (kbd "F")
+            (lambda ()
+              (interactive)
+              (mapc #'find-file (reverse (dired-get-marked-files)))
+              )
+            )
+
 (define-key lisp-interaction-mode-map (kbd "C-c C-b") nil t)
 (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'elisp-byte-compile-buffer)
 (define-key flyspell-mode-map (kbd "C-x s b") 'flyspell-buffer)

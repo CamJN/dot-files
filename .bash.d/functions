@@ -131,7 +131,16 @@ function csed {
 }
 
 function colors {
-    local script='BEGIN{
+    if [ "${COLORTERM}" != truecolor ]; then
+        for i in {0..31} ; do
+            for j in {0..7} ; do
+                printf "[7;(38;05;%d)mColor %-3d[0m\t" $((i + j * 32)) $((i + j * 32))
+            done;
+            echo ''
+        done;
+        echo -n "[0m"
+    else
+        local script='BEGIN{
     s = "/\\";
     total_cols = term_cols*term_lines;
     for (colnum = 0; colnum<total_cols; colnum++) {
@@ -146,9 +155,10 @@ function colors {
     }
     printf "\n";
     }'
-    awk -v term_cols="${width:-$(tput cols || echo 80)}" \
-        -v term_lines="${height:-$(tput lines || echo 1)}" \
-        "$script"
+        awk -v term_cols="${width:-$(tput cols || echo 80)}" \
+            -v term_lines="${height:-$(tput lines || echo 1)}" \
+            "$script"
+    fi
 }
 
 function loveSongsForCamden {

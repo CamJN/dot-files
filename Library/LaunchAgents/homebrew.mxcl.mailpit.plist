@@ -16,13 +16,13 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/mailpit/bin/mailpit</string>
+		<string>/opt/homebrew/opt/mailpit/bin/mailpit</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
-	<string>/usr/local/var/log/mailpit.log</string>
+	<string>/opt/homebrew/var/log/mailpit.log</string>
 	<key>StandardOutPath</key>
-	<string>/usr/local/var/log/mailpit.log</string>
+	<string>/opt/homebrew/var/log/mailpit.log</string>
 </dict>
 </plist>

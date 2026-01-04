@@ -16,15 +16,15 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/emacs/bin/emacs</string>
+		<string>/opt/homebrew/opt/emacs/bin/emacs</string>
 		<string>--fg-daemon</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardOutPath</key>
-	<string>/usr/local/var/run/emacs/stdout.log</string>
+	<string>/opt/homebrew/var/run/emacs/stdout.log</string>
 	<key>StandardErrorPath</key>
-	<string>/usr/local/var/run/emacs/stderr.log</string>
+	<string>/opt/homebrew/var/run/emacs/stderr.log</string>
 	<key>WorkingDirectory</key>
 	<string>/Users/camdennarzt</string>
 </dict>

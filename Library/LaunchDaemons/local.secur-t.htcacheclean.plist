@@ -23,8 +23,8 @@
     <key>WorkingDirectory</key>
     <string>/var/run/apache2</string>
     <key>StandardOutPath</key>
-    <string>/usr/local/var/log/htcacheclean.log</string>
+    <string>/opt/homebrew/var/log/htcacheclean.log</string>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/htcacheclean_err.log</string>
+    <string>/opt/homebrew/var/log/htcacheclean_err.log</string>
   </dict>
 </plist>

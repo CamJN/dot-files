@@ -99,6 +99,7 @@
 # 	required = true
 # 	process = git-lfs filter-process
 [gpg]
+	program = /opt/homebrew/bin/gpg
 	#program = # if broken try to set to a script that finds gpg
 [commit]
 	verbose = true

@@ -16,12 +16,12 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/dnsmasq/sbin/dnsmasq</string>
+		<string>/opt/homebrew/opt/dnsmasq/sbin/dnsmasq</string>
 		<string>--keep-in-foreground</string>
 		<string>-C</string>
-		<string>/usr/local/etc/dnsmasq.conf</string>
+		<string>/opt/homebrew/etc/dnsmasq.conf</string>
 		<string>-7</string>
-		<string>/usr/local/etc/dnsmasq.d,*.conf</string>
+		<string>/opt/homebrew/etc/dnsmasq.d,*.conf</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

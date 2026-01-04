@@ -26,16 +26,16 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/colima/bin/colima</string>
+		<string>/opt/homebrew/opt/colima/bin/colima</string>
 		<string>start</string>
 		<string>-f</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
-	<string>/usr/local/var/log/colima.log</string>
+	<string>/opt/homebrew/var/log/colima.log</string>
 	<key>StandardOutPath</key>
-	<string>/usr/local/var/log/colima.log</string>
+	<string>/opt/homebrew/var/log/colima.log</string>
 	<key>WorkingDirectory</key>
 	<string>/Users/camdennarzt</string>
 </dict>

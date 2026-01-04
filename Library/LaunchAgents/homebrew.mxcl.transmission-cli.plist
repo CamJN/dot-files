@@ -16,13 +16,13 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/opt/transmission-cli/bin/transmission-daemon</string>
+		<string>/opt/homebrew/opt/transmission-cli/bin/transmission-daemon</string>
 		<string>--foreground</string>
 		<string>--config-dir</string>
-		<string>/usr/local/var/transmission/</string>
+		<string>/opt/homebrew/var/transmission/</string>
 		<string>--log-info</string>
 		<string>--logfile</string>
-		<string>/usr/local/var/transmission/transmission-daemon.log</string>
+		<string>/opt/homebrew/var/transmission/transmission-daemon.log</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

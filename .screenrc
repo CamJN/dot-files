@@ -1,7 +1,7 @@
 term screen-256color
 escape ^^^^
 startup_message off
-shell /usr/local/bin/bash
+shell /opt/homebrew/bin/bash
 screen
 termcapinfo xterm* ti@:te@
 msgminwait 0

@@ -42,7 +42,7 @@ function fail() {
     exit 1
 }
 
-declare -i PGVER=17
+declare -i PGVER=18
 
 # wrap in a function to prevent partial execution if download fails
 function main() {
@@ -358,6 +358,7 @@ function main() {
         sudo chgrp -R _www ~/Sites
     fi
     sudo touch "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
+    # maybe set user:group to _postgres:_postgres ?
     sudo chown "$USER" "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
 
     # check LaunchDaemons for changes

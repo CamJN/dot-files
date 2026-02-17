@@ -8,12 +8,22 @@ export PS4='+${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():}'
 # error-fast
 set -xeuo pipefail
 
+# vm help
+if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
+    networksetup -listnetworkserviceorder | grep -B 1 'Device: en' | grep -v 'Device: en' | cut -w -f 2- | xargs -I{} networksetup -setdnsservers "{}" 1.1.1.1
+    sudo sysctl -w net.inet.tcp.tso=0
+    export SKIP_CASE_CHECK=true
+    export SKIP_HOMEBREW_BUNDLE_APPS=true
+    export SKIP_INSTALL_GETARGV=true
+fi
+
 # pre-reqs:
-# make fs case sensitive
-# login to app store
+# ensure network working, incl. dns
+# make fs case sensitive or set SKIP_CASE_CHECK=true
+# login to app store or set SKIP_HOMEBREW_BUNDLE_APPS=true
 # copy over secrets file
 # copy over gpg keys
-# copy over ssh keys
+# copy over ssh keys or set SKIP_INSTALL_GETARGV=true
 # copy over passenger enterprise download token
 
 # post-reqs:
@@ -87,12 +97,14 @@ function main() {
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
-        find ~/Developer/Bash/dot-files -not -name dot-files -delete
+        if [ -e "$HOME/Developer/Bash/dot-files" ]; then
+            find ~/Developer/Bash/dot-files -delete
+        fi
         git clone --recurse-submodules https://github.com/CamJN/dot-files ~/Developer/Bash/dot-files
     else
         # ensure clean repo by making temp commit with changes
         declare -a git_args=(-C ~/Developer/Bash/dot-files)
-        if ! which -s gpg && gpg --quiet --sign --armor <<< ok | gpg --verify 2>/dev/null; then
+        if ! which -s gpg && gpg --quiet --sign --armor <<< ok | gpg --verify 2>&1 | grep -q 'Good signature'; then
             git_args+=(-c "commit.gpgsign=false")
         fi
         git "${git_args[@]}" diff --quiet --exit-code || git "${git_args[@]}" commit -am 'tmp'

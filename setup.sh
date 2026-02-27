@@ -8,22 +8,13 @@ export PS4='+${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():}'
 # error-fast
 set -xeuo pipefail
 
-# vm help
-if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
-    sudo sysctl -w net.inet.tcp.tso=0
-    defaults write com.apple.universalaccess reduceTransparency -bool true
-    export SKIP_CASE_CHECK=true
-    export SKIP_HOMEBREW_BUNDLE_APPS=true
-    export SKIP_INSTALL_GETARGV=true
-fi
-
 # pre-reqs:
 # ensure network working, incl. dns
 # make fs case sensitive or set SKIP_CASE_CHECK=true
 # login to app store or set SKIP_HOMEBREW_BUNDLE_APPS=true
 # copy over secrets file
 # copy over gpg keys
-# copy over ssh keys or set SKIP_INSTALL_GETARGV=true
+# copy over ssh keys, login with ssh agent forwarding, or set SKIP_INSTALL_GETARGV=true
 # copy over passenger enterprise download token
 
 # post-reqs:
@@ -56,6 +47,20 @@ declare -i PGVER=18
 
 # wrap in a function to prevent partial execution if download fails
 function main() {
+    if [ $(id -u) = 0 ]; then
+        fail "do not run this script as root, it will ask to raise permissions when needed."
+    fi
+
+    # vm help
+    if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
+        sudo sysctl -w net.inet.tcp.tso=0
+        defaults write com.apple.universalaccess reduceTransparency -bool true
+        export SKIP_CASE_CHECK=true # not setup in vm image
+        export SKIP_HOMEBREW_BUNDLE_APPS=true # can't login to mac app store
+        export SKIP_DOCKER=true # no nested virtualization
+        export SKIP_INSTALL_GETARGV=true
+    fi
+
     # ensure PATH includes likely dirs
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/bin/:/sbin/:/usr/bin/:/usr/sbin/:$PATH"
 
@@ -65,7 +70,7 @@ function main() {
         fi
     fi
 
-    if [ ! -e "$HOME/.ssh/id_rsa" ]; then
+    if [ -z "${SSH_AUTH_SOCK-}" ] && [ -z "${SKIP_INSTALL_GETARGV-}" ] && [ ! -e "$HOME/.ssh/id_rsa" ]; then
         fail "ssh key not found, please provide it"
     fi
 
@@ -94,6 +99,10 @@ function main() {
     # Ensure history dir exists
     mkdir -p ~/.history
 
+    # Ensure gnupg dir exists
+    # shellcheck disable=SC2174
+    mkdir -pm 700 ~/.gnupg
+
     export GIT_CEILING_DIRECTORIES=/Users
     # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
@@ -104,7 +113,7 @@ function main() {
     else
         # ensure clean repo by making temp commit with changes
         declare -a git_args=(-C ~/Developer/Bash/dot-files)
-        if ! which -s gpg && gpg --quiet --sign --armor <<< ok | gpg --verify 2>&1 | grep -q 'Good signature'; then
+        if ! which -s gpg || ! gpg --quiet --sign --armor <<< ok | gpg --verify 2>&1 | grep -q 'Good signature'; then
             git_args+=(-c "commit.gpgsign=false")
         fi
         git "${git_args[@]}" diff --quiet --exit-code || git "${git_args[@]}" commit -am 'tmp'
@@ -138,11 +147,13 @@ function main() {
     comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
     if [ -z "${SKIP_BUNDLE-}" ]; then
-        if [ -z "${HOMEBREW_GITHUB_API_TOKEN-}" ]; then
+        if [ -z "${SKIP_INSTALL_GETARGV-}" ] && [ -z "${HOMEBREW_GITHUB_API_TOKEN-}" ]; then
             fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
         fi
-        if [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
-            fail "$HOME/.passenger-enterprise-download-token is required to continue."
+
+        if [ -z "${SKIP_INSTALL_PASSENGER_ENTERPRISE-}" ] && [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
+            export HOMEBREW_BUNDLE_TAP_SKIP="phusion/passenger $HOMEBREW_BUNDLE_TAP_SKIP"
+            export HOMEBREW_BUNDLE_BREW_SKIP="phusion/passenger/passenger-enterprise $HOMEBREW_BUNDLE_BREW_SKIP"
         fi
         # install all homebrew packages in Brewfile
         if ! brew bundle check; then
@@ -153,7 +164,10 @@ function main() {
 
     # make my tap have one location on disk
     function unify_tap() {
-        declare TAP_PATH
+        if ! brew tap | grep -qFxe "${1/homebrew-/}"; then
+            brew tap "$1"
+        fi
+        local TAP_PATH
         if [ "$(uname -m)" = "x86_64" ]; then
             TAP_PATH="${HOMEBREW_PREFIX}/Homebrew/Library/Taps/$1"
         elif [ "$(uname -m)" = "arm64" ]; then
@@ -164,6 +178,9 @@ function main() {
         if [ ! -L "$TAP_PATH" ]; then
             rm -rf "$TAP_PATH"
             ln -shFf "$HOME/Developer/$2" "$TAP_PATH"
+            local branch
+            branch=$(git -C "$TAP_PATH" symbolic-ref refs/remotes/origin/HEAD --short)
+            git -C "$TAP_PATH" checkout "${branch#origin/}"
         fi
     }
     unify_tap camjn/homebrew-fixed Bash/dot-files/homebrew
@@ -175,12 +192,13 @@ function main() {
         unify_tap getargv/homebrew-tap Ruby/getargv-tap
     fi
 
-    # pin formulae that shouldn't be changed without care & attention
-    brew pin emacs dnsmasq transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
-    if [ "$(uname -m)" = "arm64" ]; then
-        brew pin batt tart
+    if [ -z "${SKIP_BUNDLE-}" ]; then
+        # pin formulae that shouldn't be changed without care & attention
+        brew pin emacs dnsmasq transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
+        if [ "$(uname -m)" = "arm64" ]; then
+            brew pin batt tart
+        fi
     fi
-
 
     # Check if brew doctor has any new complaints
     if [ -z "${SKIP_DOCTOR-}" ]; then
@@ -245,9 +263,6 @@ function main() {
             filename=$(basename "$file")
             local formula="${filename%.plist}"
             local plist_path="$HOMEBREW_PREFIX/opt/${formula#homebrew.mxcl.}/${filename}"
-            if [ "$(uname -m)" != "arm64" ] && [ "$formula" = 'homebrew.mxcl.tart' ]; then
-                continue
-            fi
             if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                 # the read is non-root, tee is root to write
                 if [ -f "$plist_path" ]; then
@@ -259,11 +274,11 @@ function main() {
             else
                 cat "$plist_path" > "$file"
             fi
-            # weird quoting in $file expansion is necessary
-            declare saved_diff_path="saved_diffs/${file#"$HOME/Developer/Bash/dot-files/"}"
+            declare diff_prefix="$HOME/Developer/Bash/dot-files/"
+            declare saved_diff_path="${file/#"$diff_prefix"/${diff_prefix}saved_diffs/}"
             if [ -f "$saved_diff_path" ]; then
-                if diff -q <(git diff "$file") "$saved_diff_path"; then
-                    git restore "$file"
+                if diff -q <(git -C "$diff_prefix" diff "$file") "$saved_diff_path"; then
+                    git -C "$diff_prefix" restore "$file"
                     if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                         sudo chown root:wheel "$file"
                     fi
@@ -318,7 +333,7 @@ function main() {
             fail "Unknown architecture: $(uname -m) please update docker-buildx section of script."
         fi
         declare builders
-        builders=$(docker buildx ls)
+        builders=$(docker buildx ls --timeout 1s)
         if ! grep -Fwe native_arch >/dev/null <<< "$builders"; then
             docker buildx create \
                    --name local_remote_builder \
@@ -363,9 +378,10 @@ function main() {
 
     # Ensure Sites dir exists in home dir
     if [ ! -d "$HOME/Sites" ]; then
-        mkdir -p ~/Sites
+        mkdir -pm 770 ~/Sites
+    else
+        chmod -R 770 ~/Sites
     fi
-    chmod -R 770 ~/Sites
     if [ "$(stat -f '%g' ~/Sites/)" -ne "$(dscl . -read /Groups/_www PrimaryGroupID | awk '{print $NF}')" ]; then
         sudo chgrp -R _www ~/Sites
     fi
@@ -385,7 +401,11 @@ function main() {
     done
     shopt -u nullglob
 
-    pg_isready -q || sudo launchctl load "/Library/LaunchDaemons/homebrew.mxcl.postgresql@${PGVER}.plist"
+    declare postgresplist="/Library/LaunchDaemons/homebrew.mxcl.postgresql@${PGVER}.plist"
+    if [ "$USER" != camdennarzt ]; then
+        sudo plutil -replace "UserName" -string "$USER" -o "$postgresplist" "$postgresplist"
+    fi
+    pg_isready -q || sudo launchctl load "$postgresplist"
     local wait_count=0
     until pg_isready -q || [ $wait_count -gt 5 ]; do
         ((wait_count+=1))
@@ -395,10 +415,10 @@ function main() {
     if [ $wait_count -gt 5 ]; then
         fail "postgresql didn't start in time, check ${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log."
     fi
-    psql "$USER" -c '\q' 2>/dev/null || createdb
+    psql "$USER" -c '\q' 2>/dev/null || createdb "$USER"
 
     mkdir -p "${HOMEBREW_PREFIX}/var/log/dnsmasq"
-    chgrp _uucp "${HOMEBREW_PREFIX}/var/log/dnsmasq"
+    sudo chgrp -R _uucp "${HOMEBREW_PREFIX}/var/log/dnsmasq"
     chmod 755 ~ # for _www (httpd) and nobody (dnsmasq) to read symlinks.
     sudo mkdir -p /etc/resolver/
 
@@ -420,7 +440,7 @@ function main() {
 
     # copy paths files into paths dirs, cannot be symlinks for some reason
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
-    sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/homebrew
+    sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/25-homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
     # ensure rbenv installed and all current c-rubies
     if ! which -s rbenv; then
@@ -689,7 +709,8 @@ function main() {
         done
         echo -n "</dict>"
     }
-    declare selected="$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Roman' 'InputSourceKind' 'Input Mode')"
+    declare selected
+    selected="$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Roman' 'InputSourceKind' 'Input Mode')"
 
     defaults write com.apple.HIToolbox AppleCurrentKeyboardLayoutInputSourceID -string com.apple.keylayout.Canadian
     defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Japanese' 'InputSourceKind' 'Input Mode')"

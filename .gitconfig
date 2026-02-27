@@ -4,6 +4,8 @@
 	signingkey = 45CDAC6F53A7A2EE3D294A79E349304DE45D816B
 [blame]
 	coloring = highlightRecent
+[log]
+	follow = true
 [core]
 	autocrlf = input
 	compression = 9

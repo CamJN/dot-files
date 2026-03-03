@@ -10,8 +10,8 @@ set -xeuo pipefail
 
 # vm help
 if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
-    networksetup -listnetworkserviceorder | grep -B 1 'Device: en' | grep -v 'Device: en' | cut -w -f 2- | xargs -I{} networksetup -setdnsservers "{}" 1.1.1.1
     sudo sysctl -w net.inet.tcp.tso=0
+    defaults write com.apple.universalaccess reduceTransparency -bool true
     export SKIP_CASE_CHECK=true
     export SKIP_HOMEBREW_BUNDLE_APPS=true
     export SKIP_INSTALL_GETARGV=true
@@ -435,6 +435,7 @@ function main() {
     fi
 
     # install csharp language server
+    export DOTNET_GENERATE_ASPNET_CERTIFICATE=false
     dotnet tool install --global csharp-ls
 
     # ensure swiftly initialized

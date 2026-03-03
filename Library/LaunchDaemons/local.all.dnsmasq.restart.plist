@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>homebrew.mxcl.dnsmasq.restart</string>
+    <string>local.all.dnsmasq.restart</string>
     <key>ProgramArguments</key>
     <array>
       <string>/bin/launchctl</string>

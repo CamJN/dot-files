@@ -37,9 +37,9 @@ _filedir() {
     #cleanup_code
     echo -n ''
 }
-#source <(swiftly --generate-completion-script) # enable after https://github.com/swiftlang/swiftly/issues/360 fixed
+source <(swiftly --generate-completion-script)
 source <(node --completion-bash)
-source <("$(brew --prefix rustup)/bin/rustup" completions bash)
+source <(rustup completions bash)
 source <(pip3 completion --bash)
 source <(colima completion bash)
 source <(bat --completion bash)

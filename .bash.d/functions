@@ -828,3 +828,14 @@ function free(){
     bytes=$(\bc -l <<< "$pages * $(pagesize)")
     units -o "%0.f GB free" -t "$bytes bytes" gigabytes
 }
+
+function groupadd() {
+    group_to_add_to="$1"
+    shift
+    if [ "${group_to_add_to-}" = "--help" ] || [ "${group_to_add_to-}" = "-h" ]; then
+        echo "Usage: groupadd groupname user1 [user2, ...]" >&2
+    fi
+    for username_to_add in "$@"; do
+        sudo dseditgroup -o edit -a $username_to_add -t user "$group_to_add_to"
+    done
+}

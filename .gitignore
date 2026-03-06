@@ -69,3 +69,4 @@ passenger.*.pid.lock
 /.docker/.token_seed
 /.docker/.token_seed.lock
 /.colima/_store
+/usr/local/etc/dnsmasq.d/interfaces.conf

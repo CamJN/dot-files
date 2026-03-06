@@ -33,7 +33,7 @@ function throttle () {
 }
 
 # cleanup in case of bad exit
-[ -p netwatch_pipe ] && rm netwatch_pipe
+test -p netwatch_pipe && rm netwatch_pipe
 # create clean pipe
 mkfifo netwatch_pipe
 
@@ -46,6 +46,7 @@ exec 3>netwatch_pipe
 
 # scutil script
 echo 'n.add State:/Network/Global/IPv. "IPv."' > netwatch_pipe
+echo 'n.add State:/Network/Interface' > netwatch_pipe
 echo "n.watch" > netwatch_pipe
 
 # cleanup pipe when asked to quit

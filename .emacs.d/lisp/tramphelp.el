@@ -3,7 +3,7 @@
 (require 'tramp)
 ;;(tramp-cleanup-all-connections)
 ;;(setq tramp-debug-buffer t)
-;;(setopt tramp-verbose 9)
+;;(setopt tramp-verbose 9) ; 5 is better usually
 ;;(setopt tramp-shell-prompt-pattern "")
 ;;(string-match tramp-shell-prompt-pattern "camdennarzt@upstream ~ % ")
 ;;(string-match tramp-shell-prompt-pattern "camdennarzt@upstream ~ $ ")

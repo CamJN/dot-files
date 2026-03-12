@@ -17,6 +17,6 @@ PREFIX="$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)"
 grep -Fq  "${nameserver:-nameserver 1.1.1.1}"   "$PREFIX/etc/dnsmasq.d/filtering.resolv" || \
     echo "${nameserver:-nameserver 1.1.1.1}" > "$PREFIX/etc/dnsmasq.d/filtering.resolv"
 
-ifconfig -l -X 'bridge|lo' | xargs printf "interface=%s\n" > "$PREFIX/etc/dnsmasq.d/interfaces.conf"
+ifconfig -l -X 'bridge|lo' | xargs printf "interface=%s\n" | grep -Fve bridge0 > "$PREFIX/etc/dnsmasq.d/interfaces.conf"
 
 [ -r "$HOME/.netwatchrc" ] && . "$HOME/.netwatchrc"

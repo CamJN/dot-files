@@ -381,9 +381,10 @@ function makeRHELArgs {
     largs=("$c1" '&&' "$c2")
 }
 
-function enter {
+function docker_internal_env {
     local IMAGE
     local args=()
+    local envs=()
     if [[ "$1" == rocky:* ]] || [[ "$1" == rockylinux:* ]]; then
         IMAGE="rockylinux/rockylinux:${1#*:}"
     elif [[ "$1" == *:* ]]; then
@@ -417,7 +418,7 @@ function enter {
         export RHEL_USERNAME=$(getUsernameFor $RHEL_ID)
         # shellcheck disable=SC2155
         export RHEL_PASSWORD=$(getPasswordFor $RHEL_ID)
-        local envs=('-e' 'RHEL_USERNAME' '-e' 'RHEL_PASSWORD')
+        envs=('-e' 'RHEL_USERNAME' '-e' 'RHEL_PASSWORD')
     else
         echo "Couldn't find proper distro for $1" >&2
         return 1
@@ -431,9 +432,24 @@ function enter {
         local arch=arm64
     fi
 
-    docker run --platform="linux/$arch" -it -v "$PWD:/pwd" -e "BASH_INIT_CMDS=${args[*]}" "${envs[@]}" --security-opt seccomp=unconfined "$IMAGE" bash --login --init-file '<(echo "$BASH_INIT_CMDS")'
-}
+    envs+=('-e' "BASH_INIT_CMDS=${args[*]}")
 
+    echo "arch=$arch"
+    echo "envs=(${envs[*]})"
+    echo "IMAGE=$IMAGE"
+}
+function enter {
+    source <(docker_internal_env "$@")
+    docker_run bash --login --init-file '<(echo "$BASH_INIT_CMDS")'
+}
+function run {
+    source <(docker_internal_env "$@")
+    shift
+    docker_run bash -c "$*"
+}
+function docker_run {
+    docker run --platform="linux/$arch" -it -v "$PWD:/mnt/pwd" "${envs[@]}" --security-opt seccomp=unconfined "$IMAGE" "$@"
+}
 function postgresql-upgrade-database {
     if [ $# -lt 2 ] || [ "$1" -eq "$2" ]; then
         echo "Usage: brew postgresql-upgrade-database 14 16" >&2
@@ -462,26 +478,8 @@ function verlt() {
     ! vergte "$@"
 }
 
-function csoftwareupdate {
-    softwareupdate --list |\
-        grep -F Label |\
-        awk -F': ' 'BEGIN { ORS = "\0" } ; {print $2}' |\
-        xargs -0 -I {} softwareupdate --download '{}' &
-
-    brew update
-    brew upgrade
-    rbenv list | xargs -n1 rbenv install --skip-existing
-    gem update
-    npm update -g
-    rustup update
-    swiftly update
-    cargo install --list | awk '/^[[:alnum:]_-]+ v[0-9.]+:$/{print $1}' | xargs cargo install
-    sudo xprotect update
-    wait
-    sudo softwareupdate --install --all --restart
-}
-
 function xcode-clean() {
+    PATH="$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin"
     rm -rf ~/Library/Developer/Xcode/DerivedData
     rm -rf ~/Library/Developer/Xcode/Archives
     rm -rf ~/Library/Developer/Xcode/*\ DeviceSupport
@@ -514,8 +512,15 @@ function start_under_debugger() {
     esac
 }
 
+function service_to_interface {
+    networksetup -listnetworkserviceorder | sed -n '/^([0-9]/ N; s/\n/ /g; p' | awk -v "name=$1" '$0 ~ name {sub(")","",$NF); print $NF}'
+}
+
 function ssid(){
-    ipconfig getsummary en0 | grep SSID | grep -v redacted | cut -d: -f 2 | tr -d '[:space:]'
+    sudo ipconfig setverbose 1
+    ipconfig getsummary $(service_to_interface Wi-Fi) | grep -Ee '\bSSID' | grep -v redacted | cut -d: -f 2 | tr -d '[:space:]'
+    echo
+    sudo ipconfig setverbose 0
 }
 
 function czip() {

@@ -75,6 +75,7 @@ alias ssh-bare='ssh -oRemoteCommand=none -t'
 alias ssh-hangup='ssh -O stop'
 alias ssh-retry='ssh -oConnectionAttempts=120'
 alias ssh-test='ssh -T'
+alias ssh-debug='ssh -G'
 alias strip_empty="grep . --color=never"
 alias strip_comments="grep -ve '^\s*#' --color=never"
 alias strip_matches='cut -d: -f1 | sort -u'

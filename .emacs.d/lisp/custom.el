@@ -148,7 +148,7 @@
  '(tramp-password-prompt-regexp
    "^.*\\(passcode\\|pass ?phrase\\|passwor[dt]\\|wachtwoord\\|\343\203\221\343\202\271\343\203\257\343\203\274\343\203\211\\|Verification code\\).*:\0? *")
  '(tramp-ssh-controlmaster-options
-   "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no -o RemoteCommand=none" t)
+   "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no -o RemoteCommand=none -P tramp" t)
  '(tramp-use-connection-share t)
  '(tramp-use-ssh-controlmaster-options t)
  '(transient-mark-mode t)

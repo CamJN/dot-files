@@ -18,7 +18,18 @@ set -e
 
 # Name the arguments:
 # declare remote_name="$1"
-# declare remote_url="$2"
+declare remote_url="$2"
+
+if [ "$remote_url" = "git@github.com:phusion/passenger_apt_automation.git" ]; then
+    if ! grep -Fqe "$(internal/lib/docker_image_info.sh buildbox_name):$(internal/lib/docker_image_info.sh buildbox_version)" internal/lib/distro_info.sh; then
+        echo "run internal/scripts/regen_distro_info_script.sh" >&2
+        exit 1
+    fi
+    if ! grep -Eqe "$(internal/lib/docker_image_info.sh testbox_base_name)_[^:]+:$(internal/lib/docker_image_info.sh testbox_version)" internal/lib/distro_info.sh; then
+        echo "run internal/scripts/regen_distro_info_script.sh" >&2
+        exit 1
+    fi
+fi
 
 declare zero="$(git hash-object --stdin </dev/null | tr '[:xdigit:]' '0')"
 

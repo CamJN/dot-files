@@ -4,4 +4,4 @@ default_toolchain = "stable-aarch64-apple-darwin"
 profile = "default"
 
 [overrides]
-"/Users/camdennarzt/Developer/Rust/hello-rocket" = "nightly-x86_64-apple-darwin"
+"/Users/camdennarzt/Developer/Rust/hello-rocket" = "nightly-aarch64-apple-darwin"

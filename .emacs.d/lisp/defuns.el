@@ -360,6 +360,19 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
   (flyspell-buffer)
 )
 
+;; -- CSV --
+(defun csv-kill-column-at-point ()
+  "Kill column at point."
+  (interactive
+   (let ((cur (csv--field-index)))
+     (save-excursion
+       (goto-char (point-min))
+       (csv-kill-one-column cur)
+       )
+     )
+   )
+  )
+
 (provide 'defuns)
 
 ;;; defuns.el ends here

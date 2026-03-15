@@ -175,6 +175,7 @@
 (add-to-list 'auto-mode-alist '("\\.\\(ba\\)?sh\\(rc\\)?\\'"        . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.bash\\.d/"         . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)cmd/brew-"            . bash-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'"                          . markdown-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'"                  . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'"                              . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.\\(bash_\\(profile\\|history\\|log\\(in\\|out\\)\\)\\|log\\(in\\|out\\)\\)\\'" . bash-ts-mode))
@@ -318,7 +319,11 @@
 (put 'erase-buffer 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'scroll-left 'disabled nil)
-(fset 'yes-or-no-p 'y-or-n-p)
+
+(if (boundp 'use-short-answers)
+  (setopt use-short-answers t)
+  (fset 'yes-or-no-p 'y-or-n-p)
+)
 
 (provide 'init)
 

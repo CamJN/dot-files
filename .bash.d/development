@@ -21,16 +21,13 @@ if [ "$(uname)" = "Darwin" ]; then
     export CUA_TELEMETRY_ENABLED=false
     export LUME_TELEMETRY_ENABLED=false
 
-    # shellcheck disable=SC1090
-    source <(brew shellenv)
-    # cannot use ~/.config/homebrew/brew.env because the idiots don't allow variable substitution
+    # cannot put these into a ~/.config/homebrew/brew.env file because it is not evaluated, just read literally, so cannot use variables like $HOME
     export HOMEBREW_INSTALL_BADGE=🍷
     export HOMEBREW_AUTO_UPDATE_SECS=86400
     export HOMEBREW_NO_INSTALL_CLEANUP="Fuck off"
     export HOMEBREW_NO_ANALYTICS="Fuck off, seriously"
     export HOMEBREW_CACHE="$HOME/Library/Caches/Homebrew/"
     export HOMEBREW_UPDATE_TO_TAG="Homebrew devs suck"
-    # export HOMEBREW_BUILD_FROM_SOURCE="Fuck off, forever"
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
     export HOMEBREW_NO_BOTTLE_SOURCE_FALLBACK="fuck you"
     export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK="rebuilding llvm for no reason? fuck you"
@@ -41,9 +38,14 @@ if [ "$(uname)" = "Darwin" ]; then
     # have to specify the socket name because the shit-for-brains devs filter the env for the editor
     export HOMEBREW_EDITOR="${EDITOR} --socket-name ${EMACS_SOCKET_NAME}"
     export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
+    # version variable because homebrew sets it AFTER it is needed, idiots
+    HOMEBREW_MACOS_VERSION_NUMERIC=$(/usr/bin/sw_vers -productVersion | tr '.' '\n' | xargs printf "%02d%02d%02d")
+    export HOMEBREW_MACOS_VERSION_NUMERIC
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
-
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications --language=en-CA --require-sha=true"
+    # shellcheck disable=SC1090
+    source <(brew shellenv bash)
     # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default
     export CPATH="$HOMEBREW_PREFIX/include"
     #MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)

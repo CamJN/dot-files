@@ -821,9 +821,11 @@ function catch() {
 }
 
 function download() {
+    local base_url="https://www.youtube.com/watch"
     for label in "$@"; do
-        ( yt-dlp --no-mtime -f m4a    "https://www.youtube.com/watch?v=$label" || \
-              yt-dlp --no-mtime -t mp4 -x "https://www.youtube.com/watch?v=$label" ) &
+        local url=$(trurl --replace-append v="$label" --url "$base_url")
+        ( yt-dlp --no-mtime -f m4a    "$url" || \
+          yt-dlp --no-mtime -t mp4 -x "$url" ) &
     done
     wait
 }

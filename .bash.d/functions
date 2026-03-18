@@ -846,3 +846,7 @@ function groupadd() {
         sudo dseditgroup -o edit -a $username_to_add -t user "$group_to_add_to"
     done
 }
+
+function enable_keyboard_nav(){
+    defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+}

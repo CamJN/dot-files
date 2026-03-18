@@ -47,18 +47,17 @@ declare -i PGVER=18
 
 # wrap in a function to prevent partial execution if download fails
 function main() {
-    if [ $(id -u) = 0 ]; then
+    if [ "$(id -u)" = 0 ]; then
         fail "do not run this script as root, it will ask to raise permissions when needed."
     fi
 
     # vm help
     if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
-        sudo sysctl -w net.inet.tcp.tso=0
-        defaults write com.apple.universalaccess reduceTransparency -bool true
-        export SKIP_CASE_CHECK=true # not setup in vm image
-        export SKIP_HOMEBREW_BUNDLE_APPS=true # can't login to mac app store
-        export SKIP_DOCKER=true # no nested virtualization
-        export SKIP_INSTALL_GETARGV=true
+        SCRIPT_DIR=$(dirname -- "${BASH_SOURCE[0]:-$0}")
+        if ! [ -r "$SCRIPT_DIR/vm-setup.sh" ]; then
+            curl -fsSL https://raw.githubusercontent.com/CamJN/dot-files/master/vm-setup.sh -o "$SCRIPT_DIR/vm-setup.sh"
+        fi
+        source "$SCRIPT_DIR/vm-setup.sh"
     fi
 
     # ensure PATH includes likely dirs
@@ -70,8 +69,12 @@ function main() {
         fi
     fi
 
-    if [ -z "${SSH_AUTH_SOCK-}" ] && [ -z "${SKIP_INSTALL_GETARGV-}" ] && [ ! -e "$HOME/.ssh/id_rsa" ]; then
-        fail "ssh key not found, please provide it"
+    if [ -z "${SSH_AUTH_SOCK-}" ] && [ ! -e "$HOME/.ssh/id_rsa" ]; then
+        if [ -z "${SKIP_INSTALL_GETARGV-}" ]; then
+            fail "installing getargv but ssh key not found, please provide it"
+        elif [ -f "$HOME/.gitconfig" ]; then
+            fail "git configured for ssh but ssh key not found, please provide it"
+        fi
     fi
 
     if ! which -s pinentry-mac ; then
@@ -104,6 +107,29 @@ function main() {
     mkdir -pm 700 ~/.gnupg
 
     export GIT_CEILING_DIRECTORIES=/Users
+    # shellcheck disable=SC2174
+    mkdir -pm 700 ~/.ssh
+    curl --no-progress-meter https://api.github.com/meta | jq -r '.ssh_keys[]|"github.com \(.)"' > ~/.ssh/github_hosts
+    if [ ! -e "$HOME/.ssh/config.d/github.conf" ]; then
+        cat > ~/.ssh/config <<-EOF
+	Host github.com gist.github.com
+  	  Hostname %h
+	  User git
+	  RequestTTY no
+	  RemoteCommand none
+	  AddressFamily inet
+	  UserKnownHostsFile ~/.ssh/github_hosts
+	  IdentityFile ~/.ssh/keys/github_rsa
+	EOF
+        declare FILE="$HOME/.ssh/config"
+        declare NEEDLE='Include ~/.ssh/config.d/*'
+        if [ ! -e "$FILE" ]; then
+            echo "$NEEDLE" > "$FILE"
+        elif ! grep -q "$NEEDLE" "$FILE"; then
+            # ugly syntax because double quoted newlines "\n" don't work
+            sed -e $'1i\\\n'"$NEEDLE" "$FILE"
+        fi
+    fi
     # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
         if [ -e "$HOME/Developer/Bash/dot-files" ]; then
@@ -113,7 +139,7 @@ function main() {
     else
         # ensure clean repo by making temp commit with changes
         declare -a git_args=(-C ~/Developer/Bash/dot-files)
-        if ! which -s gpg || ! gpg --quiet --sign --armor <<< ok | gpg --verify 2>&1 | grep -q 'Good signature'; then
+        if ! which -s gpg || ! gpg --quiet --sign --armor <<< ok 2>/dev/null | gpg --verify 2>&1 | grep -q 'Good signature'; then
             git_args+=(-c "commit.gpgsign=false")
         fi
         git "${git_args[@]}" diff --quiet --exit-code || git "${git_args[@]}" commit -am 'tmp'
@@ -132,6 +158,7 @@ function main() {
     HOMEBREW_PREFIX="$(brew --prefix)"
     export HOMEBREW_PREFIX
     export HOMEBREW_BUNDLE_FILE="$HOME/Developer/Bash/dot-files/homebrew/Brewfile"
+    export HOMEBREW_NO_ENV_HINTS=1
     if [ -n "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
         declare HOMEBREW_BUNDLE_MAS_SKIP
         HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
@@ -378,6 +405,7 @@ function main() {
 
     # Ensure Sites dir exists in home dir
     if [ ! -d "$HOME/Sites" ]; then
+        # shellcheck disable=SC2174
         mkdir -pm 770 ~/Sites
     else
         chmod -R 770 ~/Sites
@@ -425,7 +453,7 @@ function main() {
     # check OS's etc config files for changes, and symlink them
     find ~/Developer/Bash/dot-files/etc -type f \! -path '*paths.d/*' -print0 | while IFS= read -r -d '' file; do
         # weird quoting in $file expansion is necessary
-        DIR="${file#"$HOME/Developer/Bash/dot-files/"}"
+        declare DIR="${file#"$HOME/Developer/Bash/dot-files/"}"
         # if DIR is a file and is not a symlink
         if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
             cat "/$DIR" | sudo tee "$file"
@@ -440,6 +468,14 @@ function main() {
 
     # copy paths files into paths dirs, cannot be symlinks for some reason
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
+    if [ ! -f "${HOMEBREW_PREFIX}/etc/paths" ]; then
+        # homebrew is broken, doesn't set this var before the shellenv script is run
+        declare HOMEBREW_MACOS_VERSION_NUMERIC
+        HOMEBREW_MACOS_VERSION_NUMERIC=$(/usr/bin/sw_vers -productVersion | tr '.' '\n' | xargs printf "%02d%02d%02d")
+        export HOMEBREW_MACOS_VERSION_NUMERIC
+        # running shellenv creates the $HOMEBREW_PREFIX/etc/paths file
+        HOMEBREW_PREFIX="" "${HOMEBREW_PREFIX}/bin/brew" shellenv
+    fi
     sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/25-homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
     # ensure rbenv installed and all current c-rubies

@@ -391,6 +391,8 @@ function main() {
     sudo --validate
     while kill -0 "$$"; do sudo -n true; sleep 60; done 2>/dev/null &
 
+    sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+
     declare COMPNAME
     COMPNAME="$(scutil --get ComputerName)"
     declare DEFAULT_NAME

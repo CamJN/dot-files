@@ -8,12 +8,9 @@ override_git_prompt_colors() {
     EndColor="${ResetColor}"
     ResetColor=""
     StatusRed="[1;31m"
-    # hard-red "[(01;(38;05;196))m"
 
     function git_prompt_command_ok {
-        # StatusGreen="[(01;(38;05;22))m"
         StatusGreen="[1;32m"
-        # StatusAmber="[(01;(38;05;214))m"
         StatusAmber="[1;33m"
         if $_isroot; then
             echo ${StatusAmber};

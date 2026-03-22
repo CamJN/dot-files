@@ -2,10 +2,9 @@
 
 case "${INSIDE_EMACS}${TERM}" in
     screen-256color | xterm-256color)
-        __gpd="$(brew --prefix bash-git-prompt)/share"
-        GIT_PROMPT_PATH="${__gpd}/gitprompt.sh"
+        __GIT_PROMPT_DIR="$(brew --prefix bash-git-prompt)/share"
+        GIT_PROMPT_PATH="${__GIT_PROMPT_DIR}/gitprompt.sh"
         if [ -f "$GIT_PROMPT_PATH" ]; then
-            __GIT_PROMPT_DIR="$__gpd"
             export GIT_PROMPT_ONLY_IN_REPO=0
             export GIT_PROMPT_THEME=Custom
             export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
@@ -17,8 +16,8 @@ case "${INSIDE_EMACS}${TERM}" in
         # shellcheck disable=SC2016
         export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[01;32m"; else echo -n "[01;31m"; fi;)'
         # shellcheck disable=SC2016
-        export COLOR2='$(if [[ $? = 0 ]]; then echo "[0;33m"; else echo "[01;31m"; fi;)'
-        export PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
+        export COLOR2='$(if [[ $? = 0 ]]; then echo -n "[01;33m"; else echo -n "[01;31m"; fi;)'
+        export      PS1="\[$COLOR1\]\u@\h:\w \\$ \[[0m\]"
         export SUDO_PS1="\[$COLOR2\]\u@\h:\w \\$ \[[0m\]"
         ;;
     dumb | * )

@@ -29,7 +29,7 @@ function update_tcc_database() {
 	('kTCCServicePostEvent',     1, '/usr/libexec/sshd-keygen-wrapper', 2, 0, 1, NULL, 'UNUSED'),
 	('kTCCServiceAppleEvents',   1, '/usr/libexec/sshd-keygen-wrapper', 2, 0, 1, 0, 'com.apple.systemevents'),
 	('kTCCServiceAppleEvents',   1, '/usr/libexec/sshd-keygen-wrapper', 2, 0, 1, 0, 'com.apple.Safari'),
-	('kTCCServiceAppleEvents',   1, '/usr/libexec/sshd-keygen-wrapper', 2, 0, 1, 0, 'com.apple.Music');
+	('kTCCServiceMediaLibrary',  1, '/usr/libexec/sshd-keygen-wrapper', 2, 0, 1, NULL, 'UNUSED');
 	EOF
 }
 

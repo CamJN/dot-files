@@ -477,7 +477,7 @@ function main() {
         HOMEBREW_MACOS_VERSION_NUMERIC=$(/usr/bin/sw_vers -productVersion | tr '.' '\n' | xargs printf "%02d%02d%02d")
         export HOMEBREW_MACOS_VERSION_NUMERIC
         # running shellenv creates the $HOMEBREW_PREFIX/etc/paths file
-        HOMEBREW_PREFIX="" brew shellenv
+        env -i "HOME=$HOME" "${HOMEBREW_PREFIX}/bin/brew" shellenv
     fi
     sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/25-homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/

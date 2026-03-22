@@ -31,8 +31,10 @@ passenger.*.pid.lock
 /.cargo/.package-cache-mutate
 /.cargo/bin
 /.cargo/env
+/.cargo/env.tcsh
 /.cargo/registry
 /.colima/_lima
+/.colima/_store
 /.colima/default/daemon
 /.config/op
 /.config/swiftly
@@ -40,6 +42,8 @@ passenger.*.pid.lock
 /.docker/cli-plugins
 /.docker/contexts
 /.docker/manifests
+/.docker/.token_seed
+/.docker/.token_seed.lock
 /.emacs.d/%backup%~
 /.emacs.d/.cache
 /.emacs.d/.dap-breakpoints
@@ -66,7 +70,5 @@ passenger.*.pid.lock
 /usr/local/etc/dnsmasq.d/dnsmasq.blacklist.txt
 /usr/local/etc/dnsmasq.d/filtering.resolv
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
-/.docker/.token_seed
-/.docker/.token_seed.lock
-/.colima/_store
 /usr/local/etc/dnsmasq.d/interfaces.conf
+

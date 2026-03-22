@@ -95,7 +95,7 @@ function main() {
     fi
 
     # Ensure Bash dir exists in Developer dir
-    if [ ! -d "$HOME/Developer/Bash" ]; then
+    if [ ! -d ~/Developer/Bash ]; then
         mkdir -p ~/Developer/Bash
     fi
 
@@ -110,10 +110,11 @@ function main() {
     # shellcheck disable=SC2174
     mkdir -pm 700 ~/.ssh
     curl --no-progress-meter https://api.github.com/meta | jq -r '.ssh_keys[]|"github.com \(.)"' > ~/.ssh/github_hosts
-    if [ ! -e "$HOME/.ssh/config.d/github.conf" ]; then
-        cat <<-EOF > "$HOME/.ssh/config.d/github.conf"
+    if [ ! -e ~/.ssh/config.d/github.conf ]; then
+        mkdir -pm 700 ~/.ssh/config.d
+        cat <<- EOF > ~/.ssh/config.d/github.conf
 	Host github.com gist.github.com
-  	  Hostname %h
+	  Hostname %h
 	  User git
 	  RequestTTY no
 	  RemoteCommand none

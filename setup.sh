@@ -111,7 +111,7 @@ function main() {
     mkdir -pm 700 ~/.ssh
     curl --no-progress-meter https://api.github.com/meta | jq -r '.ssh_keys[]|"github.com \(.)"' > ~/.ssh/github_hosts
     if [ ! -e "$HOME/.ssh/config.d/github.conf" ]; then
-        cat > ~/.ssh/config <<-EOF
+        cat > "$HOME/.ssh/config.d/github.conf" <<-EOF
 	Host github.com gist.github.com
   	  Hostname %h
 	  User git

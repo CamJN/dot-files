@@ -111,6 +111,7 @@ function main() {
     mkdir -pm 700 ~/.ssh
     curl --no-progress-meter https://api.github.com/meta | jq -r '.ssh_keys[]|"github.com \(.)"' > ~/.ssh/github_hosts
     if [ ! -e ~/.ssh/config.d/github.conf ]; then
+        # shellcheck disable=SC2174
         mkdir -pm 700 ~/.ssh/config.d
         cat <<- EOF > ~/.ssh/config.d/github.conf
 	Host github.com gist.github.com
@@ -459,9 +460,9 @@ function main() {
         declare DIR="${file#"$HOME/Developer/Bash/dot-files/"}"
         # if DIR is a file and is not a symlink
         if [ -f "/$DIR" ] && [ ! -h "/$DIR" ]; then
-            cat "/$DIR" | sudo tee "$file"
-            if [ -f "saved_diffs/$DIR" ]; then
-                if diff -q <(git diff "$file") "saved_diffs/$DIR"; then
+            cat "/$DIR" | sudo tee "$file" >/dev/null
+            if [ -f "$HOME/Developer/Bash/dot-files/saved_diffs/$DIR" ]; then
+                if diff -q <(git diff "$file") "$HOME/Developer/Bash/dot-files/saved_diffs/$DIR"; then
                     git restore "$file"
                 fi
             fi

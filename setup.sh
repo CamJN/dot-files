@@ -623,6 +623,14 @@ function main() {
     defaults write com.apple.AdPlatforms AdPlatformsPAAvailable -bool false
     defaults write com.apple.AdPlatforms personalizedAdsDefaulted -bool false
 
+    if ! defaults export com.apple.Terminal - | plutil -extract 'Window Settings' xml1 -o - -; then
+        # Terminal has never been opened and doesn't have its settings populated.
+        # this also means we aren't running in the terminal in a gui session so we can quit the terminal too
+        open -a Terminal
+        sleep 1
+        killall Terminal
+    fi
+
     defaults write com.apple.Terminal SecureKeyboardEntry -bool false
     defaults write com.apple.Terminal "Default Window Settings" -string "My Clear Dark"
     defaults write com.apple.Terminal "Man Page Window Settings" -string "Man Page"

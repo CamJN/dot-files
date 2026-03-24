@@ -224,9 +224,6 @@ function main() {
     if [ -z "${SKIP_BUNDLE-}" ]; then
         # pin formulae that shouldn't be changed without care & attention
         brew pin emacs dnsmasq transmission-cli gnupg mailpit "postgresql@${PGVER}" colima lima
-        if [ "$(uname -m)" = "arm64" ]; then
-            brew pin batt tart
-        fi
     fi
 
     # Check if brew doctor has any new complaints

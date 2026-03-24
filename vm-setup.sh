@@ -38,6 +38,7 @@ sudo sysctl -w net.inet.tcp.tso=0
 update_tcc_database "${HOME}/Library/Application Support/com.apple.TCC/TCC.db"
 
 if [ "$(dscl -plist . -read "/Users/$USER" RealName | plutil -extract 'dsAttrTypeStandard:RealName.0' raw -)" != "Managed via Tart" ]; then
+    echo '%admin ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/vm-admin
     automationmodetool enable-automationmode-without-authentication
     defaults -currentHost write com.apple.screensaver idleTime -int 0
     sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime -int 0

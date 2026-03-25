@@ -1556,6 +1556,7 @@ image/jp2					jp2
 image/jpeg					jpeg jpg jpe
 # image/jpm
 # image/jpx
+image/jxl					jxl
 image/ktx					ktx
 # image/naplps
 image/pict					pict pic pct

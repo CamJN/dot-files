@@ -44,6 +44,8 @@ if [ "$(dscl -plist . -read "/Users/$USER" RealName | plutil -extract 'dsAttrTyp
     sudo defaults write /Library/Preferences/com.apple.screensaver loginWindowIdleTime -int 0
     sudo systemsetup -setsleep Off
     sysadminctl -screenLock off -password "$(<~/password)"
+    # alt: https://github.com/xfreebird/kcpassword
+    sysadminctl -autologin set -userName "${USER}" -password "$(<~/password)"
 fi
 
 # Must be after tcc database

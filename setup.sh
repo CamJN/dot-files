@@ -9,6 +9,7 @@ export PS4='+${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():}'
 set -xeuo pipefail
 
 # pre-reqs:
+# ensure full disk access for /usr/libexec/sshd-keygen-wrapper
 # ensure network working, incl. dns
 # make fs case sensitive or set SKIP_CASE_CHECK=true
 # login to app store or set SKIP_HOMEBREW_BUNDLE_APPS=true
@@ -806,6 +807,9 @@ function main() {
     if (security find-identity -v -p codesigning | grep -q '0 valid identities found'); then
         fail "No code-signing authority found, apache cannot load 3rd party modules."
     else
+        declare id
+        id=$(security find-identity -v -p codesigning | grep -Fe '1)' | cut -wf 4- | tr -d '"')
+        find "$HOMEBREW_PREFIX"/opt/passenger*/libexec/buildout/apache2/mod_passenger.so "$HOMEBREW_PREFIX/lib/httpd/modules/libphp.so" -exec codesign -fs "$id" --keychain ~/Library/Keychains/login.keychain-db {} \;
         sudo apachectl -t && sudo apachectl restart
     fi
 

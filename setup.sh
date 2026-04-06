@@ -808,7 +808,7 @@ function main() {
         fail "No code-signing authority found, apache cannot load 3rd party modules."
     else
         declare id
-        id=$(security find-identity -v -p codesigning | grep -Fe '1)' | cut -wf 4- | tr -d '"')
+        id=$(security find-identity -v -p codesigning | awk -F'"' '/)/{print $2}')
         find "$HOMEBREW_PREFIX"/opt/passenger*/libexec/buildout/apache2/mod_passenger.so "$HOMEBREW_PREFIX/lib/httpd/modules/libphp.so" -exec codesign -fs "$id" --keychain ~/Library/Keychains/login.keychain-db {} \;
         sudo apachectl -t && sudo apachectl restart
     fi

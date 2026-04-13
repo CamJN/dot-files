@@ -4,10 +4,19 @@
 <dict>
     <key>Label</key>
     <string>local.all.ssh-agent</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>SSH_ASKPASS</key>
+        <string>echo</string>
+        <key>SSH_ASKPASS_REQUIRE</key>
+        <string>force</string>
+    </dict>
     <key>ProgramArguments</key>
     <array>
         <string>ssh-add</string>
         <string>--apple-load-keychain</string>
+        <string>-S</string>
+        <string>/usr/lib/ssh-keychain.dylib</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

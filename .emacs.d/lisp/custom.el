@@ -17,6 +17,8 @@
    (list (cons ".*" (expand-file-name "~/.emacs.d/backup-files/"))))
  '(bell-volume 0)
  '(browse-url-browser-function 'browse-url-default-macosx-browser)
+ '(browse-url-firefox-program
+   "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox")
  '(calendar-mark-holidays-flag t)
  '(column-number-mode t)
  '(completion-styles '(substring partial-completion emacs22))
@@ -136,7 +138,8 @@
  '(replace-character-fold t)
  '(require-final-newline t)
  '(safe-local-variable-values
-   '((python-shell-virtualenv-root . default-directory) (eval highlight-regexp "^\11* ") (web-mode-use-tabs)))
+   '((backup-inhibited . t) (python-shell-virtualenv-root . default-directory) (eval highlight-regexp "^\11* ")
+     (web-mode-use-tabs)))
  '(search-default-mode 'character-fold-to-regexp)
  '(search-highlight t)
  '(send-mail-function 'sendmail-send-it)

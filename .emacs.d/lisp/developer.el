@@ -176,7 +176,7 @@
 (setenv "PATH"
         (concat
          (expand-file-name "~/.cargo/bin/") ":"
-         (expand-file-name "~/.config/swiftly/bin/") ":"
+         ;;(expand-file-name "~/.config/swiftly/bin/") ":"
          (expand-file-name "~/.rbenv/shims") ":"
          (expand-file-name "~/.dotnet/tools") ":"
          (getenv "GOPATH")"/bin" ":"
@@ -184,7 +184,7 @@
          (getenv "PATH")
          )
         )
-(setq exec-path (eval (car (get 'exec-path 'standard-value))))
+(setopt exec-path (eval (car (get 'exec-path 'standard-value))))
 
 (setopt company-idle-delay 0.2)
 (setopt company-minimum-prefix-length 1)

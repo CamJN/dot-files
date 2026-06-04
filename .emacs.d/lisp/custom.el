@@ -28,8 +28,7 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   '("475f919f0834441d7a0b08f3d294dfe55b8c2f9e19abba8d1c2029fa16741b23"
-     "3099419f142e6776de8097e39f9f22896f65e7f2ab58be3a104bde5811828bde" default))
+   '("fa3e046d8b39d4e913aae457f28c3900fc11df38b10c8b3ff7d6113a9e3d18ed" default))
  '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
  '(delete-active-region 'kill)
  '(delete-by-moving-to-trash t)

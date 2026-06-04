@@ -235,6 +235,8 @@ Semantic, and Ansi-Color faces are included."
    `(tool-bar             ((,class (:foreground ,alum-5))))
    `(widget-documentation ((,class (:foreground ,cham-3))))
    `(cursor               ((,class (:background ,butter-1))))
+   ;; Web Mode
+   `(web-mode-html-tag-bracket-face ((,class (:foreground ,alum-4))))
 ))
 
 (provide-theme 'dusk)

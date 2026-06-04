@@ -513,10 +513,12 @@ function main() {
     # ensure rustup initialized
     export RUSTUP_INIT_SKIP_PATH_CHECK=yes
     if [ "$(uname -m)" = "x86_64" ]; then
-        "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host x86_64-apple-darwin --default-toolchain stable
+        "$(brew --prefix rustup)/bin/rustup" default stable
+        "$(brew --prefix rustup)/bin/rustup" toolchain install stable-x86_64-apple-darwin
         "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve x86_64 || true ) | xargs rustup toolchain uninstall
     elif [ "$(uname -m)" = "arm64" ]; then
-        "$(brew --prefix rustup)/bin/rustup-init" -y --no-modify-path --default-host aarch64-apple-darwin --default-toolchain stable
+        "$(brew --prefix rustup)/bin/rustup" default stable
+        "$(brew --prefix rustup)/bin/rustup" toolchain install stable-aarch64-apple-darwin
         "$(brew --prefix rustup)/bin/rustup" toolchain list | ( grep -Fve aarch64 || true ) | xargs rustup toolchain uninstall
     else
         fail "Unknown architecture: $(uname -m) please update rustup section of script."

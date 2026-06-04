@@ -176,6 +176,8 @@ function main() {
     # untap unwanted homebrew taps
     comm -12 <(brew tap) <(grep -Fe untap "$HOMEBREW_BUNDLE_FILE" | cut -w -f3 | tr -d '"') | xargs -L 1 brew untap
 
+    brew tap | xargs brew trust --tap
+
     if [ -z "${SKIP_BUNDLE-}" ]; then
         if [ -z "${SKIP_INSTALL_GETARGV-}" ] && [ -z "${HOMEBREW_GITHUB_API_TOKEN-}" ]; then
             fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."

@@ -2,7 +2,7 @@
 # Default: 2
 cpu: 2
 
-# Size of the disk in GiB to be allocated to the virtual machine.
+# Size of the disk in GiB to be allocated to the virtual machine for container data.
 # NOTE: value can only be increased after virtual machine has been created.
 #
 # Default: 100
@@ -24,6 +24,14 @@ arch: host
 # Default: docker
 runtime: docker
 
+# AI model runner (docker, ramalama).
+# Both require krunkit VM type for GPU access.
+# docker: Uses Docker Model Runner.
+# ramalama: Uses Ramalama.
+#
+# Default: docker
+modelRunner: ""
+
 # Set custom hostname for the virtual machine.
 # Default: colima
 #          colima-profile_name for other profiles
@@ -44,6 +52,11 @@ kubernetes:
   # Default: traefik is disabled
   k3sArgs:
     - --disable=traefik
+  
+  # Kubernetes port to listen on
+  # A common port is 6443, though left unbound to ensure no port conflicts
+  # Default: pick random unbound port
+  port: 0
 
 # Auto-activate on the Host for client access.
 # Setting to true does the following on startup
@@ -59,6 +72,22 @@ network:
   # NOTE: this is currently macOS only and ignored on Linux.
   # Default: false
   address: false
+  
+  # Network mode for the virtual machine (shared, bridged).
+  # NOTE: this is currently macOS only and ignored on Linux.
+  # Default: shared
+  mode: ""
+  
+  # Network interface to use for bridged mode.
+  # This is only used when mode is set to bridged.
+  # NOTE: this is currently macOS only and ignored on Linux.
+  # Default: en0
+  interface: ""
+  
+  # Use the assigned IP address as the preferred route for the VM.
+  # Note: this only has an effect when `address` is set to true.
+  # Default: false
+  preferredRoute: false
   
   # Custom DNS resolvers for the virtual machine.
   #
@@ -85,6 +114,15 @@ network:
   #
   # Default: false
   hostAddresses: false
+  
+  # Custom gateway address for the virtual machine.
+  # The last octet needs to be 2.
+  #
+  # EXAMPLE
+  # gatewayAddress: 192.168.10.2
+  #
+  # Default: 192.168.5.2
+  gatewayAddress: null
 
 # ===================================================================== #
 # ADVANCED CONFIGURATION
@@ -113,14 +151,23 @@ forwardAgent: false
 # Default: {}
 docker: {}
 
-# Virtual Machine type (qemu, vz)
+# Virtual Machine type (krunkit, qemu, vz)
 # NOTE: this is macOS 13 only. For Linux and macOS <13.0, qemu is always used.
 #
-# vz is macOS virtualization framework and requires macOS 13
+# vz is macOS virtualization framework and requires macOS 13.
+# krunkit runs super‑light VMs on macOS/ARM64 with a focus on GPU access. It is experimental.
 #
 # NOTE: value cannot be changed after virtual machine is created.
 # Default: qemu
 vmType: vz
+
+# Port forwarder for the virtual machine (ssh, grpc, none).
+# ssh is more stable but supports only TCP.
+# grpc supports both TCP and UDP, but is experimental.
+# none disables port forwarding.
+#
+# Default: ssh
+portForwarder: ssh
 
 # Utilise rosetta for amd64 emulation (requires m1 mac and vmType `vz`)
 # Default: false
@@ -173,6 +220,16 @@ cpuType: ""
 #       echo provisioning as $USER...
 #       touch ~/.provision
 #
+# EXAMPLE - script executed after VM boot, before container runtimes start
+# provision:
+#   - mode: after-boot
+#     script: echo "VM is up, containers not yet started"
+#
+# EXAMPLE - script executed after VM and container runtimes are ready
+# provision:
+#   - mode: ready
+#     script: echo "everything is ready"
+#
 # Default: []
 provision: []
 
@@ -198,7 +255,7 @@ sshPort: 0
 #   - location: ~/projects
 #     writable: true
 #
-# Colima default behaviour: $HOME and /tmp/colima are mounted as writable.
+# Colima default behaviour: $HOME is mounted as writable.
 # Default: []
 mounts: []
 
@@ -209,6 +266,15 @@ mounts: []
 #
 # Default: ""
 diskImage: ""
+
+# Use the custom disk image even if it does NOT match a supported release image.
+# WARNING: This bypasses validating the image and is a completely unsupported!
+forceDiskImage: false
+
+# Size of the disk in GiB for the root filesystem of the virtual machine.
+# This value is ignored if no runtime is in use. i.e. `none` runtime.
+# Default: 20
+rootDisk: 20
 
 # Environment variables for the virtual machine.
 #

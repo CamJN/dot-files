@@ -1,4 +1,8 @@
 {
+/* http://xahlee.info/kbd/osx_keybinding_key_syntax.html */
+/* https://github.com/ttscoff/keybindings */
+/* https://developer.apple.com/documentation/appkit/nsstandardkeybindingresponding?language=objc */
+/* https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/TextDefaultsBindings/TextDefaultsBindings.html */
     "^ "        = "setMark:";
     "^w"        = "deleteToMark:";
     "~w"        = "copy:";

@@ -8,7 +8,9 @@ export NODE_REPL_HISTORY="$HOME/.history/node"
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PYTHON_HISTORY="$HOME/.history/python"
 export PIP_UPLOAD_PRIOR_TO=P14D
-export BUN_OPTIONS="--minimum-release-age=$(units -t "2 weeks" seconds)"
+if which -s units; then
+    export BUN_OPTIONS="--minimum-release-age=$(units -t "2 weeks" seconds)"
+fi
 #export BUN_REPL_HISTORY="$HOME/.history/bun" # not real
 export RUBY_DEBUG_HISTORY_FILE="$HOME/.history/rdbg"
 export SQLITE_HISTORY="$HOME/.history/sqlite"

@@ -36,7 +36,9 @@ alias less='/usr/share/vim/vim*/macros/less.sh'
 alias locate='clocate'
 alias lock='/System/Library/CoreServices/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine 2>/dev/null'
 alias loveSongs='loveSongsForCamden'
+if which -s eza; then
 alias ls=cls
+fi
 alias maccurl=nscurl
 alias macdig='dscacheutil -q host -a name'
 alias minemacs=mg

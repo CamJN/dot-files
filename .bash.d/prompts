@@ -2,17 +2,25 @@
 
 case "${INSIDE_EMACS}${TERM}" in
     screen-256color | xterm-256color)
-        __GIT_PROMPT_DIR="$(brew --prefix bash-git-prompt)/share"
-        GIT_PROMPT_PATH="${__GIT_PROMPT_DIR}/gitprompt.sh"
-        if [ -f "$GIT_PROMPT_PATH" ]; then
-            export GIT_PROMPT_ONLY_IN_REPO=0
-            export GIT_PROMPT_THEME=Custom
-            export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
-            # shellcheck disable=SC1090
-            source "$GIT_PROMPT_PATH"
+        if ! which -s brew ; then
+            if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+                __GIT_PROMPT_DIR="$HOME/.bash-git-prompt"
+            fi
+        else
+            __GIT_PROMPT_DIR="$(brew --prefix bash-git-prompt)/share"
+        fi
+        if [ -n "$__GIT_PROMPT_DIR" ]; then
+            GIT_PROMPT_PATH="${__GIT_PROMPT_DIR}/gitprompt.sh"
+            if [ -f "$GIT_PROMPT_PATH" ]; then
+                export GIT_PROMPT_ONLY_IN_REPO=0
+                export GIT_PROMPT_THEME=Custom
+                export GIT_PROMPT_THEME_FILE=~/.bash.d/git-prompt-colors.sh
+                # shellcheck disable=SC1090
+                source "$GIT_PROMPT_PATH"
+            fi
         fi
         ;;
-    screen | xterm)
+    screen | xterm* | rxvt*)
         # shellcheck disable=SC2016
         export COLOR1='$(if [[ $? = 0 ]]; then echo -n "[01;32m"; else echo -n "[01;31m"; fi;)'
         # shellcheck disable=SC2016

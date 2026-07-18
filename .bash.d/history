@@ -3,9 +3,13 @@
 export SHELL_SESSION_HISTORY=1
 #export HISTFILE="$HOME/.history/bash" # breaks session history
 export LESSHISTFILE="$HOME/.history/less"
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
+# append to the history file, don't overwrite it
 shopt -s histappend
+# don't put duplicate lines or lines starting with space in the history.
+export HISTCONTROL=ignoreboth
 
 if command -v shell_session_history_enable >/dev/null; then
     function prompt_save_history() {

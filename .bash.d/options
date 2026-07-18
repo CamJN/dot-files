@@ -7,8 +7,12 @@ stty -ixon -ixoff
 shopt -s nullglob
 shopt -s extglob
 shopt -s xpg_echo
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
 shopt -s globstar
 shopt -s nocaseglob
 shopt -s nocasematch
 shopt -s direxpand
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
 shopt -s checkwinsize

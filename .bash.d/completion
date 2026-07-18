@@ -4,26 +4,38 @@
 
 export FIGNORE=".git:.DS_Store:~"
 
-HOMEBREW_PREFIX=$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)
-export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
-if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
-    source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+if which -s brew ; then
+    HOMEBREW_PREFIX=$(/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin brew --prefix)
+    export BASH_COMPLETION_COMPAT_DIR="$HOMEBREW_PREFIX/etc/bash_completion.d"
+    if [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]]; then
+        source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+    fi
+else
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
 fi
 
-source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
+if [ -f "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash" ]; then
+    source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
+fi
 
-source ~/.bash.d/launchctl-completion.bash
+if [ -f "$HOME/.bash.d/launchctl-completion.bash" ]; then
+    source ~/.bash.d/launchctl-completion.bash
+fi
 
 complete -C aws_completer aws
 
 function copy_function() {
-  test -n "$(declare -f "$1")" || return
-  eval "${_/$1/$2}"
+    test -n "$(declare -f "$1")" || return
+    eval "${_/$1/$2}"
 }
 
 function rename_function() {
-  copy_function "$@" || return
-  unset -f "$1"
+    copy_function "$@" || return
+    unset -f "$1"
 }
 
 rename_function _filedir old_filedir
@@ -37,14 +49,34 @@ _filedir() {
     #cleanup_code
     echo -n ''
 }
-source <(swiftly --generate-completion-script)
-source <(node --completion-bash)
-source <(rustup completions bash)
-source <(pip3 completion --bash)
-source <(colima completion bash)
-source <(bat --completion bash)
+
+if which -s swiftly ; then
+    source <(swiftly --generate-completion-script)
+fi
+
+if which -s node; then
+    source <(node --completion-bash)
+fi
+
+if which -s rustup; then
+    source <(rustup completions bash)
+fi
+
+if which -s pip3; then
+    source <(pip3 completion --bash)
+fi
+
+if which -s colima; then
+    source <(colima completion bash)
+fi
+
+if which -s bat; then
+    source <(bat --completion bash)
+fi
+
 if which -s batt; then
     source <(batt completion bash)
 fi
+
 complete -o default -F _pip_completion pip
 # do not try to add 'python -m pip' style invocations

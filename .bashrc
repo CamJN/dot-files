@@ -1,4 +1,5 @@
 # no shebang
+# ~/.bashrc: executed by bash(1) for non-login shells.
 
 if [ -x /usr/libexec/path_helper ]; then
     # shellcheck disable=SC1090

@@ -755,12 +755,19 @@ function dump_defaults() {
     _dump_defaults_stubborn
 }
 
-function apply_symbol() {
+function folder_symbol() {
     if [ $# -ne 2 ]; then
-        echo "apply_symbol symbol_name folder"
+        echo "$0 symbol_name folder"
         return 1
     fi
     xattr -w 'com.apple.icon.folder#S' "$(printf '{"sym":"%s"}' "$1")" "$2"
+}
+function folder_text() {
+    if [ $# -ne 2 ]; then
+        echo "$0 text folder"
+        return 1
+    fi
+    xattr -w 'com.apple.icon.folder#S' "$(printf '{"emoji":"%s"}' "$1")" "$2"
 }
 
 function nato () {

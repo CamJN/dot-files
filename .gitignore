@@ -72,3 +72,4 @@ passenger.*.pid.lock
 /usr/local/etc/dnsmasq.d/resolv-dnsmasq.conf
 /usr/local/etc/dnsmasq.d/interfaces.conf
 
+/.emacs.d/notes.txt

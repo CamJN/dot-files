@@ -1,7 +1,13 @@
 #!/usr/local/bin/bash
 
 # shellcheck disable=SC2155
-export EMACS_SOCKET_NAME="${TMPDIR}emacs$(id -u)/server"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export EMACS_SOCKET_NAME="${TMPDIR}emacs$(id -u)/server"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    export EMACS_SOCKET_NAME="$XDG_RUNTIME_DIR/emacs/server"
+else
+    echo "Unknown OS, emacsclient probably won't work."
+fi
 export EDITOR="$(which emacsclient) --tty"
 
 alias emacs-save="emacsclient --eval '(save-some-buffers t)' >/dev/null"

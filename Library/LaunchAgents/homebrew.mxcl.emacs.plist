@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>__CF_USER_TEXT_ENCODING</key>
+		<string>0x1F5:0x8000100:0x52</string>
+	</dict>
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>

@@ -8,3 +8,12 @@ msgminwait 0
 fit
 defutf8 on
 defscrollback 32000
+
+# If set to on, "alternate screen" support is enabled in virtual terminals, just like in xterm.  Initial setting is `off'.
+# altscreen on
+
+# bufferfile:   The file to use for commands "readbuf" ('<') and "writebuf" ('>')
+# bufferfile $HOME/.screen.d/exchange
+
+# hardcopydir:  The directory which contains all hardcopies.
+# hardcopydir ~/.screen.d/hardcopies

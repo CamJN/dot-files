@@ -27,9 +27,9 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardOutPath</key>
-	<string>/opt/homebrew/var/run/emacs/stdout.log</string>
+	<string>/opt/homebrew/var/log/emacs/stdout.log</string>
 	<key>StandardErrorPath</key>
-	<string>/opt/homebrew/var/run/emacs/stderr.log</string>
+	<string>/opt/homebrew/var/log/emacs/stderr.log</string>
 	<key>WorkingDirectory</key>
 	<string>/Users/camdennarzt</string>
 </dict>

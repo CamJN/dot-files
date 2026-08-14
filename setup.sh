@@ -763,10 +763,44 @@ function main() {
     selected="$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Roman' 'InputSourceKind' 'Input Mode')"
 
     defaults write com.apple.HIToolbox AppleCurrentKeyboardLayoutInputSourceID -string com.apple.keylayout.Canadian
-    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Japanese' 'InputSourceKind' 'Input Mode')"
-    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'InputSourceKind' 'Keyboard Input Method')"
-    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$selected"
-    defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.50onPaletteIM' 'InputSourceKind' 'Non Keyboard Input Method')"
+    # modify to check if japanese input already enabled, otherwise wind up with hundreds of duplicates
+    if false; then
+        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Japanese' 'InputSourceKind' 'Input Mode')"
+        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'InputSourceKind' 'Keyboard Input Method')"
+        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$selected"
+        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.50onPaletteIM' 'InputSourceKind' 'Non Keyboard Input Method')"
+    fi
+    # Goal:
+    # (
+    #     {
+    #         InputSourceKind = "Keyboard Layout";
+    #         "KeyboardLayout ID" = 29;
+    #         "KeyboardLayout Name" = Canadian;
+    #     },
+    #     {
+    #         "Bundle ID" = "com.apple.CharacterPaletteIM";
+    #         InputSourceKind = "Non Keyboard Input Method";
+    #     },
+    #     {
+    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
+    #         "Input Mode" = "com.apple.inputmethod.Japanese";
+    #         InputSourceKind = "Input Mode";
+    #     },
+    #     {
+    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
+    #         InputSourceKind = "Keyboard Input Method";
+    #     },
+    #     {
+    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
+    #         "Input Mode" = "com.apple.inputmethod.Roman";
+    #         InputSourceKind = "Input Mode";
+    #     },
+    #     {
+    #         "Bundle ID" = "com.apple.50onPaletteIM";
+    #         InputSourceKind = "Non Keyboard Input Method";
+    #     }
+    # )
+
     defaults write com.apple.HIToolbox AppleSelectedInputSources -array    "$selected"
     defaults write com.apple.HIToolbox AppleFnUsageType -int 2
 

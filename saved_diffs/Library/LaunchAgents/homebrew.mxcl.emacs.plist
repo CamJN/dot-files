@@ -1,13 +1,26 @@
-Library/LaunchAgents/homebrew.mxcl.emacs.plist --- XML
-21 21     </array>
-22 22     <key>RunAtLoad</key>
-23 23     <true/>
-24 ..     <key>StandardOutPath</key>
-25 ..     <string>/opt/homebrew/var/run/emacs/stdout.log</string>
-26 ..     <key>StandardErrorPath</key>
-27 ..     <string>/opt/homebrew/var/run/emacs/stderr.log</string>
-28 ..     <key>WorkingDirectory</key>
-29 ..     <string>/Users/camdennarzt</string>
-30 24 </dict>
-31 25 </plist>
+Library/LaunchAgents/homebrew.mxcl.emacs.plist --- 1/2 --- XML
+ 2  2 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ 3  3 <plist version="1.0">
+ 4  4 <dict>
+ 5  .     <key>EnvironmentVariables</key>
+ 6  .     <dict>
+ 7  .         <key>__CF_USER_TEXT_ENCODING</key>
+ 8  .         <string>0x1F5:0x8000100:0x52</string>
+ 9  .     </dict>
+10  5     <key>KeepAlive</key>
+11  6     <true/>
+12  7     <key>Label</key>
+
+Library/LaunchAgents/homebrew.mxcl.emacs.plist --- 2/2 --- XML
+26 21     </array>
+27 22     <key>RunAtLoad</key>
+28 23     <true/>
+29 ..     <key>StandardOutPath</key>
+30 ..     <string>/opt/homebrew/var/log/emacs/stdout.log</string>
+31 ..     <key>StandardErrorPath</key>
+32 ..     <string>/opt/homebrew/var/log/emacs/stderr.log</string>
+33 ..     <key>WorkingDirectory</key>
+34 ..     <string>/Users/camdennarzt</string>
+35 24 </dict>
+36 25 </plist>
 

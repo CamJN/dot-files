@@ -1,10 +1,13 @@
 Library/LaunchAgents/homebrew.mxcl.ollama.plist --- XML
- 8  8         <string>1</string>
- 9  9         <key>OLLAMA_KV_CACHE_TYPE</key>
-10 10         <string>q8_0</string>
-11 ..         <key>OLLAMA_LIBRARY_PATH</key>
-12 ..         <string>/opt/homebrew/lib</string>
-13 11     </dict>
-14 12     <key>KeepAlive</key>
-15 13     <true/>
+ 7         <key>OLLAMA_FLASH_ATTENTION</key>    7         <key>OLLAMA_FLASH_ATTENTION</key>
+ 8         <string>1</string>                   8         <string>1</string>
+ 9         <key>OLLAMA_KV_CACHE_TYPE</key>      9         <key>OLLAMA_KV_CACHE_TYPE</key>
+10         <string>f16</string>                10         <string>q8_0</string>
+11         <key>OLLAMA_LIBRARY_PATH</key>      .. 
+12         <string>/opt/homebrew/lib</string>  .. 
+13         <key>OLLAMA_NO_CLOUD</key>          .. 
+14         <string>1</string>                  .. 
+15     </dict>                                 11     </dict>
+16     <key>KeepAlive</key>                    12     <key>KeepAlive</key>
+17     <true/>                                 13     <true/>
 

@@ -4,13 +4,15 @@ Library/LaunchDaemons/homebrew.mxcl.postgresql@18.plist --- XML
  7         <key>LC_ALL</key>                          7         <key>LC_ALL</key>
  8         <string>en_CA.UTF-8</string>               8         <string>en_US.UTF-8</string>
  9     </dict>                                        9     </dict>
-10     <key>KeepAlive</key>                          10     <key>KeepAlive</key>
-11     <true/>                                       11     <true/>
-12     <key>Label</key>                              12     <key>Label</key>
-13     <string>homebrew.mxcl.postgresql@18</string>  13     <string>homebrew.mxcl.postgresql@18</string>
-14     <key>UserName</key>                           .. 
-15     <string>camdennarzt</string>                  .. 
-16     <key>LimitLoadToSessionType</key>             14     <key>LimitLoadToSessionType</key>
-17     <array>                                       15     <array>
-18         <string>Aqua</string>                     16         <string>Aqua</string>
+10     <key>ExitTimeOut</key>                        10     <key>ExitTimeOut</key>
+11     <integer>120</integer>                        11     <integer>120</integer>
+12     <key>KeepAlive</key>                          12     <key>KeepAlive</key>
+13     <true/>                                       13     <true/>
+14     <key>Label</key>                              14     <key>Label</key>
+15     <string>homebrew.mxcl.postgresql@18</string>  15     <string>homebrew.mxcl.postgresql@18</string>
+16     <key>UserName</key>                           .. 
+17     <string>camdennarzt</string>                  .. 
+18     <key>LimitLoadToSessionType</key>             16     <key>LimitLoadToSessionType</key>
+19     <array>                                       17     <array>
+20         <string>Aqua</string>                     18         <string>Aqua</string>
 

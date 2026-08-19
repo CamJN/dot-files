@@ -7,6 +7,8 @@
 		<key>LC_ALL</key>
 		<string>en_CA.UTF-8</string>
 	</dict>
+	<key>ExitTimeOut</key>
+	<integer>120</integer>
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>

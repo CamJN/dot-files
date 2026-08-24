@@ -48,6 +48,7 @@
  '(eglot-events-buffer-size 0)
  '(file-name-shadow-mode t)
  '(fill-column 120)
+ '(flymake-show-diagnostics-at-end-of-line 'short)
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)

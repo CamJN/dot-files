@@ -1,0 +1,10 @@
+{
+  "trustedtaps": [
+    "camjn/fixed",
+    "darrylmorley/whatcable",
+    "getargv/tap",
+    "https://github.com/phusion/homebrew-passenger-enterprise.git",
+    "openai/tools",
+    "oven-sh/bun"
+  ]
+}

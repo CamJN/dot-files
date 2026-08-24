@@ -73,3 +73,4 @@ passenger.*.pid.lock
 /usr/local/etc/dnsmasq.d/interfaces.conf
 
 /.emacs.d/notes.txt
+/.config/homebrew/trust.json.lock

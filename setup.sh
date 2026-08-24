@@ -215,6 +215,7 @@ function main() {
             git -C "$TAP_PATH" checkout "${branch#origin/}"
         fi
     }
+    unify_tap phusion/homebrew-passenger-enterprise C++/passenger-enterprise/packaging/homebrew-enterprise
     unify_tap camjn/homebrew-fixed Bash/dot-files/homebrew
     if [ -z "${SKIP_INSTALL_GETARGV-}" ]; then
         if [ ! -d "$HOME/Developer/Ruby/getargv-tap" ]; then

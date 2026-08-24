@@ -1,0 +1,9 @@
+#! /bin/bash
+# alias: brew fix-completion
+#:  * `fix-completion`
+#:    `brew fix-completion` is an alias that fixes bash completion after a `brew update`
+
+# This is a Homebrew alias script. It'll be called when the user
+# types `brew fix-completion`.
+
+comm -23 <(basename "$(brew --repository camjn/fixed)"/cmd/* | sed 's/^brew-//' | sort) <(sort "$(brew --cache)/all_commands_list.txt") | tee -a "$(brew --cache)/all_commands_list.txt"

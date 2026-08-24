@@ -37,7 +37,6 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK="rebuilding llvm for no reason? fuck you"
     HOMEBREW_BUNDLE_BREW_SKIP="$(grep -F ignore-dependencies "$HOMEBREW_BUNDLE_FILE" | awk '{print $2}' | tr -d '",')"
     export HOMEBREW_BUNDLE_BREW_SKIP
-    export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
     export HOMEBREW_USE_RUBY_FROM_PATH=1
     # have to specify the socket name because the shit-for-brains devs filter the env for the editor
     export HOMEBREW_EDITOR="${EDITOR} --socket-name ${EMACS_SOCKET_NAME}"
@@ -47,7 +46,7 @@ if [ "$(uname)" = "Darwin" ]; then
     export HOMEBREW_MACOS_VERSION_NUMERIC
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
-    export HOMEBREW_CASK_OPTS="--appdir=/Applications --language=en-CA --require-sha=true"
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications --language=en-CA"
     # shellcheck disable=SC1090
     source <(brew shellenv bash)
     # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default

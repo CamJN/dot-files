@@ -3,10 +3,6 @@
 #environment variables
 export DO_NOT_TRACK=1
 export PASSENGER_INSTANCE_REGISTRY_DIR=/tmp
-if which -s colima; then
-export DOCKER_SOCK="unix://$HOME/.colima/default/docker.sock"
-export DOCKER_HOST="$DOCKER_SOCK"
-fi
 export __CF_USER_TEXT_ENCODING="0x1F5:0x8000100:0x52"
 export CLICOLOR=1
 export LSCOLORS=dxHxgxgxBxfxhxCxGxExFx
@@ -30,7 +26,18 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export RIPGREP_CONFIG_PATH=~/.ripgrep.rc
 export SUDO_EDITOR=mg
-export XDG_CACHE_HOME="$HOME/Library/Caches"
-#export XDG_CONFIG_HOME="${HOME}/.config"
+
+export XDG_CACHE_HOME="${HOME}/Library/Caches"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_RUNTIME_DIR="$TMPDIR"
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+#export XDG_CONFIG_DIRS="blah:blah" # defines the preference-ordered set of base directories to search for configuration files in addition to the $XDG_CONFIG_HOME base directory.
+
+if which -s colima; then
+export DOCKER_SOCK="unix://$XDG_CONFIG_HOME/colima/default/docker.sock"
+export DOCKER_HOST="$DOCKER_SOCK"
+fi
 
 export DEFAULT_LOADABLE_BUILTINS_PATH="$HOMEBREW_PREFIX/lib/bash:."

@@ -33,9 +33,9 @@ passenger.*.pid.lock
 /.cargo/env
 /.cargo/env.tcsh
 /.cargo/registry
-/.colima/_lima
-/.colima/_store
-/.colima/default/daemon
+/.config/colima/_lima
+/.config/colima/_store
+/.config/colima/default/daemon
 /.config/op
 /.config/swiftly
 /.docker/buildx

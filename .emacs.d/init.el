@@ -1,4 +1,4 @@
-;;; init.el --- Initial environment for emacs.
+;;; init.el --- Initial environment for emacs.  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This file sets emacs into a generally useful state,
@@ -40,12 +40,9 @@
   (advice-add 'completion-at-point :after #'minibuffer-hide-completions)
   )
 
-(add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "lisp")))
 (add-to-list 'load-path (concat user-emacs-directory (file-name-as-directory "elpa")))
 
-(setopt custom-file (concat user-emacs-directory
-                          (file-name-as-directory "lisp")
-                          "custom.el"))
+(setopt custom-file (concat user-emacs-directory (file-name-as-directory "user-lisp") "custom.el"))
 (load custom-file nil t t t)
 
 (require 'dirtrack)
@@ -54,6 +51,7 @@
 (require 'lisp-mode)
 (require 'shell)
 (require 'vc-git)
+(require 'remember)
 
 (require 'defuns)
 (require 'darwin nil t)
@@ -74,7 +72,8 @@
                               (define-key input-map "\e[?~" (kbd "C-<backspace>"))
                               (define-key input-map "\e\e[?~" (kbd "C-M-<backspace>"))
                               ))
-(define-key y-or-n-p-map        (kbd "C-s")            #'ignore )
+(define-key help-map            (kbd "a")              #'describe-face)
+(define-key y-or-n-p-map        (kbd "C-s")            #'ignore)
 (define-key emacs-lisp-mode-map (kbd "<f5>")            'emacs-lisp-byte-compile-and-load)
 (define-key isearch-mode-map    (kbd "C-o")             'isearch-occur)
 (define-key read-expression-map (kbd "<tab>")           'lisp-complete-symbol)
@@ -96,7 +95,7 @@
 (global-set-key                 (kbd "C-M-h")           'mark-defun)
 (global-set-key                 (kbd "C-x c")           'quick-save)
 (global-set-key                 (kbd "C-c C-b")         'erase-buffer)
-(global-set-key                 (kbd "C-c C-r")         'sudo-edit-current-file)
+(global-set-key                 (kbd "C-c C-r")         'sudo-edit-current-file) ; default: C-x x @
 (global-set-key                 (kbd "C-c o")           'previous-multiframe-window)
 (global-set-key                 (kbd "C-h a")           'apropos)
 (global-set-key                 (kbd "C-r")             'isearch-backward-regexp)
@@ -175,7 +174,6 @@
 (add-to-list 'auto-mode-alist '("\\.\\(ba\\)?sh\\(rc\\)?\\'"        . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.bash\\.d/"         . bash-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)cmd/brew-"            . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'"                          . markdown-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.dockerfile\\'"                  . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:[\\.-][^/\\]*\\)?\\'"                              . dockerfile-ts-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)\\.\\(bash_\\(profile\\|history\\|log\\(in\\|out\\)\\)\\|log\\(in\\|out\\)\\)\\'" . bash-ts-mode))
@@ -183,7 +181,7 @@
 (add-to-list 'auto-mode-alist '("\\(?:\\.\\(?:rbw?\\|ru\\|rake\\|thor\\|jbuilder\\|rabl\\|gemspec\\|podspec\\)\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Puppet\\|Berks\\|Brew\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . ruby-ts-mode))
 (when (functionp 'markdown-ts-mode) (add-to-list 'auto-mode-alist '("\\.\\(?:md\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'"   . markdown-ts-mode)))
 (when (functionp 'swift-ts-mode)    (add-to-list 'auto-mode-alist '("\\.swift\\'" . swift-ts-mode)))
-(when (functionp 'html-ts-mode)     (add-to-list 'auto-mode-alist '("\\.html?\\'" . html-ts-mode)))
+(when (functionp 'html-ts-mode)     (add-to-list 'auto-mode-alist '("\\.html?\\'" . mhtml-ts-mode)))
 
 (setq auto-mode-interpreter-regexp
       (concat
@@ -228,7 +226,8 @@
   text-mode-hook
 ))
 
-(add-hook 'flyspell-mode-hook (lambda () (set-language "en" "English")))
+(set-language "en_CA-w_accents" "English")
+(add-hook 'flyspell-mode-hook #'flyspell-buffer)
 
 ;;----------Saving stuff----------------------------------------
 (add-hook 'before-save-hook (lambda ()
@@ -283,7 +282,7 @@
 
 
 ;;----------buffer switching-------------------------------------
-(defvar ido-dont-ignore-buffer-names '("*scratch*" "*eldoc*" "*Occur*" "*Help*"))
+(defvar ido-dont-ignore-buffer-names '("*scratch*" "*eldoc*" "*Occur*" "*Help*" "*notes*"))
 (with-current-buffer "*scratch*" (emacs-lock-mode 'kill))
 ;;(mapcar (lambda (b) (with-current-buffer b (emacs-lock-mode 'kill))) ido-dont-ignore-buffer-names)
 
@@ -324,6 +323,8 @@
   (setopt use-short-answers t)
   (fset 'yes-or-no-p 'y-or-n-p)
 )
+
+(remember-notes)
 
 (provide 'init)
 

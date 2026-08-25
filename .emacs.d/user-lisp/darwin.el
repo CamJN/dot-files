@@ -1,4 +1,4 @@
-;;; darwin.el --- Darwin/OSX specific configuration excluding OBJ-C code
+;;; darwin.el --- Darwin/OSX specific configuration excluding OBJ-C code  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;
@@ -8,8 +8,9 @@
 (when (eq system-type 'darwin)
 
   (require 'find-file)
+  (require 'locate)
 
-  (setq locate-command "mdfind")
+  (setq-default locate-command "mdfind")
   ;;(setq compile-command "xcodebuild")
 
   ;; Of course you’ll also want to add the framework paths to cc-search-directories.

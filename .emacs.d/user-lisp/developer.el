@@ -1,4 +1,4 @@
-;;; developer.el --- Various functions and settings useful for programming.
+;;; developer.el --- Various functions and settings useful for programming.  -*- lexical-binding: t; -*-
 (require 'sql)
 (require 'cc-mode)
 (require 'compile)
@@ -88,7 +88,7 @@
                                        (keymap-set (current-local-map) (kbd "C-M-a") #'treesit-beginning-of-defun)
                                        (keymap-set (current-local-map) (kbd "C-M-e") #'treesit-end-of-defun)
                                        (keymap-set (current-local-map) (kbd "C-M-f") #'treesit-forward-sexp)
-                                       (keymap-set (current-local-map) (kbd "C-M-b") #'treesit-backward-sexp)
+                                       (keymap-set (current-local-map) (kbd "C-M-b") (lambda (num) (interactive "p")(treesit-forward-sexp (* -1 num))))
                                        ))
 (setq treesit-load-name-override-list '(
 (csharp "libtree-sitter-csharp" "tree_sitter_c_sharp")
@@ -110,6 +110,7 @@
         (c          "https://github.com/tree-sitter/tree-sitter-c")
         (cpp        "https://github.com/tree-sitter/tree-sitter-cpp")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (jsdoc      "https://github.com/tree-sitter/tree-sitter-jsdoc")
         (toml       "https://github.com/tree-sitter-grammars/tree-sitter-toml")
         (yaml       "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
         (make       "https://github.com/tree-sitter-grammars/tree-sitter-make")
@@ -119,14 +120,13 @@
         (gpg-config "https://github.com/tree-sitter-grammars/tree-sitter-gpg-config")
         (pem        "https://github.com/tree-sitter-grammars/tree-sitter-pem")
 
-
-        (tsx        "https://github.com/tree-sitter/tree-sitter-typescript"        "master"               "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript"        "master"               "typescript/src")
-        (php        "https://github.com/tree-sitter/tree-sitter-php"               "master"               "php/src")
-        (markdown   "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser"         "tree-sitter-markdown/src")
-        (csv        "https://github.com/tree-sitter-grammars/tree-sitter-csv"      "master"               "csv/src")
-        (xml        "https://github.com/tree-sitter-grammars/tree-sitter-xml"      "master"               "xml/src")
-        (swift      "https://github.com/alex-pinkus/tree-sitter-swift"             "with-generated-files" "src")
+        (tsx        "https://github.com/tree-sitter/tree-sitter-typescript"        :revision "master"               :source-dir "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript"        :revision "master"               :source-dir "typescript/src")
+        (php        "https://github.com/tree-sitter/tree-sitter-php"               :revision "master"               :source-dir "php/src")
+        (markdown   "https://github.com/tree-sitter-grammars/tree-sitter-markdown" :revision "split_parser"         :source-dir "tree-sitter-markdown/src")
+        (csv        "https://github.com/tree-sitter-grammars/tree-sitter-csv"      :revision "master"               :source-dir "csv/src")
+        (xml        "https://github.com/tree-sitter-grammars/tree-sitter-xml"      :revision "master"               :source-dir "xml/src")
+        (swift      "https://github.com/alex-pinkus/tree-sitter-swift"             :revision "with-generated-files" :source-dir "src")
 
         (elisp      "https://github.com/Wilfred/tree-sitter-elisp")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
@@ -261,7 +261,7 @@
 (defun setup-eglot ()
   "setup eglot mode with functionality"
   (progn
-    (when (eglot--server-capable :documentFormattingProvider)
+    (when (eglot-server-capable :documentFormattingProvider)
       (add-hook 'before-save-hook #'eglot-format-buffer nil t));; t makes this local-only and calls global too
     (company-mode)
     (yas-minor-mode)
@@ -368,7 +368,7 @@
 
   (add-to-list 'eglot-server-programs
                `((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode)
-                 "typescript-language-server" "--stdio"
+                 "tsc" "--lsp" "--stdio"
                  :initializationOptions
                  (:preferences
                   (

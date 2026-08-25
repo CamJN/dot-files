@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -28,12 +29,17 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(dusk))
  '(custom-safe-themes
-   '("fa3e046d8b39d4e913aae457f28c3900fc11df38b10c8b3ff7d6113a9e3d18ed" default))
- '(custom-theme-directory (expand-file-name "~/.emacs.d/lisp/"))
+   '("2c4f64fda0f96e6cdd308f6900c834d5746981444a8a5718bd1da239d8e12299"
+     "d00baeba8bbd250db8cc8c0fc906a1065e20d41f0c69d0f3b0a0c645d2b85c42" default))
+ '(custom-theme-directory (expand-file-name "~/.emacs.d/user-lisp/"))
  '(delete-active-region 'kill)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions 0)
  '(delete-selection-mode t)
+ '(diff-whitespace-style
+   '(face trailing tabs spaces empty indentation::tab indentation::space indentation space-after-tab::tab page-delimiters
+          space-after-tab::space space-after-tab space-before-tab::tab space-before-tab::space space-before-tab
+          space-mark tab-mark) nil (whitespace))
  '(dired-listing-switches "-alh")
  '(dired-use-ls-dired nil)
  '(display-line-numbers-widen t)
@@ -48,7 +54,7 @@
  '(eglot-events-buffer-size 0)
  '(file-name-shadow-mode t)
  '(fill-column 120)
- '(flymake-show-diagnostics-at-end-of-line 'short)
+ '(flymake-show-diagnostics-at-end-of-line 'fancy)
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)
@@ -69,6 +75,7 @@
    '((mark modified read-only " " (name 30 30 :left :elide) " " (size-h 9 -1 :right) " " (mode 16 16 :left :elide) " "
            filename-and-process)
      (mark " " (name 16 -1) " " filename)))
+ '(ibuffer-human-readable-size t)
  '(ibuffer-saved-filter-groups
    '(("personal" ("elisp" (mode . emacs-lisp-mode))
       ("bash-config" (or (name . "^\\.bash(rc|_.*)$") (mode . shell-script-mode) (mode . bash-ts-mode)))
@@ -104,6 +111,7 @@
  '(inhibit-startup-echo-area-message t)
  '(inhibit-startup-screen t)
  '(isearch-lazy-count t)
+ '(ispell-program-name "/opt/homebrew/bin/aspell")
  '(kill-buffer-query-functions (cons 'dont-kill-scratch kill-buffer-query-functions) t)
  '(kill-read-only-ok 1)
  '(large-file-warning-threshold nil)
@@ -134,6 +142,7 @@
  '(recentf-mode t)
  '(recentf-save-file (expand-file-name "~/.emacs.d/recentf"))
  '(redisplay-dont-pause t t)
+ '(remember-notes-initial-major-mode 'text-mode)
  '(remote-file-name-inhibit-delete-by-moving-to-trash t)
  '(replace-character-fold t)
  '(require-final-newline t)
@@ -166,7 +175,7 @@
  '(whitespace-empty-at-bob-regexp "\\(\\([      ]*\12\\)+\\)")
  '(whitespace-line-column 120)
  '(whitespace-style
-   '(face trailing tabs spaces empty indentation::tab indentation::space indentation space-after-tab::tab
+   '(face trailing tabs spaces empty indentation::tab indentation::space indentation space-after-tab::tab page-delimiters
           space-after-tab::space space-after-tab space-before-tab::tab space-before-tab::space space-before-tab
           space-mark tab-mark)))
 (custom-set-faces

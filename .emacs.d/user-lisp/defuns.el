@@ -1,12 +1,13 @@
-;;; defuns.el --- Definition of functions that I want available in all modes.
+;;; defuns.el --- Definition of functions that I want available in all modes.  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Defining them here avoids circular `require' use.
 
 ;;; Code:
 
+(require 'ispell)
 (require 'guru-mode)
-
+(require 'csv-mode)
 ;; M-x query-replace-regexp ^[0-9]+$ \,(number-to-string (+ 1 (string-to-number (match-string 0))))
 
 (defun remove-last-hook(hook-variable-name)
@@ -20,7 +21,8 @@
 ;;----------auto mode debug---------------------------
 (defun explain-auto-mode (file)
   "Explain in which mode FILE gets visited according to `auto-mode-alist'.
-With prefix arg, prompt the user for FILE; else, use function `buffer-file-name'."
+ With prefix arg, prompt the user for FILE; else, use function
+ `buffer-file-name'."
   (interactive
    (list
     (if current-prefix-arg
@@ -167,7 +169,10 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
       (when (eobp) (open-line 1))
       (forward-line 1)
       (beginning-of-line)
-      (dotimes (i n) (insert line)))))
+      (dotimes (_ n) (insert line))
+    )
+  )
+)
 
 (defvar old-fullscreen nil "The value of the fullscreen parameter last used before toggling fullscreen.")
 (defun toggle-fullscreen ()
@@ -218,7 +223,8 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
   )
 
 (defun between-p (lower-bound elem upper-bound)
-  "Return t if LOWER-BOUND is less than or equal to ELEM which is in turn less than or equal to UPPER-BOUND."
+  "Return t if LOWER-BOUND is less than or equal to ELEM which is in turn less
+ than or equal to UPPER-BOUND."
   (and (<= elem upper-bound) (>= elem lower-bound)))
 
 
@@ -245,10 +251,10 @@ With a prefix argument, set VARIABLE to VALUE buffer-locally."
 
 (unless (fboundp 'string-match-p)
   (defsubst string-match-p (regexp string &optional start)
-    "\
-Same as `string-match' except this function does not change the match data."
-    (let ((inhibit-changing-match-data t))
-      (string-match regexp string start))))
+    "Same as `string-match' except this function does not change the match data."
+    (save-match-data (string-match regexp string start))
+    )
+  )
 
 (unless (fboundp 'split-string-and-unquote)
   (defun split-string-and-unquote (string &optional separator)
@@ -266,13 +272,14 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
                         (split-string-and-unquote (substring string (cdr rfs)) sep))))))))
 
 (defun remove-dots (DIRS)
-  "remove .s from a list"
+  "remove '.'s from a list"
   (filter
    (lambda (dir) (not (or (string-prefix-p "." dir) (string-match-p "/\\.+$" dir))))
    DIRS))
 
 (defun filter (condp lst)
-  "Apply predicate CONDP to list LST to keep only elements of list for which CONDP returns non nil."
+  "Apply predicate CONDP to list LST to keep only elements of list for which
+CONDP returns non nil."
   (delq nil
         (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
@@ -286,7 +293,7 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
 
 (defun replace-last-sexp ()
   (interactive)
-  (let ((value (eval (preceding-sexp))))
+  (let ((value (eval (elisp--preceding-sexp))))
     (kill-sexp -1)
     (insert (format "%s" value))))
 
@@ -317,13 +324,16 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
       (let ((thelist (list '( "&amp;" "&" ) '( "&quot;" "“" ) '( "&quot;" "”" ) '("&apos;" "’") '( "&quot;" "\"" )  '( "&apos;" "'" ) '( "&lt;" "<" ) '( "&gt;" ">" ) '( "&iexcl;" "¡" ) '( "&cent;" "¢" ) '( "&pound;" "£" ) '( "&curren;" "¤" ) '( "&yen;" "¥" ) '( "&brvbar;" "¦" ) '( "&sect;" "§" ) '( "&uml;" "¨" ) '( "&copy;" "©" ) '( "&ordf;" "ª" ) '( "&laquo;" "«" ) '( "&not;" "¬" ) '( "&reg;" "®" ) '( "&macr;" "¯" ) '( "&deg;" "°" ) '( "&plusmn;" "±" ) '( "&sup2;" "²" ) '( "&sup3;" "³" ) '( "&acute;" "´" ) '( "&micro;" "µ" ) '( "&para;" "¶" ) '( "&middot;" "·" ) '( "&cedil;" "¸" ) '( "&sup1;" "¹" ) '( "&ordm;" "º" ) '( "&raquo;" "»" ) '( "&frac14;" "¼" ) '( "&frac12;" "½" ) '( "&frac34;" "¾" ) '( "&iquest;" "¿" ) '( "&Agrave;" "À" ) '( "&Aacute;" "Á" ) '( "&Acirc;" "Â" ) '( "&Atilde;" "Ã" ) '( "&Auml;" "Ä" ) '( "&Aring;" "Å" ) '( "&AElig;" "Æ" ) '( "&Ccedil;" "Ç" ) '( "&Egrave;" "È" ) '( "&Eacute;" "É" ) '( "&Ecirc;" "Ê" ) '( "&Euml;" "Ë" ) '( "&Igrave;" "Ì" ) '( "&Iacute;" "Í" ) '( "&Icirc;" "Î" ) '( "&Iuml;" "Ï" ) '( "&ETH;" "Ð" ) '( "&Ntilde;" "Ñ" ) '( "&Ograve;" "Ò" ) '( "&Oacute;" "Ó" ) '( "&Ocirc;" "Ô" ) '( "&Otilde;" "Õ" ) '( "&Ouml;" "Ö" ) '( "&times;" "×" ) '( "&Oslash;" "Ø" ) '( "&Ugrave;" "Ù" ) '( "&Uacute;" "Ú" ) '( "&Ucirc;" "Û" ) '( "&Uuml;" "Ü" ) '( "&Yacute;" "Ý" ) '( "&THORN;" "Þ" ) '( "&szlig;" "ß" ) '( "&agrave;" "à" ) '( "&aacute;" "á" ) '( "&acirc;" "â" ) '( "&atilde;" "ã" ) '( "&auml;" "ä" ) '( "&aring;" "å" ) '( "&aelig;" "æ" ) '( "&ccedil;" "ç" ) '( "&egrave;" "è" ) '( "&eacute;" "é" ) '( "&ecirc;" "ê" ) '( "&euml;" "ë" ) '( "&igrave;" "ì" ) '( "&iacute;" "í" ) '( "&icirc;" "î" ) '( "&iuml;" "ï" ) '( "&eth;" "ð" ) '( "&ntilde;" "ñ" ) '( "&ograve;" "ò" ) '( "&oacute;" "ó" ) '( "&ocirc;" "ô" ) '( "&otilde;" "õ" ) '( "&ouml;" "ö" ) '( "&divide;" "÷" ) '( "&oslash;" "ø" ) '( "&ugrave;" "ù" ) '( "&uacute;" "ú" ) '( "&ucirc;" "û" ) '( "&uuml;" "ü" ) '( "&yacute;" "ý" ) '( "&thorn;" "þ" ) '( "&yuml;" "ÿ" ) '( "&OElig;" "Œ" ) '( "&oelig;" "œ" ) '( "&Scaron;" "Š" ) '( "&scaron;" "š" ) '( "&Yuml;" "Ÿ" ) '( "&fnof;" "ƒ" ) '( "&circ;" "ˆ" ) '( "&tilde;" "˜" ) '( "&Alpha;" "Α" ) '( "&Beta;" "Β" ) '( "&Gamma;" "Γ" ) '( "&Delta;" "Δ" ) '( "&Epsilon;" "Ε" ) '( "&Zeta;" "Ζ" ) '( "&Eta;" "Η" ) '( "&Theta;" "Θ" ) '( "&Iota;" "Ι" ) '( "&Kappa;" "Κ" ) '( "&Lambda;" "Λ" ) '( "&Mu;" "Μ" ) '( "&Nu;" "Ν" ) '( "&Xi;" "Ξ" ) '( "&Omicron;" "Ο" ) '( "&Pi;" "Π" ) '( "&Rho;" "Ρ" ) '( "&Sigma;" "Σ" ) '( "&Tau;" "Τ" ) '( "&Upsilon;" "Υ" ) '( "&Phi;" "Φ" ) '( "&Chi;" "Χ" ) '( "&Psi;" "Ψ" ) '( "&Omega;" "Ω" ) '( "&alpha;" "α" ) '( "&beta;" "β" ) '( "&gamma;" "γ" ) '( "&delta;" "δ" ) '( "&epsilon;" "ε" ) '( "&zeta;" "ζ" ) '( "&eta;" "η" ) '( "&theta;" "θ" ) '( "&iota;" "ι" ) '( "&kappa;" "κ" ) '( "&lambda;" "λ" ) '( "&mu;" "μ" ) '( "&nu;" "ν" ) '( "&xi;" "ξ" ) '( "&omicron;" "ο" ) '( "&pi;" "π" ) '( "&rho;" "ρ" ) '( "&sigmaf;" "ς" ) '( "&sigma;" "σ" ) '( "&tau;" "τ" ) '( "&upsilon;" "υ" ) '( "&phi;" "φ" ) '( "&chi;" "χ" ) '( "&psi;" "ψ" ) '( "&omega;" "ω" ) '( "&thetasym;" "ϑ" ) '( "&upsih;" "ϒ" ) '( "&piv;" "ϖ" ) '( "&ensp;" " " ) '( "&emsp;" " " ) '( "&thinsp;" " " ) '( "&ndash;" "–" ) '( "&mdash;" "—" ) '( "&apos;" "‘" ) '( "&rsquo;" "’" ) '( "&sbquo;" "‚" ) '( "&bdquo;" "„" ) '( "&dagger;" "†" ) '( "&Dagger;" "‡" ) '( "&bull;" "•" ) '( "&hellip;" "…" ) '( "&permil;" "‰" ) '( "&prime;" "′" ) '( "&Prime;" "″" ) '( "&lsaquo;" "‹" ) '( "&rsaquo;" "›" ) '( "&oline;" "‾" ) '( "&frasl;" "⁄" ) '( "&euro;" "€" ) '( "&image;" "ℑ" ) '( "&weierp;" "℘" ) '( "&real;" "ℜ" ) '( "&trade;" "™" ) '( "&alefsym;" "ℵ" ) '( "&larr;" "←" ) '( "&uarr;" "↑" ) '( "&rarr;" "→" ) '( "&darr;" "↓" ) '( "&harr;" "↔" ) '( "&crarr;" "↵" ) '( "&lArr;" "⇐" ) '( "&uArr;" "⇑" ) '( "&rArr;" "⇒" ) '( "&dArr;" "⇓" ) '( "&hArr;" "⇔" ) '( "&forall;" "∀" ) '( "&part;" "∂" ) '( "&exist;" "∃" ) '( "&empty;" "∅" ) '( "&nabla;" "∇" ) '( "&isin;" "∈" ) '( "&notin;" "∉" ) '( "&ni;" "∋" ) '( "&prod;" "∏" ) '( "&sum;" "∑" ) '( "&minus;" "−" ) '( "&lowast;" "∗" ) '( "&radic;" "√" ) '( "&prop;" "∝" ) '( "&infin;" "∞" ) '( "&ang;" "∠" ) '( "&and;" "∧" ) '( "&or;" "∨" ) '( "&cap;" "∩" ) '( "&cup;" "∪" ) '( "&int;" "∫" ) '( "&there4;" "∴" ) '( "&sim;" "∼" ) '( "&cong;" "≅" ) '( "&asymp;" "≈" ) '( "&ne;" "≠" ) '( "&equiv;" "≡" ) '( "&le;" "≤" ) '( "&ge;" "≥" ) '( "&sub;" "⊂" ) '( "&sup;" "⊃" ) '( "&nsub;" "⊄" ) '( "&sube;" "⊆" ) '( "&supe;" "⊇" ) '( "&oplus;" "⊕" ) '( "&otimes;" "⊗" ) '( "&perp;" "⊥" ) '( "&sdot;" "⋅" ) '( "&lceil;" "⌈" ) '( "&rceil;" "⌉" ) '( "&lfloor;" "⌊" ) '( "&rfloor;" "⌋" ) '( "&lang;" "〈" ) '( "&rang;" "〉" ) '( "&loz;" "◊" ) '( "&spades;" "♠" ) '( "&clubs;" "♣" ) '( "&hearts;" "♥" ) '( "&diams;" "♦" ) )))
         (dolist (e thelist)
           (progn (goto-char (point-min))
-                 (replace-string (car e) (cadr e)))
+                 (while (search-forward (car e) nil t)
+                   (replace-match (cadr e))
+                   )
+                 )
           )))))
 
 (defun query-multi-replace-regexp (&rest pairs)
   "Query replace for each regexp and replacement string in PAIRS."
   (interactive
-   (let (pairs regexp replacement)
+   (let (pairs regexp)
      (while (and (setq regexp (read-regexp "Query replace regexp"))
                  (not (string= regexp "")))
        (push regexp pairs)
@@ -337,7 +347,7 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
       (pop pos))
     (perform-replace
      (concat "\\(?:" (mapconcat 'identity patterns "\\|") "\\)")
-     (cons (lambda (pairs count)
+     (cons (lambda (pairs _)
              (catch 'replacement
                (while pairs
                  (let ((regexp (pop pairs))
@@ -349,16 +359,14 @@ The SEPARATOR regexp defaults to \"\\s-+\"."
 
 ;; -- spelling/language --
 
-(defun set-language (code name)
+(defun set-language (code _name)
   (let* ((dir (expand-file-name "~/.config/aspell/"))
          (pd (concat dir code ".pws"))
          (rd (concat dir code ".prepl")))
     (make-directory dir t)
     (setq ispell-personal-dictionary pd)
-    (setq ispell-extra-args (list "--repl" rd)))
-  (ispell-change-dictionary code)
-  (flyspell-buffer)
-)
+    (setq ispell-extra-args (list "--repl" rd))
+    (ispell-change-dictionary code)))
 
 ;; -- CSV --
 (defun csv-kill-column-at-point ()

@@ -6,6 +6,8 @@
 	<dict>
 		<key>__CF_USER_TEXT_ENCODING</key>
 		<string>0x1F5:0x8000100:0x52</string>
+		<key>COLORTERM</key>
+		<string>truecolor</string>
 	</dict>
 	<key>KeepAlive</key>
 	<true/>

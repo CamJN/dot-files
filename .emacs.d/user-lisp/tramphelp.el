@@ -1,4 +1,4 @@
-;;; tramphelp.el --- Various functions and settings useful for tramp mode
+;;; tramphelp.el --- Various functions and settings useful for tramp mode  -*- lexical-binding: t; -*-
 
 (require 'tramp)
 ;;(tramp-cleanup-all-connections)
@@ -8,6 +8,9 @@
 ;;(string-match tramp-shell-prompt-pattern "camdennarzt@upstream ~ % ")
 ;;(string-match tramp-shell-prompt-pattern "camdennarzt@upstream ~ $ ")
 ;;(with-current-buffer "*scratch*" (insert "(find-file \"/ssh:secur-t.local:/Users/camdennarzt/.bash_profile\")"))
+
+;External methods can now be used in multi-hop connections.
+;This is implemented for 'tramp-sh' methods, like "/scp:user@host|sudo::".
 
 (require 'tramp-container)
 

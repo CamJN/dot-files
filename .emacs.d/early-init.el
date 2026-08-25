@@ -1,5 +1,6 @@
-;(setq stack-trace-on-error t)
-;(setopt debug-on-error t)
+;; -*- lexical-binding: t; -*-
+;;(setq stack-trace-on-error t)
+;;(setopt debug-on-error t)
 
 ;; startup uses a lot of ram
 (setopt gc-cons-threshold most-positive-fixnum)

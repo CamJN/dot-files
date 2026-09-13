@@ -764,43 +764,48 @@ function main() {
     selected="$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Roman' 'InputSourceKind' 'Input Mode')"
 
     defaults write com.apple.HIToolbox AppleCurrentKeyboardLayoutInputSourceID -string com.apple.keylayout.Canadian
-    # modify to check if japanese input already enabled, otherwise wind up with hundreds of duplicates
-    if false; then
-        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'Input Mode' 'com.apple.inputmethod.Japanese' 'InputSourceKind' 'Input Mode')"
-        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.inputmethod.Kotoeri.RomajiTyping' 'InputSourceKind' 'Keyboard Input Method')"
-        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$selected"
-        defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$(HIToolbox 'com.apple.50onPaletteIM' 'InputSourceKind' 'Non Keyboard Input Method')"
-    fi
-    # Goal:
-    # (
-    #     {
-    #         InputSourceKind = "Keyboard Layout";
-    #         "KeyboardLayout ID" = 29;
-    #         "KeyboardLayout Name" = Canadian;
-    #     },
-    #     {
-    #         "Bundle ID" = "com.apple.CharacterPaletteIM";
-    #         InputSourceKind = "Non Keyboard Input Method";
-    #     },
-    #     {
-    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
-    #         "Input Mode" = "com.apple.inputmethod.Japanese";
-    #         InputSourceKind = "Input Mode";
-    #     },
-    #     {
-    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
-    #         InputSourceKind = "Keyboard Input Method";
-    #     },
-    #     {
-    #         "Bundle ID" = "com.apple.inputmethod.Kotoeri.RomajiTyping";
-    #         "Input Mode" = "com.apple.inputmethod.Roman";
-    #         InputSourceKind = "Input Mode";
-    #     },
-    #     {
-    #         "Bundle ID" = "com.apple.50onPaletteIM";
-    #         InputSourceKind = "Non Keyboard Input Method";
-    #     }
-    # )
+
+    function input_source_exists() {
+        local source="$*"
+
+        local existing
+        existing=$(defaults export com.apple.HIToolbox - | plutil -extract AppleEnabledInputSources json -o - -)
+
+        local wanted
+        wanted=$(printf '%s\n' "$source" | plutil -convert json -o - -- -)
+
+        jq -e --argjson wanted "$wanted" 'any(.[]; . == $wanted)' <<< "$existing" # >/dev/null
+    }
+
+    function add_input_source_if_missing() {
+        local source="$*"
+
+        if ! input_source_exists "$source"; then
+            echo defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add "$source"
+        fi
+    }
+
+    add_input_source_if_missing \
+        "$(HIToolbox \
+        'com.apple.inputmethod.Kotoeri.RomajiTyping' \
+        'Input Mode' \
+        'com.apple.inputmethod.Japanese' \
+        'InputSourceKind' \
+        'Input Mode')"
+
+    add_input_source_if_missing \
+        "$(HIToolbox \
+        'com.apple.inputmethod.Kotoeri.RomajiTyping' \
+        'InputSourceKind' \
+        'Keyboard Input Method')"
+
+    add_input_source_if_missing "$selected"
+
+    add_input_source_if_missing \
+        "$(HIToolbox \
+        'com.apple.50onPaletteIM' \
+        'InputSourceKind' \
+        'Non Keyboard Input Method')"
 
     defaults write com.apple.HIToolbox AppleSelectedInputSources -array    "$selected"
     defaults write com.apple.HIToolbox AppleFnUsageType -int 2

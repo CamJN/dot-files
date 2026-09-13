@@ -267,6 +267,7 @@
     (yas-minor-mode)
     (flymake-mode)
     (eglot-inlay-hints-mode nil);; force enable
+    (setopt eglot-max-file-watches 100)
     (flyspell-prog-mode)
     (when (functionp 'completion-preview-mode) (completion-preview-mode)) ;; Options in the completion-preview customization group control when this preview is displayed
     ;;(treemacs t)

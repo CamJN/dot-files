@@ -21,6 +21,7 @@ alias echo='echo -e'
 alias egrep='grep -E'
 alias emptycache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder;'
 alias fgrep='grep -F --color=always'
+alias finder_dir="osascript -e 'tell application \"Finder\" to POSIX path of (insertion location as alias)'"
 alias find='cfind'
 alias gpg-check='gpg --quiet --sign --armor <<< ok | gpg --verify 2>/dev/null'
 alias gpg-restart-agent='gpgconf --kill gpg-agent'

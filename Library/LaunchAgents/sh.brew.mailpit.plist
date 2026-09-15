@@ -5,7 +5,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.transmission-cli</string>
+	<string>sh.brew.mailpit</string>
 	<key>LimitLoadToSessionType</key>
 	<array>
 		<string>Aqua</string>
@@ -16,15 +16,13 @@
 	</array>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/opt/homebrew/opt/transmission-cli/bin/transmission-daemon</string>
-		<string>--foreground</string>
-		<string>--config-dir</string>
-		<string>/opt/homebrew/var/transmission/</string>
-		<string>--log-info</string>
-		<string>--logfile</string>
-		<string>/opt/homebrew/var/transmission/transmission-daemon.log</string>
+		<string>/opt/homebrew/opt/mailpit/bin/mailpit</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>StandardErrorPath</key>
+	<string>/opt/homebrew/var/log/mailpit.log</string>
+	<key>StandardOutPath</key>
+	<string>/opt/homebrew/var/log/mailpit.log</string>
 </dict>
 </plist>

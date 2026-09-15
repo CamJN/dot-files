@@ -1,4 +1,4 @@
-Library/LaunchAgents/homebrew.mxcl.ollama.plist --- XML
+Library/LaunchAgents/sh.brew.ollama.plist --- XML
  7         <key>OLLAMA_FLASH_ATTENTION</key>    7         <key>OLLAMA_FLASH_ATTENTION</key>
  8         <string>1</string>                   8         <string>1</string>
  9         <key>OLLAMA_KV_CACHE_TYPE</key>      9         <key>OLLAMA_KV_CACHE_TYPE</key>

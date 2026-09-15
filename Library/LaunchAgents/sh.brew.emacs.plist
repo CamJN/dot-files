@@ -12,7 +12,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.emacs</string>
+	<string>sh.brew.emacs</string>
 	<key>LimitLoadToSessionType</key>
 	<array>
 		<string>Aqua</string>

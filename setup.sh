@@ -292,7 +292,7 @@ function main() {
             local filename
             filename=$(basename "$file")
             local formula="${filename%.plist}"
-            local plist_path="$HOMEBREW_PREFIX/opt/${formula#homebrew.mxcl.}/${filename}"
+            local plist_path="$HOMEBREW_PREFIX/opt/${formula#sh.brew.}/${filename}"
             if [[ "$file" == *"/LaunchDaemons/"* ]]; then
                 # the read is non-root, tee is root to write
                 if [ -f "$plist_path" ]; then
@@ -323,9 +323,9 @@ function main() {
     # ensure LaunchAgents path exists
     mkdir -p ~/Library/LaunchAgents
     # check LaunchAgents for changes
-    getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.mxcl.*.plist
+    getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchAgents/sh.brew.*.plist
     # symlink LaunchAgents
-    ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/homebrew.* ~/Library/LaunchAgents/
+    ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/sh.brew.* ~/Library/LaunchAgents/
     ln -shf ~/Developer/Bash/dot-files/Library/LaunchAgents/local.all.* ~/Library/LaunchAgents/
     shopt -s nullglob
     for agent in "$HOME/Developer/Bash/dot-files/Library/LaunchAgents/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
@@ -423,10 +423,10 @@ function main() {
     sudo chown "$USER" "${HOMEBREW_PREFIX}/var/log/postgresql@${PGVER}.log"
 
     # check LaunchDaemons for changes
-    getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.mxcl.*.plist
+    getLaunchdPlist ~/Developer/Bash/dot-files/Library/LaunchDaemons/sh.brew.*.plist
     # symlink LaunchDaemons
     sudo chown root:wheel ~/Developer/Bash/dot-files/Library/LaunchDaemons/*
-    sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/homebrew.* /Library/LaunchDaemons/
+    sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/sh.brew.* /Library/LaunchDaemons/
     sudo ln -shf ~/Developer/Bash/dot-files/Library/LaunchDaemons/local.all.* /Library/LaunchDaemons/
     shopt -s nullglob
     for daemon in "$HOME/Developer/Bash/dot-files/Library/LaunchDaemons/local.$(scutil --get LocalHostName | tr '[:upper:]' '[:lower:]')".* ; do
@@ -434,7 +434,7 @@ function main() {
     done
     shopt -u nullglob
 
-    declare postgresplist="/Library/LaunchDaemons/homebrew.mxcl.postgresql@${PGVER}.plist"
+    declare postgresplist="/Library/LaunchDaemons/sh.brew.postgresql@${PGVER}.plist"
     if [ "$USER" != camdennarzt ]; then
         sudo plutil -replace "UserName" -string "$USER" -o "$postgresplist" "$postgresplist"
     fi

@@ -1,0 +1,28 @@
+Library/LaunchAgents/sh.brew.emacs.plist --- 1/2 --- XML
+ 2  2 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ 3  3 <plist version="1.0">
+ 4  4 <dict>
+ 5  .     <key>EnvironmentVariables</key>
+ 6  .     <dict>
+ 7  .         <key>__CF_USER_TEXT_ENCODING</key>
+ 8  .         <string>0x1F5:0x8000100:0x52</string>
+ 9  .         <key>COLORTERM</key>
+10  .         <string>truecolor</string>
+11  .     </dict>
+12  5     <key>KeepAlive</key>
+13  6     <true/>
+14  7     <key>Label</key>
+
+Library/LaunchAgents/sh.brew.emacs.plist --- 2/2 --- XML
+28 21     </array>
+29 22     <key>RunAtLoad</key>
+30 23     <true/>
+31 ..     <key>StandardOutPath</key>
+32 ..     <string>/opt/homebrew/var/log/emacs/stdout.log</string>
+33 ..     <key>StandardErrorPath</key>
+34 ..     <string>/opt/homebrew/var/log/emacs/stderr.log</string>
+35 ..     <key>WorkingDirectory</key>
+36 ..     <string>/Users/camdennarzt</string>
+37 24 </dict>
+38 25 </plist>
+

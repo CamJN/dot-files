@@ -16,7 +16,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.ollama</string>
+	<string>sh.brew.ollama</string>
 	<key>LimitLoadToSessionType</key>
 	<array>
 		<string>Aqua</string>

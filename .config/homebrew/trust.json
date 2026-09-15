@@ -6,5 +6,8 @@
     "openai/tools",
     "oven-sh/bun",
     "phusion/passenger-enterprise"
+  ],
+  "trustedformulae": [
+    "phusion/passenger-enterprise/passenger-enterprise"
   ]
 }

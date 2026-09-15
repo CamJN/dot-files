@@ -189,7 +189,7 @@ function main() {
         fi
         # install all homebrew packages in Brewfile
         if ! brew bundle check; then
-            brew install bash "bash-completion@2"
+            brew install -y bash "bash-completion@2"
             brew bundle install --verbose
         fi
     fi

@@ -556,6 +556,8 @@ function main() {
     defaults write com.apple.screensaver askForPassword -bool true
     defaults write com.apple.screensaver askForPasswordDelay -int 0
 
+    defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled -bool false
+
     defaults write NSGlobalDomain AppleAccentColor -int 2
     defaults write NSGlobalDomain AppleLanguages -array {en,de,ja}-CA
     defaults write NSGlobalDomain AppleLocale -string en_CA

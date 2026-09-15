@@ -76,3 +76,7 @@ blink, A:link, A:visited, A:link:hover, A:visited:hover { text-decoration: none 
     div.container_12 { min-height: 0px !important; }
     div.entrylinks { height: 100% !important; }
 }
+
+@-moz-document url("about:home"), url("about:newtab") {
+    .wallpaper-attribution { display: none !important; }
+}

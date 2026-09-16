@@ -1,5 +1,5 @@
 version = "12"
-default_host_triple = "aarch64-apple-darwin"
+default_host_tuple = "aarch64-apple-darwin"
 default_toolchain = "stable-aarch64-apple-darwin"
 profile = "default"
 

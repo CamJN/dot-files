@@ -8,7 +8,7 @@
 #  find way to list: asids, xpc-tokens, xsc-names, port-names
 #  complete plist files with relative paths when pwd is one of /library/ ~/library or a launch* dir in those
 
-log () {
+__launchctl_cmp_log () {
     if [ -n "$DEBUG_LAUNCHCTL_COMP" ]; then
         echo "$*" >> /tmp/launchctl-completion-debug.log
     fi
@@ -90,19 +90,19 @@ __launchctl_list_service_targets ()
 
 __launchctl_list_labels ()
 {
-    log "labels: $1"
+    __launchctl_cmp_log "labels: $1"
     launchctl print "${1:-gui/$UID}" | awk '/^\tservices = {/,/}/{print $NF}' | grep -vxFe '{' -e '}'
 }
 
 __launchctl_list_started ()
 {
-    log "started: $1"
+    __launchctl_cmp_log "started: $1"
     launchctl print "${1:-gui/$UID}" | awk '/^\tservices = {/,/}/' | awk '$1 != 0{print $NF}' | grep -vxFe '{' -e '}'
 }
 
 __launchctl_list_stopped ()
 {
-    log "stopped: $1"
+    __launchctl_cmp_log "stopped: $1"
     launchctl print "${1:-gui/$UID}" | awk '/^\tservices = {/,/}/' | awk '$1 == 0{print $NF}' | grep -vxFe '{' -e '}'
 }
 
@@ -126,7 +126,7 @@ _launchctl2 ()
         return
     fi
 
-    log "${COMP_WORDS[1]} ${COMP_CWORD}"
+    __launchctl_cmp_log "${COMP_WORDS[1]} ${COMP_CWORD}"
     case "${COMP_WORDS[1]}" in
         asuser)
             # asuser UID command [args]

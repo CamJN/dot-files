@@ -1,4 +1,5 @@
 #!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
+# shellcheck shell=bash
 
 while [ -z "$interface" ]; do
 interface=$(route -n get default 2>&- | grep -F interface | tr -d ' ' | cut -d: -f2)

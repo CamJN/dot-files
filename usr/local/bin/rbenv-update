@@ -1,3 +1,4 @@
 #!/usr/bin/env -P /usr/local/bin:/opt/homebrew/bin bash
+# shellcheck shell=bash
 
 rbenv list | xargs -n1 rbenv install --skip-existing

@@ -354,8 +354,19 @@
     )
   )
 
+(defun my--open-link ()
+  (interactive)
+  (if-let* ((url (get-text-property (point) 'help-echo)))
+      (browse-url url)
+    (user-error "No URL at point")))
+
 (with-eval-after-load 'eglot
   (advice-add 'eldoc-display-in-buffer :around #'my--eldoc-preprocess)
+
+  (advice-add 'eldoc-display-in-buffer :after
+              (lambda (&rest _)
+                (with-current-buffer eldoc--doc-buffer
+                  (keymap-local-set "RET" #'my--open-link))))
 
   ;;https://github.com/kristoff-it/superhtml/tree/main/editors/emacs
   (add-to-list 'eglot-server-programs

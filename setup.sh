@@ -301,8 +301,10 @@ function main() {
                 else
                     echo "$plist_path doesn't exist, not checking for updates."
                 fi
-            else
+            elif [ -f "$plist_path" ]; then
                 cat "$plist_path" > "$file"
+            else
+                echo "$plist_path doesn't exist, not checking for updates."
             fi
             declare diff_prefix="$HOME/Developer/Bash/dot-files/"
             declare saved_diff_path="${file/#"$diff_prefix"/${diff_prefix}saved_diffs/}"

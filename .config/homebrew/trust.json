@@ -8,6 +8,7 @@
     "phusion/passenger-enterprise"
   ],
   "trustedformulae": [
+    "camjn/fixed/fakeapxs",
     "phusion/passenger-enterprise/passenger-enterprise"
   ]
 }

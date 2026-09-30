@@ -9,7 +9,7 @@
       <string>/bin/launchctl</string>
       <string>kickstart</string>
       <string>-k</string>
-      <string>system/homebrew.mxcl.dnsmasq</string>
+      <string>system/sh.brew.dnsmasq</string>
     </array>
     <key>WatchPaths</key>
     <array>

@@ -12,7 +12,7 @@
 	<key>KeepAlive</key>
 	<true/>
 	<key>Label</key>
-	<string>homebrew.mxcl.postgresql@18</string>
+	<string>sh.brew.postgresql@18</string>
 	<key>UserName</key>
 	<string>camdennarzt</string>
 	<key>LimitLoadToSessionType</key>

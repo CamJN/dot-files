@@ -1,4 +1,4 @@
-Library/LaunchDaemons/homebrew.mxcl.postgresql@18.plist --- XML
+Library/LaunchDaemons/sh.brew.postgresql@18.plist --- XML
  5     <key>EnvironmentVariables</key>                5     <key>EnvironmentVariables</key>
  6     <dict>                                         6     <dict>
  7         <key>LC_ALL</key>                          7         <key>LC_ALL</key>
@@ -9,7 +9,7 @@ Library/LaunchDaemons/homebrew.mxcl.postgresql@18.plist --- XML
 12     <key>KeepAlive</key>                          12     <key>KeepAlive</key>
 13     <true/>                                       13     <true/>
 14     <key>Label</key>                              14     <key>Label</key>
-15     <string>homebrew.mxcl.postgresql@18</string>  15     <string>homebrew.mxcl.postgresql@18</string>
+15     <string>sh.brew.postgresql@18</string>        15     <string>sh.brew.postgresql@18</string>
 16     <key>UserName</key>                           .. 
 17     <string>camdennarzt</string>                  .. 
 18     <key>LimitLoadToSessionType</key>             16     <key>LimitLoadToSessionType</key>

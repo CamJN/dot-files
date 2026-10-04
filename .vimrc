@@ -14,5 +14,5 @@ set noswapfile  " disable swapfile
 set viminfo+=n${HOME}/.history/vim
 
 filetype on
-autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
-autocmd BufRead,BufNewFile *.ts set filetype=typescript
+"autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+"autocmd BufRead,BufNewFile *.ts set filetype=typescript

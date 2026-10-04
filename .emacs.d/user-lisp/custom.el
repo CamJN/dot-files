@@ -98,7 +98,7 @@
            (mode . typescript-ts-mode) (mode . tsx-ts-mode) (mode . js-ts-mode) (mode . js-mode) (mode . less-css-mode)
            (mode . php-mode) (mode . php-ts-mode)))
       ("git" (name . "^\\.git.*$")) ("help" (name . "^\\*\\(Help\\|Apropos\\|info\\|eldoc\\)\\*$"))
-      ("keep around" (name . "^\\*\\(shell\\|scratch\\)\\*$")) ("built-in" (name . "^\\*.*\\*$"))
+      ("keep around" (name . "^\\*\\(shell\\|scratch\\|notes\\)\\*$")) ("built-in" (name . "^\\*.*\\*$"))
       ("Tags" (filename . "TAGS")) ("other" (name . ".*")))))
  '(ibuffer-show-empty-filter-groups nil)
  '(ibuffer-use-other-window t)

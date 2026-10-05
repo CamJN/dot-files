@@ -55,6 +55,7 @@
  '(file-name-shadow-mode t)
  '(fill-column 120)
  '(flymake-show-diagnostics-at-end-of-line 'fancy)
+ '(flymake-inline-diagnostics 'fancy)
  '(font-lock-maximum-decoration t)
  '(global-display-line-numbers-mode t)
  '(global-font-lock-mode t)
@@ -123,7 +124,7 @@
  '(mouse-wheel-mode nil)
  '(osx-clipboard-mode t)
  '(package-selected-packages
-   '(alert apache-mode company csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot emojify f
+   '(alert apache-mode company csv-mode diff-hl dockerfile-mode editorconfig editorconfig-core eglot f
            flycheck-css-colorguard flycheck-rust folding git-modes gitconfig-mode gitignore-mode gntp go-mode
            graphql-mode groovy-mode guru-mode hide-lines ibuffer-tramp json-mode julia-mode launchctl less-css-mode
            logstash-conf markdown-mode markdown-preview-mode markdown-ts-mode md-ts-mode nginx-mode osx-clipboard

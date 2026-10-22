@@ -14,6 +14,11 @@
 		<string>StandardIO</string>
 		<string>System</string>
 	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>MP_API_CORS</key>
+		<string>mailcatcher.test</string>
+	</dict>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/opt/homebrew/opt/mailpit/bin/mailpit</string>

@@ -50,32 +50,12 @@ _filedir() {
     echo -n ''
 }
 
-if which -s swiftly ; then
-    source <(swiftly --generate-completion-script)
-fi
-
 if which -s node; then
     source <(node --completion-bash)
 fi
 
-if which -s rustup; then
-    source <(rustup completions bash)
-fi
-
 if which -s pip3; then
     source <(pip3 completion --bash)
-fi
-
-if which -s colima; then
-    source <(colima completion bash)
-fi
-
-if which -s bat; then
-    source <(bat --completion bash)
-fi
-
-if which -s batt; then
-    source <(batt completion bash)
 fi
 
 complete -o default -F _pip_completion pip

@@ -47,6 +47,8 @@ if [ "$(uname)" = "Darwin" ]; then
     # /Users/camdennarzt/.brew_irb_history # move if possible in future
     # HOMEBREW_SSH_CONFIG_PATH # set to avoid having overrides in main git config
     export HOMEBREW_CASK_OPTS="--appdir=/Applications --language=en-CA"
+    # since 'trust' was introduced all the 'fast' implementations are broken, but the ruby impl of `brew update` infinite-loops. Also all ruby commands are like minutes-long slow these days.
+    #export HOMEBREW_FORCE_RUBY_COMMAND=1
     # shellcheck disable=SC1090
     source <(brew shellenv bash)
     # Setting SDKROOT breaks CPATH including `/usr/local/include` which it does by default

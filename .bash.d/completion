@@ -38,6 +38,12 @@ function rename_function() {
     unset -f "$1"
 }
 
+rename_function _brew old_brew
+
+_brew() {
+    HOMEBREW_FORCE_RUBY_COMMAND=1 old_brew
+}
+
 rename_function _filedir old_filedir
 
 _filedir() {

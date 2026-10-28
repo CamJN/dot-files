@@ -1,0 +1,13 @@
+Library/LaunchAgents/sh.brew.mailpit.plist --- XML
+14 14         <string>StandardIO</string>
+15 15         <string>System</string>
+16 16     </array>
+17 ..     <key>EnvironmentVariables</key>
+18 ..     <dict>
+19 ..         <key>MP_API_CORS</key>
+20 ..         <string>mailcatcher.test</string>
+21 ..     </dict>
+22 17     <key>ProgramArguments</key>
+23 18     <array>
+24 19         <string>/opt/homebrew/opt/mailpit/bin/mailpit</string>
+

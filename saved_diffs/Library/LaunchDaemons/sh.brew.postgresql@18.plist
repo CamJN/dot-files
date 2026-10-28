@@ -1,18 +1,19 @@
-Library/LaunchDaemons/sh.brew.postgresql@18.plist --- XML
- 5     <key>EnvironmentVariables</key>                5     <key>EnvironmentVariables</key>
- 6     <dict>                                         6     <dict>
- 7         <key>LC_ALL</key>                          7         <key>LC_ALL</key>
- 8         <string>en_CA.UTF-8</string>               8         <string>en_US.UTF-8</string>
- 9     </dict>                                        9     </dict>
-10     <key>ExitTimeOut</key>                        10     <key>ExitTimeOut</key>
-11     <integer>120</integer>                        11     <integer>120</integer>
-12     <key>KeepAlive</key>                          12     <key>KeepAlive</key>
-13     <true/>                                       13     <true/>
-14     <key>Label</key>                              14     <key>Label</key>
-15     <string>sh.brew.postgresql@18</string>        15     <string>sh.brew.postgresql@18</string>
-16     <key>UserName</key>                           .. 
-17     <string>camdennarzt</string>                  .. 
-18     <key>LimitLoadToSessionType</key>             16     <key>LimitLoadToSessionType</key>
-19     <array>                                       17     <array>
-20         <string>Aqua</string>                     18         <string>Aqua</string>
+Library/LaunchDaemons/sh.brew.postgresql@18.plist --- 1/2 --- XML
+ 5     <key>EnvironmentVariables</key>          5     <key>EnvironmentVariables</key>
+ 6     <dict>                                   6     <dict>
+ 7         <key>LC_ALL</key>                    7         <key>LC_ALL</key>
+ 8         <string>en_CA.UTF-8</string>         8         <string>en_US.UTF-8</string>
+ 9     </dict>                                  9     </dict>
+10     <key>ExitTimeOut</key>                  10     <key>ExitTimeOut</key>
+11     <integer>120</integer>                  11     <integer>120</integer>
+
+Library/LaunchDaemons/sh.brew.postgresql@18.plist --- 2/2 --- XML
+16 16     </dict>
+17 17     <key>Label</key>
+18 18     <string>sh.brew.postgresql@18</string>
+19 ..     <key>UserName</key>
+20 ..     <string>camdennarzt</string>
+21 19     <key>LimitLoadToSessionType</key>
+22 20     <array>
+23 21         <string>Aqua</string>
 

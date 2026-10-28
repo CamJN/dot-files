@@ -9,6 +9,7 @@
   ],
   "trustedformulae": [
     "camjn/fixed/fakeapxs",
+    "openai/tools/tart",
     "phusion/passenger-enterprise/passenger-enterprise"
   ]
 }

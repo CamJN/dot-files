@@ -10,7 +10,10 @@
 	<key>ExitTimeOut</key>
 	<integer>120</integer>
 	<key>KeepAlive</key>
-	<true/>
+	<dict>
+		<key>Crashed</key>
+		<true/>
+	</dict>
 	<key>Label</key>
 	<string>sh.brew.postgresql@18</string>
 	<key>UserName</key>

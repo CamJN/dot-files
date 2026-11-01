@@ -52,6 +52,21 @@ function main() {
         fail "do not run this script as root, it will ask to raise permissions when needed."
     fi
 
+    LOG_PATH="$PWD/setup.log"
+    MAX_LOGS=5
+
+    # Rotate existing logs
+    if [[ -f "$LOG_PATH" ]]; then
+        for ((i=MAX_LOGS-1; i>=1; i--)); do
+            [[ -f "${LOG_PATH}.${i}" ]] && mv "${LOG_PATH}.${i}" "${LOG_PATH}.$((i+1))"
+        done
+
+        mv "$LOG_PATH" "${LOG_PATH}.1"
+    fi
+
+    # Log stdout and stderr to both terminal and file
+    exec > >(tee -a "$LOG_PATH") 2>&1
+
     # vm help
     if system_profiler SPHardwareDataType | grep -q 'Model Identifier: .*Virtual'; then
         SCRIPT_DIR=$(dirname -- "${BASH_SOURCE[0]:-$0}")

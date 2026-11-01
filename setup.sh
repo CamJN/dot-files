@@ -133,12 +133,9 @@ function main() {
             sed -e $'1i\\\n'"$NEEDLE" "$FILE"
         fi
     fi
-    # Ensure repo installed
     if [ ! -e "$HOME/Developer/Bash/dot-files/.git" ]; then
-        if [ -e "$HOME/Developer/Bash/dot-files" ]; then
-            find ~/Developer/Bash/dot-files -delete
-        fi
-        git clone --recurse-submodules https://github.com/CamJN/dot-files ~/Developer/Bash/dot-files
+        # not in a git repo...
+        echo "dot-files is not a repo" >&2
     else
         # ensure clean repo by making temp commit with changes
         declare -a git_args=(-C ~/Developer/Bash/dot-files)

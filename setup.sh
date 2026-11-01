@@ -161,7 +161,7 @@ function main() {
     export HOMEBREW_NO_ENV_HINTS=1
     if [ -n "${SKIP_HOMEBREW_BUNDLE_APPS-}" ]; then
         declare HOMEBREW_BUNDLE_MAS_SKIP
-        HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
+        HOMEBREW_BUNDLE_MAS_SKIP="$(awk '/^ *mas/ {print $NF}' < "$HOMEBREW_BUNDLE_FILE" | tr '\n' ' ')"
         export HOMEBREW_BUNDLE_MAS_SKIP
     fi
 

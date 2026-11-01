@@ -180,9 +180,9 @@ function main() {
             fail "HOMEBREW_GITHUB_API_TOKEN env var is required, but not set."
         fi
 
-        if [ -z "${SKIP_INSTALL_PASSENGER_ENTERPRISE-}" ] && [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
-            export HOMEBREW_BUNDLE_TAP_SKIP="phusion/passenger $HOMEBREW_BUNDLE_TAP_SKIP"
-            export HOMEBREW_BUNDLE_BREW_SKIP="phusion/passenger/passenger-enterprise $HOMEBREW_BUNDLE_BREW_SKIP"
+        if [ -n "${SKIP_INSTALL_PASSENGER_ENTERPRISE-}" ] && [ ! -f "$HOME/.passenger-enterprise-download-token" ]; then
+            export HOMEBREW_BUNDLE_TAP_SKIP="phusion/passenger-enterprise $HOMEBREW_BUNDLE_TAP_SKIP"
+            export HOMEBREW_BUNDLE_BREW_SKIP="phusion/passenger-enterprise/passenger-enterprise $HOMEBREW_BUNDLE_BREW_SKIP"
         fi
         # install all homebrew packages in Brewfile
         if ! brew bundle check; then

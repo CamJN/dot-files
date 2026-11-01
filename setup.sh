@@ -285,6 +285,8 @@ function main() {
     done
 
     function getLaunchdPlist() {
+        declare diff_prefix="$HOME/Developer/Bash/dot-files/"
+        if ! [ -f "$diff_prefix/.git/config" ]; then return; fi
         for file in "$@"; do
             local filename
             filename=$(basename "$file")
@@ -303,7 +305,6 @@ function main() {
             else
                 echo "$plist_path doesn't exist, not checking for updates."
             fi
-            declare diff_prefix="$HOME/Developer/Bash/dot-files/"
             declare saved_diff_path="${file/#"$diff_prefix"/${diff_prefix}saved_diffs/}"
             if [ -f "$saved_diff_path" ]; then
                 if diff -q <(git -C "$diff_prefix" diff "$file") "$saved_diff_path"; then

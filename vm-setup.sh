@@ -50,3 +50,4 @@ export SKIP_CASE_CHECK=true # not setup in vm image
 export SKIP_HOMEBREW_BUNDLE_APPS=true # can't login to mac app store
 export SKIP_DOCKER=true # no nested virtualization
 export SKIP_INSTALL_GETARGV=true
+export SKIP_INSTALL_PASSENGER_ENTERPRISE=true

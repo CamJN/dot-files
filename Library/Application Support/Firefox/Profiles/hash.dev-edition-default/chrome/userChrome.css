@@ -83,3 +83,8 @@ hbox.titlebar-placeholder[type="caption-buttons"] {
         }
     }
 }
+
+/* button's border was cut off at the top */
+.tab-close-button.close-icon {
+    top:0px!important;
+}

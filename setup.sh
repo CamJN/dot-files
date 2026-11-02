@@ -494,15 +494,7 @@ function main() {
 
     # copy paths files into paths dirs, cannot be symlinks for some reason
     sudo cp ~/Developer/Bash/dot-files/etc/paths.d/* /etc/paths.d/
-    if [ ! -f "${HOMEBREW_PREFIX}/etc/paths" ]; then
-        # homebrew is broken, doesn't set this var before the shellenv script is run
-        declare HOMEBREW_MACOS_VERSION_NUMERIC
-        HOMEBREW_MACOS_VERSION_NUMERIC=$(/usr/bin/sw_vers -productVersion | tr '.' '\n' | xargs printf "%02d%02d%02d")
-        export HOMEBREW_MACOS_VERSION_NUMERIC
-        # running shellenv creates the $HOMEBREW_PREFIX/etc/paths file
-        env -i "HOME=$HOME" "${HOMEBREW_PREFIX}/bin/brew" shellenv
-    fi
-    sudo cp "${HOMEBREW_PREFIX}/etc/paths" /etc/paths.d/25-homebrew
+    printf '%s\n' "${HOMEBREW_PREFIX}/"{,s}bin | sudo tee /etc/paths.d/25-homebrew
     sudo cp ~/Developer/Bash/dot-files/etc/manpaths.d/* /etc/manpaths.d/
     # ensure rbenv installed and all current c-rubies
     if ! which -s rbenv; then

@@ -592,8 +592,10 @@ function main() {
 
     defaults write com.apple.Spotlight PasteboardHistoryVersion -int 2
 
-    defaults write com.apple.Music showAppleMusic -bool false
-    defaults write com.apple.Music TransitionsEnabled -bool false
+    if [ -z "${SKIP_MUSIC_PREFS-}" ]; then
+        defaults write com.apple.Music showAppleMusic -bool false
+        defaults write com.apple.Music TransitionsEnabled -bool false
+    fi
 
     defaults write com.apple.controlcenter AirplayReceiverEnabled -bool false
     defaults write com.apple.controlcenter Battery -int 1

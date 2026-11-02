@@ -298,6 +298,8 @@ function main() {
         fi
     done
 
+    sudo chown root:wheel ~/Developer/Bash/dot-files/etc/sudoers.d/*
+
     # symlink executables
     for file in ~/Developer/Bash/dot-files/usr/local/bin/*; do
         ln -shf "$file" "$HOMEBREW_PREFIX/bin/"

@@ -876,7 +876,11 @@ function main() {
     else
         declare id
         id=$(security find-identity -v -p codesigning | awk -F'"' '/)/{print $2}')
-        find "$HOMEBREW_PREFIX"/opt/passenger*/libexec/buildout/apache2/mod_passenger.so "$HOMEBREW_PREFIX/lib/httpd/modules/libphp.so" -exec codesign -fs "$id" --keychain ~/Library/Keychains/login.keychain-db {} \;
+        declare -a modules=("$HOMEBREW_PREFIX/lib/httpd/modules/libphp.so")
+        if [ -z "${SKIP_INSTALL_PASSENGER_ENTERPRISE-}" ]; then
+            modules+=("$HOMEBREW_PREFIX"/opt/passenger*/libexec/buildout/apache2/mod_passenger.so)
+        fi
+        find "${modules[@]}" -exec codesign -fs "$id" --keychain ~/Library/Keychains/login.keychain-db {} \;
         sudo apachectl -t && sudo apachectl restart
     fi
 

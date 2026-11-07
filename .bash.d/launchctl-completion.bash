@@ -54,14 +54,14 @@ __launchctl_list_uids ()
 
 __launchctl_list_asids ()
 {
+    # A login/ domain is identified by the audit session created
+    # at GUI login. `print user/<uid>` shows it as "gui asid = N".
+    # A bare nested "asid = N" line refers to the user domain
+    # itself and is not a valid login/ target.
     local uid
 
     while IFS= read -r uid; do
-        launchctl print "user/${uid}" 2>/dev/null |
-            awk '$1 == "asid" && $2 == "=" && $3 ~ /^[0-9]+$/ {
-                print $3
-                exit
-            }'
+        launchctl print "user/${uid}" 2>/dev/null | awk '/gui asid =/{print $4}'
     done < <(__launchctl_list_uids) | sort -un
 }
 
@@ -325,7 +325,7 @@ _launchctl2 ()
     local cur="${COMP_WORDS[COMP_CWORD]}"
 
     # Subcommand list
-    local subcommands=(asuser attach blame bootout bootstrap bsexec config debug disable enable error examine getenv help hostinfo kickstart kill limit list load managername managerpid manageruid plist print print-cache print-disabled procinfo reboot remove resolveport setenv start stop submit unload unsetenv variant version bootshell print-token dump-xsc dumpjpcategory dumpstate)
+    local subcommands=(asuser attach blame bootout bootstrap bsexec config debug disable enable error examine getenv help hostinfo kickstart kill limit list load managername managerpid manageruid plist print print-cache print-disabled procinfo reboot reload-atf remove resolveport setenv start stop submit unload unsetenv variant version bootshell print-token dump-xsc dumpjpcategory dumpstate)
 
     if [[ ${COMP_CWORD} -eq 1 ]]; then
         compgen -V COMPREPLY -W "${subcommands[*]}" -- "${cur}"
@@ -680,10 +680,12 @@ _launchctl2 ()
             if [[ ${COMP_CWORD} -eq 2 ]]; then
                 possibilities=(posix mach bootstrap)
             else
+                # Upper bounds verified against `launchctl error <domain> N`:
+                # 167 reports "Unknown error: 167", 58/1004/1106/1608 likewise.
                 case "${COMP_WORDS[2]}" in
-                    bootstrap) possibilities=("$(seq 0 56) $(seq 1000 1003) $(seq 1100 1105) $(seq 1601 1607)");;
-                    mach) possibilities=("$(seq 1 56)");;
-                    posix) possibilities=("$(seq 0 164)");;
+                    bootstrap) possibilities=("$(seq 0 57) $(seq 1000 1003) $(seq 1100 1105) $(seq 1601 1607)");;
+                    mach) possibilities=("$(seq 0 57)");;
+                    posix) possibilities=("$(seq 0 166)");;
                 esac
             fi
             compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
@@ -759,7 +761,8 @@ _launchctl2 ()
                     compopt -o nospace #doesn't work if set in compgen here...
                     compgen -o nospace -S / -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
                 else
-                    local possibilities=("$(__launchctl_list_service_targets "${cur%/*}" stopped | paste -sd ' ' -)")
+                    # kill only operates on services that are running.
+                    local possibilities=("$(__launchctl_list_service_targets "${cur%/*}" started | paste -sd ' ' -)")
                     compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
                 fi
             fi
@@ -875,8 +878,32 @@ _launchctl2 ()
             ;;
         reboot)
             # reboot [system|halt|userspace|logout|apps] [-s]
-            local possibilities=(system halt userspace logout apps)
+            local possibilities=(system halt userspace logout apps -s)
             compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
+            return
+            ;;
+        reload-atf)
+            # reload-atf [-u] [-l] [-a path] [-k path0 path1 ...]
+            local flag_possibilities=(-u -l -a -k)
+            local possibilities=()
+            local value
+            for value in "${flag_possibilities[@]}"; do
+                if ! __launchctl_array_contains COMP_WORDS "$value"; then
+                    possibilities+=("${value}")
+                fi
+            done
+            if __launchctl_array_contains flag_possibilities "${cur}"; then
+                possibilities+=("${cur}")
+            fi
+
+            case "${COMP_WORDS[COMP_CWORD-1]}" in
+                -a|-k) __launchctl_complete_path "${cur}" filesystem; return;;
+            esac
+            if [[ -z ${cur} || ${cur:0:1} == '-' ]]; then
+                compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
+            else
+                __launchctl_complete_path "${cur}" filesystem
+            fi
             return
             ;;
         remove)
@@ -887,8 +914,11 @@ _launchctl2 ()
             ;;
         resolveport)
             # resolveport owner-pid port-name
-            local possibilities=("$(__launchctl_list_pids | paste -sd ' ' -)")
-            compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
+            # Port names cannot be enumerated from launchctl (see TODO).
+            if [[ ${COMP_CWORD} -eq 2 ]]; then
+                local possibilities=("$(__launchctl_list_pids | paste -sd ' ' -)")
+                compgen -V COMPREPLY -W "${possibilities[*]}" -- "${cur}"
+            fi
             return
             ;;
         setenv)

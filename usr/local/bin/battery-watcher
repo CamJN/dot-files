@@ -7,6 +7,9 @@ declare -i oldVolume=$(osascript -e 'output volume of (get volume settings)')
 declare -i upper=81
 declare -i lower=20
 
+/usr/bin/log show --last 2m --style compact   --predicate 'process == "PowerUIAgent"' | grep -Fiqe 'ChargingUpForGauging'
+declare -i calibrating="$?"
+
 function mysay(){
     osascript -e "set volume without output muted"
     osascript -e "set volume 4"
@@ -23,8 +26,11 @@ log "status: $status percent: ${percent}%"
 
 case "${status:-x}" in
     charging)
-        if [ $percent -ge $upper ]; then
-            mysay "battery charged"
+        # if calibrating, don't complain
+        if [ $calibrating -ne 0 ]; then
+            if [ $percent -ge $upper ]; then
+                mysay "battery charged"
+            fi
         fi
         ;;
     discharging)

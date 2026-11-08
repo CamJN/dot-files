@@ -364,8 +364,9 @@ CONDP returns non nil."
          (pd (concat dir code ".pws"))
          (rd (concat dir code ".prepl")))
     (make-directory dir t)
+    (setq ispell-dictionary code)
     (setq ispell-personal-dictionary pd)
-    (setq ispell-extra-args (list "--repl" rd))
+    (setq ispell-extra-args (list "--repl=" rd))
     (ispell-change-dictionary code)))
 
 ;; -- CSV --

@@ -3,15 +3,15 @@
 # Modifications to this file will be lost on restarting the Lima instance.
 Host colima
   IdentityFile "/Users/camdennarzt/Developer/Bash/dot-files/.config/colima/_lima/_config/user"
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-  NoHostAuthenticationForLocalhost yes
   PreferredAuthentications publickey
   Compression no
   BatchMode yes
   IdentitiesOnly yes
   GSSAPIAuthentication no
   Ciphers "^aes128-gcm@openssh.com,aes256-gcm@openssh.com"
+  StrictHostKeyChecking yes
+  UserKnownHostsFile "/Users/camdennarzt/Developer/Bash/dot-files/.config/colima/_lima/colima/ssh.known_hosts"
+  HostKeyAlias lima-colima
   User camdennarzt
   ControlMaster auto
   ControlPath "/Users/camdennarzt/Developer/Bash/dot-files/.config/colima/_lima/colima/ssh.sock"
